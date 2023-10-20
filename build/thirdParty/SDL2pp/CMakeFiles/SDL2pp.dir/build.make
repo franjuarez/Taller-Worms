@@ -73,323 +73,323 @@ thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/AudioDevice.cc.o: thirdParty/SDL2
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/AudioDevice.cc.o: ../thirdParty/SDL2pp/SDL2pp/AudioDevice.cc
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/AudioDevice.cc.o: thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/martu/Facu/Taller I/Taller-Worms/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/AudioDevice.cc.o"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/AudioDevice.cc.o -MF CMakeFiles/SDL2pp.dir/SDL2pp/AudioDevice.cc.o.d -o CMakeFiles/SDL2pp.dir/SDL2pp/AudioDevice.cc.o -c "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/AudioDevice.cc"
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/AudioDevice.cc.o -MF CMakeFiles/SDL2pp.dir/SDL2pp/AudioDevice.cc.o.d -o CMakeFiles/SDL2pp.dir/SDL2pp/AudioDevice.cc.o -c "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/AudioDevice.cc"
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/AudioDevice.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SDL2pp.dir/SDL2pp/AudioDevice.cc.i"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/AudioDevice.cc" > CMakeFiles/SDL2pp.dir/SDL2pp/AudioDevice.cc.i
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/AudioDevice.cc" > CMakeFiles/SDL2pp.dir/SDL2pp/AudioDevice.cc.i
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/AudioDevice.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SDL2pp.dir/SDL2pp/AudioDevice.cc.s"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/AudioDevice.cc" -o CMakeFiles/SDL2pp.dir/SDL2pp/AudioDevice.cc.s
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/AudioDevice.cc" -o CMakeFiles/SDL2pp.dir/SDL2pp/AudioDevice.cc.s
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/AudioLock.cc.o: thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/flags.make
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/AudioLock.cc.o: ../thirdParty/SDL2pp/SDL2pp/AudioLock.cc
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/AudioLock.cc.o: thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/martu/Facu/Taller I/Taller-Worms/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/AudioLock.cc.o"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/AudioLock.cc.o -MF CMakeFiles/SDL2pp.dir/SDL2pp/AudioLock.cc.o.d -o CMakeFiles/SDL2pp.dir/SDL2pp/AudioLock.cc.o -c "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/AudioLock.cc"
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/AudioLock.cc.o -MF CMakeFiles/SDL2pp.dir/SDL2pp/AudioLock.cc.o.d -o CMakeFiles/SDL2pp.dir/SDL2pp/AudioLock.cc.o -c "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/AudioLock.cc"
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/AudioLock.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SDL2pp.dir/SDL2pp/AudioLock.cc.i"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/AudioLock.cc" > CMakeFiles/SDL2pp.dir/SDL2pp/AudioLock.cc.i
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/AudioLock.cc" > CMakeFiles/SDL2pp.dir/SDL2pp/AudioLock.cc.i
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/AudioLock.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SDL2pp.dir/SDL2pp/AudioLock.cc.s"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/AudioLock.cc" -o CMakeFiles/SDL2pp.dir/SDL2pp/AudioLock.cc.s
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/AudioLock.cc" -o CMakeFiles/SDL2pp.dir/SDL2pp/AudioLock.cc.s
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/AudioSpec.cc.o: thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/flags.make
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/AudioSpec.cc.o: ../thirdParty/SDL2pp/SDL2pp/AudioSpec.cc
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/AudioSpec.cc.o: thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/martu/Facu/Taller I/Taller-Worms/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/AudioSpec.cc.o"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/AudioSpec.cc.o -MF CMakeFiles/SDL2pp.dir/SDL2pp/AudioSpec.cc.o.d -o CMakeFiles/SDL2pp.dir/SDL2pp/AudioSpec.cc.o -c "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/AudioSpec.cc"
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/AudioSpec.cc.o -MF CMakeFiles/SDL2pp.dir/SDL2pp/AudioSpec.cc.o.d -o CMakeFiles/SDL2pp.dir/SDL2pp/AudioSpec.cc.o -c "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/AudioSpec.cc"
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/AudioSpec.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SDL2pp.dir/SDL2pp/AudioSpec.cc.i"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/AudioSpec.cc" > CMakeFiles/SDL2pp.dir/SDL2pp/AudioSpec.cc.i
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/AudioSpec.cc" > CMakeFiles/SDL2pp.dir/SDL2pp/AudioSpec.cc.i
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/AudioSpec.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SDL2pp.dir/SDL2pp/AudioSpec.cc.s"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/AudioSpec.cc" -o CMakeFiles/SDL2pp.dir/SDL2pp/AudioSpec.cc.s
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/AudioSpec.cc" -o CMakeFiles/SDL2pp.dir/SDL2pp/AudioSpec.cc.s
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Color.cc.o: thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/flags.make
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Color.cc.o: ../thirdParty/SDL2pp/SDL2pp/Color.cc
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Color.cc.o: thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/martu/Facu/Taller I/Taller-Worms/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Color.cc.o"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Color.cc.o -MF CMakeFiles/SDL2pp.dir/SDL2pp/Color.cc.o.d -o CMakeFiles/SDL2pp.dir/SDL2pp/Color.cc.o -c "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Color.cc"
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Color.cc.o -MF CMakeFiles/SDL2pp.dir/SDL2pp/Color.cc.o.d -o CMakeFiles/SDL2pp.dir/SDL2pp/Color.cc.o -c "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Color.cc"
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Color.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SDL2pp.dir/SDL2pp/Color.cc.i"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Color.cc" > CMakeFiles/SDL2pp.dir/SDL2pp/Color.cc.i
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Color.cc" > CMakeFiles/SDL2pp.dir/SDL2pp/Color.cc.i
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Color.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SDL2pp.dir/SDL2pp/Color.cc.s"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Color.cc" -o CMakeFiles/SDL2pp.dir/SDL2pp/Color.cc.s
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Color.cc" -o CMakeFiles/SDL2pp.dir/SDL2pp/Color.cc.s
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Exception.cc.o: thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/flags.make
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Exception.cc.o: ../thirdParty/SDL2pp/SDL2pp/Exception.cc
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Exception.cc.o: thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/martu/Facu/Taller I/Taller-Worms/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Exception.cc.o"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Exception.cc.o -MF CMakeFiles/SDL2pp.dir/SDL2pp/Exception.cc.o.d -o CMakeFiles/SDL2pp.dir/SDL2pp/Exception.cc.o -c "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Exception.cc"
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Exception.cc.o -MF CMakeFiles/SDL2pp.dir/SDL2pp/Exception.cc.o.d -o CMakeFiles/SDL2pp.dir/SDL2pp/Exception.cc.o -c "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Exception.cc"
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Exception.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SDL2pp.dir/SDL2pp/Exception.cc.i"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Exception.cc" > CMakeFiles/SDL2pp.dir/SDL2pp/Exception.cc.i
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Exception.cc" > CMakeFiles/SDL2pp.dir/SDL2pp/Exception.cc.i
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Exception.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SDL2pp.dir/SDL2pp/Exception.cc.s"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Exception.cc" -o CMakeFiles/SDL2pp.dir/SDL2pp/Exception.cc.s
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Exception.cc" -o CMakeFiles/SDL2pp.dir/SDL2pp/Exception.cc.s
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Point.cc.o: thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/flags.make
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Point.cc.o: ../thirdParty/SDL2pp/SDL2pp/Point.cc
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Point.cc.o: thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/martu/Facu/Taller I/Taller-Worms/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Point.cc.o"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Point.cc.o -MF CMakeFiles/SDL2pp.dir/SDL2pp/Point.cc.o.d -o CMakeFiles/SDL2pp.dir/SDL2pp/Point.cc.o -c "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Point.cc"
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Point.cc.o -MF CMakeFiles/SDL2pp.dir/SDL2pp/Point.cc.o.d -o CMakeFiles/SDL2pp.dir/SDL2pp/Point.cc.o -c "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Point.cc"
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Point.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SDL2pp.dir/SDL2pp/Point.cc.i"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Point.cc" > CMakeFiles/SDL2pp.dir/SDL2pp/Point.cc.i
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Point.cc" > CMakeFiles/SDL2pp.dir/SDL2pp/Point.cc.i
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Point.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SDL2pp.dir/SDL2pp/Point.cc.s"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Point.cc" -o CMakeFiles/SDL2pp.dir/SDL2pp/Point.cc.s
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Point.cc" -o CMakeFiles/SDL2pp.dir/SDL2pp/Point.cc.s
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/RWops.cc.o: thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/flags.make
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/RWops.cc.o: ../thirdParty/SDL2pp/SDL2pp/RWops.cc
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/RWops.cc.o: thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/martu/Facu/Taller I/Taller-Worms/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/RWops.cc.o"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/RWops.cc.o -MF CMakeFiles/SDL2pp.dir/SDL2pp/RWops.cc.o.d -o CMakeFiles/SDL2pp.dir/SDL2pp/RWops.cc.o -c "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/RWops.cc"
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/RWops.cc.o -MF CMakeFiles/SDL2pp.dir/SDL2pp/RWops.cc.o.d -o CMakeFiles/SDL2pp.dir/SDL2pp/RWops.cc.o -c "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/RWops.cc"
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/RWops.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SDL2pp.dir/SDL2pp/RWops.cc.i"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/RWops.cc" > CMakeFiles/SDL2pp.dir/SDL2pp/RWops.cc.i
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/RWops.cc" > CMakeFiles/SDL2pp.dir/SDL2pp/RWops.cc.i
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/RWops.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SDL2pp.dir/SDL2pp/RWops.cc.s"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/RWops.cc" -o CMakeFiles/SDL2pp.dir/SDL2pp/RWops.cc.s
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/RWops.cc" -o CMakeFiles/SDL2pp.dir/SDL2pp/RWops.cc.s
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Rect.cc.o: thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/flags.make
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Rect.cc.o: ../thirdParty/SDL2pp/SDL2pp/Rect.cc
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Rect.cc.o: thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/martu/Facu/Taller I/Taller-Worms/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Rect.cc.o"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Rect.cc.o -MF CMakeFiles/SDL2pp.dir/SDL2pp/Rect.cc.o.d -o CMakeFiles/SDL2pp.dir/SDL2pp/Rect.cc.o -c "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Rect.cc"
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Rect.cc.o -MF CMakeFiles/SDL2pp.dir/SDL2pp/Rect.cc.o.d -o CMakeFiles/SDL2pp.dir/SDL2pp/Rect.cc.o -c "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Rect.cc"
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Rect.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SDL2pp.dir/SDL2pp/Rect.cc.i"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Rect.cc" > CMakeFiles/SDL2pp.dir/SDL2pp/Rect.cc.i
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Rect.cc" > CMakeFiles/SDL2pp.dir/SDL2pp/Rect.cc.i
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Rect.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SDL2pp.dir/SDL2pp/Rect.cc.s"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Rect.cc" -o CMakeFiles/SDL2pp.dir/SDL2pp/Rect.cc.s
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Rect.cc" -o CMakeFiles/SDL2pp.dir/SDL2pp/Rect.cc.s
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Renderer.cc.o: thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/flags.make
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Renderer.cc.o: ../thirdParty/SDL2pp/SDL2pp/Renderer.cc
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Renderer.cc.o: thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/martu/Facu/Taller I/Taller-Worms/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Renderer.cc.o"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Renderer.cc.o -MF CMakeFiles/SDL2pp.dir/SDL2pp/Renderer.cc.o.d -o CMakeFiles/SDL2pp.dir/SDL2pp/Renderer.cc.o -c "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Renderer.cc"
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Renderer.cc.o -MF CMakeFiles/SDL2pp.dir/SDL2pp/Renderer.cc.o.d -o CMakeFiles/SDL2pp.dir/SDL2pp/Renderer.cc.o -c "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Renderer.cc"
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Renderer.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SDL2pp.dir/SDL2pp/Renderer.cc.i"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Renderer.cc" > CMakeFiles/SDL2pp.dir/SDL2pp/Renderer.cc.i
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Renderer.cc" > CMakeFiles/SDL2pp.dir/SDL2pp/Renderer.cc.i
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Renderer.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SDL2pp.dir/SDL2pp/Renderer.cc.s"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Renderer.cc" -o CMakeFiles/SDL2pp.dir/SDL2pp/Renderer.cc.s
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Renderer.cc" -o CMakeFiles/SDL2pp.dir/SDL2pp/Renderer.cc.s
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SDL.cc.o: thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/flags.make
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SDL.cc.o: ../thirdParty/SDL2pp/SDL2pp/SDL.cc
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SDL.cc.o: thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/martu/Facu/Taller I/Taller-Worms/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SDL.cc.o"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SDL.cc.o -MF CMakeFiles/SDL2pp.dir/SDL2pp/SDL.cc.o.d -o CMakeFiles/SDL2pp.dir/SDL2pp/SDL.cc.o -c "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/SDL.cc"
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SDL.cc.o -MF CMakeFiles/SDL2pp.dir/SDL2pp/SDL.cc.o.d -o CMakeFiles/SDL2pp.dir/SDL2pp/SDL.cc.o -c "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/SDL.cc"
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SDL.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SDL2pp.dir/SDL2pp/SDL.cc.i"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/SDL.cc" > CMakeFiles/SDL2pp.dir/SDL2pp/SDL.cc.i
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/SDL.cc" > CMakeFiles/SDL2pp.dir/SDL2pp/SDL.cc.i
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SDL.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SDL2pp.dir/SDL2pp/SDL.cc.s"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/SDL.cc" -o CMakeFiles/SDL2pp.dir/SDL2pp/SDL.cc.s
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/SDL.cc" -o CMakeFiles/SDL2pp.dir/SDL2pp/SDL.cc.s
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Surface.cc.o: thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/flags.make
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Surface.cc.o: ../thirdParty/SDL2pp/SDL2pp/Surface.cc
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Surface.cc.o: thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/martu/Facu/Taller I/Taller-Worms/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Surface.cc.o"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Surface.cc.o -MF CMakeFiles/SDL2pp.dir/SDL2pp/Surface.cc.o.d -o CMakeFiles/SDL2pp.dir/SDL2pp/Surface.cc.o -c "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Surface.cc"
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Surface.cc.o -MF CMakeFiles/SDL2pp.dir/SDL2pp/Surface.cc.o.d -o CMakeFiles/SDL2pp.dir/SDL2pp/Surface.cc.o -c "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Surface.cc"
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Surface.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SDL2pp.dir/SDL2pp/Surface.cc.i"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Surface.cc" > CMakeFiles/SDL2pp.dir/SDL2pp/Surface.cc.i
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Surface.cc" > CMakeFiles/SDL2pp.dir/SDL2pp/Surface.cc.i
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Surface.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SDL2pp.dir/SDL2pp/Surface.cc.s"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Surface.cc" -o CMakeFiles/SDL2pp.dir/SDL2pp/Surface.cc.s
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Surface.cc" -o CMakeFiles/SDL2pp.dir/SDL2pp/Surface.cc.s
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SurfaceLock.cc.o: thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/flags.make
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SurfaceLock.cc.o: ../thirdParty/SDL2pp/SDL2pp/SurfaceLock.cc
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SurfaceLock.cc.o: thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/martu/Facu/Taller I/Taller-Worms/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SurfaceLock.cc.o"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SurfaceLock.cc.o -MF CMakeFiles/SDL2pp.dir/SDL2pp/SurfaceLock.cc.o.d -o CMakeFiles/SDL2pp.dir/SDL2pp/SurfaceLock.cc.o -c "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/SurfaceLock.cc"
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SurfaceLock.cc.o -MF CMakeFiles/SDL2pp.dir/SDL2pp/SurfaceLock.cc.o.d -o CMakeFiles/SDL2pp.dir/SDL2pp/SurfaceLock.cc.o -c "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/SurfaceLock.cc"
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SurfaceLock.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SDL2pp.dir/SDL2pp/SurfaceLock.cc.i"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/SurfaceLock.cc" > CMakeFiles/SDL2pp.dir/SDL2pp/SurfaceLock.cc.i
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/SurfaceLock.cc" > CMakeFiles/SDL2pp.dir/SDL2pp/SurfaceLock.cc.i
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SurfaceLock.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SDL2pp.dir/SDL2pp/SurfaceLock.cc.s"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/SurfaceLock.cc" -o CMakeFiles/SDL2pp.dir/SDL2pp/SurfaceLock.cc.s
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/SurfaceLock.cc" -o CMakeFiles/SDL2pp.dir/SDL2pp/SurfaceLock.cc.s
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Texture.cc.o: thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/flags.make
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Texture.cc.o: ../thirdParty/SDL2pp/SDL2pp/Texture.cc
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Texture.cc.o: thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/martu/Facu/Taller I/Taller-Worms/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Texture.cc.o"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Texture.cc.o -MF CMakeFiles/SDL2pp.dir/SDL2pp/Texture.cc.o.d -o CMakeFiles/SDL2pp.dir/SDL2pp/Texture.cc.o -c "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Texture.cc"
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Texture.cc.o -MF CMakeFiles/SDL2pp.dir/SDL2pp/Texture.cc.o.d -o CMakeFiles/SDL2pp.dir/SDL2pp/Texture.cc.o -c "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Texture.cc"
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Texture.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SDL2pp.dir/SDL2pp/Texture.cc.i"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Texture.cc" > CMakeFiles/SDL2pp.dir/SDL2pp/Texture.cc.i
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Texture.cc" > CMakeFiles/SDL2pp.dir/SDL2pp/Texture.cc.i
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Texture.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SDL2pp.dir/SDL2pp/Texture.cc.s"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Texture.cc" -o CMakeFiles/SDL2pp.dir/SDL2pp/Texture.cc.s
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Texture.cc" -o CMakeFiles/SDL2pp.dir/SDL2pp/Texture.cc.s
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/TextureLock.cc.o: thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/flags.make
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/TextureLock.cc.o: ../thirdParty/SDL2pp/SDL2pp/TextureLock.cc
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/TextureLock.cc.o: thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/martu/Facu/Taller I/Taller-Worms/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/TextureLock.cc.o"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/TextureLock.cc.o -MF CMakeFiles/SDL2pp.dir/SDL2pp/TextureLock.cc.o.d -o CMakeFiles/SDL2pp.dir/SDL2pp/TextureLock.cc.o -c "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/TextureLock.cc"
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/TextureLock.cc.o -MF CMakeFiles/SDL2pp.dir/SDL2pp/TextureLock.cc.o.d -o CMakeFiles/SDL2pp.dir/SDL2pp/TextureLock.cc.o -c "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/TextureLock.cc"
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/TextureLock.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SDL2pp.dir/SDL2pp/TextureLock.cc.i"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/TextureLock.cc" > CMakeFiles/SDL2pp.dir/SDL2pp/TextureLock.cc.i
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/TextureLock.cc" > CMakeFiles/SDL2pp.dir/SDL2pp/TextureLock.cc.i
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/TextureLock.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SDL2pp.dir/SDL2pp/TextureLock.cc.s"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/TextureLock.cc" -o CMakeFiles/SDL2pp.dir/SDL2pp/TextureLock.cc.s
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/TextureLock.cc" -o CMakeFiles/SDL2pp.dir/SDL2pp/TextureLock.cc.s
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Wav.cc.o: thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/flags.make
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Wav.cc.o: ../thirdParty/SDL2pp/SDL2pp/Wav.cc
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Wav.cc.o: thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/martu/Facu/Taller I/Taller-Worms/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Wav.cc.o"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Wav.cc.o -MF CMakeFiles/SDL2pp.dir/SDL2pp/Wav.cc.o.d -o CMakeFiles/SDL2pp.dir/SDL2pp/Wav.cc.o -c "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Wav.cc"
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Wav.cc.o -MF CMakeFiles/SDL2pp.dir/SDL2pp/Wav.cc.o.d -o CMakeFiles/SDL2pp.dir/SDL2pp/Wav.cc.o -c "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Wav.cc"
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Wav.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SDL2pp.dir/SDL2pp/Wav.cc.i"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Wav.cc" > CMakeFiles/SDL2pp.dir/SDL2pp/Wav.cc.i
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Wav.cc" > CMakeFiles/SDL2pp.dir/SDL2pp/Wav.cc.i
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Wav.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SDL2pp.dir/SDL2pp/Wav.cc.s"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Wav.cc" -o CMakeFiles/SDL2pp.dir/SDL2pp/Wav.cc.s
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Wav.cc" -o CMakeFiles/SDL2pp.dir/SDL2pp/Wav.cc.s
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Window.cc.o: thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/flags.make
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Window.cc.o: ../thirdParty/SDL2pp/SDL2pp/Window.cc
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Window.cc.o: thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/martu/Facu/Taller I/Taller-Worms/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Window.cc.o"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Window.cc.o -MF CMakeFiles/SDL2pp.dir/SDL2pp/Window.cc.o.d -o CMakeFiles/SDL2pp.dir/SDL2pp/Window.cc.o -c "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Window.cc"
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Window.cc.o -MF CMakeFiles/SDL2pp.dir/SDL2pp/Window.cc.o.d -o CMakeFiles/SDL2pp.dir/SDL2pp/Window.cc.o -c "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Window.cc"
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Window.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SDL2pp.dir/SDL2pp/Window.cc.i"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Window.cc" > CMakeFiles/SDL2pp.dir/SDL2pp/Window.cc.i
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Window.cc" > CMakeFiles/SDL2pp.dir/SDL2pp/Window.cc.i
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Window.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SDL2pp.dir/SDL2pp/Window.cc.s"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Window.cc" -o CMakeFiles/SDL2pp.dir/SDL2pp/Window.cc.s
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Window.cc" -o CMakeFiles/SDL2pp.dir/SDL2pp/Window.cc.s
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SDLTTF.cc.o: thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/flags.make
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SDLTTF.cc.o: ../thirdParty/SDL2pp/SDL2pp/SDLTTF.cc
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SDLTTF.cc.o: thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/martu/Facu/Taller I/Taller-Worms/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SDLTTF.cc.o"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SDLTTF.cc.o -MF CMakeFiles/SDL2pp.dir/SDL2pp/SDLTTF.cc.o.d -o CMakeFiles/SDL2pp.dir/SDL2pp/SDLTTF.cc.o -c "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/SDLTTF.cc"
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SDLTTF.cc.o -MF CMakeFiles/SDL2pp.dir/SDL2pp/SDLTTF.cc.o.d -o CMakeFiles/SDL2pp.dir/SDL2pp/SDLTTF.cc.o -c "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/SDLTTF.cc"
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SDLTTF.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SDL2pp.dir/SDL2pp/SDLTTF.cc.i"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/SDLTTF.cc" > CMakeFiles/SDL2pp.dir/SDL2pp/SDLTTF.cc.i
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/SDLTTF.cc" > CMakeFiles/SDL2pp.dir/SDL2pp/SDLTTF.cc.i
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SDLTTF.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SDL2pp.dir/SDL2pp/SDLTTF.cc.s"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/SDLTTF.cc" -o CMakeFiles/SDL2pp.dir/SDL2pp/SDLTTF.cc.s
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/SDLTTF.cc" -o CMakeFiles/SDL2pp.dir/SDL2pp/SDLTTF.cc.s
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Font.cc.o: thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/flags.make
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Font.cc.o: ../thirdParty/SDL2pp/SDL2pp/Font.cc
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Font.cc.o: thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/martu/Facu/Taller I/Taller-Worms/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Font.cc.o"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Font.cc.o -MF CMakeFiles/SDL2pp.dir/SDL2pp/Font.cc.o.d -o CMakeFiles/SDL2pp.dir/SDL2pp/Font.cc.o -c "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Font.cc"
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Font.cc.o -MF CMakeFiles/SDL2pp.dir/SDL2pp/Font.cc.o.d -o CMakeFiles/SDL2pp.dir/SDL2pp/Font.cc.o -c "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Font.cc"
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Font.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SDL2pp.dir/SDL2pp/Font.cc.i"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Font.cc" > CMakeFiles/SDL2pp.dir/SDL2pp/Font.cc.i
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Font.cc" > CMakeFiles/SDL2pp.dir/SDL2pp/Font.cc.i
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Font.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SDL2pp.dir/SDL2pp/Font.cc.s"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Font.cc" -o CMakeFiles/SDL2pp.dir/SDL2pp/Font.cc.s
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Font.cc" -o CMakeFiles/SDL2pp.dir/SDL2pp/Font.cc.s
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SDLImage.cc.o: thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/flags.make
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SDLImage.cc.o: ../thirdParty/SDL2pp/SDL2pp/SDLImage.cc
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SDLImage.cc.o: thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/martu/Facu/Taller I/Taller-Worms/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SDLImage.cc.o"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SDLImage.cc.o -MF CMakeFiles/SDL2pp.dir/SDL2pp/SDLImage.cc.o.d -o CMakeFiles/SDL2pp.dir/SDL2pp/SDLImage.cc.o -c "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/SDLImage.cc"
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SDLImage.cc.o -MF CMakeFiles/SDL2pp.dir/SDL2pp/SDLImage.cc.o.d -o CMakeFiles/SDL2pp.dir/SDL2pp/SDLImage.cc.o -c "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/SDLImage.cc"
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SDLImage.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SDL2pp.dir/SDL2pp/SDLImage.cc.i"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/SDLImage.cc" > CMakeFiles/SDL2pp.dir/SDL2pp/SDLImage.cc.i
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/SDLImage.cc" > CMakeFiles/SDL2pp.dir/SDL2pp/SDLImage.cc.i
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SDLImage.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SDL2pp.dir/SDL2pp/SDLImage.cc.s"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/SDLImage.cc" -o CMakeFiles/SDL2pp.dir/SDL2pp/SDLImage.cc.s
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/SDLImage.cc" -o CMakeFiles/SDL2pp.dir/SDL2pp/SDLImage.cc.s
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Chunk.cc.o: thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/flags.make
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Chunk.cc.o: ../thirdParty/SDL2pp/SDL2pp/Chunk.cc
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Chunk.cc.o: thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/martu/Facu/Taller I/Taller-Worms/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Chunk.cc.o"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Chunk.cc.o -MF CMakeFiles/SDL2pp.dir/SDL2pp/Chunk.cc.o.d -o CMakeFiles/SDL2pp.dir/SDL2pp/Chunk.cc.o -c "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Chunk.cc"
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Chunk.cc.o -MF CMakeFiles/SDL2pp.dir/SDL2pp/Chunk.cc.o.d -o CMakeFiles/SDL2pp.dir/SDL2pp/Chunk.cc.o -c "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Chunk.cc"
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Chunk.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SDL2pp.dir/SDL2pp/Chunk.cc.i"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Chunk.cc" > CMakeFiles/SDL2pp.dir/SDL2pp/Chunk.cc.i
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Chunk.cc" > CMakeFiles/SDL2pp.dir/SDL2pp/Chunk.cc.i
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Chunk.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SDL2pp.dir/SDL2pp/Chunk.cc.s"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Chunk.cc" -o CMakeFiles/SDL2pp.dir/SDL2pp/Chunk.cc.s
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Chunk.cc" -o CMakeFiles/SDL2pp.dir/SDL2pp/Chunk.cc.s
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Mixer.cc.o: thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/flags.make
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Mixer.cc.o: ../thirdParty/SDL2pp/SDL2pp/Mixer.cc
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Mixer.cc.o: thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/martu/Facu/Taller I/Taller-Worms/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Mixer.cc.o"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Mixer.cc.o -MF CMakeFiles/SDL2pp.dir/SDL2pp/Mixer.cc.o.d -o CMakeFiles/SDL2pp.dir/SDL2pp/Mixer.cc.o -c "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Mixer.cc"
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Mixer.cc.o -MF CMakeFiles/SDL2pp.dir/SDL2pp/Mixer.cc.o.d -o CMakeFiles/SDL2pp.dir/SDL2pp/Mixer.cc.o -c "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Mixer.cc"
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Mixer.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SDL2pp.dir/SDL2pp/Mixer.cc.i"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Mixer.cc" > CMakeFiles/SDL2pp.dir/SDL2pp/Mixer.cc.i
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Mixer.cc" > CMakeFiles/SDL2pp.dir/SDL2pp/Mixer.cc.i
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Mixer.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SDL2pp.dir/SDL2pp/Mixer.cc.s"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Mixer.cc" -o CMakeFiles/SDL2pp.dir/SDL2pp/Mixer.cc.s
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Mixer.cc" -o CMakeFiles/SDL2pp.dir/SDL2pp/Mixer.cc.s
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Music.cc.o: thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/flags.make
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Music.cc.o: ../thirdParty/SDL2pp/SDL2pp/Music.cc
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Music.cc.o: thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/martu/Facu/Taller I/Taller-Worms/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Music.cc.o"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Music.cc.o -MF CMakeFiles/SDL2pp.dir/SDL2pp/Music.cc.o.d -o CMakeFiles/SDL2pp.dir/SDL2pp/Music.cc.o -c "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Music.cc"
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Music.cc.o -MF CMakeFiles/SDL2pp.dir/SDL2pp/Music.cc.o.d -o CMakeFiles/SDL2pp.dir/SDL2pp/Music.cc.o -c "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Music.cc"
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Music.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SDL2pp.dir/SDL2pp/Music.cc.i"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Music.cc" > CMakeFiles/SDL2pp.dir/SDL2pp/Music.cc.i
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Music.cc" > CMakeFiles/SDL2pp.dir/SDL2pp/Music.cc.i
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Music.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SDL2pp.dir/SDL2pp/Music.cc.s"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Music.cc" -o CMakeFiles/SDL2pp.dir/SDL2pp/Music.cc.s
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Music.cc" -o CMakeFiles/SDL2pp.dir/SDL2pp/Music.cc.s
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SDLMixer.cc.o: thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/flags.make
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SDLMixer.cc.o: ../thirdParty/SDL2pp/SDL2pp/SDLMixer.cc
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SDLMixer.cc.o: thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/martu/Facu/Taller I/Taller-Worms/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SDLMixer.cc.o"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SDLMixer.cc.o -MF CMakeFiles/SDL2pp.dir/SDL2pp/SDLMixer.cc.o.d -o CMakeFiles/SDL2pp.dir/SDL2pp/SDLMixer.cc.o -c "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/SDLMixer.cc"
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SDLMixer.cc.o -MF CMakeFiles/SDL2pp.dir/SDL2pp/SDLMixer.cc.o.d -o CMakeFiles/SDL2pp.dir/SDL2pp/SDLMixer.cc.o -c "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/SDLMixer.cc"
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SDLMixer.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SDL2pp.dir/SDL2pp/SDLMixer.cc.i"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/SDLMixer.cc" > CMakeFiles/SDL2pp.dir/SDL2pp/SDLMixer.cc.i
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/SDLMixer.cc" > CMakeFiles/SDL2pp.dir/SDL2pp/SDLMixer.cc.i
 
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SDLMixer.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SDL2pp.dir/SDL2pp/SDLMixer.cc.s"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/SDLMixer.cc" -o CMakeFiles/SDL2pp.dir/SDL2pp/SDLMixer.cc.s
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/SDLMixer.cc" -o CMakeFiles/SDL2pp.dir/SDL2pp/SDLMixer.cc.s
 
 # Object files for target SDL2pp
 SDL2pp_OBJECTS = \

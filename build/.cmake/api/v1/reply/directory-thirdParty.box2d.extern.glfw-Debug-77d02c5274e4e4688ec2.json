@@ -1,0 +1,14 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : [],
+		"nodes" : []
+	},
+	"installers" : [],
+	"paths" : 
+	{
+		"build" : "thirdParty/box2d/extern/glfw",
+		"source" : "thirdParty/box2d/extern/glfw"
+	}
+}

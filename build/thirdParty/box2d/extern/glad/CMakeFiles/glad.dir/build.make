@@ -73,15 +73,15 @@ thirdParty/box2d/extern/glad/CMakeFiles/glad.dir/src/gl.c.o: thirdParty/box2d/ex
 thirdParty/box2d/extern/glad/CMakeFiles/glad.dir/src/gl.c.o: ../thirdParty/box2d/extern/glad/src/gl.c
 thirdParty/box2d/extern/glad/CMakeFiles/glad.dir/src/gl.c.o: thirdParty/box2d/extern/glad/CMakeFiles/glad.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/martu/Facu/Taller I/Taller-Worms/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building C object thirdParty/box2d/extern/glad/CMakeFiles/glad.dir/src/gl.c.o"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/box2d/extern/glad" && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT thirdParty/box2d/extern/glad/CMakeFiles/glad.dir/src/gl.c.o -MF CMakeFiles/glad.dir/src/gl.c.o.d -o CMakeFiles/glad.dir/src/gl.c.o -c "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d/extern/glad/src/gl.c"
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/box2d/extern/glad" && /usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT thirdParty/box2d/extern/glad/CMakeFiles/glad.dir/src/gl.c.o -MF CMakeFiles/glad.dir/src/gl.c.o.d -o CMakeFiles/glad.dir/src/gl.c.o -c "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d/extern/glad/src/gl.c"
 
 thirdParty/box2d/extern/glad/CMakeFiles/glad.dir/src/gl.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/glad.dir/src/gl.c.i"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/box2d/extern/glad" && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d/extern/glad/src/gl.c" > CMakeFiles/glad.dir/src/gl.c.i
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/box2d/extern/glad" && /usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d/extern/glad/src/gl.c" > CMakeFiles/glad.dir/src/gl.c.i
 
 thirdParty/box2d/extern/glad/CMakeFiles/glad.dir/src/gl.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/glad.dir/src/gl.c.s"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/box2d/extern/glad" && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d/extern/glad/src/gl.c" -o CMakeFiles/glad.dir/src/gl.c.s
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/box2d/extern/glad" && /usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d/extern/glad/src/gl.c" -o CMakeFiles/glad.dir/src/gl.c.s
 
 # Object files for target glad
 glad_OBJECTS = \

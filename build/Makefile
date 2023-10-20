@@ -302,6 +302,30 @@ main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/PorFavorCompila.dir/build.make CMakeFiles/PorFavorCompila.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+screen.o: screen.cpp.o
+.PHONY : screen.o
+
+# target to build an object file
+screen.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PorFavorCompila.dir/build.make CMakeFiles/PorFavorCompila.dir/screen.cpp.o
+.PHONY : screen.cpp.o
+
+screen.i: screen.cpp.i
+.PHONY : screen.i
+
+# target to preprocess a source file
+screen.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PorFavorCompila.dir/build.make CMakeFiles/PorFavorCompila.dir/screen.cpp.i
+.PHONY : screen.cpp.i
+
+screen.s: screen.cpp.s
+.PHONY : screen.s
+
+# target to generate assembly for a file
+screen.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PorFavorCompila.dir/build.make CMakeFiles/PorFavorCompila.dir/screen.cpp.s
+.PHONY : screen.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -326,6 +350,9 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... screen.o"
+	@echo "... screen.i"
+	@echo "... screen.s"
 .PHONY : help
 
 

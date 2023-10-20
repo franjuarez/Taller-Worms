@@ -9,6 +9,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/martu/Facu/Taller I/Taller-Worms/main.cpp" "CMakeFiles/PorFavorCompila.dir/main.cpp.o" "gcc" "CMakeFiles/PorFavorCompila.dir/main.cpp.o.d"
+  "/home/martu/Facu/Taller I/Taller-Worms/screen.cpp" "CMakeFiles/PorFavorCompila.dir/screen.cpp.o" "gcc" "CMakeFiles/PorFavorCompila.dir/screen.cpp.o.d"
   )
 
 # Targets to which this target links.

@@ -1,0 +1,307 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						9
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.19.2"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0
+					]
+				},
+				{
+					"build" : "thirdParty/box2d",
+					"childIndexes" : 
+					[
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-thirdParty.box2d-Debug-14938f4e397aca9f58d1.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "thirdParty/box2d"
+				},
+				{
+					"build" : "thirdParty/box2d/src",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-thirdParty.box2d.src-Debug-aa84dfca839bc4ee3d3f.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 1,
+					"source" : "thirdParty/box2d/src",
+					"targetIndexes" : 
+					[
+						2
+					]
+				},
+				{
+					"build" : "thirdParty/box2d/unit-test",
+					"jsonFile" : "directory-thirdParty.box2d.unit-test-Debug-bfda33643282fbf29180.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 1,
+					"source" : "thirdParty/box2d/unit-test",
+					"targetIndexes" : 
+					[
+						8
+					]
+				},
+				{
+					"build" : "thirdParty/box2d/extern/glad",
+					"jsonFile" : "directory-thirdParty.box2d.extern.glad-Debug-f319d809704e9c870f5a.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 1,
+					"source" : "thirdParty/box2d/extern/glad",
+					"targetIndexes" : 
+					[
+						3
+					]
+				},
+				{
+					"build" : "thirdParty/box2d/extern/glfw",
+					"jsonFile" : "directory-thirdParty.box2d.extern.glfw-Debug-77d02c5274e4e4688ec2.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 1,
+					"source" : "thirdParty/box2d/extern/glfw",
+					"targetIndexes" : 
+					[
+						4
+					]
+				},
+				{
+					"build" : "thirdParty/box2d/extern/imgui",
+					"jsonFile" : "directory-thirdParty.box2d.extern.imgui-Debug-c8a8550b0bd00b3760d5.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 1,
+					"source" : "thirdParty/box2d/extern/imgui",
+					"targetIndexes" : 
+					[
+						5
+					]
+				},
+				{
+					"build" : "thirdParty/box2d/extern/sajson",
+					"jsonFile" : "directory-thirdParty.box2d.extern.sajson-Debug-97ad34831ef435e8d68f.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 1,
+					"source" : "thirdParty/box2d/extern/sajson",
+					"targetIndexes" : 
+					[
+						6
+					]
+				},
+				{
+					"build" : "thirdParty/box2d/testbed",
+					"jsonFile" : "directory-thirdParty.box2d.testbed-Debug-2a910411cca13579feff.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 1,
+					"source" : "thirdParty/box2d/testbed",
+					"targetIndexes" : 
+					[
+						7
+					]
+				},
+				{
+					"build" : "thirdParty/SDL2pp",
+					"jsonFile" : "directory-thirdParty.SDL2pp-Debug-eaa647b7987c2da16b39.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 2,
+					"source" : "thirdParty/SDL2pp",
+					"targetIndexes" : 
+					[
+						1
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1,
+						2
+					],
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "PorFavorCompila",
+					"targetIndexes" : 
+					[
+						0
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8
+					],
+					"name" : "box2d",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						9
+					],
+					"name" : "libSDL2pp",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						1
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "PorFavorCompila::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-PorFavorCompila-Debug-e71de7343f10cc5a2779.json",
+					"name" : "PorFavorCompila",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 9,
+					"id" : "SDL2pp::@be54aea5a8654ccf6572",
+					"jsonFile" : "target-SDL2pp-Debug-cc4dc11d38b672140b2c.json",
+					"name" : "SDL2pp",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "box2d::@01408b3fc8f3d6926df1",
+					"jsonFile" : "target-box2d-Debug-2c89f66c6a2f744b48dc.json",
+					"name" : "box2d",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "glad::@74c5ddbb25f2cd90089a",
+					"jsonFile" : "target-glad-Debug-257bbdc295a0f0ca0788.json",
+					"name" : "glad",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 5,
+					"id" : "glfw::@766351e2ddb7203e303b",
+					"jsonFile" : "target-glfw-Debug-0e85d9d5808a8ff760e3.json",
+					"name" : "glfw",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 6,
+					"id" : "imgui::@db15d9df3907f92a4780",
+					"jsonFile" : "target-imgui-Debug-d34835efb63e52f28c34.json",
+					"name" : "imgui",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 7,
+					"id" : "sajson::@958316b125a801ec23f5",
+					"jsonFile" : "target-sajson-Debug-9badfbab6438b0e72fab.json",
+					"name" : "sajson",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 8,
+					"id" : "testbed::@edb108c23235a016c719",
+					"jsonFile" : "target-testbed-Debug-63094904fd2cfd4f4189.json",
+					"name" : "testbed",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "unit_test::@449f4efa19b0dce21d96",
+					"jsonFile" : "target-unit_test-Debug-ae891a7bb2841d97002a.json",
+					"name" : "unit_test",
+					"projectIndex" : 1
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/martu/Facu/Taller I/Taller-Worms/build",
+		"source" : "/home/martu/Facu/Taller I/Taller-Worms"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 3
+	}
+}

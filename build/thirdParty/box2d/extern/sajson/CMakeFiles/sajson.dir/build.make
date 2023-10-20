@@ -73,15 +73,15 @@ thirdParty/box2d/extern/sajson/CMakeFiles/sajson.dir/sajson.cpp.o: thirdParty/bo
 thirdParty/box2d/extern/sajson/CMakeFiles/sajson.dir/sajson.cpp.o: ../thirdParty/box2d/extern/sajson/sajson.cpp
 thirdParty/box2d/extern/sajson/CMakeFiles/sajson.dir/sajson.cpp.o: thirdParty/box2d/extern/sajson/CMakeFiles/sajson.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/martu/Facu/Taller I/Taller-Worms/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object thirdParty/box2d/extern/sajson/CMakeFiles/sajson.dir/sajson.cpp.o"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/box2d/extern/sajson" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT thirdParty/box2d/extern/sajson/CMakeFiles/sajson.dir/sajson.cpp.o -MF CMakeFiles/sajson.dir/sajson.cpp.o.d -o CMakeFiles/sajson.dir/sajson.cpp.o -c "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d/extern/sajson/sajson.cpp"
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/box2d/extern/sajson" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT thirdParty/box2d/extern/sajson/CMakeFiles/sajson.dir/sajson.cpp.o -MF CMakeFiles/sajson.dir/sajson.cpp.o.d -o CMakeFiles/sajson.dir/sajson.cpp.o -c "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d/extern/sajson/sajson.cpp"
 
 thirdParty/box2d/extern/sajson/CMakeFiles/sajson.dir/sajson.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/sajson.dir/sajson.cpp.i"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/box2d/extern/sajson" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d/extern/sajson/sajson.cpp" > CMakeFiles/sajson.dir/sajson.cpp.i
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/box2d/extern/sajson" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d/extern/sajson/sajson.cpp" > CMakeFiles/sajson.dir/sajson.cpp.i
 
 thirdParty/box2d/extern/sajson/CMakeFiles/sajson.dir/sajson.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/sajson.dir/sajson.cpp.s"
-	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/box2d/extern/sajson" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d/extern/sajson/sajson.cpp" -o CMakeFiles/sajson.dir/sajson.cpp.s
+	cd "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/box2d/extern/sajson" && /usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d/extern/sajson/sajson.cpp" -o CMakeFiles/sajson.dir/sajson.cpp.s
 
 # Object files for target sajson
 sajson_OBJECTS = \

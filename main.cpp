@@ -1,36 +1,35 @@
-
+#include "screen.h"
 #include <box2d/box2d.h>
 #include <SDL2pp/SDL2pp.hh>
 
+#include <chrono>
 #include <iostream>
 
-using namespace SDL2pp;
 int main() {
-	// Initialize SDL library
-	SDL sdl(SDL_INIT_VIDEO);
+	Screen screen;
 
-	// Create main window: 640x480 dimensions, resizable, "SDL2pp demo" title
-	Window window("SDL2pp demo",
-			SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-			1000, 880,
-			SDL_WINDOW_RESIZABLE);
+	int i = 0;
+	while(1) {
 
-	// Create accelerated video renderer with default driver
-	Renderer renderer(window, -1, SDL_RENDERER_ACCELERATED);
+		SDL_Event event;
+		while (SDL_PollEvent(&event)) {
+			if (event.type == SDL_QUIT) {
+				return 0;
+			} else if (event.type == SDL_KEYDOWN) {
+				switch (event.key.keysym.sym) {
+				case SDLK_ESCAPE: case SDLK_q:
+					return 0;
+				}
+			}
+		}
 
-	// Load sprites image as a new texture
-	Texture sprites(renderer, DATA_PATH "/M484SpaceSoldier.png");
+		screen.clear();
+		screen.createSquare(i,i%100,100,100);
+		screen.createSquare(i*20,i*20%100,100,100);
+		screen.present();
+		std::chrono::seconds(1/12);
+		i++;
+	}
 
-	// Clear screen
-	renderer.Clear();
-
-	// Render our image, stretching it to the whole window
-	renderer.Copy(sprites);
-
-	// Show rendered frame
-	renderer.Present();
-
-	// 5 second delay
-	SDL_Delay(5000);
 	return 0;
-}
+};
