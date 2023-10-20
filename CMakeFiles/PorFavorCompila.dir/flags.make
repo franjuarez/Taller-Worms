@@ -6,5 +6,5 @@ CXX_DEFINES = -DDATA_PATH="\"/home/martu/Facu/Taller I/Taller-Worms/data\""
 
 CXX_INCLUDES = -I"/home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d/src/../include" -I"/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp" -isystem /usr/include/SDL2 -isystem /usr/local/include/SDL2
 
-CXX_FLAGS = 
+CXX_FLAGS = -Wall -Wextra -pedantic -pedantic-errors
 

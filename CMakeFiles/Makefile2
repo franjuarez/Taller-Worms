@@ -240,12 +240,12 @@ CMakeFiles/PorFavorCompila.dir/all: thirdParty/box2d/src/CMakeFiles/box2d.dir/al
 CMakeFiles/PorFavorCompila.dir/all: thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/PorFavorCompila.dir/build.make CMakeFiles/PorFavorCompila.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/PorFavorCompila.dir/build.make CMakeFiles/PorFavorCompila.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/home/martu/Facu/Taller I/Taller-Worms/CMakeFiles" --progress-num=1 "Built target PorFavorCompila"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/home/martu/Facu/Taller I/Taller-Worms/CMakeFiles" --progress-num=1,2 "Built target PorFavorCompila"
 .PHONY : CMakeFiles/PorFavorCompila.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/PorFavorCompila.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/martu/Facu/Taller I/Taller-Worms/CMakeFiles" 42
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/martu/Facu/Taller I/Taller-Worms/CMakeFiles" 43
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/PorFavorCompila.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start "/home/martu/Facu/Taller I/Taller-Worms/CMakeFiles" 0
 .PHONY : CMakeFiles/PorFavorCompila.dir/rule
@@ -266,7 +266,7 @@ CMakeFiles/PorFavorCompila.dir/clean:
 thirdParty/box2d/src/CMakeFiles/box2d.dir/all:
 	$(MAKE) $(MAKESILENT) -f thirdParty/box2d/src/CMakeFiles/box2d.dir/build.make thirdParty/box2d/src/CMakeFiles/box2d.dir/depend
 	$(MAKE) $(MAKESILENT) -f thirdParty/box2d/src/CMakeFiles/box2d.dir/build.make thirdParty/box2d/src/CMakeFiles/box2d.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/home/martu/Facu/Taller I/Taller-Worms/CMakeFiles" --progress-num=16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42 "Built target box2d"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/home/martu/Facu/Taller I/Taller-Worms/CMakeFiles" --progress-num=17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43 "Built target box2d"
 .PHONY : thirdParty/box2d/src/CMakeFiles/box2d.dir/all
 
 # Build rule for subdir invocation for target.
@@ -318,12 +318,12 @@ thirdParty/box2d/unit-test/CMakeFiles/unit_test.dir/clean:
 thirdParty/box2d/extern/glad/CMakeFiles/glad.dir/all:
 	$(MAKE) $(MAKESILENT) -f thirdParty/box2d/extern/glad/CMakeFiles/glad.dir/build.make thirdParty/box2d/extern/glad/CMakeFiles/glad.dir/depend
 	$(MAKE) $(MAKESILENT) -f thirdParty/box2d/extern/glad/CMakeFiles/glad.dir/build.make thirdParty/box2d/extern/glad/CMakeFiles/glad.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/home/martu/Facu/Taller I/Taller-Worms/CMakeFiles" --progress-num=43,44 "Built target glad"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/home/martu/Facu/Taller I/Taller-Worms/CMakeFiles" --progress-num=44 "Built target glad"
 .PHONY : thirdParty/box2d/extern/glad/CMakeFiles/glad.dir/all
 
 # Build rule for subdir invocation for target.
 thirdParty/box2d/extern/glad/CMakeFiles/glad.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/martu/Facu/Taller I/Taller-Worms/CMakeFiles" 2
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/martu/Facu/Taller I/Taller-Worms/CMakeFiles" 1
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 thirdParty/box2d/extern/glad/CMakeFiles/glad.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start "/home/martu/Facu/Taller I/Taller-Worms/CMakeFiles" 0
 .PHONY : thirdParty/box2d/extern/glad/CMakeFiles/glad.dir/rule
@@ -431,7 +431,7 @@ thirdParty/box2d/testbed/CMakeFiles/testbed.dir/all: thirdParty/box2d/extern/saj
 
 # Build rule for subdir invocation for target.
 thirdParty/box2d/testbed/CMakeFiles/testbed.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/martu/Facu/Taller I/Taller-Worms/CMakeFiles" 81
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/martu/Facu/Taller I/Taller-Worms/CMakeFiles" 80
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 thirdParty/box2d/testbed/CMakeFiles/testbed.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start "/home/martu/Facu/Taller I/Taller-Worms/CMakeFiles" 0
 .PHONY : thirdParty/box2d/testbed/CMakeFiles/testbed.dir/rule
@@ -452,7 +452,7 @@ thirdParty/box2d/testbed/CMakeFiles/testbed.dir/clean:
 thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/all:
 	$(MAKE) $(MAKESILENT) -f thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/build.make thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/depend
 	$(MAKE) $(MAKESILENT) -f thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/build.make thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/home/martu/Facu/Taller I/Taller-Worms/CMakeFiles" --progress-num=2,3,4,5,6,7,8,9,10,11,12,13,14,15 "Built target SDL2pp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/home/martu/Facu/Taller I/Taller-Worms/CMakeFiles" --progress-num=3,4,5,6,7,8,9,10,11,12,13,14,15,16 "Built target SDL2pp"
 .PHONY : thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/all
 
 # Build rule for subdir invocation for target.

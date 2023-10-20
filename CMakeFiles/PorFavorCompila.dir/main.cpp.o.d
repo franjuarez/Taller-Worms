@@ -355,6 +355,7 @@ CMakeFiles/PorFavorCompila.dir/main.cpp.o: \
  /usr/include/c++/11/pstl/glue_memory_defs.h \
  /home/martu/Facu/Taller\ I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/Music.hh \
  /home/martu/Facu/Taller\ I/Taller-Worms/thirdParty/SDL2pp/SDL2pp/SDLMixer.hh \
+ /home/martu/Facu/Taller\ I/Taller-Worms/motor.h \
  /home/martu/Facu/Taller\ I/Taller-Worms/thirdParty/box2d/src/../include/box2d/box2d.h \
  /home/martu/Facu/Taller\ I/Taller-Worms/thirdParty/box2d/src/../include/box2d/b2_settings.h \
  /home/martu/Facu/Taller\ I/Taller-Worms/thirdParty/box2d/src/../include/box2d/b2_types.h \

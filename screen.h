@@ -1,3 +1,6 @@
+#ifndef SCREEN_H
+#define SCREEN_H
+
 #include <SDL2pp/SDL2pp.hh>
 
 using namespace SDL2pp;
@@ -20,3 +23,4 @@ public:
 
 	~Screen();
 };
+#endif

@@ -302,6 +302,30 @@ main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/PorFavorCompila.dir/build.make CMakeFiles/PorFavorCompila.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+motor.o: motor.cpp.o
+.PHONY : motor.o
+
+# target to build an object file
+motor.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PorFavorCompila.dir/build.make CMakeFiles/PorFavorCompila.dir/motor.cpp.o
+.PHONY : motor.cpp.o
+
+motor.i: motor.cpp.i
+.PHONY : motor.i
+
+# target to preprocess a source file
+motor.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PorFavorCompila.dir/build.make CMakeFiles/PorFavorCompila.dir/motor.cpp.i
+.PHONY : motor.cpp.i
+
+motor.s: motor.cpp.s
+.PHONY : motor.s
+
+# target to generate assembly for a file
+motor.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PorFavorCompila.dir/build.make CMakeFiles/PorFavorCompila.dir/motor.cpp.s
+.PHONY : motor.cpp.s
+
 screen.o: screen.cpp.o
 .PHONY : screen.o
 
@@ -350,6 +374,9 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... motor.o"
+	@echo "... motor.i"
+	@echo "... motor.s"
 	@echo "... screen.o"
 	@echo "... screen.i"
 	@echo "... screen.s"

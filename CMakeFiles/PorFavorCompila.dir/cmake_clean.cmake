@@ -1,6 +1,8 @@
 file(REMOVE_RECURSE
   "CMakeFiles/PorFavorCompila.dir/main.cpp.o"
   "CMakeFiles/PorFavorCompila.dir/main.cpp.o.d"
+  "CMakeFiles/PorFavorCompila.dir/motor.cpp.o"
+  "CMakeFiles/PorFavorCompila.dir/motor.cpp.o.d"
   "CMakeFiles/PorFavorCompila.dir/screen.cpp.o"
   "CMakeFiles/PorFavorCompila.dir/screen.cpp.o.d"
   "PorFavorCompila"
