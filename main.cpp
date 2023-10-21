@@ -11,14 +11,13 @@ int main() {
 	Screen screen;
 	Motor motor(0.0f, -9.8f);
 	
-	float timeStep = 1.0f / 80.0f;
+	float timeStep = 1.0f / 60.0f;
 	int32 velocityIterations = 6;
 	int32 positionIterations = 2;
 
 
 	int i = 0;
 	while(1) {
-
 		SDL_Event event;
 		while (SDL_PollEvent(&event)) {
 			if (event.type == SDL_QUIT) {
@@ -30,12 +29,17 @@ int main() {
 				}
 			}
 		}
+		motor.step(timeStep, velocityIterations, positionIterations);
+		if (i % 10 != 0) {
+			continue;
+		}
+		
 
 		screen.clear();
 
 		// Instruct the world to perform a single step of simulation.
 		// It is generally best to keep the time step and iterations fixed.
-		motor.step(timeStep, velocityIterations, positionIterations);
+		
 
 		// Now print the position and angle of the body.
 		b2Vec2 position1 = motor.block1->GetPosition();
