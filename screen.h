@@ -15,7 +15,7 @@ private:
 public:
 	Screen();
 
-	void createSquare(int x, int y, int width, int height);
+	void createSquare(int x, int y, int width, int height, int angle);
 
 	void clear();
 
