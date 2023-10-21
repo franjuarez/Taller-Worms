@@ -16,9 +16,8 @@ void Screen::createSquare(int x, int y, int width, int height, int angle) {
     num_image %= 101;
     ruta += std::to_string(num_image);
     ruta += ".png";
-    Texture square(renderer, ruta);
-    square.SetAlphaMod((255, 255, 0));
-    renderer.Copy(square, Rect(0, 0, 729, 800), Rect(x, y, width, height));    
+    Texture square(renderer, Surface(ruta).SetColorKey(true, 0));
+    renderer.Copy(square, Rect(0, 0, 496, 496), Rect(x, y, width * 1024 / 100, height * 512 / 50));    
 }
 
 void Screen::clear() {

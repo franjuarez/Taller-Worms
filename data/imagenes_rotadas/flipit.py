@@ -20,12 +20,14 @@ def rotate_and_save_with_transparent_background(image, angle, output_path):
     new_image.save(output_path)
 
 # Load the input PNG image
-input_image_path = '../bloque_poc.png'
+input_image_path = '../cuadrado.png'
 image = Image.open(input_image_path)
 image = image.convert("RGBA")
 
 # Define the rotation angles (0 to 2*pi in steps of 1 degree)
-rotation_angles = [i* math.pi / 180 for i in range(101)]  # 0 to 2*pi in radians with 1-degree steps
+rotation_angles = [((i/100) * 2*math.pi)   for i in range(101) ]
+
+#rotation_angles = [i* math.pi / 180 for i in range(101)]  # 0 to 2*pi in radians with 1-degree steps
 
 # Rotate and save the images
 for i, angle in enumerate(rotation_angles):

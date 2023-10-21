@@ -1,6 +1,6 @@
 # Remove the folder CMakeFiles
 CMakeFiles/
-
+MakeFile
 # Remove the CMakeCache.txt file
 CMakeCache.txt
 

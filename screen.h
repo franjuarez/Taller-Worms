@@ -1,6 +1,7 @@
 #ifndef SCREEN_H
 #define SCREEN_H
 
+// @ts-ignore
 #include <SDL2pp/SDL2pp.hh>
 
 using namespace SDL2pp;

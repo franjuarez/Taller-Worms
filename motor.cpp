@@ -32,12 +32,12 @@ Motor::Motor(float ax, float ay) :
     groundBody->CreateFixture(&groundBox, 0.0f);
 
     b2BodyDef block1Def;
-    block1Def.position.Set(10, 100);
+    block1Def.position.Set(14, 100);
     block1Def.type = b2_dynamicBody;
     this->block1 = this->world.CreateBody(&block1Def);
     
     b2PolygonShape block1Box;
-    block1Box.SetAsBox(2.5f, 2.5f);
+    block1Box.SetAsBox(5.0f, 5.0f);
 
     b2FixtureDef block1Fixture;
     block1Fixture.shape = &block1Box;
@@ -47,7 +47,7 @@ Motor::Motor(float ax, float ay) :
     this->block1->CreateFixture(&block1Fixture);
 
     b2BodyDef block2Def;
-    block2Def.position.Set(14, 20);
+    block2Def.position.Set(15, 20);
     block2Def.type = b2_dynamicBody;
     this->block2 = this->world.CreateBody(&block2Def);
     

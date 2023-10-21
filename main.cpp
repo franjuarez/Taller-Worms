@@ -11,7 +11,7 @@ int main() {
 	Screen screen;
 	Motor motor(0.0f, -9.8f);
 	
-	float timeStep = 1.0f / 60.0f;
+	float timeStep = 1.0f / 30.0f;
 	int32 velocityIterations = 6;
 	int32 positionIterations = 2;
 
@@ -30,9 +30,6 @@ int main() {
 			}
 		}
 		motor.step(timeStep, velocityIterations, positionIterations);
-		if (i % 10 != 0) {
-			continue;
-		}
 		
 
 		screen.clear();
@@ -55,8 +52,8 @@ int main() {
 		j2 = (-5.12) * position2.y + 512;
 		k2 = motor.block1->GetAngle();
 
-		screen.createSquare(q1, j1, 100, 100, k1);
-		screen.createSquare(q2, j2, 100, 100, k2);		
+		screen.createSquare(q1, j1, 5, 5, k1);
+		screen.createSquare(q2, j2, 5, 5, k2);		
 
 		screen.present();
 		std::chrono::seconds(1/12);
