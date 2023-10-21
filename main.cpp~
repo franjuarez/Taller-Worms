@@ -60,7 +60,7 @@ int main() {
 	}
 
 	return 0;
-}
+};
 
 // int main(){
 // 	Motor motor(0.0f, -9.8f);

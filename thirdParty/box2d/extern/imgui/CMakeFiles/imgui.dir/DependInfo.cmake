@@ -1,17 +1,19 @@
-
-# Consider dependencies only in project.
-set(CMAKE_DEPENDS_IN_PROJECT_ONLY OFF)
-
 # The set of languages for which implicit dependencies are needed:
 set(CMAKE_DEPENDS_LANGUAGES
+  "CXX"
   )
+# The set of files for implicit dependencies of each language:
+set(CMAKE_DEPENDS_CHECK_CXX
+  "/home/joaco/cuatri/taller/tp3_worms/thirdParty/box2d/extern/imgui/imgui.cpp" "/home/joaco/cuatri/taller/tp3_worms/thirdParty/box2d/extern/imgui/CMakeFiles/imgui.dir/imgui.cpp.o"
+  "/home/joaco/cuatri/taller/tp3_worms/thirdParty/box2d/extern/imgui/imgui_demo.cpp" "/home/joaco/cuatri/taller/tp3_worms/thirdParty/box2d/extern/imgui/CMakeFiles/imgui.dir/imgui_demo.cpp.o"
+  "/home/joaco/cuatri/taller/tp3_worms/thirdParty/box2d/extern/imgui/imgui_draw.cpp" "/home/joaco/cuatri/taller/tp3_worms/thirdParty/box2d/extern/imgui/CMakeFiles/imgui.dir/imgui_draw.cpp.o"
+  "/home/joaco/cuatri/taller/tp3_worms/thirdParty/box2d/extern/imgui/imgui_widgets.cpp" "/home/joaco/cuatri/taller/tp3_worms/thirdParty/box2d/extern/imgui/CMakeFiles/imgui.dir/imgui_widgets.cpp.o"
+  )
+set(CMAKE_CXX_COMPILER_ID "GNU")
 
-# The set of dependency files which are needed:
-set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d/extern/imgui/imgui.cpp" "thirdParty/box2d/extern/imgui/CMakeFiles/imgui.dir/imgui.cpp.o" "gcc" "thirdParty/box2d/extern/imgui/CMakeFiles/imgui.dir/imgui.cpp.o.d"
-  "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d/extern/imgui/imgui_demo.cpp" "thirdParty/box2d/extern/imgui/CMakeFiles/imgui.dir/imgui_demo.cpp.o" "gcc" "thirdParty/box2d/extern/imgui/CMakeFiles/imgui.dir/imgui_demo.cpp.o.d"
-  "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d/extern/imgui/imgui_draw.cpp" "thirdParty/box2d/extern/imgui/CMakeFiles/imgui.dir/imgui_draw.cpp.o" "gcc" "thirdParty/box2d/extern/imgui/CMakeFiles/imgui.dir/imgui_draw.cpp.o.d"
-  "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d/extern/imgui/imgui_widgets.cpp" "thirdParty/box2d/extern/imgui/CMakeFiles/imgui.dir/imgui_widgets.cpp.o" "gcc" "thirdParty/box2d/extern/imgui/CMakeFiles/imgui.dir/imgui_widgets.cpp.o.d"
+# The include file search paths:
+set(CMAKE_CXX_TARGET_INCLUDE_PATH
+  "thirdParty/box2d/extern/imgui/.."
   )
 
 # Targets to which this target links.
