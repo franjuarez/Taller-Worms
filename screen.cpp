@@ -1,33 +1,75 @@
 #include "screen.h"
 
-Screen::Screen() : 
-sdl(SDL_INIT_VIDEO),
-window("POC",
-    SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 
-    1124, 612,
-    SDL_WINDOW_RESIZABLE), renderer(window, -1, SDL_RENDERER_ACCELERATED) {
-}
+// #define SCREEN_WIDTH 1024
+// #define SCREEN_HEIGHT 512
+
+#define PATH_BACKGROUND "../resources/fondo.png"
+#define BACKGROUND_PIXEL_X 740
+#define BACKGROUND_PIXEL_Y 422
+
+#define PATH_BANANERO "../resources/banana.png"
 
 
-void Screen::createSquare(int x, int y, int width, int height, int angle) {
-    std::string ruta;
-    ruta += DATA_PATH "/imagenes_rotadas/output_";
-    int num_image = (angle / (2*3.14159265)) * 100;
-    num_image %= 101;
-    ruta += std::to_string(num_image);
-    ruta += ".png";
-    Texture square(renderer, Surface(ruta).SetColorKey(true, 0));
-    renderer.Copy(square, Rect(0, 0, 496, 496), Rect(x, y, width * 1024 / 100, height * 512 / 50));    
+Screen::Screen(Game& game) : sdl(SDL_INIT_VIDEO), 
+        window("El Bananero", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN), 
+        renderer(window, -1, SDL_RENDERER_ACCELERATED), game(game) {}
+
+Screen::~Screen() {}
+
+void Screen::start() {
+    while(true) { //ver si podemos sacar este while true
+        SDL_Event event;
+        while (SDL_PollEvent(&event)){
+            // aca evaluamos los event.type
+            if (event.type == SDL_QUIT) {
+				return;
+			}
+            if (event.type == SDL_KEYDOWN) {
+                parseKey(event.key.keysym.sym);
+            }
+        }
+        clear();
+        update();
+        present();
+        std::chrono::seconds(1/30);
+    }
 }
 
 void Screen::clear() {
     renderer.Clear();
 }
 
-void Screen::present() {
-    renderer.Present();
-
-    SDL_Delay(1);
+void Screen::update() {
+    this->entities = game.step();
 }
 
-Screen::~Screen() {}
+void Screen::present() {
+
+    Texture background(renderer, PATH_BACKGROUND);
+    renderer.Copy(background, NullOpt, NullOpt);
+    //despues los personajes
+    Texture bananero(renderer, PATH_BANANERO);
+
+    int x = this->entities.at(0).x;
+    int y = this->entities.at(0).y;
+    
+
+    //El 1er Reactangulo dice: desde donde empiezo a copiar (en x y) y que tamaño tiene (en x y)
+    //El 2do Reactangulo dice: desde donde empiezo a pegar (en x y) y que tamaño tiene (en x y)
+    renderer.Copy(bananero, Rect(4,2,102,134), Rect(x,y,50,70));
+    
+    renderer.Present();
+
+}
+
+
+
+void Screen::parseKey(SDL_Keycode key){
+    if(key == SDLK_RIGHT) {
+        printf("derecha\n");
+    } else if( key == SDLK_LEFT ) {
+        printf("izquierda\n");
+    } else if (key == SDLK_b) {
+        printf("banana\n");
+    }
+}

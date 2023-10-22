@@ -1,27 +1,35 @@
 #ifndef SCREEN_H
 #define SCREEN_H
 
-// @ts-ignore
 #include <SDL2pp/SDL2pp.hh>
+#include "game.h"
+#include <chrono>
+#include <vector>
 
 using namespace SDL2pp;
 
 class Screen {
-	
 private:
-	SDL sdl;
-	Window window;
-	Renderer renderer;
-	
+    SDL sdl;
+    Window window;
+    Renderer renderer;
+    Game game;
+    std::vector<entities_t> entities;
+
+    void update();
+
 public:
-	Screen();
+    Screen(Game& game);
 
-	void createSquare(int x, int y, int width, int height, int angle);
+    ~Screen();
+    
+    void start();
 
-	void clear();
+    void present();
 
-	void present();
+    void clear();
 
-	~Screen();
+    void parseKey(SDL_Keycode);
 };
 #endif
+
