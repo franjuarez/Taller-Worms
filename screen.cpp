@@ -31,7 +31,7 @@ void Screen::start() {
         clear();
         update();
         present();
-        std::chrono::seconds(1/30);
+        std::chrono::seconds(1/12);
     }
 }
 
@@ -57,6 +57,9 @@ void Screen::present() {
     //El 1er Reactangulo dice: desde donde empiezo a copiar (en x y) y que tamaño tiene (en x y)
     //El 2do Reactangulo dice: desde donde empiezo a pegar (en x y) y que tamaño tiene (en x y)
     renderer.Copy(bananero, Rect(4,2,102,134), Rect(x,y,50,70));
+
+    Texture piso(renderer, PATH_BANANERO);
+    renderer.Copy(piso, Rect(4,2,102, 134), Rect(0, 390, 1000, 1));
     
     renderer.Present();
 

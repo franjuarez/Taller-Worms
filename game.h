@@ -20,9 +20,11 @@ typedef struct _entities {
 
 class Game {
 private:
+    
     b2World world;
     int bananero_dir;
-    b2Body* bananeroBody;
+    b2Body* bananero;
+    b2Body* groundBody;
     //std::vector<b2Body*> bananas;
 
 public:

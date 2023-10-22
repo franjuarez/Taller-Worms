@@ -1,4 +1,5 @@
 #include "game.h"
+#include <iostream>
 
 #define AC_Y -9.8f
 #define AC_X 0.0f
@@ -8,13 +9,14 @@
 
 #define GROUND_HEIGHT 0.2f
 
-#define BANANERO_WIDTH 0.1f
-#define BANANERO_HEIGHT 0.3f
+#define BANANERO_WIDTH 1.1f
+#define BANANERO_HEIGHT 1.3f
 
 #define BANANERO_START_X WORLD_WIDTH / 2.0f
 #define BANANERO_START_Y (GROUND_HEIGHT + BANANERO_HEIGHT + 1)
 
-#define BANANERO_DENSITY 10.0f
+
+#define BANANERO_DENSITY 100.0f
 #define BANANERO_FRICTION 0.8f
 #define DERECHA 0
 #define IZQUIERDA 1
@@ -28,13 +30,12 @@
 //-0.2__________________________________
 
 Game::Game() : world(b2Vec2(AC_X, AC_Y)), bananero_dir(0) {
-    /// Ground
     b2BodyDef groundBodyDef;
-    groundBodyDef.position.Set(0.0f, 0.0f);
-    b2Body* groundBody = this->world.CreateBody(&groundBodyDef);
+    groundBodyDef.position.Set(WORLD_WIDTH/2, 0.0f);
+    this->groundBody = this->world.CreateBody(&groundBodyDef);
 
     b2PolygonShape groundBox;
-    groundBox.SetAsBox(WORLD_WIDTH, GROUND_HEIGHT);
+    groundBox.SetAsBox(WORLD_WIDTH/2, GROUND_HEIGHT);
     groundBody->CreateFixture(&groundBox, 0.0f);
 
     /// Bananero 
@@ -42,7 +43,7 @@ Game::Game() : world(b2Vec2(AC_X, AC_Y)), bananero_dir(0) {
 
     bananeroBodyDef.position.Set(BANANERO_START_X, BANANERO_START_Y);
     bananeroBodyDef.type = b2_dynamicBody;
-    this->bananeroBody = this->world.CreateBody(&bananeroBodyDef);
+    this->bananero = this->world.CreateBody(&bananeroBodyDef);
     
     b2PolygonShape bananeroBox;
     bananeroBox.SetAsBox(BANANERO_WIDTH, BANANERO_HEIGHT);
@@ -52,18 +53,67 @@ Game::Game() : world(b2Vec2(AC_X, AC_Y)), bananero_dir(0) {
     bananeroFixture.density = BANANERO_DENSITY;
     bananeroFixture.friction = BANANERO_FRICTION;
     
-    this->bananeroBody->CreateFixture(&bananeroFixture);
+    this->bananero->CreateFixture(&bananeroFixture);
+    // this->bananero->SetBullet(true);
+    
+    /*
+    /// Bananero 2
+    b2BodyDef bananero2BodyDef;
+
+    bananero2BodyDef.position.Set(BANANERO_START_X, BANANERO_START_Y + 2.0f);
+    bananero2BodyDef.type = b2_dynamicBody;
+    b2Body* bananero2 = this->world.CreateBody(&bananero2BodyDef);
+    
+    b2PolygonShape bananero2Box;
+    bananero2Box.SetAsBox(BANANERO_WIDTH, BANANERO_HEIGHT);
+    
+    b2FixtureDef bananero2Fixture;
+    bananero2Fixture.shape = &bananero2Box;
+    bananero2Fixture.density = BANANERO_DENSITY + 5.0f;
+    bananero2Fixture.friction = BANANERO_FRICTION;
+    
+    bananero2->CreateFixture(&bananero2Fixture);    
+    */
 }
+
+/*
+b2Fixture* groundFixture = groundBody->CreateFixture(&groundBox, 0.0f);
+*/
 
 std::vector<entities_t> Game::step(){
     this->world.Step(1.0f / 30.0f, 6, 2);
+    
+    this->world.GetBodyList();
+    //print the bodies
+    for(b2Body* body = this->world.GetBodyList(); body; body = body->GetNext()) {
+        if(body->GetType() == b2_staticBody){
+            std::cout << "HAY PISO: ";
+            std::cout << "x: " << body->GetPosition().x << " y: " << body->GetPosition().y << std::endl;
+        }
+        if(body == this->bananero) std::cout << "HAY BANANERO\n";
+    }
+/*
+___________
+|    |    |
+|    |    |
+|____|____|
+|    |    |
+|    |    |
+|____|____|
 
+
+
+
+*/
     std::vector<entities_t> entities;
     entities_t entity;
     entity.type = BANANERO;
-    entity.x = this->bananeroBody->GetPosition().x * m_to_pix_x;
-    entity.y = this->bananeroBody->GetPosition().y * m_to_pix_y;
-    entity.angle = this->bananeroBody->GetAngle();
+    entity.x = (this->bananero->GetPosition().x + BANANERO_WIDTH) * m_to_pix_x;
+    entity.y = ((this->bananero->GetPosition().y + BANANERO_HEIGHT) * m_to_pix_y) - ((WORLD_HEIGHT - 8) * m_to_pix_y);
+
+    
+    std::cout << "x: " << this->bananero->GetPosition().x << " y: " << this->bananero->GetPosition().y << std::endl;
+    entity.angle = this->bananero->GetAngle();
     entity.dir = this->bananero_dir;
     entities.push_back(entity);
     return entities;
