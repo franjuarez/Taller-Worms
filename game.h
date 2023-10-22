@@ -24,6 +24,7 @@ private:
     b2World world;
     int bananero_dir;
     b2Body* bananero;
+    b2Body* bananero2;
     b2Body* groundBody;
     //std::vector<b2Body*> bananas;
 
