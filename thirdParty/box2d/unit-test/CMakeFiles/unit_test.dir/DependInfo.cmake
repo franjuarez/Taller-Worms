@@ -1,25 +1,23 @@
+
+# Consider dependencies only in project.
+set(CMAKE_DEPENDS_IN_PROJECT_ONLY OFF)
+
 # The set of languages for which implicit dependencies are needed:
 set(CMAKE_DEPENDS_LANGUAGES
-  "CXX"
   )
-# The set of files for implicit dependencies of each language:
-set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/joaco/cuatri/taller/tp3_worms/thirdParty/box2d/unit-test/collision_test.cpp" "/home/joaco/cuatri/taller/tp3_worms/thirdParty/box2d/unit-test/CMakeFiles/unit_test.dir/collision_test.cpp.o"
-  "/home/joaco/cuatri/taller/tp3_worms/thirdParty/box2d/unit-test/hello_world.cpp" "/home/joaco/cuatri/taller/tp3_worms/thirdParty/box2d/unit-test/CMakeFiles/unit_test.dir/hello_world.cpp.o"
-  "/home/joaco/cuatri/taller/tp3_worms/thirdParty/box2d/unit-test/joint_test.cpp" "/home/joaco/cuatri/taller/tp3_worms/thirdParty/box2d/unit-test/CMakeFiles/unit_test.dir/joint_test.cpp.o"
-  "/home/joaco/cuatri/taller/tp3_worms/thirdParty/box2d/unit-test/math_test.cpp" "/home/joaco/cuatri/taller/tp3_worms/thirdParty/box2d/unit-test/CMakeFiles/unit_test.dir/math_test.cpp.o"
-  "/home/joaco/cuatri/taller/tp3_worms/thirdParty/box2d/unit-test/world_test.cpp" "/home/joaco/cuatri/taller/tp3_worms/thirdParty/box2d/unit-test/CMakeFiles/unit_test.dir/world_test.cpp.o"
-  )
-set(CMAKE_CXX_COMPILER_ID "GNU")
 
-# The include file search paths:
-set(CMAKE_CXX_TARGET_INCLUDE_PATH
-  "thirdParty/box2d/src/../include"
+# The set of dependency files which are needed:
+set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d/unit-test/collision_test.cpp" "thirdParty/box2d/unit-test/CMakeFiles/unit_test.dir/collision_test.cpp.o" "gcc" "thirdParty/box2d/unit-test/CMakeFiles/unit_test.dir/collision_test.cpp.o.d"
+  "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d/unit-test/hello_world.cpp" "thirdParty/box2d/unit-test/CMakeFiles/unit_test.dir/hello_world.cpp.o" "gcc" "thirdParty/box2d/unit-test/CMakeFiles/unit_test.dir/hello_world.cpp.o.d"
+  "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d/unit-test/joint_test.cpp" "thirdParty/box2d/unit-test/CMakeFiles/unit_test.dir/joint_test.cpp.o" "gcc" "thirdParty/box2d/unit-test/CMakeFiles/unit_test.dir/joint_test.cpp.o.d"
+  "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d/unit-test/math_test.cpp" "thirdParty/box2d/unit-test/CMakeFiles/unit_test.dir/math_test.cpp.o" "gcc" "thirdParty/box2d/unit-test/CMakeFiles/unit_test.dir/math_test.cpp.o.d"
+  "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d/unit-test/world_test.cpp" "thirdParty/box2d/unit-test/CMakeFiles/unit_test.dir/world_test.cpp.o" "gcc" "thirdParty/box2d/unit-test/CMakeFiles/unit_test.dir/world_test.cpp.o.d"
   )
 
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
-  "/home/joaco/cuatri/taller/tp3_worms/thirdParty/box2d/src/CMakeFiles/box2d.dir/DependInfo.cmake"
+  "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d/src/CMakeFiles/box2d.dir/DependInfo.cmake"
   )
 
 # Fortran module output directory.
