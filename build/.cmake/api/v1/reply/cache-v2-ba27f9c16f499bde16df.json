@@ -99,11 +99,11 @@
 			[
 				{
 					"name" : "HELPSTRING",
-					"value" : "No help, variable specified on the command line."
+					"value" : "Choose the type of build, options are: None Debug Release RelWithDebInfo MinSizeRel ..."
 				}
 			],
 			"type" : "STRING",
-			"value" : "Debug"
+			"value" : ""
 		},
 		{
 			"name" : "CMAKE_CACHEFILE_DIR",
@@ -115,7 +115,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/home/martu/Facu/Taller I/Taller-Worms/build"
+			"value" : "/home/joaco/cuatri/taller/tp3_worms/build"
 		},
 		{
 			"name" : "CMAKE_CACHE_MAJOR_VERSION",
@@ -139,7 +139,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "22"
+			"value" : "16"
 		},
 		{
 			"name" : "CMAKE_CACHE_PATCH_VERSION",
@@ -151,7 +151,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "1"
+			"value" : "3"
 		},
 		{
 			"name" : "CMAKE_COLOR_MAKEFILE",
@@ -215,11 +215,11 @@
 				},
 				{
 					"name" : "HELPSTRING",
-					"value" : "No help, variable specified on the command line."
+					"value" : "CXX compiler"
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/usr/bin/g++"
+			"value" : "/usr/bin/c++"
 		},
 		{
 			"name" : "CMAKE_CXX_COMPILER_AR",
@@ -235,7 +235,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/usr/bin/gcc-ar-11"
+			"value" : "/usr/bin/gcc-ar-9"
 		},
 		{
 			"name" : "CMAKE_CXX_COMPILER_RANLIB",
@@ -251,7 +251,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/usr/bin/gcc-ranlib-11"
+			"value" : "/usr/bin/gcc-ranlib-9"
 		},
 		{
 			"name" : "CMAKE_CXX_FLAGS",
@@ -343,11 +343,11 @@
 				},
 				{
 					"name" : "HELPSTRING",
-					"value" : "No help, variable specified on the command line."
+					"value" : "C compiler"
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/usr/bin/gcc"
+			"value" : "/usr/bin/cc"
 		},
 		{
 			"name" : "CMAKE_C_COMPILER_AR",
@@ -363,7 +363,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/usr/bin/gcc-ar-11"
+			"value" : "/usr/bin/gcc-ar-9"
 		},
 		{
 			"name" : "CMAKE_C_COMPILER_RANLIB",
@@ -379,7 +379,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/usr/bin/gcc-ranlib-11"
+			"value" : "/usr/bin/gcc-ranlib-9"
 		},
 		{
 			"name" : "CMAKE_C_FLAGS",
@@ -574,12 +574,16 @@
 			"properties" : 
 			[
 				{
+					"name" : "ADVANCED",
+					"value" : "1"
+				},
+				{
 					"name" : "HELPSTRING",
-					"value" : "No help, variable specified on the command line."
+					"value" : "Enable/Disable output of compile commands during generation."
 				}
 			],
 			"type" : "BOOL",
-			"value" : "TRUE"
+			"value" : "OFF"
 		},
 		{
 			"name" : "CMAKE_EXTRA_GENERATOR",
@@ -675,6 +679,30 @@
 				}
 			],
 			"type" : "INTERNAL",
+			"value" : ""
+		},
+		{
+			"name" : "CMAKE_HAVE_PTHREADS_CREATE",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Have library pthreads"
+				}
+			],
+			"type" : "INTERNAL",
+			"value" : ""
+		},
+		{
+			"name" : "CMAKE_HAVE_PTHREAD_CREATE",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Have library pthread"
+				}
+			],
+			"type" : "INTERNAL",
 			"value" : "1"
 		},
 		{
@@ -723,7 +751,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/home/martu/Facu/Taller I/Taller-Worms"
+			"value" : "/home/joaco/cuatri/taller/tp3_worms"
 		},
 		{
 			"name" : "CMAKE_INSTALL_BINDIR",
@@ -1047,7 +1075,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/usr/bin/gmake"
+			"value" : "/usr/bin/make"
 		},
 		{
 			"name" : "CMAKE_MODULE_LINKER_FLAGS",
@@ -1339,7 +1367,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/usr/share/cmake-3.22"
+			"value" : "/usr/share/cmake-3.16"
 		},
 		{
 			"name" : "CMAKE_SHARED_LINKER_FLAGS",
@@ -1671,19 +1699,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/home/martu/Facu/Taller I/Taller-Worms/build"
-		},
-		{
-			"name" : "PorFavorCompila_IS_TOP_LEVEL",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Value Computed by CMake"
-				}
-			],
-			"type" : "STATIC",
-			"value" : "ON"
+			"value" : "/home/joaco/cuatri/taller/tp3_worms/build"
 		},
 		{
 			"name" : "PorFavorCompila_SOURCE_DIR",
@@ -1695,7 +1711,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/home/martu/Facu/Taller I/Taller-Worms"
+			"value" : "/home/joaco/cuatri/taller/tp3_worms"
 		},
 		{
 			"name" : "RT_LIBRARY",
@@ -1707,7 +1723,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/usr/lib/x86_64-linux-gnu/librt.a"
+			"value" : "/usr/lib/x86_64-linux-gnu/librt.so"
 		},
 		{
 			"name" : "SDL2_DIR",
@@ -1719,7 +1735,7 @@
 				}
 			],
 			"type" : "PATH",
-			"value" : "/usr/lib/x86_64-linux-gnu/cmake/SDL2"
+			"value" : "/usr/local/lib/cmake/SDL2"
 		},
 		{
 			"name" : "SDL2_IMAGE_INCLUDE_DIR",
@@ -1918,38 +1934,6 @@
 			"value" : "/usr/lib/x86_64-linux-gnu/libX11.so"
 		},
 		{
-			"name" : "X11_X11_xcb_INCLUDE_PATH",
-			"properties" : 
-			[
-				{
-					"name" : "ADVANCED",
-					"value" : "1"
-				},
-				{
-					"name" : "HELPSTRING",
-					"value" : "Path to a file."
-				}
-			],
-			"type" : "PATH",
-			"value" : "X11_X11_xcb_INCLUDE_PATH-NOTFOUND"
-		},
-		{
-			"name" : "X11_X11_xcb_LIB",
-			"properties" : 
-			[
-				{
-					"name" : "ADVANCED",
-					"value" : "1"
-				},
-				{
-					"name" : "HELPSTRING",
-					"value" : "Path to a library."
-				}
-			],
-			"type" : "FILEPATH",
-			"value" : "X11_X11_xcb_LIB-NOTFOUND"
-		},
-		{
 			"name" : "X11_XRes_INCLUDE_PATH",
 			"properties" : 
 			[
@@ -2076,38 +2060,6 @@
 			],
 			"type" : "FILEPATH",
 			"value" : "/usr/lib/x86_64-linux-gnu/libXau.so"
-		},
-		{
-			"name" : "X11_Xaw_INCLUDE_PATH",
-			"properties" : 
-			[
-				{
-					"name" : "ADVANCED",
-					"value" : "1"
-				},
-				{
-					"name" : "HELPSTRING",
-					"value" : "Path to a file."
-				}
-			],
-			"type" : "PATH",
-			"value" : "X11_Xaw_INCLUDE_PATH-NOTFOUND"
-		},
-		{
-			"name" : "X11_Xaw_LIB",
-			"properties" : 
-			[
-				{
-					"name" : "ADVANCED",
-					"value" : "1"
-				},
-				{
-					"name" : "HELPSTRING",
-					"value" : "Path to a library."
-				}
-			],
-			"type" : "FILEPATH",
-			"value" : "X11_Xaw_LIB-NOTFOUND"
 		},
 		{
 			"name" : "X11_Xcomposite_INCLUDE_PATH",
@@ -2814,214 +2766,6 @@
 			"value" : "/usr/include"
 		},
 		{
-			"name" : "X11_xcb_INCLUDE_PATH",
-			"properties" : 
-			[
-				{
-					"name" : "ADVANCED",
-					"value" : "1"
-				},
-				{
-					"name" : "HELPSTRING",
-					"value" : "Path to a file."
-				}
-			],
-			"type" : "PATH",
-			"value" : "/usr/include"
-		},
-		{
-			"name" : "X11_xcb_LIB",
-			"properties" : 
-			[
-				{
-					"name" : "ADVANCED",
-					"value" : "1"
-				},
-				{
-					"name" : "HELPSTRING",
-					"value" : "Path to a library."
-				}
-			],
-			"type" : "FILEPATH",
-			"value" : "/usr/lib/x86_64-linux-gnu/libxcb.so"
-		},
-		{
-			"name" : "X11_xcb_icccm_INCLUDE_PATH",
-			"properties" : 
-			[
-				{
-					"name" : "ADVANCED",
-					"value" : "1"
-				},
-				{
-					"name" : "HELPSTRING",
-					"value" : "Path to a file."
-				}
-			],
-			"type" : "PATH",
-			"value" : "X11_xcb_icccm_INCLUDE_PATH-NOTFOUND"
-		},
-		{
-			"name" : "X11_xcb_icccm_LIB",
-			"properties" : 
-			[
-				{
-					"name" : "ADVANCED",
-					"value" : "1"
-				},
-				{
-					"name" : "HELPSTRING",
-					"value" : "Path to a library."
-				}
-			],
-			"type" : "FILEPATH",
-			"value" : "X11_xcb_icccm_LIB-NOTFOUND"
-		},
-		{
-			"name" : "X11_xcb_util_INCLUDE_PATH",
-			"properties" : 
-			[
-				{
-					"name" : "ADVANCED",
-					"value" : "1"
-				},
-				{
-					"name" : "HELPSTRING",
-					"value" : "Path to a file."
-				}
-			],
-			"type" : "PATH",
-			"value" : "X11_xcb_util_INCLUDE_PATH-NOTFOUND"
-		},
-		{
-			"name" : "X11_xcb_util_LIB",
-			"properties" : 
-			[
-				{
-					"name" : "ADVANCED",
-					"value" : "1"
-				},
-				{
-					"name" : "HELPSTRING",
-					"value" : "Path to a library."
-				}
-			],
-			"type" : "FILEPATH",
-			"value" : "X11_xcb_util_LIB-NOTFOUND"
-		},
-		{
-			"name" : "X11_xcb_xfixes_INCLUDE_PATH",
-			"properties" : 
-			[
-				{
-					"name" : "ADVANCED",
-					"value" : "1"
-				},
-				{
-					"name" : "HELPSTRING",
-					"value" : "Path to a file."
-				}
-			],
-			"type" : "PATH",
-			"value" : "X11_xcb_xfixes_INCLUDE_PATH-NOTFOUND"
-		},
-		{
-			"name" : "X11_xcb_xfixes_LIB",
-			"properties" : 
-			[
-				{
-					"name" : "ADVANCED",
-					"value" : "1"
-				},
-				{
-					"name" : "HELPSTRING",
-					"value" : "Path to a library."
-				}
-			],
-			"type" : "FILEPATH",
-			"value" : "X11_xcb_xfixes_LIB-NOTFOUND"
-		},
-		{
-			"name" : "X11_xcb_xkb_LIB",
-			"properties" : 
-			[
-				{
-					"name" : "ADVANCED",
-					"value" : "1"
-				},
-				{
-					"name" : "HELPSTRING",
-					"value" : "Path to a library."
-				}
-			],
-			"type" : "FILEPATH",
-			"value" : "X11_xcb_xkb_LIB-NOTFOUND"
-		},
-		{
-			"name" : "X11_xkbcommon_INCLUDE_PATH",
-			"properties" : 
-			[
-				{
-					"name" : "ADVANCED",
-					"value" : "1"
-				},
-				{
-					"name" : "HELPSTRING",
-					"value" : "Path to a file."
-				}
-			],
-			"type" : "PATH",
-			"value" : "/usr/include"
-		},
-		{
-			"name" : "X11_xkbcommon_LIB",
-			"properties" : 
-			[
-				{
-					"name" : "ADVANCED",
-					"value" : "1"
-				},
-				{
-					"name" : "HELPSTRING",
-					"value" : "Path to a library."
-				}
-			],
-			"type" : "FILEPATH",
-			"value" : "/usr/lib/x86_64-linux-gnu/libxkbcommon.so"
-		},
-		{
-			"name" : "X11_xkbcommon_X11_INCLUDE_PATH",
-			"properties" : 
-			[
-				{
-					"name" : "ADVANCED",
-					"value" : "1"
-				},
-				{
-					"name" : "HELPSTRING",
-					"value" : "Path to a file."
-				}
-			],
-			"type" : "PATH",
-			"value" : "X11_xkbcommon_X11_INCLUDE_PATH-NOTFOUND"
-		},
-		{
-			"name" : "X11_xkbcommon_X11_LIB",
-			"properties" : 
-			[
-				{
-					"name" : "ADVANCED",
-					"value" : "1"
-				},
-				{
-					"name" : "HELPSTRING",
-					"value" : "Path to a library."
-				}
-			],
-			"type" : "FILEPATH",
-			"value" : "X11_xkbcommon_X11_LIB-NOTFOUND"
-		},
-		{
 			"name" : "X11_xkbfile_INCLUDE_PATH",
 			"properties" : 
 			[
@@ -3075,19 +2819,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/box2d"
-		},
-		{
-			"name" : "box2d_IS_TOP_LEVEL",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Value Computed by CMake"
-				}
-			],
-			"type" : "STATIC",
-			"value" : "OFF"
+			"value" : "/home/joaco/cuatri/taller/tp3_worms/build/thirdParty/box2d"
 		},
 		{
 			"name" : "box2d_SOURCE_DIR",
@@ -3099,7 +2831,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d"
+			"value" : "/home/joaco/cuatri/taller/tp3_worms/thirdParty/box2d"
 		},
 		{
 			"name" : "libSDL2pp_BINARY_DIR",
@@ -3111,19 +2843,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp"
-		},
-		{
-			"name" : "libSDL2pp_IS_TOP_LEVEL",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Value Computed by CMake"
-				}
-			],
-			"type" : "STATIC",
-			"value" : "OFF"
+			"value" : "/home/joaco/cuatri/taller/tp3_worms/build/thirdParty/SDL2pp"
 		},
 		{
 			"name" : "libSDL2pp_SOURCE_DIR",
@@ -3135,7 +2855,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp"
+			"value" : "/home/joaco/cuatri/taller/tp3_worms/thirdParty/SDL2pp"
 		}
 	],
 	"kind" : "cache",

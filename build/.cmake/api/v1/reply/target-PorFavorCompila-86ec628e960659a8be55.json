@@ -62,7 +62,7 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "-g"
+					"fragment" : " "
 				},
 				{
 					"backtrace" : 4,
@@ -79,33 +79,31 @@
 				{
 					"backtrace" : 4,
 					"fragment" : "-pedantic-errors"
+				},
+				{
+					"fragment" : "-std=gnu++17"
 				}
 			],
 			"defines" : 
 			[
 				{
 					"backtrace" : 5,
-					"define" : "DATA_PATH=\"/home/martu/Facu/Taller I/Taller-Worms/data\""
+					"define" : "DATA_PATH=\"/home/joaco/cuatri/taller/tp3_worms/data\""
 				}
 			],
 			"includes" : 
 			[
 				{
 					"backtrace" : 2,
-					"path" : "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d/src/../include"
+					"path" : "/home/joaco/cuatri/taller/tp3_worms/thirdParty/box2d/src/../include"
 				},
 				{
 					"backtrace" : 3,
-					"path" : "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp"
+					"path" : "/home/joaco/cuatri/taller/tp3_worms/thirdParty/SDL2pp"
 				},
 				{
 					"backtrace" : 3,
-					"path" : "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp"
-				},
-				{
-					"backtrace" : 3,
-					"isSystem" : true,
-					"path" : "/usr/include/SDL2"
+					"path" : "/home/joaco/cuatri/taller/tp3_worms/build/thirdParty/SDL2pp"
 				},
 				{
 					"backtrace" : 3,
@@ -114,14 +112,6 @@
 				}
 			],
 			"language" : "CXX",
-			"languageStandard" : 
-			{
-				"backtraces" : 
-				[
-					1
-				],
-				"standard" : "17"
-			},
 			"sourceIndexes" : 
 			[
 				0,
@@ -147,15 +137,11 @@
 		"commandFragments" : 
 		[
 			{
-				"fragment" : "-g",
-				"role" : "flags"
-			},
-			{
 				"fragment" : "",
 				"role" : "flags"
 			},
 			{
-				"fragment" : "-Wl,-rpath,\"/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp:/usr/local/lib\"",
+				"fragment" : "-Wl,-rpath,/home/joaco/cuatri/taller/tp3_worms/build/thirdParty/SDL2pp:/usr/local/lib",
 				"role" : "libraries"
 			},
 			{
@@ -164,16 +150,15 @@
 				"role" : "libraries"
 			},
 			{
-				"backtrace" : 3,
 				"fragment" : "thirdParty/SDL2pp/libSDL2pp.so.8.3.0",
 				"role" : "libraries"
 			},
 			{
-				"fragment" : "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+				"fragment" : "/usr/local/lib/libSDL2-2.0.so.0.2800.4",
 				"role" : "libraries"
 			},
 			{
-				"fragment" : "/usr/lib/x86_64-linux-gnu/libSDL2main.a",
+				"fragment" : "/usr/local/lib/libSDL2main.a",
 				"role" : "libraries"
 			},
 			{

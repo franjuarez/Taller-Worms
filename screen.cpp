@@ -2,11 +2,11 @@
 #include "motor.h"
 #include <chrono>
 
-#define PATH_BACKGROUND "data/fondo.png"
+#define PATH_BACKGROUND "../data/fondo.png"
 #define BACKGROUND_PIXEL_X 740
 #define BACKGROUND_PIXEL_Y 422
 
-#define PATH_BANANERO "data/banana.png"
+#define PATH_BANANERO "../data/banana.png"
 
 #define BANANERO_PIXEL_HEIGHT 140 
 #define BANANERO_PIXEL_WIDTH 100
@@ -21,7 +21,18 @@
 #define GROUND_PIXEL_HEIGHT (-1 * GROUND_HEIGHT * m_to_pix_y) / 2
 #define GROUND_PIXEL_WIDTH (GROUND_WIDTH * m_to_pix_x)
 
-#define PATH_BANANA "data/banana.png"
+#define PATH_BANANA "../data/la_banana.png"
+//bananero
+#define BANANA_PIXEL_HEIGHT 150
+#define BANANA_PIXEL_WIDTH 328
+#define BANANA_START_PIXEL_X 1
+#define BANANA_START_PIXEL_X 1
+//banana
+#define LA_BANANA_PIXEL_HEIGHT 997
+#define LA_BANANA_PIXEL_WIDTH 1060
+#define LA_BANANA_START_PIXEL_X 7
+#define LA_BANANA_START_PIXEL_Y 7
+#define LA_BANANA_TAMANIO 60
 
 Screen::Screen() : 
 sdl(SDL_INIT_VIDEO),
@@ -58,20 +69,24 @@ void Screen::draw(unsigned int frame_ticks) {
     } else if (this->entities.at(0).dir == RIGHT) {
         renderer.Copy(bananero, Rect(START_PIXEL_RUN_X + phase * (PIXEL_RUN_WIDTH + IMAGE_MARGIN), START_PIXEL_RUN_Y, PIXEL_RUN_WIDTH, PIXEL_RUN_HEIGHT), Rect(x,y,BANANERO_PIXEL_WIDTH,BANANERO_PIXEL_HEIGHT), 0.0, NullOpt, SDL_FLIP_HORIZONTAL);
     }
+    
+    std::cout << "BANMortyANA: " << " x: " << this->entities.at(0).x << " y: " << this->entities.at(0).y << std::endl;
 
     for (size_t i = 1; i < this->entities.size(); i++) {
-        Surface surface(PATH_BANANA);
+        std::cout << "BANANA: " << i << " x: " << this->entities.at(i).x << " y: " << this->entities.at(i).y << std::endl;        
+        Surface surfaceBanana(PATH_BANANA);
 	
-        Texture bananero(renderer, surface.SetColorKey(true,0));
-        bananero.SetBlendMode(SDL_BLENDMODE_BLEND);
+        Texture banana(renderer, surfaceBanana.SetColorKey(true,0));
+        banana.SetBlendMode(SDL_BLENDMODE_BLEND);
 
         int x = this->entities.at(i).x;
         int y = this->entities.at(i).y;
 
-        if (this->entities.at(0).dir == LEFT) {        
-        renderer.Copy(bananero, Rect(START_PIXEL_RUN_X , START_PIXEL_RUN_Y, PIXEL_RUN_WIDTH, PIXEL_RUN_HEIGHT), Rect(x,y,BANANERO_PIXEL_WIDTH,BANANERO_PIXEL_HEIGHT));
-        } else if (this->entities.at(0).dir == RIGHT) {
-        renderer.Copy(bananero, Rect(START_PIXEL_RUN_X , START_PIXEL_RUN_Y, PIXEL_RUN_WIDTH, PIXEL_RUN_HEIGHT), Rect(x,y,BANANERO_PIXEL_WIDTH,BANANERO_PIXEL_HEIGHT), 0.0, NullOpt, SDL_FLIP_HORIZONTAL);
+        
+        if (this->entities.at(i).dir == LEFT) {        
+            renderer.Copy(banana, Rect(LA_BANANA_START_PIXEL_X , LA_BANANA_START_PIXEL_Y, LA_BANANA_PIXEL_WIDTH, LA_BANANA_PIXEL_HEIGHT), Rect(x,y,LA_BANANA_TAMANIO,LA_BANANA_TAMANIO));
+        } else if (this->entities.at(i).dir == RIGHT) {
+            renderer.Copy(banana, Rect(LA_BANANA_START_PIXEL_X , LA_BANANA_START_PIXEL_Y, LA_BANANA_PIXEL_WIDTH, LA_BANANA_PIXEL_HEIGHT), Rect(x,y,LA_BANANA_TAMANIO,LA_BANANA_TAMANIO), 0.0, NullOpt, SDL_FLIP_HORIZONTAL);
         }
     }
 }

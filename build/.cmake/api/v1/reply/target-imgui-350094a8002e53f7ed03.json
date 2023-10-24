@@ -43,14 +43,14 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "-g -fvisibility=hidden -fvisibility-inlines-hidden"
+					"fragment" : "-fvisibility=hidden -fvisibility-inlines-hidden  "
 				}
 			],
 			"includes" : 
 			[
 				{
 					"backtrace" : 2,
-					"path" : "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d/extern/imgui/.."
+					"path" : "/home/joaco/cuatri/taller/tp3_worms/thirdParty/box2d/extern/imgui/.."
 				}
 			],
 			"language" : "CXX",

@@ -53,18 +53,13 @@ std::vector<entity_t> Motor::step(){
 
 	vectorEnt.push_back(ent_bananero);
 
-	for (size_t i = 1; i < vectorEnt.size(); i++) {
-		b2Vec2 pos = this->bananero->GetPosition();
+	for (size_t i = 0; i < bananas.size(); i++) {
+		b2Vec2 pos = bananas.at(i)->GetPosition();
 		entity_t entBanana;
 		entBanana.type = BANANA;
-		if (dir_bananero == FRONT) {
-			entBanana.dir = RIGHT;
-		} else {
-		entBanana.dir = dir_bananero;
-		}
-		entBanana.x = pos.x;
-		entBanana.y = pos.y;
-		std::cout << "pos x: " << pos.x << "     " << "pos y: " << pos.y << std::endl;
+		entBanana.dir = dir_bananero == FRONT ? RIGHT : dir_bananero;
+		entBanana.x = (pos.x + BANANA_WIDTH) * m_to_pix_x;
+		entBanana.y = ((pos.y + BANANA_HEIGHT) * m_to_pix_y) - (WORLD_HEIGHT * m_to_pix_y);
 		vectorEnt.push_back(entBanana);
 	}
 	return vectorEnt;
@@ -81,7 +76,7 @@ void Motor::jump() {
 	this->bananero->SetLinearVelocity(b2Vec2(0.0f, JUMP_STRENGH) + this->bananero->GetLinearVelocity());
 }
 
-void Motor::createBanana(){
+b2Body* Motor::createBanana(){
 
     b2BodyDef bananaDef;
 	b2Vec2 pos = this->bananero->GetPosition();
@@ -97,15 +92,13 @@ void Motor::createBanana(){
     bananaFixture.density = BANANA_DENSITY;
 
     banana->CreateFixture(&bananaFixture);
-
-
-	bananas.push_back(banana);
+	return banana;
 }
 
 void Motor::throwBanana(){
-	createBanana();
-	b2Body* banana  = bananas.back();
+	b2Body* banana  = createBanana();
 	// std::cout << "banana x: " << banana->GetPosition().x << "     " << "banana y: " << banana->GetPosition().y << std::endl;
 	// banana->ApplyForceToCenter(b2Vec2(5.0f,5.0f), true);
-	// banana->SetLinearVelocity(b2Vec2(0.0f, JUMP_STRENGH) + this->bananero->GetLinearVelocity());
+	banana->SetLinearVelocity(b2Vec2(BANANA_SPLIT, BANANA_SPLIT) + this->bananero->GetLinearVelocity());
+	bananas.push_back(banana);
 }

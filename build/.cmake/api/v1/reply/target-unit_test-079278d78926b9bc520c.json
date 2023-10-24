@@ -11,8 +11,7 @@
 		"commands" : 
 		[
 			"add_executable",
-			"target_link_libraries",
-			"set_target_properties"
+			"target_link_libraries"
 		],
 		"files" : 
 		[
@@ -34,12 +33,6 @@
 				"file" : 0,
 				"line" : 15,
 				"parent" : 0
-			},
-			{
-				"command" : 2,
-				"file" : 0,
-				"line" : 10,
-				"parent" : 0
 			}
 		]
 	},
@@ -49,7 +42,7 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "-g -fvisibility=hidden -fvisibility-inlines-hidden"
+					"fragment" : "-fvisibility=hidden -fvisibility-inlines-hidden  "
 				},
 				{
 					"fragment" : "-std=c++11"
@@ -59,18 +52,10 @@
 			[
 				{
 					"backtrace" : 2,
-					"path" : "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d/src/../include"
+					"path" : "/home/joaco/cuatri/taller/tp3_worms/thirdParty/box2d/src/../include"
 				}
 			],
 			"language" : "CXX",
-			"languageStandard" : 
-			{
-				"backtraces" : 
-				[
-					3
-				],
-				"standard" : "11"
-			},
 			"sourceIndexes" : 
 			[
 				1,
@@ -93,10 +78,6 @@
 	{
 		"commandFragments" : 
 		[
-			{
-				"fragment" : "-g",
-				"role" : "flags"
-			},
 			{
 				"fragment" : "",
 				"role" : "flags"

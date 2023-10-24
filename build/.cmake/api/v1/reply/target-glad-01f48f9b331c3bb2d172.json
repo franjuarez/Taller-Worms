@@ -43,14 +43,14 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "-g"
+					"fragment" : " "
 				}
 			],
 			"includes" : 
 			[
 				{
 					"backtrace" : 2,
-					"path" : "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d/extern/glad/include"
+					"path" : "/home/joaco/cuatri/taller/tp3_worms/thirdParty/box2d/extern/glad/include"
 				}
 			],
 			"language" : "C",

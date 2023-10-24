@@ -9,7 +9,7 @@
 #define SCREEN_HEIGHT 512
 
 #define GRAVITY_X 0.0f
-#define GRAVITY_Y -30.0f
+#define GRAVITY_Y -60.0f
 
 #define WORLD_WIDTH 50.0f
 #define WORLD_HEIGHT 40.0f
@@ -26,15 +26,17 @@
 #define BANANERO_STARTING_X (GROUND_WIDTH / 2)
 #define BANANERO_STARTING_Y (GROUND_HEIGHT + BANANERO_HEIGHT + 10)
 
-#define BANANA_HEIGHT 0.7f
+#define BANANA_HEIGHT 0.3f
 #define BANANA_WIDTH 0.3f
 #define BANANA_DENSITY 5.0f
+
+#define BANANA_SPLIT 10.0f
 
 #define m_to_pix_x (SCREEN_WIDTH / WORLD_WIDTH)
 #define m_to_pix_y (-1 * SCREEN_HEIGHT / WORLD_HEIGHT)
 
 #define MOVE_VELOCITY 10
-#define JUMP_STRENGH 10
+#define JUMP_STRENGH 100
 
 #define LEFT -1
 #define RIGHT 1
@@ -57,7 +59,7 @@ private:
     b2Body* bananero;
     std::vector<b2Body*> bananas;
     
-    void createBanana();
+    b2Body* createBanana();
 
 public:
     Motor();

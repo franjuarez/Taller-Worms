@@ -12,8 +12,7 @@
 		[
 			"add_executable",
 			"target_link_libraries",
-			"target_include_directories",
-			"set_target_properties"
+			"target_include_directories"
 		],
 		"files" : 
 		[
@@ -41,12 +40,6 @@
 				"file" : 0,
 				"line" : 74,
 				"parent" : 0
-			},
-			{
-				"command" : 3,
-				"file" : 0,
-				"line" : 76,
-				"parent" : 0
 			}
 		]
 	},
@@ -56,7 +49,7 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "-g -fvisibility=hidden -fvisibility-inlines-hidden"
+					"fragment" : "-fvisibility=hidden -fvisibility-inlines-hidden  "
 				},
 				{
 					"fragment" : "-std=c++11"
@@ -66,38 +59,30 @@
 			[
 				{
 					"backtrace" : 3,
-					"path" : "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d/testbed"
+					"path" : "/home/joaco/cuatri/taller/tp3_worms/thirdParty/box2d/testbed"
 				},
 				{
 					"backtrace" : 2,
-					"path" : "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d/src/../include"
+					"path" : "/home/joaco/cuatri/taller/tp3_worms/thirdParty/box2d/src/../include"
 				},
 				{
 					"backtrace" : 2,
-					"path" : "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d/extern/glfw/include"
+					"path" : "/home/joaco/cuatri/taller/tp3_worms/thirdParty/box2d/extern/glfw/include"
 				},
 				{
 					"backtrace" : 2,
-					"path" : "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d/extern/imgui/.."
+					"path" : "/home/joaco/cuatri/taller/tp3_worms/thirdParty/box2d/extern/imgui/.."
 				},
 				{
 					"backtrace" : 2,
-					"path" : "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d/extern/sajson/.."
+					"path" : "/home/joaco/cuatri/taller/tp3_worms/thirdParty/box2d/extern/sajson/.."
 				},
 				{
 					"backtrace" : 2,
-					"path" : "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d/extern/glad/include"
+					"path" : "/home/joaco/cuatri/taller/tp3_worms/thirdParty/box2d/extern/glad/include"
 				}
 			],
 			"language" : "CXX",
-			"languageStandard" : 
-			{
-				"backtraces" : 
-				[
-					4
-				],
-				"standard" : "11"
-			},
 			"sourceIndexes" : 
 			[
 				0,
@@ -196,10 +181,6 @@
 		"commandFragments" : 
 		[
 			{
-				"fragment" : "-g",
-				"role" : "flags"
-			},
-			{
 				"fragment" : "",
 				"role" : "flags"
 			},
@@ -229,7 +210,7 @@
 				"role" : "libraries"
 			},
 			{
-				"fragment" : "/usr/lib/x86_64-linux-gnu/librt.a",
+				"fragment" : "/usr/lib/x86_64-linux-gnu/librt.so",
 				"role" : "libraries"
 			},
 			{
@@ -242,6 +223,10 @@
 			},
 			{
 				"fragment" : "/usr/lib/x86_64-linux-gnu/libX11.so",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-lpthread",
 				"role" : "libraries"
 			}
 		],
