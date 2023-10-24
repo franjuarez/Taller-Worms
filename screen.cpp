@@ -70,10 +70,8 @@ void Screen::draw(unsigned int frame_ticks) {
         renderer.Copy(bananero, Rect(START_PIXEL_RUN_X + phase * (PIXEL_RUN_WIDTH + IMAGE_MARGIN), START_PIXEL_RUN_Y, PIXEL_RUN_WIDTH, PIXEL_RUN_HEIGHT), Rect(x,y,BANANERO_PIXEL_WIDTH,BANANERO_PIXEL_HEIGHT), 0.0, NullOpt, SDL_FLIP_HORIZONTAL);
     }
     
-    std::cout << "BANMortyANA: " << " x: " << this->entities.at(0).x << " y: " << this->entities.at(0).y << std::endl;
 
     for (size_t i = 1; i < this->entities.size(); i++) {
-        std::cout << "BANANA: " << i << " x: " << this->entities.at(i).x << " y: " << this->entities.at(i).y << std::endl;        
         Surface surfaceBanana(PATH_BANANA);
 	
         Texture banana(renderer, surfaceBanana.SetColorKey(true,0));

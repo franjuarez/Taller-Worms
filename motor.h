@@ -30,7 +30,8 @@
 #define BANANA_WIDTH 0.3f
 #define BANANA_DENSITY 5.0f
 
-#define BANANA_SPLIT 10.0f
+#define BANANA_SPLIT_X 10.0f
+#define BANANA_SPLIT_Y 30.0f
 
 #define m_to_pix_x (SCREEN_WIDTH / WORLD_WIDTH)
 #define m_to_pix_y (-1 * SCREEN_HEIGHT / WORLD_HEIGHT)

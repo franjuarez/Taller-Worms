@@ -99,6 +99,6 @@ void Motor::throwBanana(){
 	b2Body* banana  = createBanana();
 	// std::cout << "banana x: " << banana->GetPosition().x << "     " << "banana y: " << banana->GetPosition().y << std::endl;
 	// banana->ApplyForceToCenter(b2Vec2(5.0f,5.0f), true);
-	banana->SetLinearVelocity(b2Vec2(BANANA_SPLIT, BANANA_SPLIT) + this->bananero->GetLinearVelocity());
+	banana->SetLinearVelocity(b2Vec2(BANANA_SPLIT_X, BANANA_SPLIT_Y) + this->bananero->GetLinearVelocity());
 	bananas.push_back(banana);
 }
