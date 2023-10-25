@@ -77,8 +77,8 @@ void Screen::draw(unsigned int frame_ticks) {
         Texture banana(renderer, surfaceBanana.SetColorKey(true,0));
         banana.SetBlendMode(SDL_BLENDMODE_BLEND);
 
-        int x = this->entities.at(i).x;
-        int y = this->entities.at(i).y;
+        int x = this->entities[i].x;
+        int y = this->entities[i].y;
 
         
         if (this->entities.at(i).dir == LEFT) {        
