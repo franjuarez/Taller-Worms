@@ -162,17 +162,43 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named PorFavorCompila
+# Target rules for targets named SharedLib
 
 # Build rule for target.
-PorFavorCompila: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 PorFavorCompila
-.PHONY : PorFavorCompila
+SharedLib: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 SharedLib
+.PHONY : SharedLib
 
 # fast build rule for target.
-PorFavorCompila/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PorFavorCompila.dir/build.make CMakeFiles/PorFavorCompila.dir/build
-.PHONY : PorFavorCompila/fast
+SharedLib/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedLib.dir/build.make CMakeFiles/SharedLib.dir/build
+.PHONY : SharedLib/fast
+
+#=============================================================================
+# Target rules for targets named client
+
+# Build rule for target.
+client: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 client
+.PHONY : client
+
+# fast build rule for target.
+client/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/build
+.PHONY : client/fast
+
+#=============================================================================
+# Target rules for targets named server
+
+# Build rule for target.
+server: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 server
+.PHONY : server
+
+# fast build rule for target.
+server/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/build
+.PHONY : server/fast
 
 #=============================================================================
 # Target rules for targets named box2d
@@ -278,77 +304,101 @@ SDL2pp/fast:
 	$(MAKE) $(MAKESILENT) -f thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/build.make thirdParty/SDL2pp/CMakeFiles/SDL2pp.dir/build
 .PHONY : SDL2pp/fast
 
-main.o: main.cpp.o
-.PHONY : main.o
+client_src/client.o: client_src/client.cpp.o
+.PHONY : client_src/client.o
 
 # target to build an object file
-main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PorFavorCompila.dir/build.make CMakeFiles/PorFavorCompila.dir/main.cpp.o
-.PHONY : main.cpp.o
+client_src/client.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/client_src/client.cpp.o
+.PHONY : client_src/client.cpp.o
 
-main.i: main.cpp.i
-.PHONY : main.i
+client_src/client.i: client_src/client.cpp.i
+.PHONY : client_src/client.i
 
 # target to preprocess a source file
-main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PorFavorCompila.dir/build.make CMakeFiles/PorFavorCompila.dir/main.cpp.i
-.PHONY : main.cpp.i
+client_src/client.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/client_src/client.cpp.i
+.PHONY : client_src/client.cpp.i
 
-main.s: main.cpp.s
-.PHONY : main.s
+client_src/client.s: client_src/client.cpp.s
+.PHONY : client_src/client.s
 
 # target to generate assembly for a file
-main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PorFavorCompila.dir/build.make CMakeFiles/PorFavorCompila.dir/main.cpp.s
-.PHONY : main.cpp.s
+client_src/client.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/client_src/client.cpp.s
+.PHONY : client_src/client.cpp.s
 
-motor.o: motor.cpp.o
-.PHONY : motor.o
+client_src/client_main.o: client_src/client_main.cpp.o
+.PHONY : client_src/client_main.o
 
 # target to build an object file
-motor.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PorFavorCompila.dir/build.make CMakeFiles/PorFavorCompila.dir/motor.cpp.o
-.PHONY : motor.cpp.o
+client_src/client_main.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/client_src/client_main.cpp.o
+.PHONY : client_src/client_main.cpp.o
 
-motor.i: motor.cpp.i
-.PHONY : motor.i
+client_src/client_main.i: client_src/client_main.cpp.i
+.PHONY : client_src/client_main.i
 
 # target to preprocess a source file
-motor.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PorFavorCompila.dir/build.make CMakeFiles/PorFavorCompila.dir/motor.cpp.i
-.PHONY : motor.cpp.i
+client_src/client_main.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/client_src/client_main.cpp.i
+.PHONY : client_src/client_main.cpp.i
 
-motor.s: motor.cpp.s
-.PHONY : motor.s
+client_src/client_main.s: client_src/client_main.cpp.s
+.PHONY : client_src/client_main.s
 
 # target to generate assembly for a file
-motor.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PorFavorCompila.dir/build.make CMakeFiles/PorFavorCompila.dir/motor.cpp.s
-.PHONY : motor.cpp.s
+client_src/client_main.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/client_src/client_main.cpp.s
+.PHONY : client_src/client_main.cpp.s
 
-screen.o: screen.cpp.o
-.PHONY : screen.o
+server_src/main.o: server_src/main.cpp.o
+.PHONY : server_src/main.o
 
 # target to build an object file
-screen.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PorFavorCompila.dir/build.make CMakeFiles/PorFavorCompila.dir/screen.cpp.o
-.PHONY : screen.cpp.o
+server_src/main.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/server_src/main.cpp.o
+.PHONY : server_src/main.cpp.o
 
-screen.i: screen.cpp.i
-.PHONY : screen.i
+server_src/main.i: server_src/main.cpp.i
+.PHONY : server_src/main.i
 
 # target to preprocess a source file
-screen.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PorFavorCompila.dir/build.make CMakeFiles/PorFavorCompila.dir/screen.cpp.i
-.PHONY : screen.cpp.i
+server_src/main.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/server_src/main.cpp.i
+.PHONY : server_src/main.cpp.i
 
-screen.s: screen.cpp.s
-.PHONY : screen.s
+server_src/main.s: server_src/main.cpp.s
+.PHONY : server_src/main.s
 
 # target to generate assembly for a file
-screen.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PorFavorCompila.dir/build.make CMakeFiles/PorFavorCompila.dir/screen.cpp.s
-.PHONY : screen.cpp.s
+server_src/main.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/server_src/main.cpp.s
+.PHONY : server_src/main.cpp.s
+
+shared_src/const.o: shared_src/const.cpp.o
+.PHONY : shared_src/const.o
+
+# target to build an object file
+shared_src/const.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedLib.dir/build.make CMakeFiles/SharedLib.dir/shared_src/const.cpp.o
+.PHONY : shared_src/const.cpp.o
+
+shared_src/const.i: shared_src/const.cpp.i
+.PHONY : shared_src/const.i
+
+# target to preprocess a source file
+shared_src/const.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedLib.dir/build.make CMakeFiles/SharedLib.dir/shared_src/const.cpp.i
+.PHONY : shared_src/const.cpp.i
+
+shared_src/const.s: shared_src/const.cpp.s
+.PHONY : shared_src/const.s
+
+# target to generate assembly for a file
+shared_src/const.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedLib.dir/build.make CMakeFiles/SharedLib.dir/shared_src/const.cpp.s
+.PHONY : shared_src/const.cpp.s
 
 # Help Target
 help:
@@ -362,24 +412,29 @@ help:
 	@echo "... install/strip"
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
-	@echo "... PorFavorCompila"
 	@echo "... SDL2pp"
+	@echo "... SharedLib"
 	@echo "... box2d"
+	@echo "... client"
 	@echo "... glad"
 	@echo "... glfw"
 	@echo "... imgui"
 	@echo "... sajson"
+	@echo "... server"
 	@echo "... testbed"
 	@echo "... unit_test"
-	@echo "... main.o"
-	@echo "... main.i"
-	@echo "... main.s"
-	@echo "... motor.o"
-	@echo "... motor.i"
-	@echo "... motor.s"
-	@echo "... screen.o"
-	@echo "... screen.i"
-	@echo "... screen.s"
+	@echo "... client_src/client.o"
+	@echo "... client_src/client.i"
+	@echo "... client_src/client.s"
+	@echo "... client_src/client_main.o"
+	@echo "... client_src/client_main.i"
+	@echo "... client_src/client_main.s"
+	@echo "... server_src/main.o"
+	@echo "... server_src/main.i"
+	@echo "... server_src/main.s"
+	@echo "... shared_src/const.o"
+	@echo "... shared_src/const.i"
+	@echo "... shared_src/const.s"
 .PHONY : help
 
 

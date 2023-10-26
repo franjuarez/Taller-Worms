@@ -9,11 +9,24 @@ add_subdirectory("thirdParty/SDL2pp")
 
 project("PorFavorCompila")
 set(CMAKE_CXX_STANDARD 17)
-add_definitions(-DDATA_PATH="${PROJECT_SOURCE_DIR}/data")
 include_directories(${SDL2PP_INCLUDE_DIRS})
+add_library(SharedLib shared_src/const.cpp)
 
-add_executable("PorFavorCompila" main.cpp screen.cpp motor.cpp)
+set(CLIENT ${CMAKE_CURRENT_SOURCE_DIR}/client_src/client_main.cpp 
+${CMAKE_CURRENT_SOURCE_DIR}/client_src/client.cpp 
+${CMAKE_CURRENT_SOURCE_DIR}/client_src/client.h)
 
-target_compile_options("PorFavorCompila" PRIVATE $<$<NOT:$<C_COMPILER_ID:MSVC>>:-Wall -Wextra -pedantic -pedantic-errors>)
-target_link_libraries("PorFavorCompila" PUBLIC box2d)
-target_link_libraries("PorFavorCompila" PUBLIC SDL2pp::SDL2pp)
+add_executable(client ${CLIENT})
+
+add_executable(server server_src/main.cpp)
+
+target_compile_options(server PRIVATE $<$<NOT:$<C_COMPILER_ID:MSVC>>:-Wall -Wextra -pedantic -pedantic-errors>)
+target_link_libraries(server PUBLIC box2d)
+target_link_libraries(server PUBLIC SDL2pp::SDL2pp)
+target_link_libraries(server PUBLIC SharedLib)
+
+target_compile_options(client PRIVATE $<$<NOT:$<C_COMPILER_ID:MSVC>>:-Wall -Wextra -pedantic -pedantic-errors>)
+target_link_libraries(client PUBLIC box2d)
+target_link_libraries(client PUBLIC SDL2pp::SDL2pp)
+target_link_libraries(client PUBLIC SharedLib)
+
