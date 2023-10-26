@@ -2,7 +2,7 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "server"
+			"path" : "client"
 		}
 	],
 	"backtrace" : 1,
@@ -32,25 +32,25 @@
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 24,
+				"line" : 33,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 25,
+				"line" : 34,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 26,
+				"line" : 35,
 				"parent" : 0
 			},
 			{
 				"command" : 2,
 				"file" : 0,
-				"line" : 23,
+				"line" : 32,
 				"parent" : 0
 			}
 		]
@@ -116,7 +116,8 @@
 			},
 			"sourceIndexes" : 
 			[
-				0
+				0,
+				1
 			]
 		}
 	],
@@ -135,7 +136,7 @@
 			"id" : "SDL2pp::@be54aea5a8654ccf6572"
 		}
 	],
-	"id" : "server::@6890427a1f51a3e7e1df",
+	"id" : "client::@6890427a1f51a3e7e1df",
 	"link" : 
 	{
 		"commandFragments" : 
@@ -190,8 +191,8 @@
 		],
 		"language" : "CXX"
 	},
-	"name" : "server",
-	"nameOnDisk" : "server",
+	"name" : "client",
+	"nameOnDisk" : "client",
 	"paths" : 
 	{
 		"build" : ".",
@@ -203,7 +204,15 @@
 			"name" : "Source Files",
 			"sourceIndexes" : 
 			[
-				0
+				0,
+				1
+			]
+		},
+		{
+			"name" : "Header Files",
+			"sourceIndexes" : 
+			[
+				2
 			]
 		}
 	],
@@ -212,8 +221,19 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "server_src/main.cpp",
+			"path" : "client_src/client_main.cpp",
 			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "client_src/client.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "client_src/client.h",
+			"sourceGroupIndex" : 1
 		}
 	],
 	"type" : "EXECUTABLE"
