@@ -14,4 +14,3 @@ cmake_install.cmake
 server
 client
 libSharedLib.a
-PorFavorCompila
