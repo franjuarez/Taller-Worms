@@ -10,3 +10,8 @@ cmake_install.cmake
 # Remove the vscode folder
 .vscode/
 
+# Remove the executable file
+server
+client
+libSharedLib.a
+PorFavorCompila
