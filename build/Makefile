@@ -352,6 +352,54 @@ client_src/client_main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/client_src/client_main.cpp.s
 .PHONY : client_src/client_main.cpp.s
 
+client_src/receiver.o: client_src/receiver.cpp.o
+.PHONY : client_src/receiver.o
+
+# target to build an object file
+client_src/receiver.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/client_src/receiver.cpp.o
+.PHONY : client_src/receiver.cpp.o
+
+client_src/receiver.i: client_src/receiver.cpp.i
+.PHONY : client_src/receiver.i
+
+# target to preprocess a source file
+client_src/receiver.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/client_src/receiver.cpp.i
+.PHONY : client_src/receiver.cpp.i
+
+client_src/receiver.s: client_src/receiver.cpp.s
+.PHONY : client_src/receiver.s
+
+# target to generate assembly for a file
+client_src/receiver.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/client_src/receiver.cpp.s
+.PHONY : client_src/receiver.cpp.s
+
+client_src/sender.o: client_src/sender.cpp.o
+.PHONY : client_src/sender.o
+
+# target to build an object file
+client_src/sender.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/client_src/sender.cpp.o
+.PHONY : client_src/sender.cpp.o
+
+client_src/sender.i: client_src/sender.cpp.i
+.PHONY : client_src/sender.i
+
+# target to preprocess a source file
+client_src/sender.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/client_src/sender.cpp.i
+.PHONY : client_src/sender.cpp.i
+
+client_src/sender.s: client_src/sender.cpp.s
+.PHONY : client_src/sender.s
+
+# target to generate assembly for a file
+client_src/sender.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/client_src/sender.cpp.s
+.PHONY : client_src/sender.cpp.s
+
 server_src/main.o: server_src/main.cpp.o
 .PHONY : server_src/main.o
 
@@ -400,6 +448,150 @@ shared_src/const.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedLib.dir/build.make CMakeFiles/SharedLib.dir/shared_src/const.cpp.s
 .PHONY : shared_src/const.cpp.s
 
+shared_src/liberror.o: shared_src/liberror.cpp.o
+.PHONY : shared_src/liberror.o
+
+# target to build an object file
+shared_src/liberror.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedLib.dir/build.make CMakeFiles/SharedLib.dir/shared_src/liberror.cpp.o
+.PHONY : shared_src/liberror.cpp.o
+
+shared_src/liberror.i: shared_src/liberror.cpp.i
+.PHONY : shared_src/liberror.i
+
+# target to preprocess a source file
+shared_src/liberror.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedLib.dir/build.make CMakeFiles/SharedLib.dir/shared_src/liberror.cpp.i
+.PHONY : shared_src/liberror.cpp.i
+
+shared_src/liberror.s: shared_src/liberror.cpp.s
+.PHONY : shared_src/liberror.s
+
+# target to generate assembly for a file
+shared_src/liberror.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedLib.dir/build.make CMakeFiles/SharedLib.dir/shared_src/liberror.cpp.s
+.PHONY : shared_src/liberror.cpp.s
+
+shared_src/protocol.o: shared_src/protocol.cpp.o
+.PHONY : shared_src/protocol.o
+
+# target to build an object file
+shared_src/protocol.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedLib.dir/build.make CMakeFiles/SharedLib.dir/shared_src/protocol.cpp.o
+.PHONY : shared_src/protocol.cpp.o
+
+shared_src/protocol.i: shared_src/protocol.cpp.i
+.PHONY : shared_src/protocol.i
+
+# target to preprocess a source file
+shared_src/protocol.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedLib.dir/build.make CMakeFiles/SharedLib.dir/shared_src/protocol.cpp.i
+.PHONY : shared_src/protocol.cpp.i
+
+shared_src/protocol.s: shared_src/protocol.cpp.s
+.PHONY : shared_src/protocol.s
+
+# target to generate assembly for a file
+shared_src/protocol.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedLib.dir/build.make CMakeFiles/SharedLib.dir/shared_src/protocol.cpp.s
+.PHONY : shared_src/protocol.cpp.s
+
+shared_src/resolve_name.o: shared_src/resolve_name.cpp.o
+.PHONY : shared_src/resolve_name.o
+
+# target to build an object file
+shared_src/resolve_name.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedLib.dir/build.make CMakeFiles/SharedLib.dir/shared_src/resolve_name.cpp.o
+.PHONY : shared_src/resolve_name.cpp.o
+
+shared_src/resolve_name.i: shared_src/resolve_name.cpp.i
+.PHONY : shared_src/resolve_name.i
+
+# target to preprocess a source file
+shared_src/resolve_name.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedLib.dir/build.make CMakeFiles/SharedLib.dir/shared_src/resolve_name.cpp.i
+.PHONY : shared_src/resolve_name.cpp.i
+
+shared_src/resolve_name.s: shared_src/resolve_name.cpp.s
+.PHONY : shared_src/resolve_name.s
+
+# target to generate assembly for a file
+shared_src/resolve_name.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedLib.dir/build.make CMakeFiles/SharedLib.dir/shared_src/resolve_name.cpp.s
+.PHONY : shared_src/resolve_name.cpp.s
+
+shared_src/resolver.o: shared_src/resolver.cpp.o
+.PHONY : shared_src/resolver.o
+
+# target to build an object file
+shared_src/resolver.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedLib.dir/build.make CMakeFiles/SharedLib.dir/shared_src/resolver.cpp.o
+.PHONY : shared_src/resolver.cpp.o
+
+shared_src/resolver.i: shared_src/resolver.cpp.i
+.PHONY : shared_src/resolver.i
+
+# target to preprocess a source file
+shared_src/resolver.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedLib.dir/build.make CMakeFiles/SharedLib.dir/shared_src/resolver.cpp.i
+.PHONY : shared_src/resolver.cpp.i
+
+shared_src/resolver.s: shared_src/resolver.cpp.s
+.PHONY : shared_src/resolver.s
+
+# target to generate assembly for a file
+shared_src/resolver.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedLib.dir/build.make CMakeFiles/SharedLib.dir/shared_src/resolver.cpp.s
+.PHONY : shared_src/resolver.cpp.s
+
+shared_src/resolvererror.o: shared_src/resolvererror.cpp.o
+.PHONY : shared_src/resolvererror.o
+
+# target to build an object file
+shared_src/resolvererror.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedLib.dir/build.make CMakeFiles/SharedLib.dir/shared_src/resolvererror.cpp.o
+.PHONY : shared_src/resolvererror.cpp.o
+
+shared_src/resolvererror.i: shared_src/resolvererror.cpp.i
+.PHONY : shared_src/resolvererror.i
+
+# target to preprocess a source file
+shared_src/resolvererror.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedLib.dir/build.make CMakeFiles/SharedLib.dir/shared_src/resolvererror.cpp.i
+.PHONY : shared_src/resolvererror.cpp.i
+
+shared_src/resolvererror.s: shared_src/resolvererror.cpp.s
+.PHONY : shared_src/resolvererror.s
+
+# target to generate assembly for a file
+shared_src/resolvererror.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedLib.dir/build.make CMakeFiles/SharedLib.dir/shared_src/resolvererror.cpp.s
+.PHONY : shared_src/resolvererror.cpp.s
+
+shared_src/socket.o: shared_src/socket.cpp.o
+.PHONY : shared_src/socket.o
+
+# target to build an object file
+shared_src/socket.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedLib.dir/build.make CMakeFiles/SharedLib.dir/shared_src/socket.cpp.o
+.PHONY : shared_src/socket.cpp.o
+
+shared_src/socket.i: shared_src/socket.cpp.i
+.PHONY : shared_src/socket.i
+
+# target to preprocess a source file
+shared_src/socket.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedLib.dir/build.make CMakeFiles/SharedLib.dir/shared_src/socket.cpp.i
+.PHONY : shared_src/socket.cpp.i
+
+shared_src/socket.s: shared_src/socket.cpp.s
+.PHONY : shared_src/socket.s
+
+# target to generate assembly for a file
+shared_src/socket.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedLib.dir/build.make CMakeFiles/SharedLib.dir/shared_src/socket.cpp.s
+.PHONY : shared_src/socket.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -429,12 +621,36 @@ help:
 	@echo "... client_src/client_main.o"
 	@echo "... client_src/client_main.i"
 	@echo "... client_src/client_main.s"
+	@echo "... client_src/receiver.o"
+	@echo "... client_src/receiver.i"
+	@echo "... client_src/receiver.s"
+	@echo "... client_src/sender.o"
+	@echo "... client_src/sender.i"
+	@echo "... client_src/sender.s"
 	@echo "... server_src/main.o"
 	@echo "... server_src/main.i"
 	@echo "... server_src/main.s"
 	@echo "... shared_src/const.o"
 	@echo "... shared_src/const.i"
 	@echo "... shared_src/const.s"
+	@echo "... shared_src/liberror.o"
+	@echo "... shared_src/liberror.i"
+	@echo "... shared_src/liberror.s"
+	@echo "... shared_src/protocol.o"
+	@echo "... shared_src/protocol.i"
+	@echo "... shared_src/protocol.s"
+	@echo "... shared_src/resolve_name.o"
+	@echo "... shared_src/resolve_name.i"
+	@echo "... shared_src/resolve_name.s"
+	@echo "... shared_src/resolver.o"
+	@echo "... shared_src/resolver.i"
+	@echo "... shared_src/resolver.s"
+	@echo "... shared_src/resolvererror.o"
+	@echo "... shared_src/resolvererror.i"
+	@echo "... shared_src/resolvererror.s"
+	@echo "... shared_src/socket.o"
+	@echo "... shared_src/socket.i"
+	@echo "... shared_src/socket.s"
 .PHONY : help
 
 

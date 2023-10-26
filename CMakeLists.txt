@@ -10,17 +10,18 @@ add_subdirectory("thirdParty/SDL2pp")
 project("PorFavorCompila")
 set(CMAKE_CXX_STANDARD 17)
 include_directories(${SDL2PP_INCLUDE_DIRS})
-add_library(SharedLib shared_src/const.cpp)
 
-set(HEADER_FILES ${CMAKE_CURRENT_SOURCE_DIR}/client_src/client.h)
+file(GLOB SHARED "${CMAKE_CURRENT_SOURCE_DIR}/shared_src/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/shared_src/*.h" )
 
-set(CLIENT ${CMAKE_CURRENT_SOURCE_DIR}/client_src/client_main.cpp 
-            ${CMAKE_CURRENT_SOURCE_DIR}/client_src/client.cpp 
-)
+add_library(SharedLib ${SHARED})
+
+file(GLOB HEADER_FILES ${CMAKE_CURRENT_SOURCE_DIR}/client_src/*t.h)
+
+file(GLOB CLIENT "${CMAKE_CURRENT_SOURCE_DIR}/client_src/*.cpp")
 
 add_executable(client ${CLIENT} ${HEADER_FILES})
 
-set(SERVER ${CMAKE_CURRENT_SOURCE_DIR}/server_src/main.cpp)
+file(GLOB SERVER "${CMAKE_CURRENT_SOURCE_DIR}/server_src/*.cpp")
 
 add_executable(server ${SERVER})
 
