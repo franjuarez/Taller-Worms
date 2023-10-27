@@ -6,6 +6,7 @@
 class GameWorld {
 private:
     b2World* world;
+    b2Body* worm;
 
     void createBeam(float startingX, float startingY, float angle, bool large);
 
@@ -15,6 +16,9 @@ public:
 
     void update();
 
+    void moveWormLeft();
+
+    void moveWormRight();
 
     ~GameWorld();
 };

@@ -14,11 +14,13 @@
 #define LARGE_BEAM_WIDTH 6
 #define SMALL_BEAM_WIDTH 3
 #define BEAM_HEIGHT 0.8f
+#define BEAM_FRICTION 0.01f
+#define MAX_WALKABLE_BEAM_ANGLE 45
 
 #define WORM_WIDTH 0.5f
 #define WORM_HEIGHT 1.0f
 #define WORM_DENSITY 1.0f
-#define WORM_FRICTION 0.3f
+#define WORM_FRICTION 0.01f
 
 #define MOVE_VELOCITY_X 0.2f
 
@@ -61,6 +63,7 @@ void GameWorld::createWorm(float startingX, float startingY){
     fd.density = WORM_DENSITY;
     fd.friction = WORM_FRICTION;
     body->CreateFixture(&fd);
+    this->worm = body;
 }
 
 void GameWorld::createBeam(float startingX, float startingY, float angle, bool large){
@@ -82,10 +85,25 @@ void GameWorld::createBeam(float startingX, float startingY, float angle, bool l
     shape.Set(vs, 4);
     gb.friction = 0.0f;
     gb.shape = &shape;
+    gb.friction = BEAM_FRICTION;
     beamBody->CreateFixture(&gb);
 
-    beamType type = (angle > 45) ? sliding : walkable;
+    beamType type = (angle > MAX_WALKABLE_BEAM_ANGLE) ? sliding : walkable;
     beamBody->GetUserData().pointer = type;
+}
+
+// This way the worm will move to the left but
+// its Y velocity will stay the same
+void GameWorld::moveWormLeft(){
+    b2Vec2 vel = this->worm->GetLinearVelocity(); 
+    vel.x = -MOVE_VELOCITY_X;
+    this->worm->SetLinearVelocity(vel);
+}
+
+void GameWorld::moveWormRight(){
+    b2Vec2 vel = this->worm->GetLinearVelocity(); 
+    vel.x = MOVE_VELOCITY_X;
+    this->worm->SetLinearVelocity(vel);
 }
 
 void GameWorld::update() {
