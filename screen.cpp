@@ -6,6 +6,8 @@
 #define VIEWFIELD_X 10
 #define VIEWFIELD_Y 5
 
+#define FPS 30.0f
+#define RATE (1000.f / FPS)
 //rutas a archivos
 #define BACKGROUND_PATH "../resources/images/background.png"
 #define BEAM_PATH "../resources/images/grdl8.png"
@@ -19,19 +21,17 @@ Screen::Screen() :
 		WINDOW_WIDTH, WINDOW_HEIGHT,
 		SDL_WINDOW_SHOWN
 	),
+	//no usar vsync porque no voy a poder comprobar si mi loop de fps's funciona
 	renderer(window /*donde renderiza*/, -1 /*cualquier driver*/, SDL_RENDERER_ACCELERATED),
 	backgroundSprite(renderer, BACKGROUND_PATH),
 	beamSprite(renderer, BEAM_PATH) {
 
 	this->beams.push_back({ 100, 300, 0});
-	this->beams.push_back({ 100, 300, 45});
-	this->beams.push_back({ 100, 300, 90});
-	this->beams.push_back({ 100, 300, -45});
 }
 
 
 
-void Screen::draw() {
+void Screen::draw(int i) {
 	//limpio la pantalla
 	renderer.Clear();
 
@@ -39,13 +39,14 @@ void Screen::draw() {
 	//Texture background(this->renderer, BACKGROUND_PATH);
 	renderer.Copy(backgroundSprite, NullOpt, NullOpt);
 
-	for(auto beam : this->beams) {
+	for(auto &beam : this->beams) {
 		renderer.Copy(
 			beamSprite,
 			Rect(0,0,140,20),
 			Rect(beam.x, beam.y, 140, 20),
 			(- beam.angle), Point(0, 0)
 		);
+		beam.angle += (i/i);
 	}
 
 	//presento la pantalla nueva
@@ -60,8 +61,9 @@ void Screen::processInput() {
 }
 
 void Screen::start() {
-
 	int i = 0;
+	int t1 = SDL_GetTicks();
+	//float durationInSeconds;
 	while(1) {
 
 		SDL_Event event;
@@ -77,10 +79,48 @@ void Screen::start() {
                 processInput();
             }
 		}
+		// ← aca deberia actualizar Game
+		draw(i);
 
-		draw();
-		std::chrono::seconds(1/30);
+		int t2 = SDL_GetTicks();
+		float rest = RATE - (t2 - t1);
+
+		if (rest < 0) { //me tomo mas tiempo del que tenia
+			int behind = -rest; //behind -> por cuanto me pase
+			
+			//lo que deberia dormir para despertar justo en el inicio de la ventana de un frame
+			rest = RATE - fmod(behind, RATE);
+
+			//la cantidad de frames que me saltie y que por ende, deberia dormir
+			float lost = behind + rest;
+			t1 += lost;
+			i += (int )(lost / RATE);
+		}
+		t1 += RATE; //le sume lo perdido y la rate asique esta actualizado
+
 		i++;
+		SDL_Delay(rest);
+
+
+
+
+
+
+
+
+
+/*
+		durationInSeconds = (SDL_GetTicks() - startTime) / 1000.f;
+		std::cout << durationInSeconds << std::endl;
+
+		if (durationInSeconds > SPF) {
+			SDL_Delay(durationInSeconds);
+			i++;
+		} else {
+			SDL_Delay(SPF - durationInSeconds); //duermo lo que me falta para estar al comienzo
+			i += (int )(durationInSeconds / SPF) + 1; //sumo lo que me saltie mas 1
+		}
+		*/
 
 	}
 }

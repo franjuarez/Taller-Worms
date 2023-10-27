@@ -2,8 +2,9 @@
 #define SCREEN_H
 
 #include <SDL2pp/SDL2pp.hh>
-#include <chrono>
 #include <vector>
+#include <math.h>
+
 
 
 using namespace SDL2pp;
@@ -24,7 +25,7 @@ private:
 	Texture backgroundSprite;
 	Texture beamSprite;
 
-	void draw();
+	void draw(int i);
 	void processInput();
 
 public:
