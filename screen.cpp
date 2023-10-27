@@ -24,6 +24,9 @@ Screen::Screen() :
 	beamSprite(renderer, BEAM_PATH) {
 
 	this->beams.push_back({ 100, 300, 0});
+	this->beams.push_back({ 100, 300, 45});
+	this->beams.push_back({ 100, 300, 90});
+	this->beams.push_back({ 100, 300, -45});
 }
 
 
