@@ -1,0 +1,15 @@
+# Remove the folder CMakeFiles
+CMakeFiles/
+
+# Remove the CMakeCache.txt file
+CMakeCache.txt
+
+# Remove the cmake_install.cmake file
+cmake_install.cmake
+
+# Remove the vscode folder
+.vscode/
+
+# Remove the build directory
+build/
+```
