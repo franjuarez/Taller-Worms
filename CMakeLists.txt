@@ -10,7 +10,7 @@ set(CMAKE_CXX_STANDARD 17)
 add_definitions(-DDATA_PATH="${PROJECT_SOURCE_DIR}/resources")
 include_directories(${SDL2PP_INCLUDE_DIRS})
 
-add_executable("client" main.cpp screen.cpp motor.cpp)
+add_executable("client" main.cpp screen.cpp)
 
 target_compile_options("client" PRIVATE $<$<NOT:$<C_COMPILER_ID:MSVC>>:-Wall -Wextra -pedantic -pedantic-errors>)
 target_link_libraries("client" PUBLIC SDL2pp::SDL2pp)
