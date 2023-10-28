@@ -6,24 +6,35 @@
 #include <iostream>
 
 
+#include "sender.h"
+#include "receiver.h"
+#include "../shared_src/protocol.h"
+#include "../game_src/game_dynamic.h"
+#include "../game_src/game_map.h"
+
 class Client {
 
 private:
+	Protocol protocol;
+	GameDynamic gameDynamic;
+	// GameMap gameMap;
+	Queue<GameDynamic> gameStatusQueue;
+	Sender sender;
+	Receiver receiver;
+	
 public:
-	Client();
 
+	Client(const std::string&, const std::string&);
 	~Client();
 
-	void testingInclude();
-
-	// std::vector<std::string> getAvailableMaps();
+	std::vector<GameMap> getAvailableMaps();
 
 	// void selectMap(std::string);
 
 	
 	//game funciona como monitor y para empaquetar todo lo que se tiene que graficar
 
-	// Game getGameStatus();
+	GameDynamic getGameStatus();
 	
 
 	//runCommand();
@@ -31,7 +42,6 @@ public:
 	//jumpCommand();
 
 	//shootCommand();
-
 
 };
 #endif

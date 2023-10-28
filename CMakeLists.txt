@@ -11,18 +11,18 @@ project("PorFavorCompila")
 set(CMAKE_CXX_STANDARD 17)
 include_directories(${SDL2PP_INCLUDE_DIRS})
 
+file(GLOB SHAREDGAME "${CMAKE_CURRENT_SOURCE_DIR}/game_src/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/game_src/*.h" )
+add_library(SharedGameLib ${SHAREDGAME})
+
 file(GLOB SHARED "${CMAKE_CURRENT_SOURCE_DIR}/shared_src/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/shared_src/*.h" )
-
 add_library(SharedLib ${SHARED})
+target_link_libraries(SharedLib PUBLIC SharedGameLib)
 
-file(GLOB HEADER_FILES ${CMAKE_CURRENT_SOURCE_DIR}/client_src/*t.h)
-
+file(GLOB HEADER_FILES "${CMAKE_CURRENT_SOURCE_DIR}/client_src/*.h")
 file(GLOB CLIENT "${CMAKE_CURRENT_SOURCE_DIR}/client_src/*.cpp")
-
 add_executable(client ${CLIENT} ${HEADER_FILES})
 
 file(GLOB SERVER "${CMAKE_CURRENT_SOURCE_DIR}/server_src/*.cpp")
-
 add_executable(server ${SERVER})
 
 target_compile_options(server PRIVATE $<$<NOT:$<C_COMPILER_ID:MSVC>>:-Wall -Wextra -pedantic -pedantic-errors>)

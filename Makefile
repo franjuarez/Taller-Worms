@@ -162,6 +162,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named SharedGameLib
+
+# Build rule for target.
+SharedGameLib: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 SharedGameLib
+.PHONY : SharedGameLib
+
+# fast build rule for target.
+SharedGameLib/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/build
+.PHONY : SharedGameLib/fast
+
+#=============================================================================
 # Target rules for targets named SharedLib
 
 # Build rule for target.
@@ -400,6 +413,150 @@ client_src/sender.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/client_src/sender.cpp.s
 .PHONY : client_src/sender.cpp.s
 
+game_src/beam.o: game_src/beam.cpp.o
+.PHONY : game_src/beam.o
+
+# target to build an object file
+game_src/beam.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/beam.cpp.o
+.PHONY : game_src/beam.cpp.o
+
+game_src/beam.i: game_src/beam.cpp.i
+.PHONY : game_src/beam.i
+
+# target to preprocess a source file
+game_src/beam.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/beam.cpp.i
+.PHONY : game_src/beam.cpp.i
+
+game_src/beam.s: game_src/beam.cpp.s
+.PHONY : game_src/beam.s
+
+# target to generate assembly for a file
+game_src/beam.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/beam.cpp.s
+.PHONY : game_src/beam.cpp.s
+
+game_src/game_dynamic.o: game_src/game_dynamic.cpp.o
+.PHONY : game_src/game_dynamic.o
+
+# target to build an object file
+game_src/game_dynamic.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/game_dynamic.cpp.o
+.PHONY : game_src/game_dynamic.cpp.o
+
+game_src/game_dynamic.i: game_src/game_dynamic.cpp.i
+.PHONY : game_src/game_dynamic.i
+
+# target to preprocess a source file
+game_src/game_dynamic.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/game_dynamic.cpp.i
+.PHONY : game_src/game_dynamic.cpp.i
+
+game_src/game_dynamic.s: game_src/game_dynamic.cpp.s
+.PHONY : game_src/game_dynamic.s
+
+# target to generate assembly for a file
+game_src/game_dynamic.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/game_dynamic.cpp.s
+.PHONY : game_src/game_dynamic.cpp.s
+
+game_src/game_map.o: game_src/game_map.cpp.o
+.PHONY : game_src/game_map.o
+
+# target to build an object file
+game_src/game_map.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/game_map.cpp.o
+.PHONY : game_src/game_map.cpp.o
+
+game_src/game_map.i: game_src/game_map.cpp.i
+.PHONY : game_src/game_map.i
+
+# target to preprocess a source file
+game_src/game_map.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/game_map.cpp.i
+.PHONY : game_src/game_map.cpp.i
+
+game_src/game_map.s: game_src/game_map.cpp.s
+.PHONY : game_src/game_map.s
+
+# target to generate assembly for a file
+game_src/game_map.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/game_map.cpp.s
+.PHONY : game_src/game_map.cpp.s
+
+game_src/position.o: game_src/position.cpp.o
+.PHONY : game_src/position.o
+
+# target to build an object file
+game_src/position.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/position.cpp.o
+.PHONY : game_src/position.cpp.o
+
+game_src/position.i: game_src/position.cpp.i
+.PHONY : game_src/position.i
+
+# target to preprocess a source file
+game_src/position.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/position.cpp.i
+.PHONY : game_src/position.cpp.i
+
+game_src/position.s: game_src/position.cpp.s
+.PHONY : game_src/position.s
+
+# target to generate assembly for a file
+game_src/position.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/position.cpp.s
+.PHONY : game_src/position.cpp.s
+
+game_src/worm.o: game_src/worm.cpp.o
+.PHONY : game_src/worm.o
+
+# target to build an object file
+game_src/worm.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/worm.cpp.o
+.PHONY : game_src/worm.cpp.o
+
+game_src/worm.i: game_src/worm.cpp.i
+.PHONY : game_src/worm.i
+
+# target to preprocess a source file
+game_src/worm.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/worm.cpp.i
+.PHONY : game_src/worm.cpp.i
+
+game_src/worm.s: game_src/worm.cpp.s
+.PHONY : game_src/worm.s
+
+# target to generate assembly for a file
+game_src/worm.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/worm.cpp.s
+.PHONY : game_src/worm.cpp.s
+
+server_src/lobby.o: server_src/lobby.cpp.o
+.PHONY : server_src/lobby.o
+
+# target to build an object file
+server_src/lobby.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/server_src/lobby.cpp.o
+.PHONY : server_src/lobby.cpp.o
+
+server_src/lobby.i: server_src/lobby.cpp.i
+.PHONY : server_src/lobby.i
+
+# target to preprocess a source file
+server_src/lobby.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/server_src/lobby.cpp.i
+.PHONY : server_src/lobby.cpp.i
+
+server_src/lobby.s: server_src/lobby.cpp.s
+.PHONY : server_src/lobby.s
+
+# target to generate assembly for a file
+server_src/lobby.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/server_src/lobby.cpp.s
+.PHONY : server_src/lobby.cpp.s
+
 server_src/main.o: server_src/main.cpp.o
 .PHONY : server_src/main.o
 
@@ -424,29 +581,77 @@ server_src/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/server_src/main.cpp.s
 .PHONY : server_src/main.cpp.s
 
-shared_src/const.o: shared_src/const.cpp.o
-.PHONY : shared_src/const.o
+server_src/player.o: server_src/player.cpp.o
+.PHONY : server_src/player.o
 
 # target to build an object file
-shared_src/const.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedLib.dir/build.make CMakeFiles/SharedLib.dir/shared_src/const.cpp.o
-.PHONY : shared_src/const.cpp.o
+server_src/player.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/server_src/player.cpp.o
+.PHONY : server_src/player.cpp.o
 
-shared_src/const.i: shared_src/const.cpp.i
-.PHONY : shared_src/const.i
+server_src/player.i: server_src/player.cpp.i
+.PHONY : server_src/player.i
 
 # target to preprocess a source file
-shared_src/const.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedLib.dir/build.make CMakeFiles/SharedLib.dir/shared_src/const.cpp.i
-.PHONY : shared_src/const.cpp.i
+server_src/player.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/server_src/player.cpp.i
+.PHONY : server_src/player.cpp.i
 
-shared_src/const.s: shared_src/const.cpp.s
-.PHONY : shared_src/const.s
+server_src/player.s: server_src/player.cpp.s
+.PHONY : server_src/player.s
 
 # target to generate assembly for a file
-shared_src/const.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedLib.dir/build.make CMakeFiles/SharedLib.dir/shared_src/const.cpp.s
-.PHONY : shared_src/const.cpp.s
+server_src/player.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/server_src/player.cpp.s
+.PHONY : server_src/player.cpp.s
+
+server_src/receiver.o: server_src/receiver.cpp.o
+.PHONY : server_src/receiver.o
+
+# target to build an object file
+server_src/receiver.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/server_src/receiver.cpp.o
+.PHONY : server_src/receiver.cpp.o
+
+server_src/receiver.i: server_src/receiver.cpp.i
+.PHONY : server_src/receiver.i
+
+# target to preprocess a source file
+server_src/receiver.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/server_src/receiver.cpp.i
+.PHONY : server_src/receiver.cpp.i
+
+server_src/receiver.s: server_src/receiver.cpp.s
+.PHONY : server_src/receiver.s
+
+# target to generate assembly for a file
+server_src/receiver.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/server_src/receiver.cpp.s
+.PHONY : server_src/receiver.cpp.s
+
+server_src/sender.o: server_src/sender.cpp.o
+.PHONY : server_src/sender.o
+
+# target to build an object file
+server_src/sender.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/server_src/sender.cpp.o
+.PHONY : server_src/sender.cpp.o
+
+server_src/sender.i: server_src/sender.cpp.i
+.PHONY : server_src/sender.i
+
+# target to preprocess a source file
+server_src/sender.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/server_src/sender.cpp.i
+.PHONY : server_src/sender.cpp.i
+
+server_src/sender.s: server_src/sender.cpp.s
+.PHONY : server_src/sender.s
+
+# target to generate assembly for a file
+server_src/sender.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/server_src/sender.cpp.s
+.PHONY : server_src/sender.cpp.s
 
 shared_src/liberror.o: shared_src/liberror.cpp.o
 .PHONY : shared_src/liberror.o
@@ -605,6 +810,7 @@ help:
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... SDL2pp"
+	@echo "... SharedGameLib"
 	@echo "... SharedLib"
 	@echo "... box2d"
 	@echo "... client"
@@ -627,12 +833,36 @@ help:
 	@echo "... client_src/sender.o"
 	@echo "... client_src/sender.i"
 	@echo "... client_src/sender.s"
+	@echo "... game_src/beam.o"
+	@echo "... game_src/beam.i"
+	@echo "... game_src/beam.s"
+	@echo "... game_src/game_dynamic.o"
+	@echo "... game_src/game_dynamic.i"
+	@echo "... game_src/game_dynamic.s"
+	@echo "... game_src/game_map.o"
+	@echo "... game_src/game_map.i"
+	@echo "... game_src/game_map.s"
+	@echo "... game_src/position.o"
+	@echo "... game_src/position.i"
+	@echo "... game_src/position.s"
+	@echo "... game_src/worm.o"
+	@echo "... game_src/worm.i"
+	@echo "... game_src/worm.s"
+	@echo "... server_src/lobby.o"
+	@echo "... server_src/lobby.i"
+	@echo "... server_src/lobby.s"
 	@echo "... server_src/main.o"
 	@echo "... server_src/main.i"
 	@echo "... server_src/main.s"
-	@echo "... shared_src/const.o"
-	@echo "... shared_src/const.i"
-	@echo "... shared_src/const.s"
+	@echo "... server_src/player.o"
+	@echo "... server_src/player.i"
+	@echo "... server_src/player.s"
+	@echo "... server_src/receiver.o"
+	@echo "... server_src/receiver.i"
+	@echo "... server_src/receiver.s"
+	@echo "... server_src/sender.o"
+	@echo "... server_src/sender.i"
+	@echo "... server_src/sender.s"
 	@echo "... shared_src/liberror.o"
 	@echo "... shared_src/liberror.i"
 	@echo "... shared_src/liberror.s"

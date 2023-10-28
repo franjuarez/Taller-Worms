@@ -45,7 +45,7 @@
 				"thirdParty/box2d/bin/libbox2d.a"
 			],
 			"targetId" : "box2d::@01408b3fc8f3d6926df1",
-			"targetIndex" : 2,
+			"targetIndex" : 3,
 			"type" : "target"
 		},
 		{
@@ -57,7 +57,7 @@
 			[
 				{
 					"id" : "box2d::@01408b3fc8f3d6926df1",
-					"index" : 2
+					"index" : 3
 				}
 			],
 			"paths" : 

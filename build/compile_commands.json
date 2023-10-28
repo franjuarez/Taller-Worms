@@ -1,8 +1,28 @@
 [
 {
   "directory": "/home/martu/Facu/Taller I/Taller-Worms/build",
-  "command": "/usr/bin/g++   -g -o CMakeFiles/SharedLib.dir/shared_src/const.cpp.o -c \"/home/martu/Facu/Taller I/Taller-Worms/shared_src/const.cpp\"",
-  "file": "/home/martu/Facu/Taller I/Taller-Worms/shared_src/const.cpp"
+  "command": "/usr/bin/g++   -g -o CMakeFiles/SharedGameLib.dir/game_src/beam.cpp.o -c \"/home/martu/Facu/Taller I/Taller-Worms/game_src/beam.cpp\"",
+  "file": "/home/martu/Facu/Taller I/Taller-Worms/game_src/beam.cpp"
+},
+{
+  "directory": "/home/martu/Facu/Taller I/Taller-Worms/build",
+  "command": "/usr/bin/g++   -g -o CMakeFiles/SharedGameLib.dir/game_src/game_dynamic.cpp.o -c \"/home/martu/Facu/Taller I/Taller-Worms/game_src/game_dynamic.cpp\"",
+  "file": "/home/martu/Facu/Taller I/Taller-Worms/game_src/game_dynamic.cpp"
+},
+{
+  "directory": "/home/martu/Facu/Taller I/Taller-Worms/build",
+  "command": "/usr/bin/g++   -g -o CMakeFiles/SharedGameLib.dir/game_src/game_map.cpp.o -c \"/home/martu/Facu/Taller I/Taller-Worms/game_src/game_map.cpp\"",
+  "file": "/home/martu/Facu/Taller I/Taller-Worms/game_src/game_map.cpp"
+},
+{
+  "directory": "/home/martu/Facu/Taller I/Taller-Worms/build",
+  "command": "/usr/bin/g++   -g -o CMakeFiles/SharedGameLib.dir/game_src/position.cpp.o -c \"/home/martu/Facu/Taller I/Taller-Worms/game_src/position.cpp\"",
+  "file": "/home/martu/Facu/Taller I/Taller-Worms/game_src/position.cpp"
+},
+{
+  "directory": "/home/martu/Facu/Taller I/Taller-Worms/build",
+  "command": "/usr/bin/g++   -g -o CMakeFiles/SharedGameLib.dir/game_src/worm.cpp.o -c \"/home/martu/Facu/Taller I/Taller-Worms/game_src/worm.cpp\"",
+  "file": "/home/martu/Facu/Taller I/Taller-Worms/game_src/worm.cpp"
 },
 {
   "directory": "/home/martu/Facu/Taller I/Taller-Worms/build",
@@ -56,8 +76,28 @@
 },
 {
   "directory": "/home/martu/Facu/Taller I/Taller-Worms/build",
+  "command": "/usr/bin/g++  -I\"/home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d/src/../include\" -I\"/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp\" -I\"/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp\" -isystem /usr/include/SDL2 -isystem /usr/local/include/SDL2 -g -Wall -Wextra -pedantic -pedantic-errors -o CMakeFiles/server.dir/server_src/lobby.cpp.o -c \"/home/martu/Facu/Taller I/Taller-Worms/server_src/lobby.cpp\"",
+  "file": "/home/martu/Facu/Taller I/Taller-Worms/server_src/lobby.cpp"
+},
+{
+  "directory": "/home/martu/Facu/Taller I/Taller-Worms/build",
   "command": "/usr/bin/g++  -I\"/home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d/src/../include\" -I\"/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp\" -I\"/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp\" -isystem /usr/include/SDL2 -isystem /usr/local/include/SDL2 -g -Wall -Wextra -pedantic -pedantic-errors -o CMakeFiles/server.dir/server_src/main.cpp.o -c \"/home/martu/Facu/Taller I/Taller-Worms/server_src/main.cpp\"",
   "file": "/home/martu/Facu/Taller I/Taller-Worms/server_src/main.cpp"
+},
+{
+  "directory": "/home/martu/Facu/Taller I/Taller-Worms/build",
+  "command": "/usr/bin/g++  -I\"/home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d/src/../include\" -I\"/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp\" -I\"/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp\" -isystem /usr/include/SDL2 -isystem /usr/local/include/SDL2 -g -Wall -Wextra -pedantic -pedantic-errors -o CMakeFiles/server.dir/server_src/player.cpp.o -c \"/home/martu/Facu/Taller I/Taller-Worms/server_src/player.cpp\"",
+  "file": "/home/martu/Facu/Taller I/Taller-Worms/server_src/player.cpp"
+},
+{
+  "directory": "/home/martu/Facu/Taller I/Taller-Worms/build",
+  "command": "/usr/bin/g++  -I\"/home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d/src/../include\" -I\"/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp\" -I\"/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp\" -isystem /usr/include/SDL2 -isystem /usr/local/include/SDL2 -g -Wall -Wextra -pedantic -pedantic-errors -o CMakeFiles/server.dir/server_src/receiver.cpp.o -c \"/home/martu/Facu/Taller I/Taller-Worms/server_src/receiver.cpp\"",
+  "file": "/home/martu/Facu/Taller I/Taller-Worms/server_src/receiver.cpp"
+},
+{
+  "directory": "/home/martu/Facu/Taller I/Taller-Worms/build",
+  "command": "/usr/bin/g++  -I\"/home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d/src/../include\" -I\"/home/martu/Facu/Taller I/Taller-Worms/thirdParty/SDL2pp\" -I\"/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/SDL2pp\" -isystem /usr/include/SDL2 -isystem /usr/local/include/SDL2 -g -Wall -Wextra -pedantic -pedantic-errors -o CMakeFiles/server.dir/server_src/sender.cpp.o -c \"/home/martu/Facu/Taller I/Taller-Worms/server_src/sender.cpp\"",
+  "file": "/home/martu/Facu/Taller I/Taller-Worms/server_src/sender.cpp"
 },
 {
   "directory": "/home/martu/Facu/Taller I/Taller-Worms/build/thirdParty/box2d/src",

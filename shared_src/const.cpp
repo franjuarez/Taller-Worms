@@ -1,2 +1,0 @@
-#define SHARED_CONST 55
-#define SHARED_CONST_TWO 69
