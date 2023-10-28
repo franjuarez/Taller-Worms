@@ -102,25 +102,5 @@ void Screen::start() {
 		SDL_Delay(rest);
 
 
-
-
-
-
-
-
-
-/*
-		durationInSeconds = (SDL_GetTicks() - startTime) / 1000.f;
-		std::cout << durationInSeconds << std::endl;
-
-		if (durationInSeconds > SPF) {
-			SDL_Delay(durationInSeconds);
-			i++;
-		} else {
-			SDL_Delay(SPF - durationInSeconds); //duermo lo que me falta para estar al comienzo
-			i += (int )(durationInSeconds / SPF) + 1; //sumo lo que me saltie mas 1
-		}
-		*/
-
 	}
 }
