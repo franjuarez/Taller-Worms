@@ -21,6 +21,7 @@ public:
     Position getBeamPosition1(int);
     Position getBeamPosition2(int);
     std::string getMapName();
+    Beam getBeam(int);
     int getNumberOfBeams();
     int getBeamLength(int);
     ~GameMap();

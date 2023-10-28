@@ -24,13 +24,20 @@ private:
     void sendUintSixteen(uint16_t);
     void sendUintThirtyTwo(uint32_t);
     void sendString(const std::string&);
-    void sendPosition(Position&);
+    
 
     uint8_t receiveUintEight();
     uint16_t receiveUintSixteen();
     uint32_t receiveUintThirtyTwo();
     std::string receiveString();
 
+    void sendMap(GameMap&);
+    GameMap receiveMap(int i);
+    void sendBeam(Beam&);
+    Beam receiveBeam();
+    void sendWorm(Worm&);
+    Worm receiveWorm();
+    void sendPosition(Position&);
     Position receivePosition();
 
     void checkClosed();

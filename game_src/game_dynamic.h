@@ -11,7 +11,6 @@
 class GameDynamic {
 
 private:
-
     int wormPlayingID;
     std::vector<Worm*> worms;
 

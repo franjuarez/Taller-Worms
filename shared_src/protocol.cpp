@@ -22,18 +22,7 @@ void Protocol::sendMaps(std::vector<GameMap>& allMaps) {
     sendUintSixteen(nrOfMaps);
 
     for (int i = 0; i < allMaps.size(); i++) {
-        sendString(allMaps[i].getMapName());
-        uint16_t nrOfBeams = allMaps[i].getNumberOfBeams();
-        sendUintSixteen(nrOfBeams);
-
-        for (int j = 0; j < nrOfBeams; j++) {
-            Position beamPosition1 = allMaps[i].getBeamPosition1(j);
-            sendPosition(beamPosition1);
-            Position beamPosition2 = allMaps[i].getBeamPosition2(j);
-            sendPosition(beamPosition2);
-            uint16_t beamLength = allMaps[i].getBeamLength(j);
-            sendUintSixteen(beamLength);
-        }
+        sendMap(allMaps[i]);
     }
 }
 
@@ -47,11 +36,7 @@ void Protocol::sendDynamic(GameDynamic& gameDynamic) {
     std::vector<Worm*> worms = gameDynamic.getWorms();
 
     for (int i = 0; i < gameDynamic.getNumberOfWorms(); i++) {
-        sendUintSixteen(worms[i]->getId());
-        sendUintSixteen(worms[i]->getTeam());
-        sendUintThirtyTwo(worms[i]->getHealth());
-        Position pos = worms[i]->getPosition();
-        sendPosition(pos);
+        sendWorm(*worms[i]);
     }
 }
 
@@ -63,12 +48,7 @@ GameDynamic Protocol::receiveDynamic() {
 
     GameDynamic gameDynamic(wormPlayingID);
     for (int i = 0; i < numberOfWorms; i++) {
-        uint16_t id = receiveUintSixteen();
-        uint16_t team = receiveUintSixteen();
-        uint32_t health = receiveUintThirtyTwo();
-        Position pos = receivePosition();
-
-        Worm worm(id, team, health, pos);
+        Worm worm = receiveWorm();
         gameDynamic.addWorm(&worm);
     }
     return gameDynamic;
@@ -81,17 +61,7 @@ std::vector<GameMap> Protocol::receiveMaps() {
     uint16_t numberOfMaps = receiveUintSixteen();
 
     for (int i = 0; i < numberOfMaps; i++) {
-        std::string mapName = receiveString();
-        GameMap gameMap(i, mapName);
-        uint16_t numberOfBeams = receiveUintSixteen();
-
-        for (int j = 0; j < numberOfBeams; j++) {
-            Position beamPosition1 = receivePosition();
-            Position beamPosition2 = receivePosition();
-            uint16_t beamLength = receiveUintSixteen();
-            Beam beam(j, beamLength, beamPosition1, beamPosition2);
-            gameMap.addBeam(j, &beam);
-        }
+        GameMap gameMap = receiveMap(i);
         allMaps.push_back(gameMap);
     }
     return allMaps;
@@ -106,6 +76,61 @@ Position Protocol::receivePosition() {
     uint16_t x = receiveUintThirtyTwo();
     uint16_t y = receiveUintThirtyTwo();
     return Position(x, y);
+}
+
+void Protocol::sendWorm(Worm& worm) {
+    sendUintSixteen(worm.getId());
+    sendUintSixteen(worm.getTeam());
+    sendUintThirtyTwo(worm.getHealth());
+    Position pos = worm.getPosition();
+    sendPosition(pos);
+}
+
+Worm Protocol::receiveWorm() {
+    uint16_t id = receiveUintSixteen();
+    uint16_t team = receiveUintSixteen();
+    uint32_t health = receiveUintThirtyTwo();
+    Position pos = receivePosition();
+
+    Worm worm(id, team, health, pos);
+    return worm;
+}
+
+void Protocol::sendBeam(Beam& beam) {
+    Position beamPosition1 = beam.getPosition1();
+    sendPosition(beamPosition1);
+    Position beamPosition2 = beam.getPosition2();
+    sendPosition(beamPosition2);
+    uint16_t beamLength = beam.getBeamLength();
+    sendUintSixteen(beamLength);
+}
+
+void Protocol::sendMap(GameMap& gameMap) {
+    checkClosed();
+    sendString(gameMap.getMapName());
+    uint16_t nrOfBeams = gameMap.getNumberOfBeams();
+    sendUintSixteen(nrOfBeams);
+
+    // for (int j = 0; j < nrOfBeams; j++) {
+    //     sendBeam(gameMap.getBeam(j));
+    // }
+}
+
+GameMap Protocol::receiveMap(int i) {
+    checkClosed();
+    std::string mapName = receiveString();
+    GameMap gameMap(i, mapName);
+    uint16_t numberOfBeams = receiveUintSixteen();
+
+    for (int j = 0; j < numberOfBeams; j++) {
+        Position beamPosition1 = receivePosition();
+        Position beamPosition2 = receivePosition();
+        uint16_t beamLength = receiveUintSixteen();
+        Beam beam(j, beamLength, beamPosition1, beamPosition2);
+        gameMap.addBeam(j, &beam);
+    }
+
+    return gameMap;
 }
 
 

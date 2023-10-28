@@ -28,4 +28,8 @@ int GameMap::getBeamLength(int id) {
     return beamsMap[id]->getBeamLength();
 }
 
+Beam GameMap::getBeam(int id) {
+    return *beamsMap[id];
+}
+
 GameMap::~GameMap() {}

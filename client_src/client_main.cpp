@@ -7,6 +7,11 @@
 #include <chrono>
 #include <iostream>
 
-int main() {
+int client(int argc, char** argv) {
+
+	if (argc < 3) 
+		return 1;
+
+	Client client(argv[1], argv[2]);
 	return 0;
 }

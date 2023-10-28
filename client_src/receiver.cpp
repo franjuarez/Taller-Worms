@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-Receiver::Receiver(Protocol& protocol, Queue<GameDynamic>& q) : protocol(protocol), gameStatuses(q) {}
+Receiver::Receiver(Protocol& protocol, Queue<GameStatus>& q) : protocol(protocol), gameStatuses(q) {}
 
 void Receiver::run() {
     // primero necesitamos cargar los mapas del juego 
