@@ -6,7 +6,7 @@
 #define VIEWFIELD_X 10
 #define VIEWFIELD_Y 5
 
-#define FPS 30.0f
+#define FPS 60.0f
 #define RATE (1000.f / FPS)
 //rutas a archivos
 #define BACKGROUND_PATH "../resources/images/background.png"
