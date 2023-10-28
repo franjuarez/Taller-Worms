@@ -1,2 +1,0 @@
-/usr/bin/ar qc ../../bin/libsajson.a CMakeFiles/sajson.dir/sajson.cpp.o
-/usr/bin/ranlib ../../bin/libsajson.a
