@@ -162,6 +162,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named ui
+
+# Build rule for target.
+ui: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ui
+.PHONY : ui
+
+# fast build rule for target.
+ui/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ui.dir/build.make CMakeFiles/ui.dir/build
+.PHONY : ui/fast
+
+#=============================================================================
 # Target rules for targets named SharedGameLib
 
 # Build rule for target.
@@ -557,6 +570,54 @@ game_src/worm.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/worm.cpp.s
 .PHONY : game_src/worm.cpp.s
 
+main.o: main.cpp.o
+.PHONY : main.o
+
+# target to build an object file
+main.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ui.dir/build.make CMakeFiles/ui.dir/main.cpp.o
+.PHONY : main.cpp.o
+
+main.i: main.cpp.i
+.PHONY : main.i
+
+# target to preprocess a source file
+main.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ui.dir/build.make CMakeFiles/ui.dir/main.cpp.i
+.PHONY : main.cpp.i
+
+main.s: main.cpp.s
+.PHONY : main.s
+
+# target to generate assembly for a file
+main.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ui.dir/build.make CMakeFiles/ui.dir/main.cpp.s
+.PHONY : main.cpp.s
+
+screen.o: screen.cpp.o
+.PHONY : screen.o
+
+# target to build an object file
+screen.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ui.dir/build.make CMakeFiles/ui.dir/screen.cpp.o
+.PHONY : screen.cpp.o
+
+screen.i: screen.cpp.i
+.PHONY : screen.i
+
+# target to preprocess a source file
+screen.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ui.dir/build.make CMakeFiles/ui.dir/screen.cpp.i
+.PHONY : screen.cpp.i
+
+screen.s: screen.cpp.s
+.PHONY : screen.s
+
+# target to generate assembly for a file
+screen.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ui.dir/build.make CMakeFiles/ui.dir/screen.cpp.s
+.PHONY : screen.cpp.s
+
 server_src/lobby.o: server_src/lobby.cpp.o
 .PHONY : server_src/lobby.o
 
@@ -844,6 +905,7 @@ help:
 	@echo "... sajson"
 	@echo "... server"
 	@echo "... testbed"
+	@echo "... ui"
 	@echo "... unit_test"
 	@echo "... client_src/client.o"
 	@echo "... client_src/client.i"
@@ -875,6 +937,12 @@ help:
 	@echo "... game_src/worm.o"
 	@echo "... game_src/worm.i"
 	@echo "... game_src/worm.s"
+	@echo "... main.o"
+	@echo "... main.i"
+	@echo "... main.s"
+	@echo "... screen.o"
+	@echo "... screen.i"
+	@echo "... screen.s"
 	@echo "... server_src/lobby.o"
 	@echo "... server_src/lobby.i"
 	@echo "... server_src/lobby.s"
