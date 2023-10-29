@@ -4,7 +4,8 @@
 #include "socket.h"
 #include "../game_src/game_map.h"
 #include "../game_src/game_dynamic.h"
-
+#include "../game_src/game_lobby.h"
+#include "../game_src/commands.h"
 
 #include <iostream>
 #include <vector>
@@ -31,14 +32,15 @@ private:
     uint32_t receiveUintThirtyTwo();
     std::string receiveString();
 
-    void sendMap(GameMap&);
-    GameMap receiveMap(int i);
+
     void sendBeam(Beam&);
-    Beam receiveBeam();
+    Beam receiveBeam(int id);
     void sendWorm(Worm&);
     Worm receiveWorm();
     void sendPosition(Position&);
     Position receivePosition();
+    void sendMapNames(std::vector<std::string>&);
+    std::vector<std::string> receiveMapNames();
 
     void checkClosed();
 
@@ -46,11 +48,17 @@ public:
     explicit Protocol(Socket&&);
     Protocol(const std::string&, const std::string&);
 
-    void sendMaps(std::vector<GameMap>&);
-    std::vector<GameMap> receiveMaps();
+    void sendMap(GameMap&);
+    GameMap receiveMap();
+
+    void sendLobby(GameLobby&);
+    GameLobby receiveLobby();
 
     void sendDynamic(GameDynamic&);
     GameDynamic receiveDynamic();
+
+    void sendCommand(Command&);
+    Command receiveCommand();
 
     ~Protocol();
 

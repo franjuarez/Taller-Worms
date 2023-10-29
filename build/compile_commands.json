@@ -16,8 +16,18 @@
 },
 {
   "directory": "/home/martu/Facu/Taller I/Taller-Worms/build",
+  "command": "/usr/bin/g++ -DDATA_PATH=\"\\\"/home/martu/Facu/Taller I/Taller-Worms/resources\\\"\"  -g -o CMakeFiles/SharedGameLib.dir/game_src/commands.cpp.o -c \"/home/martu/Facu/Taller I/Taller-Worms/game_src/commands.cpp\"",
+  "file": "/home/martu/Facu/Taller I/Taller-Worms/game_src/commands.cpp"
+},
+{
+  "directory": "/home/martu/Facu/Taller I/Taller-Worms/build",
   "command": "/usr/bin/g++ -DDATA_PATH=\"\\\"/home/martu/Facu/Taller I/Taller-Worms/resources\\\"\"  -g -o CMakeFiles/SharedGameLib.dir/game_src/game_dynamic.cpp.o -c \"/home/martu/Facu/Taller I/Taller-Worms/game_src/game_dynamic.cpp\"",
   "file": "/home/martu/Facu/Taller I/Taller-Worms/game_src/game_dynamic.cpp"
+},
+{
+  "directory": "/home/martu/Facu/Taller I/Taller-Worms/build",
+  "command": "/usr/bin/g++ -DDATA_PATH=\"\\\"/home/martu/Facu/Taller I/Taller-Worms/resources\\\"\"  -g -o CMakeFiles/SharedGameLib.dir/game_src/game_lobby.cpp.o -c \"/home/martu/Facu/Taller I/Taller-Worms/game_src/game_lobby.cpp\"",
+  "file": "/home/martu/Facu/Taller I/Taller-Worms/game_src/game_lobby.cpp"
 },
 {
   "directory": "/home/martu/Facu/Taller I/Taller-Worms/build",

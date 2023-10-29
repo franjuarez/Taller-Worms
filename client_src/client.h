@@ -11,12 +11,17 @@
 #include "../shared_src/protocol.h"
 #include "../game_src/game_status.h"
 #include "../game_src/game_map.h"
-
+#include "../game_src/game_dynamic.h"
+#include "../game_src/game.h"
+#include "../game_src/commands.h"
 class Client {
 
 private:
 	Protocol protocol;
-	Queue<GameStatus> gameStatusQueue;
+	int team;
+	Game gameStatus;	
+	Queue<Game> gameStatusQueue;
+	Queue<Command> commandsQueue;
 	Sender sender;
 	Receiver receiver;
 	
@@ -31,7 +36,9 @@ public:
 	
 	//game funciona como monitor y para empaquetar todo lo que se tiene que graficar
 
-	GameStatus& getGameStatus();
+	Game& getGameStatus();
+
+	void execute(Command&);
 
 	//runCommand();
 

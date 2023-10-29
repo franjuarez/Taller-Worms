@@ -1,6 +1,9 @@
 #include "player.h"
 
-Player::Player(int id, Socket&& peer) : 
-id(id), protocol(std::move(peer)), sender(protocol), receiver(protocol) {}
+Player::Player(GameLobby& gameLobby, Socket&& peer) : 
+gameLobby(gameLobby), protocol(std::move(peer)), 
+sender(protocol, playerQueue), receiver(protocol) {
+    playerQueue.push(gameLobby);
+}
 
 Player::~Player() {}

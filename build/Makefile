@@ -450,6 +450,30 @@ game_src/beam.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/beam.cpp.s
 .PHONY : game_src/beam.cpp.s
 
+game_src/commands.o: game_src/commands.cpp.o
+.PHONY : game_src/commands.o
+
+# target to build an object file
+game_src/commands.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/commands.cpp.o
+.PHONY : game_src/commands.cpp.o
+
+game_src/commands.i: game_src/commands.cpp.i
+.PHONY : game_src/commands.i
+
+# target to preprocess a source file
+game_src/commands.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/commands.cpp.i
+.PHONY : game_src/commands.cpp.i
+
+game_src/commands.s: game_src/commands.cpp.s
+.PHONY : game_src/commands.s
+
+# target to generate assembly for a file
+game_src/commands.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/commands.cpp.s
+.PHONY : game_src/commands.cpp.s
+
 game_src/game_dynamic.o: game_src/game_dynamic.cpp.o
 .PHONY : game_src/game_dynamic.o
 
@@ -473,6 +497,30 @@ game_src/game_dynamic.s: game_src/game_dynamic.cpp.s
 game_src/game_dynamic.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/game_dynamic.cpp.s
 .PHONY : game_src/game_dynamic.cpp.s
+
+game_src/game_lobby.o: game_src/game_lobby.cpp.o
+.PHONY : game_src/game_lobby.o
+
+# target to build an object file
+game_src/game_lobby.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/game_lobby.cpp.o
+.PHONY : game_src/game_lobby.cpp.o
+
+game_src/game_lobby.i: game_src/game_lobby.cpp.i
+.PHONY : game_src/game_lobby.i
+
+# target to preprocess a source file
+game_src/game_lobby.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/game_lobby.cpp.i
+.PHONY : game_src/game_lobby.cpp.i
+
+game_src/game_lobby.s: game_src/game_lobby.cpp.s
+.PHONY : game_src/game_lobby.s
+
+# target to generate assembly for a file
+game_src/game_lobby.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/game_lobby.cpp.s
+.PHONY : game_src/game_lobby.cpp.s
 
 game_src/game_map.o: game_src/game_map.cpp.o
 .PHONY : game_src/game_map.o
@@ -922,9 +970,15 @@ help:
 	@echo "... game_src/beam.o"
 	@echo "... game_src/beam.i"
 	@echo "... game_src/beam.s"
+	@echo "... game_src/commands.o"
+	@echo "... game_src/commands.i"
+	@echo "... game_src/commands.s"
 	@echo "... game_src/game_dynamic.o"
 	@echo "... game_src/game_dynamic.i"
 	@echo "... game_src/game_dynamic.s"
+	@echo "... game_src/game_lobby.o"
+	@echo "... game_src/game_lobby.i"
+	@echo "... game_src/game_lobby.s"
 	@echo "... game_src/game_map.o"
 	@echo "... game_src/game_map.i"
 	@echo "... game_src/game_map.s"

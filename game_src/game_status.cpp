@@ -1,14 +1,14 @@
 #include "game_status.h"
 #include "../shared_src/constants.h"
 
-GameStatus::GameStatus(bool isNew, GameMap& gameMap, GameDynamic& gameDynamic) 
+GameStatus::GameStatus(bool isNew, const GameMap& gameMap, const GameDynamic& gameDynamic) 
 : newStatus(isNew), gameMap(gameMap), gameDynamic(gameDynamic) {}
 
 bool GameStatus::isNewStatus() {
     return newStatus;
 }
 
-GameMap& GameStatus::getGameMap() {
+const GameMap& GameStatus::getGameMap() {
     return gameMap;
 }
 

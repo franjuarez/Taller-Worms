@@ -15,15 +15,46 @@ Protocol::Protocol(Socket&& skt) : skt(std::move(skt)) { was_closed = false;}
 Protocol::Protocol(const std::string& servname, const std::string& hostname ) :
 skt(servname.c_str(), hostname.c_str()) {}
 
-void Protocol::sendMaps(std::vector<GameMap>& allMaps) {
+void Protocol::sendLobby(GameLobby& lobby) {
     checkClosed();
-    sendUintEight(SEND_MAP);
-    uint16_t nrOfMaps = allMaps.size();
-    sendUintSixteen(nrOfMaps);
+    sendUintEight(SEND_LOBBY);
+    sendUintSixteen(lobby.getTeam());
+    sendMapNames(lobby.getMapNames());
+}
 
-    for (int i = 0; i < allMaps.size(); i++) {
-        sendMap(allMaps[i]);
+GameLobby Protocol::receiveLobby() {
+    checkClosed();
+    uint8_t protocolCode = receiveUintEight();
+    uint16_t team = receiveUintSixteen();
+    std::vector<std::string> mapNames = receiveMapNames();
+    GameLobby lobby(mapNames, team);
+    return lobby;
+}
+
+void Protocol::sendMap(GameMap& gameMap) {
+    checkClosed();
+    sendString(gameMap.getMapName());
+    uint16_t nrOfBeams = gameMap.getNumberOfBeams();
+    sendUintSixteen(nrOfBeams);
+
+    for (int j = 0; j < nrOfBeams; j++) {
+        Beam beam = gameMap.getBeam(j);
+        sendBeam(beam);
     }
+}
+
+GameMap Protocol::receiveMap() {
+    checkClosed();
+    std::string mapName = receiveString();
+    uint16_t numberOfBeams = receiveUintSixteen();
+    GameMap gameMap(numberOfBeams, mapName);
+
+    for (int j = 0; j < numberOfBeams; j++) {
+        Beam beam = receiveBeam(j);
+        gameMap.addBeam(j, &beam);
+    }
+
+    return gameMap;
 }
 
 void Protocol::sendDynamic(GameDynamic& gameDynamic) {
@@ -54,17 +85,23 @@ GameDynamic Protocol::receiveDynamic() {
     return gameDynamic;
 }
 
-std::vector<GameMap> Protocol::receiveMaps() {
+void Protocol::sendCommand(Command& command) {
     checkClosed();
-    std::vector<GameMap> allMaps;
-    uint8_t protocolCode = receiveUintEight();
-    uint16_t numberOfMaps = receiveUintSixteen();
+    sendUintEight(SEND_COMMAND);
 
-    for (int i = 0; i < numberOfMaps; i++) {
-        GameMap gameMap = receiveMap(i);
-        allMaps.push_back(gameMap);
-    }
-    return allMaps;
+    // aca deberia intentar hacer un double dispatch ??? 
+    // o uso un simple if ?? 
+    
+}
+
+Command Protocol::receiveCommand() {
+    checkClosed();
+    uint8_t protocolCode = receiveUintEight();
+
+    // hay que ver como parsear esto
+    // por ahi estaria explorar las callbacks? 
+
+    return Command();
 }
 
 void Protocol::sendPosition(Position& pos) {
@@ -76,6 +113,25 @@ Position Protocol::receivePosition() {
     uint16_t x = receiveUintThirtyTwo();
     uint16_t y = receiveUintThirtyTwo();
     return Position(x, y);
+}
+
+void Protocol::sendMapNames(std::vector<std::string>& allMaps) {
+    checkClosed();
+    sendUintSixteen(allMaps.size());
+    for (int i = 0; i < allMaps.size(); i++) {
+        sendString(allMaps[i]);
+    }
+}
+
+std::vector<std::string> Protocol::receiveMapNames() {
+    checkClosed();
+    uint16_t nrOfMaps = receiveUintSixteen();
+    std::vector<std::string> allMaps;
+    for (int i = 0; i < nrOfMaps; i++) {
+        std::string mapName = receiveString();
+        allMaps.push_back(mapName);
+    }
+    return allMaps;
 }
 
 void Protocol::sendWorm(Worm& worm) {
@@ -105,32 +161,12 @@ void Protocol::sendBeam(Beam& beam) {
     sendUintSixteen(beamLength);
 }
 
-void Protocol::sendMap(GameMap& gameMap) {
-    checkClosed();
-    sendString(gameMap.getMapName());
-    uint16_t nrOfBeams = gameMap.getNumberOfBeams();
-    sendUintSixteen(nrOfBeams);
-
-    // for (int j = 0; j < nrOfBeams; j++) {
-    //     sendBeam(gameMap.getBeam(j));
-    // }
-}
-
-GameMap Protocol::receiveMap(int i) {
-    checkClosed();
-    std::string mapName = receiveString();
-    GameMap gameMap(i, mapName);
-    uint16_t numberOfBeams = receiveUintSixteen();
-
-    for (int j = 0; j < numberOfBeams; j++) {
-        Position beamPosition1 = receivePosition();
-        Position beamPosition2 = receivePosition();
-        uint16_t beamLength = receiveUintSixteen();
-        Beam beam(j, beamLength, beamPosition1, beamPosition2);
-        gameMap.addBeam(j, &beam);
-    }
-
-    return gameMap;
+Beam Protocol::receiveBeam(int id) {
+    Position beamPosition1 = receivePosition();
+    Position beamPosition2 = receivePosition();
+    uint16_t beamLength = receiveUintSixteen();
+    Beam beam(id, beamLength, beamPosition1, beamPosition2);
+    return beam;
 }
 
 

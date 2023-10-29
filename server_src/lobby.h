@@ -12,6 +12,9 @@ class Lobby {
 private:
     Socket& skt;
     std::vector<Player*> players;
+
+    void reapDead();
+    void killAll();
 // should it have the game thread queue?
 public:
     Lobby(Socket& skt);

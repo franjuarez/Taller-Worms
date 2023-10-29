@@ -4,6 +4,8 @@ enum
   READ_MAP = 0,		
   SEND_MAP,	
   SEND_DYNAMIC,	
+  SEND_LOBBY,
+  SEND_COMMAND,
 };
 
 #define NO_WORM_PLAYING 0

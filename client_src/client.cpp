@@ -3,14 +3,17 @@
 
 
 Client::Client(const std::string& servname, const std::string& hostname) :
-protocol(servname, hostname), sender(protocol),
-receiver(protocol, std::ref(gameStatusQueue)){}
+protocol(servname, hostname), gameStatus()
+, sender(protocol, std::ref(commandsQueue))
+, receiver(protocol, std::ref(gameStatusQueue)) {}
 
-GameStatus& Client::getGameStatus() {
-    GameMap gameMap(0, ""); GameDynamic gameDynamic(NO_WORM_PLAYING);
-    GameStatus gameStatus(false, gameMap, gameDynamic);
+Game& Client::getGameStatus() {
     gameStatusQueue.try_pop(gameStatus);
     return gameStatus;
+}
+
+void Client::execute(Command& command) {
+    commandsQueue.push(command);
 }
 
 Client::~Client(){}

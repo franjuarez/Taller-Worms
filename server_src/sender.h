@@ -3,14 +3,17 @@
 
 #include "../shared_src/thread.h"
 #include "../shared_src/protocol.h"
+#include "../shared_src/queue.h"
+
 
 class Sender : public Thread {
 
 private:
     Protocol& protocol;
+    Queue<Game>& playerQueue;
     // has the queue of each player
 public:
-    Sender(Protocol& protocol);
+    Sender(Protocol&, Queue<Game>& );
     ~Sender();
     void run() override;
 
