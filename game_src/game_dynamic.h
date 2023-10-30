@@ -2,13 +2,15 @@
 #define GAME_DYNAMIC_H
 
 #include "worm.h"
+#include "../game_src/game.h"
+
 
 #include <iostream>
 #include <vector>
 #include <atomic>
 
 
-class GameDynamic {
+class GameDynamic : public Game {
 
 private:
     int wormPlayingID;
@@ -16,12 +18,12 @@ private:
 
 public: 
     GameDynamic(int);
-    void addWorm(Worm*); // should change to adding all worms in one to avoid a RC
+    void addWorms(std::vector<Worm*>); // should change to adding all worms in one to avoid a RC
     void setWormPlayingID(int);
     // setDynamic to set both the vector and the current player
-    std::vector<Worm*> getWorms();
-    int getNumberOfWorms(); 
-    int getWormPlayingID();
+    std::vector<Worm*> getWorms() override;
+    int getNumberOfWorms() override; 
+    int getWormPlayingID() override;
     ~GameDynamic();
 };
 #endif

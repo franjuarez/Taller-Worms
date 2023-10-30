@@ -2,8 +2,8 @@
 
 GameDynamic::GameDynamic(int wormPlayingID) : wormPlayingID(wormPlayingID) {}
 
-void GameDynamic::addWorm(Worm* worm) {
-    worms.push_back(worm);
+void GameDynamic::addWorms(std::vector<Worm*> wormVec) {
+    worms = wormVec;
 }
 
 void GameDynamic::setWormPlayingID(int id) {

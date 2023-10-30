@@ -12,10 +12,10 @@
 
 Protocol::Protocol(Socket&& skt) : skt(std::move(skt)) { was_closed = false;}
 
-Protocol::Protocol(const std::string& servname, const std::string& hostname ) :
-skt(servname.c_str(), hostname.c_str()) {}
+Protocol::Protocol(const std::string& hostname, const std::string& servname) :
+skt(hostname.c_str(), servname.c_str()) {}
 
-void Protocol::sendLobby(GameLobby& lobby) {
+void Protocol::sendLobby(Game& lobby) {
     checkClosed();
     sendUintEight(SEND_LOBBY);
     sendUintSixteen(lobby.getTeam());
@@ -57,7 +57,7 @@ GameMap Protocol::receiveMap() {
     return gameMap;
 }
 
-void Protocol::sendDynamic(GameDynamic& gameDynamic) {
+void Protocol::sendDynamic(Game& gameDynamic) {
     checkClosed();
 
     sendUintEight(SEND_DYNAMIC); 
@@ -78,10 +78,12 @@ GameDynamic Protocol::receiveDynamic() {
     uint16_t wormPlayingID = receiveUintSixteen();
 
     GameDynamic gameDynamic(wormPlayingID);
+    std::vector<Worm*> worms;
     for (int i = 0; i < numberOfWorms; i++) {
         Worm worm = receiveWorm();
-        gameDynamic.addWorm(&worm);
+        worms.push_back(&worm);
     }
+    gameDynamic.addWorms(worms);
     return gameDynamic;
 }
 
@@ -217,7 +219,7 @@ uint32_t Protocol::receiveUintThirtyTwo() {
 std::string Protocol::receiveString() {
     uint32_t lengthString = receiveUintSixteen();
     std::string str(lengthString, '\0');
-    skt.recvall(str.data(), lengthString, &was_closed);
+    skt.recvall((void*)str.data(), lengthString, &was_closed);
     checkClosed();
     return str;
 }

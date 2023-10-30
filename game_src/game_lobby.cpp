@@ -12,4 +12,13 @@ int GameLobby::getTeam() {
     return this->team;
 }
 
+GameLobby& GameLobby::operator=(const GameLobby& other) {
+    if (this == &other) {
+        return *this;
+    }
+    this->mapNames = other.mapNames;
+    this->team = other.team;
+    return *this;
+}
+
 GameLobby::~GameLobby(){}

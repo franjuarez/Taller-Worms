@@ -15,8 +15,8 @@ private:
 public:
     GameLobby(std::vector<std::string>&, int);
     ~GameLobby();
-    std::vector<std::string>& getMapNames();
-    int getTeam();
+    std::vector<std::string>& getMapNames() override;
+    int getTeam() override;
     GameLobby& operator=(const GameLobby& other);
 };
 #endif

@@ -5,15 +5,18 @@
 #include "../shared_src/protocol.h"
 #include "../shared_src/queue.h"
 
+#include "status_broadcaster.h"
 
 class Sender : public Thread {
 
 private:
+    int id;
     Protocol& protocol;
-    Queue<Game>& playerQueue;
+    StatusBroadcaster& statusBroadcaster;
+    bool& talking;
     // has the queue of each player
 public:
-    Sender(Protocol&, Queue<Game>& );
+    Sender(int id, Protocol& protocol, StatusBroadcaster& statusBroadcaster, bool& talking);
     ~Sender();
     void run() override;
 

@@ -11,7 +11,6 @@ private:
 public: 
     SelectMap(std::string&);
     std::string& getMapName();
-
 };
 
 #endif

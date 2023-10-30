@@ -5,14 +5,14 @@
 #include "beam.h"
 
 #include <iostream>
-#include <map>
+#include <vector>
 #include <string>
 
 class GameMap {
 
 private:
     int numberOfBeams;
-    std::map<int, Beam*> beamsMap;
+    std::vector<Beam*> beamsMap;
     std::string mapName;
 
 public:
@@ -22,6 +22,7 @@ public:
     Position getBeamPosition2(int);
     std::string getMapName();
     Beam getBeam(int);
+    // std::vector<Beam*> getBeam(int);
     int getNumberOfBeams();
     int getBeamLength(int);
     ~GameMap();

@@ -450,30 +450,6 @@ game_src/beam.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/beam.cpp.s
 .PHONY : game_src/beam.cpp.s
 
-game_src/commands.o: game_src/commands.cpp.o
-.PHONY : game_src/commands.o
-
-# target to build an object file
-game_src/commands.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/commands.cpp.o
-.PHONY : game_src/commands.cpp.o
-
-game_src/commands.i: game_src/commands.cpp.i
-.PHONY : game_src/commands.i
-
-# target to preprocess a source file
-game_src/commands.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/commands.cpp.i
-.PHONY : game_src/commands.cpp.i
-
-game_src/commands.s: game_src/commands.cpp.s
-.PHONY : game_src/commands.s
-
-# target to generate assembly for a file
-game_src/commands.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/commands.cpp.s
-.PHONY : game_src/commands.cpp.s
-
 game_src/game_dynamic.o: game_src/game_dynamic.cpp.o
 .PHONY : game_src/game_dynamic.o
 
@@ -594,6 +570,30 @@ game_src/position.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/position.cpp.s
 .PHONY : game_src/position.cpp.s
 
+game_src/select_map.o: game_src/select_map.cpp.o
+.PHONY : game_src/select_map.o
+
+# target to build an object file
+game_src/select_map.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/select_map.cpp.o
+.PHONY : game_src/select_map.cpp.o
+
+game_src/select_map.i: game_src/select_map.cpp.i
+.PHONY : game_src/select_map.i
+
+# target to preprocess a source file
+game_src/select_map.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/select_map.cpp.i
+.PHONY : game_src/select_map.cpp.i
+
+game_src/select_map.s: game_src/select_map.cpp.s
+.PHONY : game_src/select_map.s
+
+# target to generate assembly for a file
+game_src/select_map.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/select_map.cpp.s
+.PHONY : game_src/select_map.cpp.s
+
 game_src/worm.o: game_src/worm.cpp.o
 .PHONY : game_src/worm.o
 
@@ -665,6 +665,30 @@ screen.s: screen.cpp.s
 screen.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ui.dir/build.make CMakeFiles/ui.dir/screen.cpp.s
 .PHONY : screen.cpp.s
+
+server_src/game_loop.o: server_src/game_loop.cpp.o
+.PHONY : server_src/game_loop.o
+
+# target to build an object file
+server_src/game_loop.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/server_src/game_loop.cpp.o
+.PHONY : server_src/game_loop.cpp.o
+
+server_src/game_loop.i: server_src/game_loop.cpp.i
+.PHONY : server_src/game_loop.i
+
+# target to preprocess a source file
+server_src/game_loop.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/server_src/game_loop.cpp.i
+.PHONY : server_src/game_loop.cpp.i
+
+server_src/game_loop.s: server_src/game_loop.cpp.s
+.PHONY : server_src/game_loop.s
+
+# target to generate assembly for a file
+server_src/game_loop.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/server_src/game_loop.cpp.s
+.PHONY : server_src/game_loop.cpp.s
 
 server_src/lobby.o: server_src/lobby.cpp.o
 .PHONY : server_src/lobby.o
@@ -785,6 +809,30 @@ server_src/sender.s: server_src/sender.cpp.s
 server_src/sender.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/server_src/sender.cpp.s
 .PHONY : server_src/sender.cpp.s
+
+server_src/status_broadcaster.o: server_src/status_broadcaster.cpp.o
+.PHONY : server_src/status_broadcaster.o
+
+# target to build an object file
+server_src/status_broadcaster.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/server_src/status_broadcaster.cpp.o
+.PHONY : server_src/status_broadcaster.cpp.o
+
+server_src/status_broadcaster.i: server_src/status_broadcaster.cpp.i
+.PHONY : server_src/status_broadcaster.i
+
+# target to preprocess a source file
+server_src/status_broadcaster.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/server_src/status_broadcaster.cpp.i
+.PHONY : server_src/status_broadcaster.cpp.i
+
+server_src/status_broadcaster.s: server_src/status_broadcaster.cpp.s
+.PHONY : server_src/status_broadcaster.s
+
+# target to generate assembly for a file
+server_src/status_broadcaster.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/server_src/status_broadcaster.cpp.s
+.PHONY : server_src/status_broadcaster.cpp.s
 
 shared_src/liberror.o: shared_src/liberror.cpp.o
 .PHONY : shared_src/liberror.o
@@ -970,9 +1018,6 @@ help:
 	@echo "... game_src/beam.o"
 	@echo "... game_src/beam.i"
 	@echo "... game_src/beam.s"
-	@echo "... game_src/commands.o"
-	@echo "... game_src/commands.i"
-	@echo "... game_src/commands.s"
 	@echo "... game_src/game_dynamic.o"
 	@echo "... game_src/game_dynamic.i"
 	@echo "... game_src/game_dynamic.s"
@@ -988,6 +1033,9 @@ help:
 	@echo "... game_src/position.o"
 	@echo "... game_src/position.i"
 	@echo "... game_src/position.s"
+	@echo "... game_src/select_map.o"
+	@echo "... game_src/select_map.i"
+	@echo "... game_src/select_map.s"
 	@echo "... game_src/worm.o"
 	@echo "... game_src/worm.i"
 	@echo "... game_src/worm.s"
@@ -997,6 +1045,9 @@ help:
 	@echo "... screen.o"
 	@echo "... screen.i"
 	@echo "... screen.s"
+	@echo "... server_src/game_loop.o"
+	@echo "... server_src/game_loop.i"
+	@echo "... server_src/game_loop.s"
 	@echo "... server_src/lobby.o"
 	@echo "... server_src/lobby.i"
 	@echo "... server_src/lobby.s"
@@ -1012,6 +1063,9 @@ help:
 	@echo "... server_src/sender.o"
 	@echo "... server_src/sender.i"
 	@echo "... server_src/sender.s"
+	@echo "... server_src/status_broadcaster.o"
+	@echo "... server_src/status_broadcaster.i"
+	@echo "... server_src/status_broadcaster.s"
 	@echo "... shared_src/liberror.o"
 	@echo "... shared_src/liberror.i"
 	@echo "... shared_src/liberror.s"

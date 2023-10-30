@@ -51,10 +51,9 @@ public:
     void sendMap(GameMap&);
     GameMap receiveMap();
 
-    void sendLobby(GameLobby&);
+    void sendLobby(Game&);
     GameLobby receiveLobby();
-
-    void sendDynamic(GameDynamic&);
+    void sendDynamic(Game&);
     GameDynamic receiveDynamic();
 
     void sendCommand(Command&);

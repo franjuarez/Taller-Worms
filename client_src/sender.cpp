@@ -11,11 +11,14 @@ void Sender::run() {
     // 1ro mando el chosen map
     // 2do empieza el game loop
     // todos los comandos son de la clase Command
-
-    while (1) {
-        Command command = commandsQueue.pop();
-        protocol.sendCommand(command);
-    }
+    try {
+        // while (1) {
+        // Command command = commandsQueue.pop();
+        // protocol.sendCommand(command);
+        // }
+    } catch (...) {
+        std::cout << "AAAAAAAAAAAAA";
+    } 
 }
 
 Sender::~Sender() {}

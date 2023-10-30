@@ -15,7 +15,7 @@ include_directories(${SDL2PP_INCLUDE_DIRS})
 
 add_executable("ui" main.cpp screen.cpp)
 
-target_compile_options("ui" PRIVATE $<$<NOT:$<C_COMPILER_ID:MSVC>>:-Wall -Wextra -pedantic -pedantic-errors>)
+target_compile_options("ui" PRIVATE $<$<NOT:$<C_COMPILER_ID:MSVC>>:-Wall -Wextra -pedantic -pedantic-errors -ggdb -DDEBUG -fno-inline>)
 target_link_libraries("ui" PUBLIC SDL2pp::SDL2pp)
 
 include_directories(${SDL2PP_INCLUDE_DIRS})

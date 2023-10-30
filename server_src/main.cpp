@@ -4,6 +4,7 @@
 
 #include "../shared_src/socket.h"
 #include "lobby.h"
+#include "game_loop.h"
 
 #include <iostream>
 #include <string>
@@ -19,6 +20,7 @@ int main(int argc, char** argv) {
 
 	Socket skt(argv[1]);
 	Lobby lobby(skt);
+	lobby.run();
 
 	return 0;
 }

@@ -666,6 +666,30 @@ screen.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ui.dir/build.make CMakeFiles/ui.dir/screen.cpp.s
 .PHONY : screen.cpp.s
 
+server_src/game_loop.o: server_src/game_loop.cpp.o
+.PHONY : server_src/game_loop.o
+
+# target to build an object file
+server_src/game_loop.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/server_src/game_loop.cpp.o
+.PHONY : server_src/game_loop.cpp.o
+
+server_src/game_loop.i: server_src/game_loop.cpp.i
+.PHONY : server_src/game_loop.i
+
+# target to preprocess a source file
+server_src/game_loop.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/server_src/game_loop.cpp.i
+.PHONY : server_src/game_loop.cpp.i
+
+server_src/game_loop.s: server_src/game_loop.cpp.s
+.PHONY : server_src/game_loop.s
+
+# target to generate assembly for a file
+server_src/game_loop.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/server_src/game_loop.cpp.s
+.PHONY : server_src/game_loop.cpp.s
+
 server_src/lobby.o: server_src/lobby.cpp.o
 .PHONY : server_src/lobby.o
 
@@ -785,6 +809,30 @@ server_src/sender.s: server_src/sender.cpp.s
 server_src/sender.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/server_src/sender.cpp.s
 .PHONY : server_src/sender.cpp.s
+
+server_src/status_broadcaster.o: server_src/status_broadcaster.cpp.o
+.PHONY : server_src/status_broadcaster.o
+
+# target to build an object file
+server_src/status_broadcaster.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/server_src/status_broadcaster.cpp.o
+.PHONY : server_src/status_broadcaster.cpp.o
+
+server_src/status_broadcaster.i: server_src/status_broadcaster.cpp.i
+.PHONY : server_src/status_broadcaster.i
+
+# target to preprocess a source file
+server_src/status_broadcaster.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/server_src/status_broadcaster.cpp.i
+.PHONY : server_src/status_broadcaster.cpp.i
+
+server_src/status_broadcaster.s: server_src/status_broadcaster.cpp.s
+.PHONY : server_src/status_broadcaster.s
+
+# target to generate assembly for a file
+server_src/status_broadcaster.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/server_src/status_broadcaster.cpp.s
+.PHONY : server_src/status_broadcaster.cpp.s
 
 shared_src/liberror.o: shared_src/liberror.cpp.o
 .PHONY : shared_src/liberror.o
@@ -997,6 +1045,9 @@ help:
 	@echo "... screen.o"
 	@echo "... screen.i"
 	@echo "... screen.s"
+	@echo "... server_src/game_loop.o"
+	@echo "... server_src/game_loop.i"
+	@echo "... server_src/game_loop.s"
 	@echo "... server_src/lobby.o"
 	@echo "... server_src/lobby.i"
 	@echo "... server_src/lobby.s"
@@ -1012,6 +1063,9 @@ help:
 	@echo "... server_src/sender.o"
 	@echo "... server_src/sender.i"
 	@echo "... server_src/sender.s"
+	@echo "... server_src/status_broadcaster.o"
+	@echo "... server_src/status_broadcaster.i"
+	@echo "... server_src/status_broadcaster.s"
 	@echo "... shared_src/liberror.o"
 	@echo "... shared_src/liberror.i"
 	@echo "... shared_src/liberror.s"

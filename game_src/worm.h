@@ -20,6 +20,5 @@ public:
     int getHealth();
     Position getPosition();
     ~Worm();
-
 };
 #endif

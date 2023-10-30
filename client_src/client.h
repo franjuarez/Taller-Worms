@@ -40,6 +40,8 @@ public:
 
 	void execute(Command&);
 
+	void run();
+
 	//runCommand();
 
 	//jumpCommand();
