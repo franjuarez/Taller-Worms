@@ -13,3 +13,7 @@ cmake_install.cmake
 # Remove the build directory
 build/
 ```
+
+main
+
+Makefile

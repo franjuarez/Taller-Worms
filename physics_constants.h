@@ -1,0 +1,30 @@
+#ifndef PHYSICS_CONSTANTS_H
+#define PHYSICS_CONSTANTS_H
+
+#define WORLD_WIDTH 100
+#define WORLD_HEIGHT 70
+#define WORLD_GRAVITY_X 0.0f
+#define WORLD_GRAVITY_Y -9.8f
+
+#define TIME_STEP 1/30.0f
+#define VELOCITY_ITERATIONS 8
+#define POSITION_ITERATIONS 3
+
+#define LARGE_BEAM_WIDTH 6
+#define SMALL_BEAM_WIDTH 3
+#define BEAM_HEIGHT 0.8f
+#define BEAM_FRICTION 0.3f //a revisar
+#define MAX_WALKABLE_BEAM_ANGLE 45
+
+#define WORM_WIDTH 0.5f
+#define WORM_HEIGHT 1.0f
+#define WORM_DENSITY 1.0f
+#define WORM_FRICTION 0.3f //a revisar
+#define WORM_DAMPING 0.3f
+
+#define MOVE_VELOCITY_X 0.2f
+#define VELOCITY_SMOOTH_BREAK 0.08f
+
+#define INFINITE_DAMPING 1000.0f
+
+#endif
