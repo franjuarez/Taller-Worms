@@ -13,10 +13,13 @@ private:
     int team;
 
 public:
-    GameLobby(std::vector<std::string>&, int);
+    GameLobby(std::vector<std::string> mapNames, int team);
     ~GameLobby();
     std::vector<std::string>& getMapNames() override;
     int getTeam() override;
     GameLobby& operator=(const GameLobby& other);
+
+    GameLobby(const GameLobby& other);
+
 };
 #endif

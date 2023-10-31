@@ -7,15 +7,21 @@
 
 #include <iostream>
 
+#define ERROR 1
+#define SUCCESS 0
+
 int main(int argc, char** argv) {
-	if (argc < 3) 
-		return 1;
+	if (argc < 3){
+		throw std::runtime_error("Invalid arguments!");
+		return ERROR;
+	}
 
 	try {
 		Client client(argv[1], argv[2]);
-		client.connect();
+		client.start();
 	} catch (const std::exception& e) {
-		return 1;
+		std::cerr << e.what() << std::endl;
+		return ERROR;
 	}
-	return 0;
+	return SUCCESS;
 }

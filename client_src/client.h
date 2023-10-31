@@ -14,8 +14,8 @@
 #include "../game_src/game_dynamic.h"
 #include "../game_src/game.h"
 #include "../game_src/commands.h"
-class Client {
 
+class Client {
 private:
 	Protocol protocol;
 	int team;
@@ -40,7 +40,7 @@ public:
 
 	void execute(Command&);
 
-	void connect();
+	void start();
 
 	//runCommand();
 

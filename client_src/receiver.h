@@ -22,4 +22,5 @@ public:
     void run() override;
     ~Receiver();
 };
+
 #endif

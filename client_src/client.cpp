@@ -12,10 +12,13 @@ Client::Client(const std::string& hostname, const std::string& servname) : proto
 //     return gameStatus;
 // }
 
-void Client::connect() {
+void Client::start() {
     try {
         sender.start();
         receiver.start();
+
+        sender.join();
+        receiver.join();
     } catch (...) {
         std::cout << "AAAAAAAAAAAAAAA\n";
     }

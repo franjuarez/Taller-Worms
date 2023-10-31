@@ -1,9 +1,10 @@
 #include "player.h"
 
-Player::Player(GameLobby& gameLobby, Socket&& peer, Queue<Command>& commandQueue, StatusBroadcaster& statusBroadcaster) : 
+Player::Player(GameLobby gameLobby,Socket&& peer, Queue<Command>& commandQueue, StatusBroadcaster& statusBroadcaster) : 
 gameLobby(gameLobby), protocol(std::move(peer)), statusBroadcaster(statusBroadcaster), 
 sender(gameLobby.getTeam(), protocol, statusBroadcaster, talking), 
 receiver(protocol, commandQueue, talking), commandsQueue(commandQueue) {
+    // std::cout << gameLobby.getMapNames()[0] + '\n'; //Imprime bien!
     playerQueue.push(gameLobby);
     statusBroadcaster.addPlayer(gameLobby.getTeam(), &playerQueue);
 }

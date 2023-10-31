@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "/home/martu/Facu/Taller I/Taller-Worms"
+CMAKE_SOURCE_DIR = /home/monke/Desktop/Taller/Taller-Worms
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "/home/martu/Facu/Taller I/Taller-Worms"
+CMAKE_BINARY_DIR = /home/monke/Desktop/Taller/Taller-Worms
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -132,14 +132,14 @@ install/strip/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	cd "/home/martu/Facu/Taller I/Taller-Worms" && $(CMAKE_COMMAND) -E cmake_progress_start "/home/martu/Facu/Taller I/Taller-Worms/CMakeFiles" "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d//CMakeFiles/progress.marks"
-	cd "/home/martu/Facu/Taller I/Taller-Worms" && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 thirdParty/box2d/all
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/martu/Facu/Taller I/Taller-Worms/CMakeFiles" 0
+	cd /home/monke/Desktop/Taller/Taller-Worms && $(CMAKE_COMMAND) -E cmake_progress_start /home/monke/Desktop/Taller/Taller-Worms/CMakeFiles /home/monke/Desktop/Taller/Taller-Worms/thirdParty/box2d//CMakeFiles/progress.marks
+	cd /home/monke/Desktop/Taller/Taller-Worms && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 thirdParty/box2d/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/monke/Desktop/Taller/Taller-Worms/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd "/home/martu/Facu/Taller I/Taller-Worms" && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 thirdParty/box2d/clean
+	cd /home/monke/Desktop/Taller/Taller-Worms && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 thirdParty/box2d/clean
 .PHONY : clean
 
 # The main clean target
@@ -148,17 +148,17 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd "/home/martu/Facu/Taller I/Taller-Worms" && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 thirdParty/box2d/preinstall
+	cd /home/monke/Desktop/Taller/Taller-Worms && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 thirdParty/box2d/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd "/home/martu/Facu/Taller I/Taller-Worms" && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 thirdParty/box2d/preinstall
+	cd /home/monke/Desktop/Taller/Taller-Worms && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 thirdParty/box2d/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd "/home/martu/Facu/Taller I/Taller-Worms" && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/monke/Desktop/Taller/Taller-Worms && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Help Target
@@ -184,6 +184,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd "/home/martu/Facu/Taller I/Taller-Worms" && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/monke/Desktop/Taller/Taller-Worms && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

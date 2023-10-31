@@ -6,6 +6,7 @@ Sender::Sender(Protocol& protocol, Queue<Command>& q) : protocol(protocol),
 commandsQueue(q) {}
 
 void Sender::run() {
+    std::cout << "Sender running\n";
     //  yyyyyy aca mando los comandos 
     // como se decidiran los comandos lo sabe dios nomas
     // 1ro mando el chosen map

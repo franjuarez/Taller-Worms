@@ -2,7 +2,7 @@
 #include "../shared_src/constants.h"
 
 GameStatus::GameStatus(bool isNew, const GameMap& gameMap, const GameDynamic& gameDynamic) 
-: newStatus(isNew), gameMap(gameMap), gameDynamic(gameDynamic) {}
+: Game(), newStatus(isNew), gameMap(gameMap), gameDynamic(gameDynamic) {}
 
 bool GameStatus::isNewStatus() {
     return newStatus;

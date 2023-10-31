@@ -17,7 +17,7 @@ private:
     GameDynamic gameDynamic;
 
 public:
-    GameStatus(bool,const GameMap&, const GameDynamic&);
+    GameStatus(bool isNew,const GameMap& gameMap, const GameDynamic& gameDynamic);
     ~GameStatus();
     bool isNewStatus();
     const GameMap& getGameMap();

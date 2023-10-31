@@ -2,6 +2,7 @@
 #define PROTOCOL_H
 
 #include "socket.h"
+#include "../game_src/game.h"
 #include "../game_src/game_map.h"
 #include "../game_src/game_dynamic.h"
 #include "../game_src/game_lobby.h"

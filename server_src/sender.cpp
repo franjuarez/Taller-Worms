@@ -4,8 +4,10 @@ Sender::Sender(int id, Protocol& protocol, StatusBroadcaster& statusBroadcaster,
 : id(id), protocol(protocol), statusBroadcaster(statusBroadcaster), talking(talking) {}
 
 void Sender::run() {
-    // Game gameLobby = statusBroadcaster.getGame(id);
-    // protocol.sendLobby(gameLobby);
+    Game gameLobby = statusBroadcaster.getGame(id);
+    std::cout << "aver si entro";
+    std::cout << gameLobby.getMapNames().at(0) + '\n';
+    protocol.sendLobby(gameLobby);
     // while (1) {
     //     Game game = statusBroadcaster.getGame(id);
     //     protocol.sendDynamic(game);

@@ -1,10 +1,10 @@
 
 #include "receiver.h"
+#include "../game_src/game.h"
 #include "../game_src/game_lobby.h"
 #include "../game_src/game_map.h"
 #include "../game_src/game_dynamic.h"
 #include "../game_src/game_status.h"
-#include "../game_src/game.h"
 #include "../shared_src/protocol.h"
 #include "../shared_src/constants.h"
 
@@ -14,14 +14,16 @@ Receiver::Receiver(Protocol& protocol, Queue<Game>& q)
 : protocol(protocol), gameStatuses(q) {}
 
 void Receiver::run() {
+    std::cout << "Reciever running\n";
+
     // 1ero get the GameLobby with the players team and the available maps
     try {   
 
         
-        // GameLobby lobby = protocol.receiveLobby();
-        // gameStatuses.push(lobby);
+        GameLobby lobby = protocol.receiveLobby();
+        gameStatuses.push(lobby);
 
-        // std::cout << lobby.getMapNames()[0] + '\n';
+        std::cout << lobby.getMapNames()[0] + '\n';
 
         // 2do get the map selected by the player
         // GameMap map = protocol.receiveMap();
@@ -36,9 +38,9 @@ void Receiver::run() {
         //     GameStatus gameStatus(true, map, gameDynamic);
         //     gameStatuses.push(gameStatus);
         // }
-    } catch (...) {
-
-        std::cout << "explote :( ";
+    } catch (const std::exception& err) {
+        std::cerr << err.what() << '\n';
+        // std::cout << "explote :( ";
 
     }
 }
