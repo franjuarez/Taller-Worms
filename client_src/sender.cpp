@@ -18,7 +18,7 @@ void Sender::run() {
         // protocol.sendCommand(command);
         // }
     } catch (...) {
-        std::cout << "AAAAAAAAAAAAA";
+        std::cout << "AAAAAAAAAAAAA\n";
     } 
 }
 

@@ -5,8 +5,6 @@ Sender::Sender(int id, Protocol& protocol, StatusBroadcaster& statusBroadcaster,
 
 void Sender::run() {
     Game gameLobby = statusBroadcaster.getGame(id);
-    std::cout << "aver si entro";
-    std::cout << gameLobby.getMapNames().at(0) + '\n';
     protocol.sendLobby(gameLobby);
     // while (1) {
     //     Game game = statusBroadcaster.getGame(id);

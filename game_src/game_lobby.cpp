@@ -2,10 +2,11 @@
 
 
 GameLobby::GameLobby(std::vector<std::string> mapNames, int team) 
-: Game(), mapNames(mapNames), team(team) {}
+: Game(mapNames, team), mapNames(mapNames), team(team) {}   
+    
+
 
 std::vector<std::string>& GameLobby::getMapNames() {
-    std::cout << "GameLobby::getMapNames()\n";
     return this->mapNames;
 }
 

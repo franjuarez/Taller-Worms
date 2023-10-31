@@ -18,14 +18,15 @@ skt(hostname.c_str(), servname.c_str()) {}
 void Protocol::sendLobby(Game& lobby) {
     checkClosed();
     sendUintEight(SEND_LOBBY);
-    sendUintSixteen(lobby.getTeam());
+    sendUintEight(lobby.getTeam());
+    std::cout << lobby.getTeam() << '\n';
     sendMapNames(lobby.getMapNames());
 }
 
 GameLobby Protocol::receiveLobby() {
     checkClosed();
     uint8_t protocolCode = receiveUintEight();
-    uint16_t team = receiveUintSixteen();
+    uint16_t team = receiveUintEight();
     std::vector<std::string> mapNames = receiveMapNames();
     GameLobby lobby(mapNames, team);
     return lobby;
@@ -190,6 +191,7 @@ void Protocol::sendUintThirtyTwo(uint32_t num) {
 }
 
 void Protocol::sendString(const std::string& str) {
+    sendUintSixteen(str.size());
     skt.sendall(str.c_str(), str.size(), &was_closed);
     checkClosed();
 }
@@ -217,7 +219,7 @@ uint32_t Protocol::receiveUintThirtyTwo() {
 
 
 std::string Protocol::receiveString() {
-    uint32_t lengthString = receiveUintSixteen();
+    uint16_t lengthString = receiveUintSixteen();
     std::string str(lengthString, '\0');
     skt.recvall((void*)str.data(), lengthString, &was_closed);
     checkClosed();
@@ -234,6 +236,5 @@ void Protocol::boom() {
     skt.shutdown(2);
     skt.close();
 }
-
 
 Protocol::~Protocol() {}

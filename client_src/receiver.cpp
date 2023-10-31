@@ -14,16 +14,15 @@ Receiver::Receiver(Protocol& protocol, Queue<Game>& q)
 : protocol(protocol), gameStatuses(q) {}
 
 void Receiver::run() {
-    std::cout << "Reciever running\n";
+    
 
     // 1ero get the GameLobby with the players team and the available maps
     try {   
-
-        
         GameLobby lobby = protocol.receiveLobby();
         gameStatuses.push(lobby);
 
-        std::cout << lobby.getMapNames()[0] + '\n';
+        std::cout << lobby.getMapNames().at(0) + '\n';
+        std::cout << lobby.getTeam() << '\n';
 
         // 2do get the map selected by the player
         // GameMap map = protocol.receiveMap();

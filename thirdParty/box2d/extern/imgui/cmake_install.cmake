@@ -1,4 +1,4 @@
-# Install script for directory: /home/monke/Desktop/Taller/Taller-Worms/thirdParty/box2d/extern/imgui
+# Install script for directory: /home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d/extern/imgui
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

@@ -1,6 +1,6 @@
 #include "game_dynamic.h"
 
-GameDynamic::GameDynamic(int wormPlayingID) : wormPlayingID(wormPlayingID) {}
+GameDynamic::GameDynamic(int wormPlayingID) : Game(wormPlayingID) {}
 
 void GameDynamic::addWorms(std::vector<Worm*> wormVec) {
     worms = wormVec;

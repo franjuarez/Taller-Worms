@@ -9,18 +9,20 @@
 class Game {
 
 protected:
-    std::vector<std::string> mapNames = {};
+    std::vector<std::string> mapNames = {"Aloha: devuelve lo de la clase madre",};
     std::vector<Worm*> worms = {};
-
+    int wormPlayingID = 0;
+    int team = 0;
 public: 
-    Game() {}
+    Game(std::vector<std::string> mapNames, int team) : mapNames(mapNames), team(team) {}
+    Game(int wormPlayingID) : wormPlayingID(wormPlayingID) {} 
     ~Game() {}
 
     virtual std::vector<std::string>& getMapNames() {
         return mapNames;
     }
     virtual int getTeam() {
-        return 0;
+        return team;
     }
 
     virtual std::vector<Worm*> getWorms() {

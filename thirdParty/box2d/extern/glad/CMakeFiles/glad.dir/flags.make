@@ -4,7 +4,7 @@
 # compile C with /usr/bin/cc
 C_DEFINES = 
 
-C_INCLUDES = -I/home/monke/Desktop/Taller/Taller-Worms/thirdParty/box2d/extern/glad/include
+C_INCLUDES = -I"/home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d/extern/glad/include"
 
 C_FLAGS = 
 
