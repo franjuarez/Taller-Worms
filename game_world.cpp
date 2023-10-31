@@ -28,6 +28,7 @@ void GameWorld::createWorm(float startingX, float startingY){
     fd.density = WORM_DENSITY;
     fd.friction = WORM_FRICTION;
     body->SetFixedRotation(true);
+    fd.filter.groupIndex = -1; //This way it doesn't collide with other worms
     body->CreateFixture(&fd);
     EntityType type = Worm;
     body->GetUserData().pointer = type;
