@@ -19,7 +19,7 @@ class Protocol {
 
 private:
     Socket skt;
-    bool was_closed;
+    bool was_closed = false;
 
     void sendUintEight(uint8_t);
     void sendUintSixteen(uint16_t);

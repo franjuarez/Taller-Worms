@@ -13,9 +13,8 @@ int main(int argc, char** argv) {
 
 	try {
 		Client client(argv[1], argv[2]);
-		client.run();
+		client.connect();
 	} catch (const std::exception& e) {
-		std::cout << "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\n";
 		return 1;
 	}
 	return 0;

@@ -10,7 +10,7 @@
 #include <vector>  
 
 
-Protocol::Protocol(Socket&& skt) : skt(std::move(skt)) { was_closed = false;}
+Protocol::Protocol(Socket&& skt) : skt(std::move(skt)) {}
 
 Protocol::Protocol(const std::string& hostname, const std::string& servname) :
 skt(hostname.c_str(), servname.c_str()) {}

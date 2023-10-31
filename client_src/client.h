@@ -19,7 +19,7 @@ class Client {
 private:
 	Protocol protocol;
 	int team;
-	Game gameStatus;	
+	// Game gameStatus;	
 	Queue<Game> gameStatusQueue;
 	Queue<Command> commandsQueue;
 	Sender sender;
@@ -40,7 +40,7 @@ public:
 
 	void execute(Command&);
 
-	void run();
+	void connect();
 
 	//runCommand();
 

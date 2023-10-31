@@ -18,8 +18,8 @@ void Receiver::run() {
     try {   
 
         
-        GameLobby lobby = protocol.receiveLobby();
-        gameStatuses.push(lobby);
+        // GameLobby lobby = protocol.receiveLobby();
+        // gameStatuses.push(lobby);
 
         // std::cout << lobby.getMapNames()[0] + '\n';
 

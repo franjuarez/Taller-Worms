@@ -4,10 +4,10 @@ Receiver::Receiver(Protocol& protocol, Queue<Command>& commandsQueue, bool& talk
 : protocol(protocol), commandsQueue(commandsQueue), talking(talking) {}
 
 void Receiver::run() {
-    while (true) {
-        Command command = protocol.receiveCommand();
-        commandsQueue.push(command);
-    }
+    // while (true) {
+    //     Command command = protocol.receiveCommand();
+    //     commandsQueue.push(command);
+    // }
 }
 
 Receiver::~Receiver() {}
