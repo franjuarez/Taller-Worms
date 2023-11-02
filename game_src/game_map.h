@@ -13,11 +13,11 @@ class GameMap : public Game{
 
 private:
     int numberOfBeams;
-    std::vector<Beam> beamsMap;
     std::string mapName;
+    std::vector<Beam> beamsMap;
 
 public:
-    GameMap(int numberOfBeams, std::string mapName);
+    GameMap(int numberOfBeams, std::string mapName, std::vector<Beam> beamsMap);
     void addBeam(int id, Beam beam);
     std::string getMapName() override;
     std::vector<Beam> getBeams(int) override;

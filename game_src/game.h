@@ -11,16 +11,17 @@ class Game {
 
 protected:
     std::vector<std::string> mapNames = {"Aloha: devuelve lo de la clase madre",};
-    std::vector<Worm*> worms = {};
-    int wormPlayingID = 0;
+    int wormPlayingID = 77;
+    std::vector<Worm> worms = {};
     int team = 0;
     int numberOfBeams = 0;
-    std::vector<Beam> beamsMap = {};
     std::string mapName = "";
+    std::vector<Beam> beamsMap = {};
+    
 public: 
     Game(std::vector<std::string> mapNames, int team) : mapNames(mapNames), team(team) {}
-    Game(int wormPlayingID) : wormPlayingID(wormPlayingID) {} 
-    Game(int numberOfBeams, std::string mapName) : numberOfBeams(numberOfBeams), mapName(mapName) {}
+    Game(int wormPlayingID, std::vector<Worm>worms) : wormPlayingID(wormPlayingID), worms(worms) {} 
+    Game(int numberOfBeams, std::string mapName, std::vector<Beam> beamsMap) : numberOfBeams(numberOfBeams), mapName(mapName), beamsMap(beamsMap) {}
     ~Game() {}
 
     virtual std::vector<std::string>& getMapNames() {
@@ -30,7 +31,11 @@ public:
         return team;
     }
 
-    virtual std::vector<Worm*> getWorms() {
+    virtual void addWorms(std::vector<Worm> worms) {
+        this->worms = worms;
+    }
+
+    virtual std::vector<Worm> getWorms() {
         return worms;
     }
 

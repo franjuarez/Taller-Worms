@@ -6,11 +6,10 @@ Sender::Sender(int id, Protocol& protocol, Queue<Game>& playerQueue, bool& talki
 void Sender::run() {
     Game gameLobby = playerQueue.pop();
     protocol.sendLobby(gameLobby);
-    // while (1) {
-    //     Game game = statusBroadcaster.getGame(id);
-    //     protocol.sendDynamic(game);
-    // }
+    while (1) {
+        Game game = playerQueue.pop();
+        protocol.sendDynamic(game);
+    }
 }
 
 Sender::~Sender() {}
-

@@ -34,8 +34,8 @@ GameLobby Protocol::receiveLobby() {
 void Protocol::sendMap(GameMap& gameMap) {
     checkClosed();
     sendString(gameMap.getMapName());
-    uint16_t nrOfBeams = gameMap.getNumberOfBeams();
-    sendUintSixteen(nrOfBeams);
+    uint8_t nrOfBeams = gameMap.getNumberOfBeams();
+    sendUintEight(nrOfBeams);
 
     std::vector<Beam> beams = gameMap.getBeams(0);
     for (int j = 0; j < nrOfBeams; j++) {
@@ -46,14 +46,14 @@ void Protocol::sendMap(GameMap& gameMap) {
 GameMap Protocol::receiveMap() {
     checkClosed();
     std::string mapName = receiveString();
-    uint16_t numberOfBeams = receiveUintSixteen();
-    GameMap gameMap(numberOfBeams, mapName);
+    uint8_t numberOfBeams = receiveUintEight();
 
+    std::vector<Beam> beams;
     for (int j = 0; j < numberOfBeams; j++) {
         Beam beam = receiveBeam(j);
-        gameMap.addBeam(j, beam);
+        beams.push_back(beam);
     }
-
+    GameMap gameMap(numberOfBeams, mapName, beams);
     return gameMap;
 }
 
@@ -64,10 +64,10 @@ void Protocol::sendDynamic(Game& gameDynamic) {
     sendUintSixteen(gameDynamic.getNumberOfWorms());
     sendUintSixteen(gameDynamic.getWormPlayingID());
 
-    std::vector<Worm*> worms = gameDynamic.getWorms();
+    std::vector<Worm> worms = gameDynamic.getWorms();
 
     for (int i = 0; i < gameDynamic.getNumberOfWorms(); i++) {
-        sendWorm(*worms[i]);
+        sendWorm(worms[i]);
     }
 }
 
@@ -77,13 +77,12 @@ GameDynamic Protocol::receiveDynamic() {
     uint16_t numberOfWorms = receiveUintSixteen();
     uint16_t wormPlayingID = receiveUintSixteen();
 
-    GameDynamic gameDynamic(wormPlayingID);
-    std::vector<Worm*> worms;
+    std::vector<Worm> worms;
     for (int i = 0; i < numberOfWorms; i++) {
         Worm worm = receiveWorm();
-        worms.push_back(&worm);
+        worms.push_back(worm);
     }
-    gameDynamic.addWorms(worms);
+    GameDynamic gameDynamic(wormPlayingID, worms);
     return gameDynamic;
 }
 
@@ -159,14 +158,14 @@ void Protocol::sendBeam(Beam& beam) {
     sendPosition(beamPosition1);
     Position beamPosition2 = beam.getPosition2();
     sendPosition(beamPosition2);
-    uint16_t beamLength = beam.getBeamLength();
-    sendUintSixteen(beamLength);
+    uint8_t beamLength = beam.getBeamLength();
+    sendUintEight(beamLength);
 }
 
 Beam Protocol::receiveBeam(int id) {
     Position beamPosition1 = receivePosition();
     Position beamPosition2 = receivePosition();
-    uint16_t beamLength = receiveUintSixteen();
+    uint8_t beamLength = receiveUintEight();
     Beam beam(id, beamLength, beamPosition1, beamPosition2);
     return beam;
 }

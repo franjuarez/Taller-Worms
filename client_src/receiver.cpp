@@ -16,31 +16,33 @@ Receiver::Receiver(Protocol& protocol, Queue<Game>& q)
 void Receiver::run() {
     
 
-    // 1ero get the GameLobby with the players team and the available maps
-    try {   
+    
+    try {
+        // 1st get the GameLobby with the players team and the available maps
         GameLobby lobby = protocol.receiveLobby();
         gameStatuses.push(lobby);
 
-        std::cout << lobby.getMapNames().at(0) + '\n';
-        std::cout << lobby.getTeam() << '\n';
-
-        // 2do get the map selected by the player
+        // 2nd get the map selected by the player
+        
         // GameMap map = protocol.receiveMap();
-        // GameStatus gameStatus(true, map, GameDynamic(NO_WORM_PLAYING));
-        // gameStatuses.push(gameStatus);
+        // gameStatuses.push(map);
+
+        // std::cout << map.getMapName() << "\n";
+        // std::cout << map.getNumberOfBeams() << "\n";
+        // std::cout << map.getBeams(0).at(0).getPosition2().getX() << "\n";
 
         // // 3rd start receiving the game status -> with the playing worm/team, 
         // // the map stays the same and the new dynamic objects -> worms, boxes, etc
+        while (true) {
+            GameDynamic gameDynamic = protocol.receiveDynamic();
+            gameStatuses.push(gameDynamic);
 
-        // while (true) {
-        //     GameDynamic gameDynamic = protocol.receiveDynamic();
-        //     GameStatus gameStatus(true, map, gameDynamic);
-        //     gameStatuses.push(gameStatus);
-        // }
+            // std::cout <<  gameDynamic.getWorms().at(0).getTeam() << "\n";
+            // std::cout <<  gameDynamic.getWorms().at(1).getTeam() << "\n";
+            // std::cout <<  gameDynamic.getWormPlayingID() << "\n";
+        }
     } catch (const std::exception& err) {
         std::cerr << err.what() << '\n';
-        // std::cout << "explote :( ";
-
     }
 }
 

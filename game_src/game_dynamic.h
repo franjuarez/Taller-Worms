@@ -14,14 +14,14 @@ class GameDynamic : public Game {
 
 private:
     int wormPlayingID;
-    std::vector<Worm*> worms;
+    std::vector<Worm> worms;
 
 public: 
-    GameDynamic(int wormPlayingID);
-    void addWorms(std::vector<Worm*>worms); // should change to adding all worms in one to avoid a RC
+    // va a tener que ser creado ya con el vect de worms parra que no chille la herencia
+    GameDynamic(int wormPlayingID, std::vector<Worm>worms);
+    void addWorms(std::vector<Worm>worms) override; // should change to adding all worms in one to avoid a RC
     void setWormPlayingID(int id);
-    // setDynamic to set both the vector and the current player
-    std::vector<Worm*> getWorms() override;
+    std::vector<Worm> getWorms() override;
     int getNumberOfWorms() override; 
     int getWormPlayingID() override;
     ~GameDynamic();

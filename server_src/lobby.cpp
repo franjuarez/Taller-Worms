@@ -1,8 +1,8 @@
 #include "lobby.h"
+#include "game_loop.h"
 #include "status_broadcaster.h"
 #include "../game_src/game.h"
 #include "../game_src/game_lobby.h"
-
 
 Lobby::Lobby(Socket& skt) : skt(skt) {}
 
@@ -17,24 +17,27 @@ void Lobby::run() {
 
     Queue<Command> commandQueue;
     StatusBroadcaster statusBroadcaster;
-    while(true) {
-        try {
-            Socket peer = skt.accept();
-            idPlayer++;
-            GameLobby playerLobby(maps, idPlayer);
-            Player* player = new Player(playerLobby, std::move(peer), commandQueue);
-            // magic happens
-            statusBroadcaster.addPlayer(idPlayer, player->getPlayerQueue());
-            player->start();
+    while (idPlayer < 1) {        
+        while(idPlayer < 1) {
+            try {
+                Socket peer = skt.accept();
+                idPlayer++;
+                GameLobby playerLobby(maps, idPlayer);
+                Player* player = new Player(playerLobby, std::move(peer), commandQueue);
+                // magic happens
+                statusBroadcaster.addPlayer(idPlayer, player->getPlayerQueue());
+                player->start();
 
-            reapDead();
-            players.push_back(player);
-        } catch (...) {
-            // pasan mas cosas 
+                reapDead();
+                players.push_back(player);
+            } catch (...) {
+                // pasan mas cosas 
+            }
         }
+        // Inicializar el GameLoop 
+        GameLoop gameLoop(commandQueue, statusBroadcaster);
+        gameLoop.start();
     }
-
-    // Inicializar el GameLoop 
 
     killAll();
 }
