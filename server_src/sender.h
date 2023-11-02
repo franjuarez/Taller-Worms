@@ -12,11 +12,11 @@ class Sender : public Thread {
 private:
     int id;
     Protocol& protocol;
-    StatusBroadcaster& statusBroadcaster;
+    Queue<Game>& playerQueue;
     bool& talking;
     // has the queue of each player
 public:
-    Sender(int id, Protocol& protocol, StatusBroadcaster& statusBroadcaster, bool& talking);
+    Sender(int id, Protocol& protocol, Queue<Game>& playerQueue, bool& talking);
     ~Sender();
     void run() override;
 

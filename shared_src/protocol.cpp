@@ -19,7 +19,6 @@ void Protocol::sendLobby(Game& lobby) {
     checkClosed();
     sendUintEight(SEND_LOBBY);
     sendUintEight(lobby.getTeam());
-    std::cout << lobby.getTeam() << '\n';
     sendMapNames(lobby.getMapNames());
 }
 

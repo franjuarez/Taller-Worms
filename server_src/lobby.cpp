@@ -22,9 +22,9 @@ void Lobby::run() {
             Socket peer = skt.accept();
             idPlayer++;
             GameLobby playerLobby(maps, idPlayer);
-            Player* player = new Player(playerLobby, std::move(peer), commandQueue, statusBroadcaster);
+            Player* player = new Player(playerLobby, std::move(peer), commandQueue);
             // magic happens
-
+            statusBroadcaster.addPlayer(idPlayer, player->getPlayerQueue());
             player->start();
 
             reapDead();

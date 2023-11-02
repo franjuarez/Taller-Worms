@@ -17,7 +17,6 @@ class Player  {
 private:
     GameLobby gameLobby;
     Protocol protocol;
-    StatusBroadcaster& statusBroadcaster;
     Sender sender;
     Receiver receiver;
     bool talking = true;
@@ -28,8 +27,9 @@ private:
     Queue<Game> playerQueue; // la q viene del game loop tiene los nuevos estados
 
 public:
-    Player(GameLobby gameLobby, Socket&& peer, Queue<Command>& commandQueue, StatusBroadcaster& statusBroadcaster);
+    Player(GameLobby gameLobby, Socket&& peer, Queue<Command>& commandQueue);
     ~Player();
+    Queue<Game>* getPlayerQueue();
     void start();
     void join();
     void kill();
