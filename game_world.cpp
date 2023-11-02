@@ -103,10 +103,8 @@ b2Vec2 calculateInitialVelocity(float maxHeight, float distance){
     float verticalVelocity = calculateVerticalVelocityForHeight(maxHeight);
     b2Vec2 velStep = b2Vec2(0, verticalVelocity);
     float timeToTop = getTimestepsToTop(velStep);
-    std::cout << "timeToTop: " << timeToTop << std::endl;
     float horizontalVelocity = distance / timeToTop * TIME_HERTZ /2;
     velStep.x = horizontalVelocity;
-    std::cout << "velStep x: " << velStep.x << " y: " << velStep.y << std::endl;
     return velStep;
 }
 
@@ -130,7 +128,6 @@ void GameWorld::jumpBackwardsWorm(){
 
 void GameWorld::update() {
     this->world->Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
-    std::cout << "Worm position: " << this->worm->GetPosition().x << ", " << this->worm->GetPosition().y << std::endl;
 }
 
 GameWorld::~GameWorld() {
