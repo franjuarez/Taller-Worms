@@ -1,9 +1,10 @@
 #include "game_world.h"
 #include <iostream>
 
+const b2Vec2 GRAVITY = b2Vec2(WORLD_GRAVITY_X, WORLD_GRAVITY_Y);
+
 GameWorld::GameWorld() {
-    b2Vec2 gravity(WORLD_GRAVITY_X, WORLD_GRAVITY_Y);
-    this->world = new b2World(gravity);
+    this->world = new b2World(GRAVITY);
     this->listener = new Listener();
     this->world->SetContactListener(this->listener);
     
@@ -72,11 +73,65 @@ void GameWorld::moveWormRight(){
     this->worm->SetLinearVelocity(vel);
 }
 
-void GameWorld::update() {
-    this->world->Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
-    // std::cout << "Worm position: " << this->worm->GetPosition().x << ", " << this->worm->GetPosition().y << std::endl;
+float calculateVerticalVelocityForHeight(float desiredHeight){
+    if (desiredHeight <= 0)
+        return 0;
+
+    b2Vec2 stepGravity = TIME_STEP * TIME_STEP * GRAVITY;
+
+    float a = 0.5f / stepGravity.y;
+    float b = 0.5f;
+    float c = desiredHeight;
+    
+    float quadraticSolution1 = ( -b - b2Sqrt( b*b - 4*a*c ) ) / (2*a);
+    float quadraticSolution2 = ( -b + b2Sqrt( b*b - 4*a*c ) ) / (2*a);
+
+    float v = quadraticSolution1 > 0 ? quadraticSolution1 : quadraticSolution2;
+
+    return v * 60.0f;
 }
 
+float getTimestepsToTop(b2Vec2& startingVelocity){
+    b2Vec2 stepVelocity = TIME_STEP * startingVelocity;
+    b2Vec2 stepGravity = TIME_STEP * TIME_STEP * GRAVITY;
+
+    float n = -stepVelocity.y / stepGravity.y - 1;
+    return n;
+}
+
+b2Vec2 calculateInitialVelocity(float maxHeight, float distance){
+    float verticalVelocity = calculateVerticalVelocityForHeight(maxHeight);
+    b2Vec2 velStep = b2Vec2(0, verticalVelocity);
+    float timeToTop = getTimestepsToTop(velStep);
+    std::cout << "timeToTop: " << timeToTop << std::endl;
+    float horizontalVelocity = distance / timeToTop * TIME_HERTZ /2;
+    velStep.x = horizontalVelocity;
+    std::cout << "velStep x: " << velStep.x << " y: " << velStep.y << std::endl;
+    return velStep;
+}
+
+void GameWorld::jumpWorm(b2Body* worm, float maxHeight, float distance){
+    b2Vec2 vel = worm->GetLinearVelocity();
+    if(vel.y != 0){
+        return;
+    }
+    b2Vec2 newVel = calculateInitialVelocity(maxHeight, distance);
+    newVel.x += vel.x;
+    this->worm->SetLinearVelocity(newVel);
+}
+
+void GameWorld::jumpForwardWorm(){
+    jumpWorm(this->worm, JUMP_FORWARD_MOVEMENT_Y, JUMP_FORWARD_MOVEMENT_X);
+}
+
+void GameWorld::jumpBackwardsWorm(){
+    jumpWorm(this->worm, JUMP_BACKWARDS_MOVEMENT_Y, JUMP_BACKWARDS_MOVEMENT_X);   
+}
+
+void GameWorld::update() {
+    this->world->Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
+    std::cout << "Worm position: " << this->worm->GetPosition().x << ", " << this->worm->GetPosition().y << std::endl;
+}
 
 GameWorld::~GameWorld() {
     for (b2Body* body = this->world->GetBodyList(); body != NULL; body = body->GetNext()) {

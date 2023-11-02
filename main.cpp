@@ -24,6 +24,18 @@ int main(){
     for(int i = 0; i < 100; i++){
         game.update();    
     }
+    game.jumpForwardWorm();
+    for(int i = 0; i < 100; i++){
+        game.update();    
+    }
+    game.jumpForwardWorm();
+    for(int i = 0; i < 100; i++){
+        game.update();    
+    }
+    game.jumpForwardWorm();
+    for(int i = 0; i < 100; i++){
+        game.update();    
+    }
     std::cout << "Termina3" << std::endl;
     return 0;
 }

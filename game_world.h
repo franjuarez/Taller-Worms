@@ -14,6 +14,8 @@ private:
     void createBeam(float startingX, float startingY, float angle, bool large);
 
     void createWorm(float startingX, float startingY);
+
+    void jumpWorm(b2Body* worm, float maxHeight, float distance);
 public:
     GameWorld();
 
@@ -22,6 +24,10 @@ public:
     void moveWormLeft();
 
     void moveWormRight();
+
+    void jumpForwardWorm();
+    
+    void jumpBackwardsWorm();
 
     ~GameWorld();
 };
