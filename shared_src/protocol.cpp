@@ -106,13 +106,13 @@ Command Protocol::receiveCommand() {
 }
 
 void Protocol::sendPosition(Position& pos) {
-    sendUintThirtyTwo(pos.getX());
-    sendUintThirtyTwo(pos.getY());
+    sendFloat(pos.getX());
+    sendFloat(pos.getY());
 }
 
 Position Protocol::receivePosition() {
-    uint16_t x = receiveUintThirtyTwo();
-    uint16_t y = receiveUintThirtyTwo();
+    float x = receiveFloat();
+    float y = receiveFloat();
     return Position(x, y);
 }
 
@@ -171,6 +171,11 @@ Beam Protocol::receiveBeam(int id) {
 }
 
 
+void Protocol::sendFloat(float num) {
+    skt.sendall(&num, sizeof(num), &was_closed);
+    checkClosed();
+}
+
 void Protocol::sendUintEight(uint8_t num) {
     skt.sendall(&num, sizeof(num), &was_closed);
     checkClosed();
@@ -192,6 +197,13 @@ void Protocol::sendString(const std::string& str) {
     sendUintSixteen(str.size());
     skt.sendall(str.c_str(), str.size(), &was_closed);
     checkClosed();
+}
+
+float Protocol::receiveFloat() {
+    float num;  
+    skt.recvall(&num, sizeof(num), &was_closed);
+    checkClosed();
+    return num;
 }
 
 uint8_t Protocol::receiveUintEight() {

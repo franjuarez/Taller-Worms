@@ -4,14 +4,14 @@
 class Position {
 
 private:
-    int x;
-    int y; 
+    float x;
+    float y; 
 public:
-    Position(int x, int y);
-    int getX();
-    int getY();
-    void setX(int x);
-    void setY(int y);
+    Position(float x, float y);
+    float getX();
+    float getY();
+    void setX(float x);
+    void setY(float y);
     ~Position();
 };
 #endif

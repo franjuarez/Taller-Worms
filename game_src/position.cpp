@@ -3,21 +3,21 @@
 #include <iostream>
 
 
-Position::Position(int x, int y) : x(x), y(y) {}
+Position::Position(float x, float y) : x(x), y(y) {}
 
-int Position::getX() {
+float Position::getX() {
     return this->x;
 }
 
-int Position::getY() {
+float Position::getY() {
     return this->y;
 }
 
-void Position::setX(int x) {
+void Position::setX(float x) {
     this->x = x;
 }
 
-void Position::setY(int y) {
+void Position::setY(float y) {
     this->y = y;
 }
 

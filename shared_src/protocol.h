@@ -22,12 +22,13 @@ private:
     Socket skt;
     bool was_closed = false;
 
+    void sendFloat(float);
     void sendUintEight(uint8_t);
     void sendUintSixteen(uint16_t);
     void sendUintThirtyTwo(uint32_t);
     void sendString(const std::string&);
     
-
+    float receiveFloat();
     uint8_t receiveUintEight();
     uint16_t receiveUintSixteen();
     uint32_t receiveUintThirtyTwo();
@@ -46,8 +47,8 @@ private:
     void checkClosed();
 
 public:
-    explicit Protocol(Socket&&);
-    Protocol(const std::string&, const std::string&);
+    explicit Protocol(Socket&& skt);
+    Protocol(const std::string& hostname, const std::string& servname);
 
     void sendMap(GameMap&);
     GameMap receiveMap();
