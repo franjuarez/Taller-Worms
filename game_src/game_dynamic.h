@@ -17,9 +17,9 @@ private:
     std::vector<Worm*> worms;
 
 public: 
-    GameDynamic(int);
-    void addWorms(std::vector<Worm*>); // should change to adding all worms in one to avoid a RC
-    void setWormPlayingID(int);
+    GameDynamic(int wormPlayingID);
+    void addWorms(std::vector<Worm*>worms); // should change to adding all worms in one to avoid a RC
+    void setWormPlayingID(int id);
     // setDynamic to set both the vector and the current player
     std::vector<Worm*> getWorms() override;
     int getNumberOfWorms() override; 

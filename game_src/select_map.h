@@ -9,7 +9,7 @@ private:
     std::string& mapName;
 
 public: 
-    SelectMap(std::string&);
+    SelectMap(std::string& mapName);
     std::string& getMapName();
 };
 

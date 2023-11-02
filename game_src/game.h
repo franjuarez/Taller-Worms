@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "worm.h"
+#include "beam.h"
 
 class Game {
 
@@ -13,9 +14,13 @@ protected:
     std::vector<Worm*> worms = {};
     int wormPlayingID = 0;
     int team = 0;
+    int numberOfBeams = 0;
+    std::vector<Beam> beamsMap = {};
+    std::string mapName = "";
 public: 
     Game(std::vector<std::string> mapNames, int team) : mapNames(mapNames), team(team) {}
     Game(int wormPlayingID) : wormPlayingID(wormPlayingID) {} 
+    Game(int numberOfBeams, std::string mapName) : numberOfBeams(numberOfBeams), mapName(mapName) {}
     ~Game() {}
 
     virtual std::vector<std::string>& getMapNames() {
@@ -30,10 +35,19 @@ public:
     }
 
     virtual int getNumberOfWorms() { 
-        return 0;
+        return worms.size();
     }
     virtual int getWormPlayingID() {
-        return 0;
+        return wormPlayingID;
+    }
+    virtual std::string getMapName() {
+        return mapName;
+    }
+    virtual std::vector<Beam> getBeams(int) {
+        return beamsMap;
+    }
+    virtual int getNumberOfBeams() {
+        return numberOfBeams;
     }
 
 };

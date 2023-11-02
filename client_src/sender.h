@@ -15,7 +15,7 @@ private:
     Protocol& protocol;
     Queue<Command>& commandsQueue;
 public:
-    Sender(Protocol&, Queue<Command>& );
+    Sender(Protocol& protocol, Queue<Command>& q);
     void run() override;
     ~Sender();
 };

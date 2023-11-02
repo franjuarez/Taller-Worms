@@ -38,9 +38,9 @@ void Protocol::sendMap(GameMap& gameMap) {
     uint16_t nrOfBeams = gameMap.getNumberOfBeams();
     sendUintSixteen(nrOfBeams);
 
+    std::vector<Beam> beams = gameMap.getBeams(0);
     for (int j = 0; j < nrOfBeams; j++) {
-        Beam beam = gameMap.getBeam(j);
-        sendBeam(beam);
+        sendBeam(beams[j]);
     }
 }
 
@@ -52,7 +52,7 @@ GameMap Protocol::receiveMap() {
 
     for (int j = 0; j < numberOfBeams; j++) {
         Beam beam = receiveBeam(j);
-        gameMap.addBeam(j, &beam);
+        gameMap.addBeam(j, beam);
     }
 
     return gameMap;

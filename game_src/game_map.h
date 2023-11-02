@@ -3,28 +3,25 @@
 
 #include "position.h"
 #include "beam.h"
+#include "game.h"
 
 #include <iostream>
 #include <vector>
 #include <string>
 
-class GameMap {
+class GameMap : public Game{
 
 private:
     int numberOfBeams;
-    std::vector<Beam*> beamsMap;
+    std::vector<Beam> beamsMap;
     std::string mapName;
 
 public:
-    GameMap(int, std::string);
-    void addBeam(int, Beam*);
-    Position getBeamPosition1(int);
-    Position getBeamPosition2(int);
-    std::string getMapName();
-    Beam getBeam(int);
-    // std::vector<Beam*> getBeam(int);
-    int getNumberOfBeams();
-    int getBeamLength(int);
+    GameMap(int numberOfBeams, std::string mapName);
+    void addBeam(int id, Beam beam);
+    std::string getMapName() override;
+    std::vector<Beam> getBeams(int) override;
+    int getNumberOfBeams() override;
     ~GameMap();
 };
 #endif

@@ -18,7 +18,7 @@ private:
     Protocol& protocol;
     Queue<Game>& gameStatuses;
 public:
-    Receiver(Protocol&, Queue<Game>&);
+    Receiver(Protocol& protocol, Queue<Game>& q);
     void run() override;
     ~Receiver();
 };

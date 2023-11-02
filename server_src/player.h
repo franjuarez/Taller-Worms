@@ -28,7 +28,7 @@ private:
     Queue<Game> playerQueue; // la q viene del game loop tiene los nuevos estados
 
 public:
-    Player(GameLobby, Socket&&, Queue<Command>&, StatusBroadcaster&);
+    Player(GameLobby gameLobby, Socket&& peer, Queue<Command>& commandQueue, StatusBroadcaster& statusBroadcaster);
     ~Player();
     void start();
     void join();

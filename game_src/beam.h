@@ -12,7 +12,7 @@ private:
     Position position2; 
     // float angle;
 public:
-    Beam(int, int, Position&, Position&);
+    Beam(int id, int lenght, Position& pos1, Position& pos2);
     int getId();
     Position getPosition1();
     Position getPosition2();

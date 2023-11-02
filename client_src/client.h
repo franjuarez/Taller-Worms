@@ -26,7 +26,7 @@ private:
 	Receiver receiver;
 	
 public:
-	Client(const std::string&, const std::string&);
+	Client(const std::string& hostname, const std::string& servname);
 	~Client();
 
 	std::vector<std::string> getAvailableMaps();
@@ -38,7 +38,7 @@ public:
 
 	Game& getGameStatus();
 
-	void execute(Command&);
+	void execute(Command& command);
 
 	void start();
 

@@ -14,7 +14,7 @@ private:
     Position position;
 
 public:
-    Worm(int, int, int, Position&);
+    Worm(int id, int team, int health, Position& position);
     int getId();
     int getTeam();
     int getHealth();

@@ -2,18 +2,13 @@
 
 #include <iostream>
 
-GameMap::GameMap(int numberOfBeams, std::string mapName) : numberOfBeams(numberOfBeams), mapName(mapName) {}
+GameMap::GameMap(int numberOfBeams, std::string mapName) : 
+Game(numberOfBeams, mapName), 
+numberOfBeams(numberOfBeams), 
+mapName(mapName) {}
 
-void GameMap::addBeam(int id, Beam* beam) {
+void GameMap::addBeam(int id, Beam beam) {
     beamsMap[id] = beam;
-}
-
-Position GameMap::getBeamPosition1(int id) {
-    return beamsMap[id]->getPosition1();
-}
-
-Position GameMap::getBeamPosition2(int id) {
-    return beamsMap[id]->getPosition2();
 }
 
 std::string GameMap::getMapName() {
@@ -24,12 +19,9 @@ int GameMap::getNumberOfBeams() {
     return this->numberOfBeams;
 }
 
-int GameMap::getBeamLength(int id) {
-    return beamsMap[id]->getBeamLength();
+std::vector<Beam> GameMap::getBeams(int id) {
+    return this->beamsMap;
 }
 
-Beam GameMap::getBeam(int id) {
-    return *beamsMap[id];
-}
 
 GameMap::~GameMap() {}
