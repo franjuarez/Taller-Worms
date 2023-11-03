@@ -19,6 +19,8 @@ int main(int argc, char** argv) {
 	try {
 		Client client(argv[1], argv[2]);
 		client.start();
+		GameDynamic game = client.getGameStatus();
+		std::cout <<  game.getWormPlayingID() << "\n";
 	} catch (const std::exception& e) {
 		std::cerr << e.what() << std::endl;
 		return ERROR;

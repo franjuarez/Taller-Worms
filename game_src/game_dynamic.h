@@ -24,6 +24,8 @@ public:
     std::vector<Worm> getWorms() override;
     int getNumberOfWorms() override; 
     int getWormPlayingID() override;
+    GameDynamic& operator=(const GameDynamic& other);
+    GameDynamic(const GameDynamic& other);
     ~GameDynamic();
 };
 #endif
