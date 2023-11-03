@@ -32,7 +32,10 @@ GameDynamic& GameDynamic::operator=(const GameDynamic& other) {
     return *this;
 }
 
-GameDynamic::GameDynamic(const GameDynamic& other) : Game(other), wormPlayingID(other.wormPlayingID), worms(other.worms) {}
+GameDynamic::GameDynamic(const GameDynamic& other) : 
+Game(other.wormPlayingID, other.worms), 
+wormPlayingID(other.wormPlayingID), 
+worms(other.worms) {}
 
 
 GameDynamic::~GameDynamic() {}

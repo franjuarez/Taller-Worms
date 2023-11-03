@@ -7,10 +7,8 @@ Client::Client(const std::string& hostname, const std::string& servname) : proto
 , sender(protocol, std::ref(commandsQueue))
 , receiver(protocol, std::ref(gameStatusQueue)) {}
 
-GameDynamic Client::getGameStatus() {
-    GameDynamic gameStatus(NO_WORM_PLAYING, std::vector<Worm>{});
-    while (gameStatusQueue.try_pop(gameStatus)) {};
-    std::cout <<  gameStatus.getWorms().at(1).getPosition().getX() << "\n";
+Game Client::getGameStatus() {
+    Game gameStatus = gameStatusQueue.pop();
     return gameStatus;
 }
 

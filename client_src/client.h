@@ -36,7 +36,7 @@ public:
 	
 	//game funciona como monitor y para empaquetar todo lo que se tiene que graficar
 
-	GameDynamic getGameStatus();
+	Game getGameStatus();
 
 	void execute(Command& command);
 

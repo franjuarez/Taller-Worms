@@ -6,10 +6,11 @@
 class SelectMap : public Command {
 
 private:
-    std::string& mapName;
-
+    int team;
+    int wormID;
+    
 public: 
-    SelectMap(std::string& mapName);
+    SelectMap(int team, int wormID);
     std::string& getMapName();
 };
 

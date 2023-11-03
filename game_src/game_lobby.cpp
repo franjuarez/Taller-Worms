@@ -23,7 +23,7 @@ GameLobby& GameLobby::operator=(const GameLobby& other) {
     return *this;
 }
 
-GameLobby::GameLobby(const GameLobby& other) : Game(other), mapNames(other.mapNames), team(other.team) {}
+GameLobby::GameLobby(const GameLobby& other) : Game(other.mapNames, other.team), mapNames(other.mapNames), team(other.team) {}
 
 
 GameLobby::~GameLobby(){}

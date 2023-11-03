@@ -5,7 +5,7 @@ GameLoop::GameLoop(Queue<Command>& commandsQueue, StatusBroadcaster& statusBroad
 
 void GameLoop::start() {
         std::vector<Worm> worms;
-        Position pos(1.0, 1.4);
+        Position pos(1.7, 1.4);
         worms.push_back(Worm(0, 79, 1, pos));
         Position pos2(9.89, 12.1);
         worms.push_back(Worm(8, 9, 1, pos2));

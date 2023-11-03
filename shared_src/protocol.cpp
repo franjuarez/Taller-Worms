@@ -95,15 +95,15 @@ void Protocol::sendCommand(Command& command) {
     
 }
 
-Command Protocol::receiveCommand() {
-    checkClosed();
-    uint8_t protocolCode = receiveUintEight();
+// Command Protocol::receiveCommand() {
+//     checkClosed();
+//     uint8_t protocolCode = receiveUintEight();
 
-    // hay que ver como parsear esto
-    // por ahi estaria explorar las callbacks? 
+//     // hay que ver como parsear esto
+//     // por ahi estaria explorar las callbacks? 
 
-    return Command();
-}
+//     return Command();
+// }
 
 void Protocol::sendPosition(Position& pos) {
     sendFloat(pos.getX());

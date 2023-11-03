@@ -4,6 +4,8 @@
 #include "../game_src/game.h"
 #include "../game_src/game_lobby.h"
 
+#define AMOUNT_OF_PLAYERS 2
+
 Lobby::Lobby(Socket& skt) : skt(skt) {}
 
 void Lobby::run() {
@@ -17,8 +19,8 @@ void Lobby::run() {
 
     Queue<Command> commandQueue;
     StatusBroadcaster statusBroadcaster;
-    while (idPlayer < 1) {        
-        while(idPlayer < 1) {
+    while (idPlayer < AMOUNT_OF_PLAYERS) {        
+        while(idPlayer < AMOUNT_OF_PLAYERS) {
             try {
                 Socket peer = skt.accept();
                 idPlayer++;
