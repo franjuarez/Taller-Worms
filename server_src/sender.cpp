@@ -1,14 +1,15 @@
 #include "sender.h"
 
-Sender::Sender(int id, Protocol& protocol, Queue<Game>& playerQueue, bool& talking) 
+Sender::Sender(int id, Protocol& protocol, Queue<Serializable>& playerQueue, bool& talking) 
 : id(id), protocol(protocol), playerQueue(playerQueue), talking(talking) {}
 
 void Sender::run() {
-    Game gameLobby = playerQueue.pop();
-    protocol.sendLobby(gameLobby);
+    Serializable* gameLobbyS = &playerQueue.pop();
+    GameLobby& gameLobby = dynamic_cast<GameLobby&>(*gameLobbyS);
+    gameLobby.send(protocol);
     while (1) {
-        Game game = playerQueue.pop();
-        protocol.sendDynamic(game);
+        // Serializable game = playerQueue.pop();
+        // protocol.sendDynamic(game);
     }
 }
 

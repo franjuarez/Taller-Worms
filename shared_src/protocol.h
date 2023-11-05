@@ -3,6 +3,7 @@
 
 #include "socket.h"
 #include "../game_src/game.h"
+#include "../game_src/serializable.h"
 #include "../game_src/game_map.h"
 #include "../game_src/game_dynamic.h"
 #include "../game_src/game_lobby.h"
@@ -23,25 +24,24 @@ private:
     bool was_closed = false;
 
     void sendFloat(float);
-    void sendUintEight(uint8_t);
-    void sendUintSixteen(uint16_t);
-    void sendUintThirtyTwo(uint32_t);
-    void sendString(const std::string&);
-    
     float receiveFloat();
+    void sendUintEight(uint8_t num);
     uint8_t receiveUintEight();
+    void sendUintSixteen(uint16_t num);
     uint16_t receiveUintSixteen();
+    void sendUintThirtyTwo(uint32_t num);
     uint32_t receiveUintThirtyTwo();
+    void sendString(const std::string& str);
     std::string receiveString();
 
 
-    void sendBeam(Beam&);
+    void sendBeam(Beam& beam);
     Beam receiveBeam(int id);
-    void sendWorm(Worm&);
+    void sendWorm(Worm& worm);
     Worm receiveWorm();
-    void sendPosition(Position&);
+    void sendPosition(Position& position);
     Position receivePosition();
-    void sendMapNames(std::vector<std::string>&);
+    void sendMapNames(std::vector<std::string>& mapNames);
     std::vector<std::string> receiveMapNames();
 
     void checkClosed();
@@ -53,9 +53,9 @@ public:
     void sendMap(GameMap&);
     GameMap receiveMap();
 
-    void sendLobby(Game&);
+    void sendLobby(GameLobby lobby);
     GameLobby receiveLobby();
-    void sendDynamic(Game&);
+    void sendDynamic(GameDynamic dynamic);
     GameDynamic receiveDynamic();
 
     void sendCommand(Command&);

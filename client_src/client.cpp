@@ -7,10 +7,10 @@ Client::Client(const std::string& hostname, const std::string& servname) : proto
 , sender(protocol, std::ref(commandsQueue))
 , receiver(protocol, std::ref(gameStatusQueue)) {}
 
-Game Client::getGameStatus() {
-    Game gameStatus = gameStatusQueue.pop();
-    return gameStatus;
-}
+// Game Client::getGameStatus() {
+//     Game gameStatus = gameStatusQueue.pop();
+//     return gameStatus;
+// }
 
 void Client::start() {
     try {

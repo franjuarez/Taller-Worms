@@ -8,9 +8,10 @@ class SelectMap : public Command {
 private:
     int team;
     int wormID;
+    std::string mapName;
     
 public: 
-    SelectMap(int team, int wormID);
+    SelectMap(int team, int wormID, std::string mapName);
     std::string& getMapName();
 };
 

@@ -9,6 +9,7 @@
 #include "../game_src/game_map.h"
 #include "../game_src/game_status.h"
 #include "../game_src/game.h"
+#include "../game_src/serializable.h"
 
 #include <iostream>
 
@@ -16,9 +17,9 @@ class Receiver : public Thread {
 
 private:
     Protocol& protocol;
-    Queue<Game>& gameStatuses;
+    Queue<Serializable>& gameStatuses;
 public:
-    Receiver(Protocol& protocol, Queue<Game>& q);
+    Receiver(Protocol& protocol, Queue<Serializable>& q);
     void run() override;
     ~Receiver();
 };

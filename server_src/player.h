@@ -15,7 +15,7 @@
 
 class Player  {
 private:
-    GameLobby gameLobby;
+    GameLobby* gameLobby;
     Protocol protocol;
     Sender sender;
     Receiver receiver;
@@ -24,12 +24,12 @@ private:
 // Game queue va a ir a un monitor? no... las playerQueue van al monitos porque Queue es thread safe 
 // las de Send van en monitor y la de RCV no.
     Queue<Command>& commandsQueue; // la q va al game loop tiene Commands
-    Queue<Game> playerQueue; // la q viene del game loop tiene los nuevos estados
+    Queue<Serializable> playerQueue; // la q viene del game loop tiene los nuevos estados
 
 public:
     Player(GameLobby gameLobby, Socket&& peer, Queue<Command>& commandQueue);
     ~Player();
-    Queue<Game>* getPlayerQueue();
+    Queue<Serializable>* getPlayerQueue();
     void start();
     void join();
     void kill();

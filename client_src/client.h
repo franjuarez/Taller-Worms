@@ -20,7 +20,7 @@ private:
 	Protocol protocol;
 	int team;
 	// Game gameStatus;	
-	Queue<Game> gameStatusQueue;
+	Queue<Serializable> gameStatusQueue;
 	Queue<Command> commandsQueue;
 	Sender sender;
 	Receiver receiver;

@@ -4,7 +4,7 @@
 #include "../shared_src/thread.h"
 #include "../shared_src/protocol.h"
 #include "../shared_src/queue.h"
-
+#include "../game_src/serializable.h"
 #include "status_broadcaster.h"
 
 class Sender : public Thread {
@@ -12,11 +12,11 @@ class Sender : public Thread {
 private:
     int id;
     Protocol& protocol;
-    Queue<Game>& playerQueue;
+    Queue<Serializable>& playerQueue;
     bool& talking;
     // has the queue of each player
 public:
-    Sender(int id, Protocol& protocol, Queue<Game>& playerQueue, bool& talking);
+    Sender(int id, Protocol& protocol, Queue<Serializable>& playerQueue, bool& talking);
     ~Sender();
     void run() override;
 

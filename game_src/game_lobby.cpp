@@ -1,8 +1,8 @@
 #include "game_lobby.h"
-
+#include "../shared_src/protocol.h"
 
 GameLobby::GameLobby(std::vector<std::string> mapNames, int team) 
-: Game(mapNames, team), mapNames(mapNames), team(team) {}   
+: Serializable(), mapNames(mapNames), team(team) {}   
     
 
 
@@ -14,6 +14,10 @@ int GameLobby::getTeam() {
     return this->team;
 }
 
+void GameLobby::send(Protocol& protocol) {
+    protocol.sendLobby(*this);
+}
+
 GameLobby& GameLobby::operator=(const GameLobby& other) {
     if (this == &other) {
         return *this;
@@ -23,7 +27,7 @@ GameLobby& GameLobby::operator=(const GameLobby& other) {
     return *this;
 }
 
-GameLobby::GameLobby(const GameLobby& other) : Game(other.mapNames, other.team), mapNames(other.mapNames), team(other.team) {}
+GameLobby::GameLobby(const GameLobby& other) : Serializable(), mapNames(other.mapNames), team(other.team) {}
 
 
 GameLobby::~GameLobby(){}

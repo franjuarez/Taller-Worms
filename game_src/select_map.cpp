@@ -2,6 +2,7 @@
 #include "commands.h"
 #include "select_map.h"
 
-SelectMap::SelectMap(int team, int wormID) : Command(team, wormID), 
+SelectMap::SelectMap(int team, int wormID, std::string mapName) : Command(team, wormID), 
 team(team), 
-wormID(wormID) {}
+wormID(wormID), 
+mapName(mapName) {}

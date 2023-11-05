@@ -10,7 +10,7 @@
 
 #include <iostream>
 
-Receiver::Receiver(Protocol& protocol, Queue<Game>& q) 
+Receiver::Receiver(Protocol& protocol, Queue<Serializable>& q) 
 : protocol(protocol), gameStatuses(q) {}
 
 void Receiver::run() {
@@ -21,7 +21,7 @@ void Receiver::run() {
         // 1st get the GameLobby with the players team and the available maps
         GameLobby lobby = protocol.receiveLobby();
         gameStatuses.push(lobby);
-        // std::cout <<  lobby.getMapNames().at(0) << "\n";
+        std::cout <<  lobby.getMapNames().at(0) << "\n";
 
         
         // 2nd get the map selected by the player
@@ -35,14 +35,14 @@ void Receiver::run() {
 
         // // 3rd start receiving the game status -> with the playing worm/team, 
         // // the map stays the same and the new dynamic objects -> worms, boxes, etc
-        while (true) {
-            GameDynamic gameDynamic = protocol.receiveDynamic();
-            gameStatuses.push(gameDynamic);
+        // while (true) {
+        //     GameDynamic gameDynamic = protocol.receiveDynamic();
+        //     gameStatuses.push(gameDynamic);
 
             // std::cout <<  gameDynamic.getWorms().at(1).getPosition().getX() << "\n";
             // std::cout <<  gameDynamic.getWorms().at(1).getPosition().getY() << "\n";
             // std::cout <<  gameDynamic.getWormPlayingID() << "\n";
-        }
+        // }
     } catch (const std::exception& err) {
         std::cerr << err.what() << '\n';
     }

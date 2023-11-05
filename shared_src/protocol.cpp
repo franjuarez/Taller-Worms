@@ -15,7 +15,7 @@ Protocol::Protocol(Socket&& skt) : skt(std::move(skt)) {}
 Protocol::Protocol(const std::string& hostname, const std::string& servname) :
 skt(hostname.c_str(), servname.c_str()) {}
 
-void Protocol::sendLobby(Game& lobby) {
+void Protocol::sendLobby(GameLobby lobby) {
     checkClosed();
     sendUintEight(SEND_LOBBY);
     sendUintEight(lobby.getTeam());
@@ -57,16 +57,16 @@ GameMap Protocol::receiveMap() {
     return gameMap;
 }
 
-void Protocol::sendDynamic(Game& gameDynamic) {
+void Protocol::sendDynamic(GameDynamic dynamic) {
     checkClosed();
 
     sendUintEight(SEND_DYNAMIC); 
-    sendUintSixteen(gameDynamic.getNumberOfWorms());
-    sendUintSixteen(gameDynamic.getWormPlayingID());
+    sendUintSixteen(dynamic.getNumberOfWorms());
+    sendUintSixteen(dynamic.getWormPlayingID());
 
-    std::vector<Worm> worms = gameDynamic.getWorms();
+    std::vector<Worm> worms = dynamic.getWorms();
 
-    for (int i = 0; i < gameDynamic.getNumberOfWorms(); i++) {
+    for (int i = 0; i < dynamic.getNumberOfWorms(); i++) {
         sendWorm(worms[i]);
     }
 }
