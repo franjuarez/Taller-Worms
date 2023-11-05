@@ -1,11 +1,10 @@
 #include "game_world.h"
-#include <iostream>
 
-const b2Vec2 GRAVITY = b2Vec2(WORLD_GRAVITY_X, WORLD_GRAVITY_Y);
+#define WORM_GROUP_INDEX -1
 
 GameWorld::GameWorld() {
-    this->world = new b2World(GRAVITY);
-    this->listener = new Listener();
+    this->world = new b2World(b2Vec2(WORLD_GRAVITY_X, WORLD_GRAVITY_Y));
+    this->listener = new Listener(this->world, this->entitiesToRemove); //VER SI HACE FALTA HEAP O STACK
     this->world->SetContactListener(this->listener);
     
     //Hardcoded (for now)
@@ -14,7 +13,8 @@ GameWorld::GameWorld() {
     createBeam(-7.5f, 1.0f, 30, false);
     createBeam(-4.0f, 0.0f, -30, false);
     createBeam(-1.0f, -5.0f, 68, true);
-    createWorm(-10.0f, 8.0f);
+    
+    createWorm(-9, 7);
 }
 
 void GameWorld::createWorm(float startingX, float startingY){
@@ -22,6 +22,7 @@ void GameWorld::createWorm(float startingX, float startingY){
     bd.type = b2_dynamicBody;
     bd.position.Set(startingX, startingY);
     b2Body* body = world->CreateBody(&bd);
+    
     b2FixtureDef fd;
     b2PolygonShape shape;
     shape.SetAsBox(WORM_WIDTH, WORM_HEIGHT);
@@ -29,10 +30,12 @@ void GameWorld::createWorm(float startingX, float startingY){
     fd.density = WORM_DENSITY;
     fd.friction = WORM_FRICTION;
     body->SetFixedRotation(true);
-    fd.filter.groupIndex = -1; //This way it doesn't collide with other worms
+    fd.filter.groupIndex = WORM_GROUP_INDEX; //This way it doesn't collide with other worms
     body->CreateFixture(&fd);
-    EntityType type = Worm;
-    body->GetUserData().pointer = type;
+    
+    Worm* wormEntity = new Worm(body, RIGHT);
+    body->GetUserData().pointer = reinterpret_cast<uintptr_t>(wormEntity);
+
     this->worm = body;
 }
 
@@ -54,58 +57,57 @@ void GameWorld::createBeam(float startingX, float startingY, float angle, bool l
     vs[3].Set(0, BEAM_HEIGHT);
     shape.Set(vs, 4);
     gb.shape = &shape;
-    gb.friction = BEAM_FRICTION;
+    gb.friction = WORM_FRICTION;
     beamBody->CreateFixture(&gb);
 
-    EntityType type = (abs(angle) > 45) ? SlidingBeam : WalkableBeam;
-    beamBody->GetUserData().pointer = type;
+    bool isWalkable = (abs(angle) > MAX_WALKABLE_BEAM_ANGLE) ? false : true;
+    Beam* beamEntity = new Beam(beamBody, isWalkable);
+    beamBody->GetUserData().pointer = reinterpret_cast<uintptr_t>(beamEntity);
+}
+
+b2Body* GameWorld::createRocket(int direction){
+    b2BodyDef bd;
+    bd.type = b2_dynamicBody;
+    float deltaX = (direction == LEFT) ? - WORM_WIDTH - ROCKET_WIDTH - 0.1f : WORM_WIDTH + ROCKET_WIDTH + 0.1f;
+    float posX = this->worm->GetPosition().x + deltaX;
+    float posY = this->worm->GetPosition().y;
+    bd.position.Set(posX, posY);
+    b2Body* body = this->world->CreateBody(&bd);
+    body->IsBullet()
+    ;
+    b2FixtureDef fd;
+    b2PolygonShape shape;
+    shape.SetAsBox(ROCKET_WIDTH, ROCKET_HEIGHT);
+    fd.shape = &shape;
+    fd.density = ROCKET_DENSITY;
+    body->CreateFixture(&fd);
+
+    Rocket* rocketEntity = new Rocket(body, ROCKET_DAMAGE, ROCKET_BLAST_RADIOUS);
+    body->GetUserData().pointer = reinterpret_cast<uintptr_t>(rocketEntity);
+    return body;
+}
+
+void GameWorld::wormLaunchRocket(float angle, int direction, float power){
+    b2Body* rocket = createRocket(direction);
+    float velX = ROCKET_MAX_SPEED * (power / 100.0f);
+    float velY = ROCKET_MAX_SPEED * (power / 100.0f);
+    int sign = (direction == LEFT) ? -1 : 1;
+    velX = cos(angle * b2_pi / 180.0f) * velX * sign;
+    velY = sin(angle * b2_pi / 180.0f) * velY;
+    b2Vec2 rocketVel = b2Vec2(velX, velY);
+    rocket->SetLinearVelocity(rocketVel);
 }
 
 void GameWorld::moveWormLeft(){
     b2Vec2 vel = this->worm->GetLinearVelocity(); 
-    vel.x = -MOVE_VELOCITY_X;
+    vel.x = -MOVE_VELOCITY;
     this->worm->SetLinearVelocity(vel);
 }
 
 void GameWorld::moveWormRight(){
     b2Vec2 vel = this->worm->GetLinearVelocity(); 
-    vel.x = MOVE_VELOCITY_X;
+    vel.x = MOVE_VELOCITY;
     this->worm->SetLinearVelocity(vel);
-}
-
-float calculateVerticalVelocityForHeight(float desiredHeight){
-    if (desiredHeight <= 0)
-        return 0;
-
-    b2Vec2 stepGravity = TIME_STEP * TIME_STEP * GRAVITY;
-
-    float a = 0.5f / stepGravity.y;
-    float b = 0.5f;
-    float c = desiredHeight;
-    
-    float quadraticSolution1 = ( -b - b2Sqrt( b*b - 4*a*c ) ) / (2*a);
-    float quadraticSolution2 = ( -b + b2Sqrt( b*b - 4*a*c ) ) / (2*a);
-
-    float v = quadraticSolution1 > 0 ? quadraticSolution1 : quadraticSolution2;
-
-    return v * 60.0f;
-}
-
-float getTimestepsToTop(b2Vec2& startingVelocity){
-    b2Vec2 stepVelocity = TIME_STEP * startingVelocity;
-    b2Vec2 stepGravity = TIME_STEP * TIME_STEP * GRAVITY;
-
-    float n = -stepVelocity.y / stepGravity.y - 1;
-    return n;
-}
-
-b2Vec2 calculateInitialVelocity(float maxHeight, float distance){
-    float verticalVelocity = calculateVerticalVelocityForHeight(maxHeight);
-    b2Vec2 velStep = b2Vec2(0, verticalVelocity);
-    float timeToTop = getTimestepsToTop(velStep);
-    float horizontalVelocity = distance / timeToTop * TIME_HERTZ /2;
-    velStep.x = horizontalVelocity;
-    return velStep;
 }
 
 void GameWorld::jumpWorm(b2Body* worm, float maxHeight, float distance){
@@ -113,7 +115,8 @@ void GameWorld::jumpWorm(b2Body* worm, float maxHeight, float distance){
     if(vel.y != 0){
         return;
     }
-    b2Vec2 newVel = calculateInitialVelocity(maxHeight, distance);
+    //From auxiliar_physics_functions.cpp
+    b2Vec2 newVel = calculateInitialVelocityForMaxHeight(maxHeight, distance);
     newVel.x += vel.x;
     this->worm->SetLinearVelocity(newVel);
 }
@@ -126,13 +129,40 @@ void GameWorld::jumpBackwardsWorm(){
     jumpWorm(this->worm, JUMP_BACKWARDS_MOVEMENT_Y, JUMP_BACKWARDS_MOVEMENT_X);   
 }
 
+void GameWorld::killDeadWorms(){
+    if(this->worm != nullptr){
+        Worm* wormData = (Worm*) this->worm->GetUserData().pointer;
+        if(wormData->isDead()){
+            std::cout << "Worm is dead" << std::endl;
+            this->entitiesToRemove.insert(this->worm);
+            this->worm = nullptr;
+        }
+    }
+}
+
+void GameWorld::removeEntities(){
+    for(b2Body* body : this->entitiesToRemove){
+        Entity* entity = (Entity*) body->GetUserData().pointer;
+        this->world->DestroyBody(body);
+        delete entity;
+    }
+    this->entitiesToRemove.clear();
+}
+
 void GameWorld::update() {
     this->world->Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
+
+    killDeadWorms();
+    removeEntities();
 }
 
 GameWorld::~GameWorld() {
     for (b2Body* body = this->world->GetBodyList(); body != NULL; body = body->GetNext()) {
+        //delete user data
+        Entity* entity = (Entity*) body->GetUserData().pointer;
         this->world->DestroyBody(body);
+        delete entity;
     }
+    delete this->listener;
     delete this->world;
 }
