@@ -1,8 +1,21 @@
 #include "Worm.h"
 
-Worm::Worm(b2Body* body, int direction) : Entity(body), health(WORM_INITIAL_HEALTH), direction(direction) {}
+Worm::Worm(b2Body* body, uint id, int direction) : Entity(body), id(id), health(WORM_INITIAL_HEALTH), direction(direction) {}
+
 
 Worm::~Worm() {}
+
+void Worm::takeDamage(float damage){
+    this->health -= damage;
+}
+
+bool Worm::isDead(){
+    return this->health <= 0;
+}
+
+uint Worm::getId(){
+    return this->id;
+}
 
 void Worm::moveOnWalkableBeam(b2Body* worm, b2Vec2 normal){
     b2Vec2 vel = worm->GetLinearVelocity();
@@ -17,14 +30,6 @@ void Worm::moveOnWalkableBeam(b2Body* worm, b2Vec2 normal){
     float velX = perpendicular.x * vel.Length() * sign;
     float velY = perpendicular.y * vel.Length() * sign;
     worm->SetLinearVelocity(b2Vec2(velX, velY));
-}
-
-void Worm::takeDamage(float damage){
-    this->health -= damage;
-}
-
-bool Worm::isDead(){
-    return this->health <= 0;
 }
 
 void Worm::beginCollisionWithBeam(Entity* otherBody, std::set<b2Body*>& entitiesToRemove) {
@@ -53,6 +58,9 @@ void Worm::beginCollisionWithWorm(Entity* otherBody, std::set<b2Body*>& entities
     UNUSED(entitiesToRemove);
 }
 
+//Cuesta reconocer cuand oesta caminando/saltando/volando. 
+//Bug conocido: cuando de alguna manera (volar por explosion por ej)
+//Llega a mas velocidad q la de movimiento, resbala por la viga.
 void Worm::preSolveCollisionWithBeam(Entity* otherBody, b2Contact* contact) {
     Beam* beam = (Beam*) otherBody;
     if(beam->isWalkable()){

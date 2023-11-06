@@ -10,19 +10,20 @@ GameWorld::GameWorld() {
     //Hardcoded (for now)
 
     createBeam(-11.0f, 4.0f, 0, false);
-    createBeam(-7.5f, 1.0f, 30, false);
+    createBeam(-7.5f, 1.0f, 30, true);
     createBeam(-4.0f, 0.0f, -30, false);
     createBeam(-1.0f, -5.0f, 68, true);
     
-    createWorm(-9, 7);
+    createWorm(-8, 7, 0);
+    createWorm(-6, 7, 1);
 }
 
-void GameWorld::createWorm(float startingX, float startingY){
+void GameWorld::createWorm(float startingX, float startingY, uint id){
     b2BodyDef bd;
     bd.type = b2_dynamicBody;
     bd.position.Set(startingX, startingY);
-    b2Body* body = world->CreateBody(&bd);
-    
+    b2Body* body = this->world->CreateBody(&bd);
+
     b2FixtureDef fd;
     b2PolygonShape shape;
     shape.SetAsBox(WORM_WIDTH, WORM_HEIGHT);
@@ -32,11 +33,17 @@ void GameWorld::createWorm(float startingX, float startingY){
     body->SetFixedRotation(true);
     fd.filter.groupIndex = WORM_GROUP_INDEX; //This way it doesn't collide with other worms
     body->CreateFixture(&fd);
-    
-    Worm* wormEntity = new Worm(body, RIGHT);
+
+    Worm* wormEntity = new Worm(body, id, RIGHT);
     body->GetUserData().pointer = reinterpret_cast<uintptr_t>(wormEntity);
 
-    this->worm = body;
+    this->worms[id] = body;
+}
+
+void GameWorld::checkWormExists(uint id){
+    if(this->worms.find(id) == this->worms.end()){
+        throw std::invalid_argument("Worm with id " + std::to_string(id) + " does not exist");
+    }
 }
 
 void GameWorld::createBeam(float startingX, float startingY, float angle, bool large){
@@ -65,12 +72,12 @@ void GameWorld::createBeam(float startingX, float startingY, float angle, bool l
     beamBody->GetUserData().pointer = reinterpret_cast<uintptr_t>(beamEntity);
 }
 
-b2Body* GameWorld::createRocket(int direction){
+b2Body* GameWorld::createRocket(b2Body* worm, int direction){
     b2BodyDef bd;
     bd.type = b2_dynamicBody;
     float deltaX = (direction == LEFT) ? - WORM_WIDTH - ROCKET_WIDTH - 0.1f : WORM_WIDTH + ROCKET_WIDTH + 0.1f;
-    float posX = this->worm->GetPosition().x + deltaX;
-    float posY = this->worm->GetPosition().y;
+    float posX = worm->GetPosition().x + deltaX;
+    float posY = worm->GetPosition().y;
     bd.position.Set(posX, posY);
     b2Body* body = this->world->CreateBody(&bd);
     body->IsBullet()
@@ -87,8 +94,10 @@ b2Body* GameWorld::createRocket(int direction){
     return body;
 }
 
-void GameWorld::wormLaunchRocket(float angle, int direction, float power){
-    b2Body* rocket = createRocket(direction);
+void GameWorld::wormLaunchRocket(uint id, float angle, int direction, float power){
+    checkWormExists(id);
+    b2Body* worm = this->worms[id];
+    b2Body* rocket = createRocket(worm, direction);
     float velX = ROCKET_MAX_SPEED * (power / 100.0f);
     float velY = ROCKET_MAX_SPEED * (power / 100.0f);
     int sign = (direction == LEFT) ? -1 : 1;
@@ -98,16 +107,27 @@ void GameWorld::wormLaunchRocket(float angle, int direction, float power){
     rocket->SetLinearVelocity(rocketVel);
 }
 
-void GameWorld::moveWormLeft(){
-    b2Vec2 vel = this->worm->GetLinearVelocity(); 
-    vel.x = -MOVE_VELOCITY;
-    this->worm->SetLinearVelocity(vel);
+void GameWorld::moveWorm(b2Body* worm, b2Vec2 vel){
+    b2Vec2 currentVel = worm->GetLinearVelocity();
+    if(currentVel.y != 0){
+        return;
+    }
+    vel = vel + currentVel;
+    worm->SetLinearVelocity(vel);
 }
 
-void GameWorld::moveWormRight(){
-    b2Vec2 vel = this->worm->GetLinearVelocity(); 
-    vel.x = MOVE_VELOCITY;
-    this->worm->SetLinearVelocity(vel);
+void GameWorld::moveWormLeft(uint id){
+    checkWormExists(id);
+    b2Body* worm = this->worms[id];
+    b2Vec2 vel = b2Vec2(-MOVE_VELOCITY, 0);
+    moveWorm(worm, vel);
+}
+
+void GameWorld::moveWormRight(uint id){
+    checkWormExists(id);
+    b2Body* worm = this->worms[id];
+    b2Vec2 vel = b2Vec2(MOVE_VELOCITY, 0);
+    moveWorm(worm, vel);
 }
 
 void GameWorld::jumpWorm(b2Body* worm, float maxHeight, float distance){
@@ -118,25 +138,36 @@ void GameWorld::jumpWorm(b2Body* worm, float maxHeight, float distance){
     //From auxiliar_physics_functions.cpp
     b2Vec2 newVel = calculateInitialVelocityForMaxHeight(maxHeight, distance);
     newVel.x += vel.x;
-    this->worm->SetLinearVelocity(newVel);
+    worm->SetLinearVelocity(newVel);
+
 }
 
-void GameWorld::jumpForwardWorm(){
-    jumpWorm(this->worm, JUMP_FORWARD_MOVEMENT_Y, JUMP_FORWARD_MOVEMENT_X);
+void GameWorld::jumpForwardWorm(uint id){
+    checkWormExists(id);
+    b2Body* worm = this->worms[id];
+    jumpWorm(worm, JUMP_FORWARD_MOVEMENT_Y, JUMP_FORWARD_MOVEMENT_X);
 }
 
-void GameWorld::jumpBackwardsWorm(){
-    jumpWorm(this->worm, JUMP_BACKWARDS_MOVEMENT_Y, JUMP_BACKWARDS_MOVEMENT_X);   
+void GameWorld::jumpBackwardsWorm(uint id){
+    checkWormExists(id);
+    b2Body* worm = this->worms[id];
+    jumpWorm(worm, JUMP_BACKWARDS_MOVEMENT_Y, JUMP_BACKWARDS_MOVEMENT_X);   
 }
 
 void GameWorld::killDeadWorms(){
-    if(this->worm != nullptr){
-        Worm* wormData = (Worm*) this->worm->GetUserData().pointer;
-        if(wormData->isDead()){
-            std::cout << "Worm is dead" << std::endl;
-            this->entitiesToRemove.insert(this->worm);
-            this->worm = nullptr;
+    std::vector<Worm*> wormsToRemove;
+    
+    for (auto& worm : this->worms) {
+        Worm* wormData = (Worm*) worm.second->GetUserData().pointer;
+        if (wormData->isDead()) {
+            std::cout << "Muriendo Worm con id: " << worm.first << std::endl;
+            wormsToRemove.push_back(wormData);
         }
+    }
+
+    for (Worm* wormToRemove : wormsToRemove) {
+        this->entitiesToRemove.insert(this->worms.find(wormToRemove->getId())->second);
+        this->worms.erase(wormToRemove->getId());
     }
 }
 
