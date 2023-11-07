@@ -6,12 +6,17 @@ Client::Client(const std::string& hostname, const std::string& servname) : proto
 , gameStatusQueue(90)
 , commandsQueue(90)
 , sender(protocol, std::ref(commandsQueue))
-, receiver(protocol, std::ref(gameStatusQueue)) {}
+, receiver(protocol, std::ref(gameStatusQueue)) {
+    lastGameStatus = NULL;
+}
 
-// Game Client::getGameStatus() {
-//     Game gameStatus = gameStatusQueue.pop();
-//     return gameStatus;
-// }
+Serializable* Client::getGameStatus() {
+    if (!lastGameStatus) {
+        lastGameStatus = gameStatusQueue.pop();
+    }
+    while (gameStatusQueue.try_pop(this->lastGameStatus)) {}
+    return this->lastGameStatus;
+}
 
 void Client::start() {
     try {
@@ -27,9 +32,9 @@ void Client::join() {
     receiver.join();
 }
 
-// void Client::execute(Command& command) {
-//     commandsQueue.push(command);
-// }
+void Client::execute(Command* command) {
+    commandsQueue.push(command);
+}
 
 
 Client::~Client(){}

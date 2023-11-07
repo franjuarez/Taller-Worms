@@ -32,10 +32,13 @@ void Receiver::run() {
         while (true) {
             GameDynamic gameDynamic = protocol.receiveDynamic();
             gameStatuses.push(&gameDynamic);
-
-            std::cout <<  gameDynamic.getWorms().at(0).getPosition().getX() << "\n";
+            std::cout << "worm " << gameDynamic.getWorms().at(0).getId() << std::endl;
+            std::cout <<  gameDynamic.getWorms().at(0).getPosition().getX() << ", ";
             std::cout <<  gameDynamic.getWorms().at(0).getPosition().getY() << "\n";
-            std::cout <<  gameDynamic.getWormPlayingID() << "\n";
+
+            std::cout << "worm " << gameDynamic.getWorms().at(1).getId() << std::endl;
+            std::cout <<  gameDynamic.getWorms().at(1).getPosition().getX() << ", ";
+            std::cout <<  gameDynamic.getWorms().at(1).getPosition().getY() << "\n";
         }
     } catch (const std::exception& err) {
         std::cerr << err.what() << '\n';

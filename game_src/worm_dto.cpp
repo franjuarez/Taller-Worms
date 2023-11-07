@@ -5,6 +5,9 @@
 WormDTO::WormDTO(int id, int team, int health, Position position) 
 : id(id), team(team), health(health), position(position) {}
 
+WormDTO::WormDTO(const WormDTO& other) 
+: id(other.id), team(other.team), health(other.health), position(other.position) {}
+
 int WormDTO::getId() {
     return this->id;
 }
@@ -19,6 +22,16 @@ int WormDTO::getHealth() {
 
 Position WormDTO::getPosition() {
     return this->position;
+}
+
+WormDTO& WormDTO::operator=(const WormDTO& other) {
+    if (this != &other) { // Check for self-assignment
+        id = other.id;
+        team = other.team;
+        health = other.health;
+        position = other.position;
+    }
+  return *this;
 }
 
 WormDTO::~WormDTO() {}

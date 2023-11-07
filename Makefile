@@ -163,6 +163,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named SharedUi
+
+# Build rule for target.
+SharedUi: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 SharedUi
+.PHONY : SharedUi
+
+# fast build rule for target.
+SharedUi/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedUi.dir/build.make CMakeFiles/SharedUi.dir/build
+.PHONY : SharedUi/fast
+
+#=============================================================================
 # Target rules for targets named SharedPhysics
 
 # Build rule for target.
@@ -1123,6 +1136,102 @@ shared_src/socket.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedLib.dir/build.make CMakeFiles/SharedLib.dir/shared_src/socket.cpp.s
 .PHONY : shared_src/socket.cpp.s
 
+ui_src/constants.o: ui_src/constants.cpp.o
+.PHONY : ui_src/constants.o
+
+# target to build an object file
+ui_src/constants.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedUi.dir/build.make CMakeFiles/SharedUi.dir/ui_src/constants.cpp.o
+.PHONY : ui_src/constants.cpp.o
+
+ui_src/constants.i: ui_src/constants.cpp.i
+.PHONY : ui_src/constants.i
+
+# target to preprocess a source file
+ui_src/constants.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedUi.dir/build.make CMakeFiles/SharedUi.dir/ui_src/constants.cpp.i
+.PHONY : ui_src/constants.cpp.i
+
+ui_src/constants.s: ui_src/constants.cpp.s
+.PHONY : ui_src/constants.s
+
+# target to generate assembly for a file
+ui_src/constants.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedUi.dir/build.make CMakeFiles/SharedUi.dir/ui_src/constants.cpp.s
+.PHONY : ui_src/constants.cpp.s
+
+ui_src/game_view.o: ui_src/game_view.cpp.o
+.PHONY : ui_src/game_view.o
+
+# target to build an object file
+ui_src/game_view.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedUi.dir/build.make CMakeFiles/SharedUi.dir/ui_src/game_view.cpp.o
+.PHONY : ui_src/game_view.cpp.o
+
+ui_src/game_view.i: ui_src/game_view.cpp.i
+.PHONY : ui_src/game_view.i
+
+# target to preprocess a source file
+ui_src/game_view.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedUi.dir/build.make CMakeFiles/SharedUi.dir/ui_src/game_view.cpp.i
+.PHONY : ui_src/game_view.cpp.i
+
+ui_src/game_view.s: ui_src/game_view.cpp.s
+.PHONY : ui_src/game_view.s
+
+# target to generate assembly for a file
+ui_src/game_view.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedUi.dir/build.make CMakeFiles/SharedUi.dir/ui_src/game_view.cpp.s
+.PHONY : ui_src/game_view.cpp.s
+
+ui_src/mouse_handler.o: ui_src/mouse_handler.cpp.o
+.PHONY : ui_src/mouse_handler.o
+
+# target to build an object file
+ui_src/mouse_handler.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedUi.dir/build.make CMakeFiles/SharedUi.dir/ui_src/mouse_handler.cpp.o
+.PHONY : ui_src/mouse_handler.cpp.o
+
+ui_src/mouse_handler.i: ui_src/mouse_handler.cpp.i
+.PHONY : ui_src/mouse_handler.i
+
+# target to preprocess a source file
+ui_src/mouse_handler.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedUi.dir/build.make CMakeFiles/SharedUi.dir/ui_src/mouse_handler.cpp.i
+.PHONY : ui_src/mouse_handler.cpp.i
+
+ui_src/mouse_handler.s: ui_src/mouse_handler.cpp.s
+.PHONY : ui_src/mouse_handler.s
+
+# target to generate assembly for a file
+ui_src/mouse_handler.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedUi.dir/build.make CMakeFiles/SharedUi.dir/ui_src/mouse_handler.cpp.s
+.PHONY : ui_src/mouse_handler.cpp.s
+
+ui_src/worm_view.o: ui_src/worm_view.cpp.o
+.PHONY : ui_src/worm_view.o
+
+# target to build an object file
+ui_src/worm_view.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedUi.dir/build.make CMakeFiles/SharedUi.dir/ui_src/worm_view.cpp.o
+.PHONY : ui_src/worm_view.cpp.o
+
+ui_src/worm_view.i: ui_src/worm_view.cpp.i
+.PHONY : ui_src/worm_view.i
+
+# target to preprocess a source file
+ui_src/worm_view.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedUi.dir/build.make CMakeFiles/SharedUi.dir/ui_src/worm_view.cpp.i
+.PHONY : ui_src/worm_view.cpp.i
+
+ui_src/worm_view.s: ui_src/worm_view.cpp.s
+.PHONY : ui_src/worm_view.s
+
+# target to generate assembly for a file
+ui_src/worm_view.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedUi.dir/build.make CMakeFiles/SharedUi.dir/ui_src/worm_view.cpp.s
+.PHONY : ui_src/worm_view.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -1139,6 +1248,7 @@ help:
 	@echo "... SharedGameLib"
 	@echo "... SharedLib"
 	@echo "... SharedPhysics"
+	@echo "... SharedUi"
 	@echo "... box2d"
 	@echo "... client"
 	@echo "... glad"
@@ -1247,6 +1357,18 @@ help:
 	@echo "... shared_src/socket.o"
 	@echo "... shared_src/socket.i"
 	@echo "... shared_src/socket.s"
+	@echo "... ui_src/constants.o"
+	@echo "... ui_src/constants.i"
+	@echo "... ui_src/constants.s"
+	@echo "... ui_src/game_view.o"
+	@echo "... ui_src/game_view.i"
+	@echo "... ui_src/game_view.s"
+	@echo "... ui_src/mouse_handler.o"
+	@echo "... ui_src/mouse_handler.i"
+	@echo "... ui_src/mouse_handler.s"
+	@echo "... ui_src/worm_view.o"
+	@echo "... ui_src/worm_view.i"
+	@echo "... ui_src/worm_view.s"
 .PHONY : help
 
 

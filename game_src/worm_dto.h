@@ -16,10 +16,12 @@ private:
 
 public:
     WormDTO(int id, int team, int health, Position position);
+    WormDTO(const WormDTO& other);
     int getId();
     int getTeam();
     int getHealth();
     Position getPosition();
+    WormDTO& operator=(const WormDTO& worm);
     ~WormDTO();
 };
 #endif

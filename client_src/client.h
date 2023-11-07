@@ -17,11 +17,11 @@ class Client {
 private:
 	Protocol protocol;
 	int team;
-	// Game gameStatus;
 	Queue<Serializable*> gameStatusQueue;
 	Queue<Command*> commandsQueue;
 	Sender sender;
 	Receiver receiver;
+	Serializable* lastGameStatus;
 	
 public:
 	Client(const std::string& hostname, const std::string& servname);
@@ -34,9 +34,9 @@ public:
 	
 	//game funciona como monitor y para empaquetar todo lo que se tiene que graficar
 
-	// Game getGameStatus();
+	Serializable* getGameStatus();
 
-	void execute(Command& command);
+	void execute(Command* command);
 
 	void start();
 

@@ -17,8 +17,10 @@ void Sender::run() {
             GameDynamic* gameDynamic = dynamic_cast<GameDynamic*>(gameLobbySS);
             gameDynamic->send(protocol);
         }
-    } catch (...) {
-        std::cout << "y mira tu casteo esta como el culo\n";
+    } catch (std::exception& e) {
+        std::cout << "error en Sender: " << e.what() << std::endl;
+        // std::cout << "y mira tu casteo esta como el culo\n";
+
     }
 }
 

@@ -13,6 +13,11 @@ add_subdirectory("thirdParty/SDL2pp")
 include_directories(${SDL2PP_INCLUDE_DIRS})
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
+file(GLOB UI "${CMAKE_CURRENT_SOURCE_DIR}/ui_src/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/ui_src/*.h")
+
+add_library(SharedUi ${UI})
+target_link_libraries(SharedUi PUBLIC SDL2pp::SDL2pp)
+
 file(GLOB SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/physics_src/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/physics_src/*.h")
 
 add_library(SharedPhysics ${SOURCES})
@@ -21,7 +26,7 @@ target_link_libraries(SharedPhysics PUBLIC box2d)
 file(GLOB SHAREDGAME "${CMAKE_CURRENT_SOURCE_DIR}/game_src/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/game_src/*.h" )
 add_library(SharedGameLib ${SHAREDGAME})
 target_link_libraries(SharedGameLib PUBLIC SharedPhysics)
-
+target_link_libraries(SharedUi PUBLIC SharedGameLib)
 
 file(GLOB SHARED "${CMAKE_CURRENT_SOURCE_DIR}/shared_src/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/shared_src/*.h" )
 add_library(SharedLib ${SHARED})
@@ -41,16 +46,12 @@ target_link_libraries(server PUBLIC SharedGameLib)
 target_compile_options(client PRIVATE $<$<NOT:$<C_COMPILER_ID:MSVC>>:-Wall -Wextra -pedantic -ggdb -DDEBUG -pedantic-errors>)
 target_link_libraries(client PUBLIC SharedLib)
 target_link_libraries(client PUBLIC SharedGameLib)
+target_link_libraries(client PUBLIC SharedUi)
 
 
 
+# add_executable("ui" main.cpp worm.cpp game_view.cpp worm_view.cpp worm.cpp constants.cpp game_view.cpp mouse_handler.cpp)
+# 
+# target_compile_options("ui" PRIVATE $<$<NOT:$<C_COMPILER_ID:MSVC>>: -ggdb -Wall -Wextra -pedantic -pedantic-errors>)
+# target_link_libraries("ui" PUBLIC SDL2pp::SDL2pp)
 
-# add_subdirectory("third_party/box2d")
-
-# file(GLOB ENTITY_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/entities/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/entities/*.h")
-# file(GLOB SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/physics_src/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/physics_src/*.h")
-
-# add_executable("main" ${SOURCES} ${ENTITY_SOURCES})
-
-# target_compile_options("main" PRIVATE $<$<NOT:$<C_COMPILER_ID:MSVC>>:-Wall -ggdb -DDEBUG -fno-inline -Wextra -pedantic -pedantic-errors>)
-# target_link_libraries("main" PUBLIC box2d)

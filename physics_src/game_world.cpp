@@ -9,13 +9,15 @@ GameWorld::GameWorld() {
     
     //Hardcoded (for now)
 
-    createBeam(-11.0f, 4.0f, 0, false);
-    createBeam(-7.5f, 1.0f, 30, true);
-    createBeam(-4.0f, 0.0f, -30, false);
-    createBeam(-1.0f, -5.0f, 68, true);
+    // createBeam(-11.0f, 4.0f, 0, false);
+    // createBeam(-7.5f, 1.0f, 30, true);
+    // createBeam(-4.0f, 0.0f, -30, false);
+    // createBeam(-1.0f, -5.0f, 68, true);
+
+    createBeam(10.0f, 10.0f, 0, true);
     
-    createWorm(-8, 7, 0);
-    createWorm(-6, 7, 1);
+    createWorm(10.0f, 15.0f, 0);
+    createWorm(12.0f, 12.0f, 1);
 }
 
 void GameWorld::createWorm(float startingX, float startingY, uint id){
