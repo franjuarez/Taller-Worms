@@ -14,4 +14,3 @@ void Receiver::run() {
 }
 
 Receiver::~Receiver() {}
-
