@@ -8,7 +8,6 @@
 #include <vector>
 
 class Protocol;
-// class Serializable;
 
 class GameLobby : public Serializable {
 

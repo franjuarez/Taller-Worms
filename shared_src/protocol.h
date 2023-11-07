@@ -2,8 +2,11 @@
 #define PROTOCOL_H
 
 #include "socket.h"
+#include "constants.h"
 #include "../game_src/serializable.h"
-#include "../game_src/game_map.h"
+#include  "../game_src/worm.h"
+#include  "../game_src/beam.h"
+#include  "../game_src/position.h"
 
 
 #include <iostream>
@@ -11,6 +14,7 @@
 
 class GameLobby;
 class GameDynamic;
+class GameMap;
 class SelectMap;
 class Move;
 class Command;
@@ -59,8 +63,8 @@ public:
     explicit Protocol(Socket&& skt);
     Protocol(const std::string& hostname, const std::string& servname);
 
-    void sendMap(GameMap&);
-    GameMap receiveMap();
+    // void sendMap(GameMap&);
+    // GameMap receiveMap();
 
     void sendLobby(GameLobby* lobby);
     GameLobby receiveLobby();

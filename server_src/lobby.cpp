@@ -1,7 +1,6 @@
 #include "lobby.h"
 #include "game_loop.h"
 #include "status_broadcaster.h"
-#include "../game_src/game.h"
 #include "../game_src/game_lobby.h"
 
 #define AMOUNT_OF_PLAYERS 3

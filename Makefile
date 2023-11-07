@@ -522,30 +522,6 @@ game_src/game_map.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/game_map.cpp.s
 .PHONY : game_src/game_map.cpp.s
 
-game_src/game_status.o: game_src/game_status.cpp.o
-.PHONY : game_src/game_status.o
-
-# target to build an object file
-game_src/game_status.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/game_status.cpp.o
-.PHONY : game_src/game_status.cpp.o
-
-game_src/game_status.i: game_src/game_status.cpp.i
-.PHONY : game_src/game_status.i
-
-# target to preprocess a source file
-game_src/game_status.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/game_status.cpp.i
-.PHONY : game_src/game_status.cpp.i
-
-game_src/game_status.s: game_src/game_status.cpp.s
-.PHONY : game_src/game_status.s
-
-# target to generate assembly for a file
-game_src/game_status.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/game_status.cpp.s
-.PHONY : game_src/game_status.cpp.s
-
 game_src/move.o: game_src/move.cpp.o
 .PHONY : game_src/move.o
 
@@ -1051,9 +1027,6 @@ help:
 	@echo "... game_src/game_map.o"
 	@echo "... game_src/game_map.i"
 	@echo "... game_src/game_map.s"
-	@echo "... game_src/game_status.o"
-	@echo "... game_src/game_status.i"
-	@echo "... game_src/game_status.s"
 	@echo "... game_src/move.o"
 	@echo "... game_src/move.i"
 	@echo "... game_src/move.s"

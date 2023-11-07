@@ -3,7 +3,7 @@
 #include <iostream>
 
 GameMap::GameMap(int numberOfBeams, std::string mapName, std::vector<Beam> beamsMap ) : 
-Game(numberOfBeams, mapName, beamsMap), 
+Serializable(), 
 numberOfBeams(numberOfBeams), 
 mapName(mapName),
 beamsMap(beamsMap) {}
@@ -24,5 +24,8 @@ std::vector<Beam> GameMap::getBeams(int id) {
     return this->beamsMap;
 }
 
+void GameMap::send(Protocol& protocol) {
+    // protocol.sendLobby(this);
+}
 
 GameMap::~GameMap() {}

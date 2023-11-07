@@ -9,7 +9,6 @@ class Protocol;
 class Move : public Command {
 private:
     int wormID;
-    // lo que requiera Monke
 public:
     Move(int wormID);
     void executeCommand() override;
@@ -17,5 +16,4 @@ public:
     int getID();
     ~Move();
 };
-
 #endif

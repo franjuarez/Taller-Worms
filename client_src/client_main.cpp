@@ -3,7 +3,6 @@
 #include <SDL2pp/SDL2pp.hh>
 
 #include "client.h"
-#include "../game_src/game.h"
 
 #include <iostream>
 

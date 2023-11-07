@@ -6,7 +6,6 @@
 
 #include "../shared_src/protocol.h"
 #include "../shared_src/queue.h"
-#include "../game_src/game.h"
 #include "../game_src/game_lobby.h"
 #include "../game_src/commands.h"
 #include "sender.h"

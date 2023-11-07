@@ -3,13 +3,16 @@
 
 #include "position.h"
 #include "beam.h"
-#include "game.h"
+#include "serializable.h"
+#include "../shared_src/protocol.h"
+
 
 #include <iostream>
 #include <vector>
 #include <string>
 
-class GameMap : public Game{
+class Protocol;
+class GameMap : public Serializable{
 
 private:
     int numberOfBeams;
@@ -19,9 +22,10 @@ private:
 public:
     GameMap(int numberOfBeams, std::string mapName, std::vector<Beam> beamsMap);
     void addBeam(int id, Beam beam);
-    std::string getMapName() override;
-    std::vector<Beam> getBeams(int) override;
-    int getNumberOfBeams() override;
+    std::string getMapName();
+    std::vector<Beam> getBeams(int);
+    int getNumberOfBeams();
+    void send(Protocol& protocol);
     ~GameMap();
 };
 #endif

@@ -1,13 +1,10 @@
 #include "protocol.h"
-#include "socket.h"
-#include "constants.h"
-#include "../game_src/game_map.h"
 #include "../game_src/game_dynamic.h"
 #include "../game_src/select_map.h"
 #include  "../game_src/move.h"
-#include  "../game_src/worm.h"
 #include "../game_src/game_lobby.h"
 #include "../game_src/commands.h"
+#include "../game_src/game_map.h"
 
 
 #include <utility>
@@ -36,31 +33,31 @@ GameLobby Protocol::receiveLobby() {
     return lobby;
 }
 
-void Protocol::sendMap(GameMap& gameMap) {
-    checkClosed();
-    sendString(gameMap.getMapName());
-    uint8_t nrOfBeams = gameMap.getNumberOfBeams();
-    sendUintEight(nrOfBeams);
+// void Protocol::sendMap(GameMap& gameMap) {
+//     checkClosed();
+//     sendString(gameMap.getMapName());
+//     uint8_t nrOfBeams = gameMap.getNumberOfBeams();
+//     sendUintEight(nrOfBeams);
 
-    std::vector<Beam> beams = gameMap.getBeams(0);
-    for (int j = 0; j < nrOfBeams; j++) {
-        sendBeam(beams[j]);
-    }
-}
+//     std::vector<Beam> beams = gameMap.getBeams(0);
+//     for (int j = 0; j < nrOfBeams; j++) {
+//         sendBeam(beams[j]);
+//     }
+// }
 
-GameMap Protocol::receiveMap() {
-    checkClosed();
-    std::string mapName = receiveString();
-    uint8_t numberOfBeams = receiveUintEight();
+// GameMap Protocol::receiveMap() {
+//     checkClosed();
+//     std::string mapName = receiveString();
+//     uint8_t numberOfBeams = receiveUintEight();
 
-    std::vector<Beam> beams;
-    for (int j = 0; j < numberOfBeams; j++) {
-        Beam beam = receiveBeam(j);
-        beams.push_back(beam);
-    }
-    GameMap gameMap(numberOfBeams, mapName, beams);
-    return gameMap;
-}
+//     std::vector<Beam> beams;
+//     for (int j = 0; j < numberOfBeams; j++) {
+//         Beam beam = receiveBeam(j);
+//         beams.push_back(beam);
+//     }
+//     GameMap gameMap(numberOfBeams, mapName, beams);
+//     return gameMap;
+// }
 
 void Protocol::sendDynamic(GameDynamic* dynamic) {
     checkClosed();
