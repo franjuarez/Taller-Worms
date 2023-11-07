@@ -2,7 +2,6 @@
 #define GAME_MAP_H
 
 #include "position.h"
-#include "beam.h"
 #include "serializable.h"
 #include "../shared_src/protocol.h"
 

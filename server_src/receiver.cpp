@@ -9,8 +9,9 @@ Receiver::Receiver(Protocol& protocol, Queue<Command*>& commandsQueue, bool& tal
 void Receiver::run() {
     while (true) {
         Command* command = protocol.receiveCommand();
-        command->executeCommand();
+        commandsQueue.push(command);
     }
 }
 
 Receiver::~Receiver() {}
+
