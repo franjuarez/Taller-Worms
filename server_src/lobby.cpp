@@ -10,7 +10,7 @@ Lobby::Lobby(Socket& skt) : skt(skt), commandQueue(90) {}
 void Lobby::run() {
 
     // se deberian parsear los archivos con los mapas
-    std::vector<std::string> maps = {"segfault:1 vs joaco:0"};
+    std::vector<std::string> maps = {"merge speedrun"};
     int idPlayer = 0;
 
     // Deberia el GameLoop ser una nueva thread? Sino? 

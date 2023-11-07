@@ -10,15 +10,13 @@ set(SDL2PP_WITH_MIXER ON)
 set(SDL2PP_WITH_TTF ON)
 add_subdirectory("thirdParty/SDL2pp")
 
-add_definitions(-DDATA_PATH="${PROJECT_SOURCE_DIR}/resources")
 include_directories(${SDL2PP_INCLUDE_DIRS})
 
-add_executable("ui" main.cpp screen.cpp)
+file(GLOB ENTITY_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/entities/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/entities/*.h")
+file(GLOB SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/physics_src/*.cpp")
 
-target_compile_options("ui" PRIVATE $<$<NOT:$<C_COMPILER_ID:MSVC>>:-Wall -Wextra -pedantic -pedantic-errors -ggdb -DDEBUG -fno-inline>)
-target_link_libraries("ui" PUBLIC SDL2pp::SDL2pp)
-
-include_directories(${SDL2PP_INCLUDE_DIRS})
+add_library(SharedPhysics ${ENTITY_SOURCES} ${SOURCES})
+target_link_libraries(SharedPhysics PUBLIC box2d)
 
 file(GLOB SHAREDGAME "${CMAKE_CURRENT_SOURCE_DIR}/game_src/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/game_src/*.h" )
 add_library(SharedGameLib ${SHAREDGAME})
@@ -39,6 +37,7 @@ target_link_libraries(server PUBLIC box2d)
 target_link_libraries(server PUBLIC SDL2pp::SDL2pp)
 target_link_libraries(server PUBLIC SharedLib)
 target_link_libraries(server PUBLIC SharedGameLib)
+target_link_libraries(server PUBLIC SharedPhysics)
 
 target_compile_options(client PRIVATE $<$<NOT:$<C_COMPILER_ID:MSVC>>:-Wall -Wextra -pedantic -ggdb -DDEBUG -pedantic-errors>)
 target_link_libraries(client PUBLIC box2d)
