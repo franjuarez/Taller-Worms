@@ -6,8 +6,8 @@
 
 #include <iostream>
 
-Receiver::Receiver(Protocol& protocol, Queue<Serializable*>& q) 
-: protocol(protocol), gameStatuses(q) {}
+Receiver::Receiver(Protocol& protocol, Queue<Serializable*>& q, bool& keepTalking) 
+: protocol(protocol), gameStatuses(q), keepTalking(keepTalking) {}
 
 void Receiver::run() {
     
@@ -16,7 +16,6 @@ void Receiver::run() {
         // GameLobby lobby = protocol.receiveLobby();
         // gameStatuses.push(&lobby);
         // std::cout <<  lobby.getMapNames().at(0) << "\n";
-
         
         // 2nd get the map selected by the player
         
@@ -29,19 +28,26 @@ void Receiver::run() {
 
         // // 3rd start receiving the game status -> with the playing worm/team, 
         // // the map stays the same and the new dynamic objects -> worms, boxes, etc
-        while (true) {
+        while (keepTalking) {
             GameDynamic gameDynamic = protocol.receiveDynamic();
             gameStatuses.push(&gameDynamic);
-            std::cout << "worm " << gameDynamic.getWorms().at(0).getId() << std::endl;
-            std::cout <<  gameDynamic.getWorms().at(0).getPosition().getX() << ", ";
-            std::cout <<  gameDynamic.getWorms().at(0).getPosition().getY() << "\n";
+            std::cout << "worm " << gameDynamic.getWorms()[0].getId() << std::endl;
+            std::cout <<  gameDynamic.getWorms()[0].getPosition().getX() << ", ";
+            std::cout <<  gameDynamic.getWorms()[0].getPosition().getY() << "\n";
 
-            std::cout << "worm " << gameDynamic.getWorms().at(1).getId() << std::endl;
-            std::cout <<  gameDynamic.getWorms().at(1).getPosition().getX() << ", ";
-            std::cout <<  gameDynamic.getWorms().at(1).getPosition().getY() << "\n";
+            std::cout << "worm " << gameDynamic.getWorms()[1].getId() << std::endl;
+            std::cout <<  gameDynamic.getWorms()[1].getPosition().getX() << ", ";
+            std::cout <<  gameDynamic.getWorms()[1].getPosition().getY() << "\n";
         }
-    } catch (const std::exception& err) {
-        std::cerr << err.what() << '\n';
+    } catch (const ClosedSocket& e){
+        std::cout << "Reciever: Se ha cerrado la conexion\n";
+        keepTalking = false;
+    } catch (const ClosedQueue& e){
+        std::cout << "Reciever: Se ha cerrado la QUEUE\n";
+        keepTalking = false;
+    } catch (const std::exception& e){
+        keepTalking = false;
+        std::cout << "Error inesperado" << e.what() << std::endl;
     }
 }
 

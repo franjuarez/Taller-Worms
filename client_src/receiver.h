@@ -16,8 +16,9 @@ class Receiver : public Thread {
 private:
     Protocol& protocol;
     Queue<Serializable*>& gameStatuses;
+    bool& keepTalking;
 public:
-    Receiver(Protocol& protocol, Queue<Serializable*>& q);
+    Receiver(Protocol& protocol, Queue<Serializable*>& q, bool& keepTaliking);
     void run() override;
     ~Receiver();
 };

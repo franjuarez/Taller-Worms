@@ -12,15 +12,17 @@ void Sender::run() {
         // GameLobby* gameLobby = dynamic_cast<GameLobby*>(gameLobbyS);
         // gameLobby->send(protocol);
 
-        while (1) {
+        while (talking) {
             Serializable* gameLobbySS = playerQueue.pop();
             GameDynamic* gameDynamic = dynamic_cast<GameDynamic*>(gameLobbySS);
             gameDynamic->send(protocol);
         }
+    } catch (ClosedQueue& e) {
+        std::cout << "Sender: Cerrada la queue\n";
+    } catch (ClosedSocket& e) {
+        std::cout << "Sender: cerrado el socket\n";
     } catch (std::exception& e) {
-        std::cout << "error en Sender: " << e.what() << std::endl;
-        // std::cout << "y mira tu casteo esta como el culo\n";
-
+        std::cout << "error inesperado! " << e.what() << std::endl;
     }
 }
 

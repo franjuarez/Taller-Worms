@@ -6,7 +6,7 @@
 #define WORLD_HEIGHT 70
 #define WORLD_GRAVITY_X 0.0f
 #define WORLD_GRAVITY_Y -9.8f
-#define TIME_STEP 1/60.0f
+#define TIME_STEP 1/30.0f
 #define TIME_HERTZ pow(TIME_STEP, -1)
 #define VELOCITY_ITERATIONS 8
 #define POSITION_ITERATIONS 3

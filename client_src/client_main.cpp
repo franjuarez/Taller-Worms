@@ -15,7 +15,7 @@ int main(int argc, char** argv) {
 	try {
 		GameView gv(argv[1], argv[2]);
 		gv.start();
-		// gv.join();
+		gv.join();
 	} catch (const std::exception& e) {
 		std::cerr << e.what() << std::endl;
 		return ERROR;

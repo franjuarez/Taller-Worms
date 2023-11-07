@@ -11,6 +11,8 @@
 //#define STILL_WORM_PATH "../resources/images/waccuse.png"
 #define JUMPING_WORM_PATH "resources/images/worm_jump.png"
 
+#include "../game_src/constants_game.h"
+#include "../game_src/move.h"
 
 GameView::GameView(const std::string& hostname, const std::string& servname) :
 		client(hostname, servname),
@@ -108,12 +110,15 @@ void GameView::start() {
                 if(event.key.keysym.sym == SDLK_RETURN) {
                 	returnKeyCase(i);
                 }
-                if (event.key.keysym.sym == SDLK_UP) {
-                	this->camY -= 5;
+                if (event.key.keysym.sym == SDLK_LEFT) {
+					std::cout << "se entro a SDLK_LEFT\n";
+                	this->client.execute(new Move(0, LEFT_DIR));
                 }
-                if (event.key.keysym.sym == SDLK_DOWN) {
-                	this->camY += 5;
+				if (event.key.keysym.sym == SDLK_RIGHT) {
+					std::cout << "se entro a SDLK_RIGHT\n";
+                	this->client.execute(new Move(0, RIGHT_DIR));
                 }
+                
                 //if ( event.type == SDL_MOUSEMOTION) {
                 //	std::cout << "mouse movement" << std::endl;
                 //	int x,y;
@@ -151,6 +156,22 @@ void GameView::start() {
 	}
 }
 
-GameView::~GameView() {
-	this->client.join();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+void GameView::join() {
+	this->client.kill();
 }
+
+GameView::~GameView() {}

@@ -22,6 +22,7 @@ private:
 	Sender sender;
 	Receiver receiver;
 	Serializable* lastGameStatus;
+	bool keepTalking = true;
 	
 public:
 	Client(const std::string& hostname, const std::string& servname);
@@ -40,7 +41,7 @@ public:
 
 	void start();
 
-	void join();
+	void kill();
 
 	//runCommand();
 

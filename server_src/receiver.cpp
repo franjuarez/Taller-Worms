@@ -7,9 +7,20 @@ Receiver::Receiver(Protocol& protocol, Queue<Command*>& commandsQueue, bool& tal
 : protocol(protocol), commandsQueue(commandsQueue), talking(talking) {}
 
 void Receiver::run() {
-    while (true) {
-        Command* command = protocol.receiveCommand();
-        commandsQueue.push(command);
+    try{
+        while (talking) {
+            Command* command = protocol.receiveCommand();
+            commandsQueue.push(command);
+        }
+    } catch (const ClosedSocket& e){
+        std::cout << "Reciever: Se ha cerrado la conexion\n";
+        talking = false;
+    } catch (const ClosedQueue& e){
+        std::cout << "Reciever: Se ha cerrado la QUEUE\n";
+        talking = false;
+    } catch (const std::exception& e){
+        talking = false;
+        std::cout << "Error inesperado" << e.what() << std::endl;
     }
 }
 

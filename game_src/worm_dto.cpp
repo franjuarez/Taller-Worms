@@ -5,8 +5,8 @@
 WormDTO::WormDTO(int id, int team, int health, Position position) 
 : id(id), team(team), health(health), position(position) {}
 
-WormDTO::WormDTO(const WormDTO& other) 
-: id(other.id), team(other.team), health(other.health), position(other.position) {}
+// WormDTO::WormDTO(const WormDTO& other) 
+// : id(other.id), team(other.team), health(other.health), position(other.position) {}
 
 int WormDTO::getId() {
     return this->id;

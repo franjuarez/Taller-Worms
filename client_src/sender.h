@@ -14,8 +14,9 @@ class Sender : public Thread {
 private:
     Protocol& protocol;
     Queue<Command*>& commandsQueue;
+    bool& keepTalking;
 public:
-    Sender(Protocol& protocol, Queue<Command*>& q);
+    Sender(Protocol& protocol, Queue<Command*>& q, bool& keepTalking);
     void run() override;
     ~Sender();
 };

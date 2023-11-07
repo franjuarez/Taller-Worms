@@ -1,6 +1,7 @@
 #ifndef GAME_VIEW_H
 #define  GAME_VIEW_H
 
+
 #include <unordered_map>
 #include <math.h>
 #include "worm_view.h"
@@ -48,6 +49,7 @@ public:
 	~GameView();
 
 	void start();
+	void join();
 };
 
 
