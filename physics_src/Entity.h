@@ -6,7 +6,7 @@
 #include <set>
 #include <string>
 
-#include "../physics_src/physics_constants.h"
+#include "physics_constants.h"
 
 //For supressing unused variable warnings
 #define UNUSED(x) (void)(x)

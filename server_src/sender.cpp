@@ -8,9 +8,9 @@ Sender::Sender(int id, Protocol& protocol, Queue<Serializable*>& playerQueue, bo
 
 void Sender::run() {
     try {
-        Serializable* gameLobbyS = playerQueue.pop();
-        GameLobby* gameLobby = dynamic_cast<GameLobby*>(gameLobbyS);
-        gameLobby->send(protocol);
+        // Serializable* gameLobbyS = playerQueue.pop();
+        // GameLobby* gameLobby = dynamic_cast<GameLobby*>(gameLobbyS);
+        // gameLobby->send(protocol);
 
         while (1) {
             Serializable* gameLobbySS = playerQueue.pop();

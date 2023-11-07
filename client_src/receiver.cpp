@@ -13,9 +13,9 @@ void Receiver::run() {
     
     try {
         // 1st get the GameLobby with the players team and the available maps
-        GameLobby lobby = protocol.receiveLobby();
-        gameStatuses.push(&lobby);
-        std::cout <<  lobby.getMapNames().at(0) << "\n";
+        // GameLobby lobby = protocol.receiveLobby();
+        // gameStatuses.push(&lobby);
+        // std::cout <<  lobby.getMapNames().at(0) << "\n";
 
         
         // 2nd get the map selected by the player
@@ -33,8 +33,8 @@ void Receiver::run() {
             GameDynamic gameDynamic = protocol.receiveDynamic();
             gameStatuses.push(&gameDynamic);
 
-            std::cout <<  gameDynamic.getWorms().at(1).getPosition().getX() << "\n";
-            std::cout <<  gameDynamic.getWorms().at(1).getPosition().getY() << "\n";
+            std::cout <<  gameDynamic.getWorms().at(0).getPosition().getX() << "\n";
+            std::cout <<  gameDynamic.getWorms().at(0).getPosition().getY() << "\n";
             std::cout <<  gameDynamic.getWormPlayingID() << "\n";
         }
     } catch (const std::exception& err) {

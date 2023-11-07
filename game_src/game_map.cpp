@@ -2,13 +2,13 @@
 
 #include <iostream>
 
-GameMap::GameMap(int numberOfBeams, std::string mapName, std::vector<Beam> beamsMap ) : 
+GameMap::GameMap(int numberOfBeams, std::string mapName, std::vector<BeamDTO> beamsMap ) : 
 Serializable(), 
 numberOfBeams(numberOfBeams), 
 mapName(mapName),
 beamsMap(beamsMap) {}
 
-void GameMap::addBeam(int id, Beam beam) {
+void GameMap::addBeam(int id, BeamDTO beam) {
     beamsMap[id] = beam;
 }
 
@@ -20,7 +20,7 @@ int GameMap::getNumberOfBeams() {
     return this->numberOfBeams;
 }
 
-std::vector<Beam> GameMap::getBeams(int id) {
+std::vector<BeamDTO> GameMap::getBeams(int id) {
     return this->beamsMap;
 }
 

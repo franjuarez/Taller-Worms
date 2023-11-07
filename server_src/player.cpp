@@ -6,7 +6,7 @@ sender(gameLobby->getTeam(), protocol, playerQueue, talking),
 receiver(protocol, commandQueue, talking), 
 commandsQueue(commandQueue), 
 playerQueue(90) {
-    playerQueue.push(gameLobby);
+    // playerQueue.push(gameLobby);
 }
 
 Queue<Serializable*>* Player::getPlayerQueue() {

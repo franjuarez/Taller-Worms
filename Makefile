@@ -427,101 +427,29 @@ client_src/sender.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/client_src/sender.cpp.s
 .PHONY : client_src/sender.cpp.s
 
-entities/Beam.o: entities/Beam.cpp.o
-.PHONY : entities/Beam.o
+game_src/beam_dto.o: game_src/beam_dto.cpp.o
+.PHONY : game_src/beam_dto.o
 
 # target to build an object file
-entities/Beam.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedPhysics.dir/build.make CMakeFiles/SharedPhysics.dir/entities/Beam.cpp.o
-.PHONY : entities/Beam.cpp.o
+game_src/beam_dto.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/beam_dto.cpp.o
+.PHONY : game_src/beam_dto.cpp.o
 
-entities/Beam.i: entities/Beam.cpp.i
-.PHONY : entities/Beam.i
-
-# target to preprocess a source file
-entities/Beam.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedPhysics.dir/build.make CMakeFiles/SharedPhysics.dir/entities/Beam.cpp.i
-.PHONY : entities/Beam.cpp.i
-
-entities/Beam.s: entities/Beam.cpp.s
-.PHONY : entities/Beam.s
-
-# target to generate assembly for a file
-entities/Beam.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedPhysics.dir/build.make CMakeFiles/SharedPhysics.dir/entities/Beam.cpp.s
-.PHONY : entities/Beam.cpp.s
-
-entities/Rocket.o: entities/Rocket.cpp.o
-.PHONY : entities/Rocket.o
-
-# target to build an object file
-entities/Rocket.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedPhysics.dir/build.make CMakeFiles/SharedPhysics.dir/entities/Rocket.cpp.o
-.PHONY : entities/Rocket.cpp.o
-
-entities/Rocket.i: entities/Rocket.cpp.i
-.PHONY : entities/Rocket.i
+game_src/beam_dto.i: game_src/beam_dto.cpp.i
+.PHONY : game_src/beam_dto.i
 
 # target to preprocess a source file
-entities/Rocket.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedPhysics.dir/build.make CMakeFiles/SharedPhysics.dir/entities/Rocket.cpp.i
-.PHONY : entities/Rocket.cpp.i
+game_src/beam_dto.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/beam_dto.cpp.i
+.PHONY : game_src/beam_dto.cpp.i
 
-entities/Rocket.s: entities/Rocket.cpp.s
-.PHONY : entities/Rocket.s
-
-# target to generate assembly for a file
-entities/Rocket.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedPhysics.dir/build.make CMakeFiles/SharedPhysics.dir/entities/Rocket.cpp.s
-.PHONY : entities/Rocket.cpp.s
-
-entities/Worm.o: entities/Worm.cpp.o
-.PHONY : entities/Worm.o
-
-# target to build an object file
-entities/Worm.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedPhysics.dir/build.make CMakeFiles/SharedPhysics.dir/entities/Worm.cpp.o
-.PHONY : entities/Worm.cpp.o
-
-entities/Worm.i: entities/Worm.cpp.i
-.PHONY : entities/Worm.i
-
-# target to preprocess a source file
-entities/Worm.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedPhysics.dir/build.make CMakeFiles/SharedPhysics.dir/entities/Worm.cpp.i
-.PHONY : entities/Worm.cpp.i
-
-entities/Worm.s: entities/Worm.cpp.s
-.PHONY : entities/Worm.s
+game_src/beam_dto.s: game_src/beam_dto.cpp.s
+.PHONY : game_src/beam_dto.s
 
 # target to generate assembly for a file
-entities/Worm.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedPhysics.dir/build.make CMakeFiles/SharedPhysics.dir/entities/Worm.cpp.s
-.PHONY : entities/Worm.cpp.s
-
-game_src/beam.o: game_src/beam.cpp.o
-.PHONY : game_src/beam.o
-
-# target to build an object file
-game_src/beam.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/beam.cpp.o
-.PHONY : game_src/beam.cpp.o
-
-game_src/beam.i: game_src/beam.cpp.i
-.PHONY : game_src/beam.i
-
-# target to preprocess a source file
-game_src/beam.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/beam.cpp.i
-.PHONY : game_src/beam.cpp.i
-
-game_src/beam.s: game_src/beam.cpp.s
-.PHONY : game_src/beam.s
-
-# target to generate assembly for a file
-game_src/beam.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/beam.cpp.s
-.PHONY : game_src/beam.cpp.s
+game_src/beam_dto.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/beam_dto.cpp.s
+.PHONY : game_src/beam_dto.cpp.s
 
 game_src/game_dynamic.o: game_src/game_dynamic.cpp.o
 .PHONY : game_src/game_dynamic.o
@@ -667,29 +595,125 @@ game_src/select_map.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/select_map.cpp.s
 .PHONY : game_src/select_map.cpp.s
 
-game_src/worm.o: game_src/worm.cpp.o
-.PHONY : game_src/worm.o
+game_src/worm_dto.o: game_src/worm_dto.cpp.o
+.PHONY : game_src/worm_dto.o
 
 # target to build an object file
-game_src/worm.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/worm.cpp.o
-.PHONY : game_src/worm.cpp.o
+game_src/worm_dto.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/worm_dto.cpp.o
+.PHONY : game_src/worm_dto.cpp.o
 
-game_src/worm.i: game_src/worm.cpp.i
-.PHONY : game_src/worm.i
+game_src/worm_dto.i: game_src/worm_dto.cpp.i
+.PHONY : game_src/worm_dto.i
 
 # target to preprocess a source file
-game_src/worm.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/worm.cpp.i
-.PHONY : game_src/worm.cpp.i
+game_src/worm_dto.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/worm_dto.cpp.i
+.PHONY : game_src/worm_dto.cpp.i
 
-game_src/worm.s: game_src/worm.cpp.s
-.PHONY : game_src/worm.s
+game_src/worm_dto.s: game_src/worm_dto.cpp.s
+.PHONY : game_src/worm_dto.s
 
 # target to generate assembly for a file
-game_src/worm.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/worm.cpp.s
-.PHONY : game_src/worm.cpp.s
+game_src/worm_dto.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/worm_dto.cpp.s
+.PHONY : game_src/worm_dto.cpp.s
+
+physics_src/Beam.o: physics_src/Beam.cpp.o
+.PHONY : physics_src/Beam.o
+
+# target to build an object file
+physics_src/Beam.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedPhysics.dir/build.make CMakeFiles/SharedPhysics.dir/physics_src/Beam.cpp.o
+.PHONY : physics_src/Beam.cpp.o
+
+physics_src/Beam.i: physics_src/Beam.cpp.i
+.PHONY : physics_src/Beam.i
+
+# target to preprocess a source file
+physics_src/Beam.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedPhysics.dir/build.make CMakeFiles/SharedPhysics.dir/physics_src/Beam.cpp.i
+.PHONY : physics_src/Beam.cpp.i
+
+physics_src/Beam.s: physics_src/Beam.cpp.s
+.PHONY : physics_src/Beam.s
+
+# target to generate assembly for a file
+physics_src/Beam.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedPhysics.dir/build.make CMakeFiles/SharedPhysics.dir/physics_src/Beam.cpp.s
+.PHONY : physics_src/Beam.cpp.s
+
+physics_src/Rocket.o: physics_src/Rocket.cpp.o
+.PHONY : physics_src/Rocket.o
+
+# target to build an object file
+physics_src/Rocket.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedPhysics.dir/build.make CMakeFiles/SharedPhysics.dir/physics_src/Rocket.cpp.o
+.PHONY : physics_src/Rocket.cpp.o
+
+physics_src/Rocket.i: physics_src/Rocket.cpp.i
+.PHONY : physics_src/Rocket.i
+
+# target to preprocess a source file
+physics_src/Rocket.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedPhysics.dir/build.make CMakeFiles/SharedPhysics.dir/physics_src/Rocket.cpp.i
+.PHONY : physics_src/Rocket.cpp.i
+
+physics_src/Rocket.s: physics_src/Rocket.cpp.s
+.PHONY : physics_src/Rocket.s
+
+# target to generate assembly for a file
+physics_src/Rocket.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedPhysics.dir/build.make CMakeFiles/SharedPhysics.dir/physics_src/Rocket.cpp.s
+.PHONY : physics_src/Rocket.cpp.s
+
+physics_src/Worm.o: physics_src/Worm.cpp.o
+.PHONY : physics_src/Worm.o
+
+# target to build an object file
+physics_src/Worm.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedPhysics.dir/build.make CMakeFiles/SharedPhysics.dir/physics_src/Worm.cpp.o
+.PHONY : physics_src/Worm.cpp.o
+
+physics_src/Worm.i: physics_src/Worm.cpp.i
+.PHONY : physics_src/Worm.i
+
+# target to preprocess a source file
+physics_src/Worm.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedPhysics.dir/build.make CMakeFiles/SharedPhysics.dir/physics_src/Worm.cpp.i
+.PHONY : physics_src/Worm.cpp.i
+
+physics_src/Worm.s: physics_src/Worm.cpp.s
+.PHONY : physics_src/Worm.s
+
+# target to generate assembly for a file
+physics_src/Worm.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedPhysics.dir/build.make CMakeFiles/SharedPhysics.dir/physics_src/Worm.cpp.s
+.PHONY : physics_src/Worm.cpp.s
+
+physics_src/auxiliar_physics_functions.o: physics_src/auxiliar_physics_functions.cpp.o
+.PHONY : physics_src/auxiliar_physics_functions.o
+
+# target to build an object file
+physics_src/auxiliar_physics_functions.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedPhysics.dir/build.make CMakeFiles/SharedPhysics.dir/physics_src/auxiliar_physics_functions.cpp.o
+.PHONY : physics_src/auxiliar_physics_functions.cpp.o
+
+physics_src/auxiliar_physics_functions.i: physics_src/auxiliar_physics_functions.cpp.i
+.PHONY : physics_src/auxiliar_physics_functions.i
+
+# target to preprocess a source file
+physics_src/auxiliar_physics_functions.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedPhysics.dir/build.make CMakeFiles/SharedPhysics.dir/physics_src/auxiliar_physics_functions.cpp.i
+.PHONY : physics_src/auxiliar_physics_functions.cpp.i
+
+physics_src/auxiliar_physics_functions.s: physics_src/auxiliar_physics_functions.cpp.s
+.PHONY : physics_src/auxiliar_physics_functions.s
+
+# target to generate assembly for a file
+physics_src/auxiliar_physics_functions.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedPhysics.dir/build.make CMakeFiles/SharedPhysics.dir/physics_src/auxiliar_physics_functions.cpp.s
+.PHONY : physics_src/auxiliar_physics_functions.cpp.s
 
 physics_src/collision_handler.o: physics_src/collision_handler.cpp.o
 .PHONY : physics_src/collision_handler.o
@@ -1136,18 +1160,9 @@ help:
 	@echo "... client_src/sender.o"
 	@echo "... client_src/sender.i"
 	@echo "... client_src/sender.s"
-	@echo "... entities/Beam.o"
-	@echo "... entities/Beam.i"
-	@echo "... entities/Beam.s"
-	@echo "... entities/Rocket.o"
-	@echo "... entities/Rocket.i"
-	@echo "... entities/Rocket.s"
-	@echo "... entities/Worm.o"
-	@echo "... entities/Worm.i"
-	@echo "... entities/Worm.s"
-	@echo "... game_src/beam.o"
-	@echo "... game_src/beam.i"
-	@echo "... game_src/beam.s"
+	@echo "... game_src/beam_dto.o"
+	@echo "... game_src/beam_dto.i"
+	@echo "... game_src/beam_dto.s"
 	@echo "... game_src/game_dynamic.o"
 	@echo "... game_src/game_dynamic.i"
 	@echo "... game_src/game_dynamic.s"
@@ -1166,9 +1181,21 @@ help:
 	@echo "... game_src/select_map.o"
 	@echo "... game_src/select_map.i"
 	@echo "... game_src/select_map.s"
-	@echo "... game_src/worm.o"
-	@echo "... game_src/worm.i"
-	@echo "... game_src/worm.s"
+	@echo "... game_src/worm_dto.o"
+	@echo "... game_src/worm_dto.i"
+	@echo "... game_src/worm_dto.s"
+	@echo "... physics_src/Beam.o"
+	@echo "... physics_src/Beam.i"
+	@echo "... physics_src/Beam.s"
+	@echo "... physics_src/Rocket.o"
+	@echo "... physics_src/Rocket.i"
+	@echo "... physics_src/Rocket.s"
+	@echo "... physics_src/Worm.o"
+	@echo "... physics_src/Worm.i"
+	@echo "... physics_src/Worm.s"
+	@echo "... physics_src/auxiliar_physics_functions.o"
+	@echo "... physics_src/auxiliar_physics_functions.i"
+	@echo "... physics_src/auxiliar_physics_functions.s"
 	@echo "... physics_src/collision_handler.o"
 	@echo "... physics_src/collision_handler.i"
 	@echo "... physics_src/collision_handler.s"

@@ -4,7 +4,7 @@
 #include <iostream>
 #include <set>
 #include "Worm.h"
-#include "../physics_src/explosion_handler.h"
+#include "explosion_handler.h"
 
 class Rocket : public Entity {
 private:

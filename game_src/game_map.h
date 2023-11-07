@@ -16,13 +16,13 @@ class GameMap : public Serializable{
 private:
     int numberOfBeams;
     std::string mapName;
-    std::vector<Beam> beamsMap;
-
+    std::vector<BeamDTO> beamsMap;
+    // std::vector<WormDTO> worms;
 public:
-    GameMap(int numberOfBeams, std::string mapName, std::vector<Beam> beamsMap);
-    void addBeam(int id, Beam beam);
+    GameMap(int numberOfBeams, std::string mapName, std::vector<BeamDTO> beamsMap);
+    void addBeam(int id, BeamDTO beam);
     std::string getMapName();
-    std::vector<Beam> getBeams(int);
+    std::vector<BeamDTO> getBeams(int);
     int getNumberOfBeams();
     void send(Protocol& protocol);
     ~GameMap();

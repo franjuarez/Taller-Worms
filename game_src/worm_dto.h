@@ -1,11 +1,12 @@
-#ifndef WORM_H
-#define WORM_H
+#ifndef WORM_DTO_H
+#define WORM_DTO_H
+
 
 #include "position.h"
 
 // should it be locked? 
 
-class Worm {
+class WormDTO {
 
 private: 
     int id;
@@ -14,11 +15,11 @@ private:
     Position position;
 
 public:
-    Worm(int id, int team, int health, Position& position);
+    WormDTO(int id, int team, int health, Position position);
     int getId();
     int getTeam();
     int getHealth();
     Position getPosition();
-    ~Worm();
+    ~WormDTO();
 };
 #endif

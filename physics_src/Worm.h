@@ -4,7 +4,8 @@
 #include "Entity.h"
 #include "Beam.h"
 #include "Rocket.h"
-#include "../physics_src/aux/auxiliar_physics_functions.h"
+#include "auxiliar_physics_functions.h"
+#include "../game_src/worm_dto.h"
 
 class Worm : public Entity {
     private:
@@ -43,6 +44,8 @@ class Worm : public Entity {
     bool isDead();
 
     uint getId();
+
+    WormDTO getDTO();
 };
 
 #endif

@@ -17,6 +17,12 @@ uint Worm::getId(){
     return this->id;
 }
 
+WormDTO Worm::getDTO(){
+    Position pos(body->GetPosition().x, body->GetPosition().y);
+    WormDTO dto(id, 0, health, pos);
+    return dto;
+}
+
 void Worm::moveOnWalkableBeam(b2Body* worm, b2Vec2 normal){
     b2Vec2 vel = worm->GetLinearVelocity();
     b2Vec2 perpendicular = b2Vec2(-normal.y, normal.x);

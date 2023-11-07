@@ -1,7 +1,4 @@
 
-#include <box2d/box2d.h>
-#include <SDL2pp/SDL2pp.hh>
-
 #include "../shared_src/socket.h"
 #include "lobby.h"
 #include "game_loop.h"

@@ -66,7 +66,7 @@ void Protocol::sendDynamic(GameDynamic* dynamic) {
     sendUintSixteen(dynamic->getNumberOfWorms());
     sendUintSixteen(dynamic->getWormPlayingID());
 
-    std::vector<Worm> worms = dynamic->getWorms();
+    std::vector<WormDTO> worms = dynamic->getWorms();
 
     for (int i = 0; i < dynamic->getNumberOfWorms(); i++) {
         sendWorm(worms[i]);
@@ -79,9 +79,9 @@ GameDynamic Protocol::receiveDynamic() {
     uint16_t numberOfWorms = receiveUintSixteen();
     uint16_t wormPlayingID = receiveUintSixteen();
 
-    std::vector<Worm> worms;
+    std::vector<WormDTO> worms;
     for (int i = 0; i < numberOfWorms; i++) {
-        Worm worm = receiveWorm();
+        WormDTO worm = receiveWorm();
         worms.push_back(worm);
     }
     GameDynamic gameDynamic(wormPlayingID, worms);
@@ -99,6 +99,7 @@ void Protocol::sendMove(Move* move) {
     checkClosed();
     sendUintEight(SEND_COMMAND_MOVE);   
     sendUintEight(move->getID());
+    sendUintEight(move->getDir());
 }
 
 
@@ -129,7 +130,8 @@ Position Protocol::receivePosition() {
 Move* Protocol::receiveMove() {
     checkClosed(); 
     uint8_t wormId = receiveUintEight();
-    return new Move(wormId);
+    uint8_t dir = receiveUintEight();
+    return new Move(wormId, dir);
 }
 
 SelectMap* Protocol::receiveSelectMap() {
@@ -158,7 +160,7 @@ std::vector<std::string> Protocol::receiveMapNames() {
     return allMaps;
 }
 
-void Protocol::sendWorm(Worm& worm) {
+void Protocol::sendWorm(WormDTO& worm) {
     sendUintSixteen(worm.getId());
     sendUintSixteen(worm.getTeam());
     sendUintThirtyTwo(worm.getHealth());
@@ -166,17 +168,17 @@ void Protocol::sendWorm(Worm& worm) {
     sendPosition(pos);
 }
 
-Worm Protocol::receiveWorm() {
+WormDTO Protocol::receiveWorm() {
     uint16_t id = receiveUintSixteen();
     uint16_t team = receiveUintSixteen();
     uint32_t health = receiveUintThirtyTwo();
     Position pos = receivePosition();
 
-    Worm worm(id, team, health, pos);
+    WormDTO worm(id, team, health, pos);
     return worm;
 }
 
-void Protocol::sendBeam(Beam& beam) {
+void Protocol::sendBeam(BeamDTO& beam) {
     Position beamPosition1 = beam.getPosition1();
     sendPosition(beamPosition1);
     Position beamPosition2 = beam.getPosition2();
@@ -185,11 +187,11 @@ void Protocol::sendBeam(Beam& beam) {
     sendUintEight(beamLength);
 }
 
-Beam Protocol::receiveBeam(int id) {
+BeamDTO Protocol::receiveBeam(int id) {
     Position beamPosition1 = receivePosition();
     Position beamPosition2 = receivePosition();
     uint8_t beamLength = receiveUintEight();
-    Beam beam(id, beamLength, beamPosition1, beamPosition2);
+    BeamDTO beam(id, beamLength, beamPosition1, beamPosition2);
     return beam;
 }
 

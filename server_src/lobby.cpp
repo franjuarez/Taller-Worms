@@ -13,9 +13,6 @@ void Lobby::run() {
     std::vector<std::string> maps = {"merge speedrun"};
     int idPlayer = 0;
 
-    // Deberia el GameLoop ser una nueva thread? Sino? 
-    // Deberia GaameLoop inicializar Lobby??? 
-
     StatusBroadcaster statusBroadcaster;
     while(idPlayer < AMOUNT_OF_PLAYERS) {
         try {
@@ -33,6 +30,8 @@ void Lobby::run() {
             // pasan mas cosas 
         }
     }
+    // momento eleccion Mapa
+
     // Inicializar el GameLoop 
     GameLoop gameLoop(commandQueue, statusBroadcaster);
     gameLoop.start();

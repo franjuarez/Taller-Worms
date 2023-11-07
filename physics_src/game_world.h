@@ -7,12 +7,12 @@
 #include <box2d/box2d.h>
 #include "listener.h"
 #include "physics_constants.h"
-#include "aux/auxiliar_physics_functions.h"
+#include "auxiliar_physics_functions.h"
 
-#include "../entities/Entity.h"
-#include "../entities/Worm.h"
-#include "../entities/Beam.h"
-#include "../entities/Rocket.h"
+#include "Entity.h"
+#include "Worm.h"
+#include "Beam.h"
+#include "Rocket.h"
 
 class GameWorld {
 private:
@@ -36,7 +36,7 @@ private:
 public:
     GameWorld();
 
-    void update();
+    std::vector<WormDTO> update();
 
     void createBeam(float startingX, float startingY, float angle, bool large);
 

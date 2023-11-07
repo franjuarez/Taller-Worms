@@ -3,10 +3,10 @@
 
 #include <unordered_map>
 
-#include "../entities/Entity.h"
-#include "../entities/Beam.h"
-#include "../entities/Rocket.h"
-#include "../entities/Worm.h"
+#include "Entity.h"
+#include "Beam.h"
+#include "Rocket.h"
+#include "Worm.h"
 
 typedef void (Entity::*beginCollisionFunc)(Entity*, std::set<b2Body*>&);
 typedef void (Entity::*preSolveCollisionFunc)(Entity*, b2Contact*);

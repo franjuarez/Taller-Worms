@@ -5,8 +5,10 @@
 #include <string>
 
 #include "../shared_src/protocol.h"
+#include "../physics_src/game_world.h"
 class Protocol;
-class Move;
+
+#define UNUSED(x) (void)(x)
 class Command {
 
 private:
@@ -15,10 +17,10 @@ private:
 public:
     Command(int team, int wormID) : team(team), wormID(wormID) {}
     virtual ~Command() {}
-    virtual void executeCommand() {
+    virtual void executeCommand(GameWorld&) {
         std::cout << "exec mother class\n";
     }
     // podria hacer un override de exec q vaya al tipo que tiene que exec ... o no ? 
-    virtual void send(Protocol&) = 0;
+    virtual void send(Protocol& protocol) = 0;
 };
 #endif

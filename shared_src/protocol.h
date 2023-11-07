@@ -4,8 +4,8 @@
 #include "socket.h"
 #include "constants.h"
 #include "../game_src/serializable.h"
-#include  "../game_src/worm.h"
-#include  "../game_src/beam.h"
+#include  "../game_src/worm_dto.h"
+#include  "../game_src/beam_dto.h"
 #include  "../game_src/position.h"
 
 
@@ -42,10 +42,10 @@ private:
     std::string receiveString();
 
 
-    void sendBeam(Beam& beam);
-    Beam receiveBeam(int id);
-    void sendWorm(Worm& worm);
-    Worm receiveWorm();
+    void sendBeam(BeamDTO& beam);
+    BeamDTO receiveBeam(int id);
+    void sendWorm(WormDTO& worm);
+    WormDTO receiveWorm();
     void sendPosition(Position& position);
     Position receivePosition();
     void sendMapNames(std::vector<std::string>& mapNames);

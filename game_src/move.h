@@ -9,11 +9,13 @@ class Protocol;
 class Move : public Command {
 private:
     int wormID;
+    int dir;
 public:
-    Move(int wormID);
-    void executeCommand() override;
+    Move(int wormID, int dir);
+    void executeCommand(GameWorld& gameWorld) override;
     void send(Protocol& protocol);
     int getID();
+    int getDir();
     ~Move();
 };
 #endif

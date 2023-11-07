@@ -16,7 +16,7 @@ public:
     SelectMap(int team, int wormID, std::string mapName);
     std::string& getMapName();
     void send(Protocol& protocol);
-    void executeCommand() override;
+    void executeCommand(GameWorld& gameWorld) override;
     int getTeam();
     ~SelectMap();
 };

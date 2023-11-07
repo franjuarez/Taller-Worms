@@ -19,8 +19,9 @@ int SelectMap::getTeam(){
     return this->team;
 }
 
-void SelectMap::executeCommand() {
+void SelectMap::executeCommand(GameWorld& gameWorld) {
     std::cout << "exec SelectMap\n";
+    UNUSED(gameWorld);
 }
 
 SelectMap::~SelectMap() {}

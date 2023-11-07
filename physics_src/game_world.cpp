@@ -180,11 +180,17 @@ void GameWorld::removeEntities(){
     this->entitiesToRemove.clear();
 }
 
-void GameWorld::update() {
-    this->world->Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
-
+std::vector<WormDTO> GameWorld::update() {
     killDeadWorms();
     removeEntities();
+    this->world->Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
+    
+    std::vector<WormDTO> wormsDTO;
+    for (auto& worm : this->worms) {
+        Worm* wormData = (Worm*) worm.second->GetUserData().pointer;
+        wormsDTO.push_back(wormData->getDTO());
+    }
+    return wormsDTO;
 }
 
 GameWorld::~GameWorld() {
