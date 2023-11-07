@@ -4,6 +4,8 @@
 #include <iostream>
 
 Client::Client(const std::string& hostname, const std::string& servname) : protocol(hostname, servname)
+, gameStatusQueue(90)
+, commandsQueue(90)
 , sender(protocol, std::ref(commandsQueue))
 , receiver(protocol, std::ref(gameStatusQueue)) {}
 

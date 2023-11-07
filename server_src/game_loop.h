@@ -14,10 +14,10 @@
 class GameLoop {
 
 private: 
-    Queue<Command>& commandsQueue; // esta saca los comandos con try pop porque no la deberia bloquear y siempre tiene que estar loopeando
+    Queue<Command*>& commandsQueue; // esta saca los comandos con try pop porque no la deberia bloquear y siempre tiene que estar loopeando
     StatusBroadcaster& statusBroadcaster;
 public:
-    GameLoop(Queue<Command>& commandsQueue, StatusBroadcaster& statusBroadcaster);
+    GameLoop(Queue<Command*>& commandsQueue, StatusBroadcaster& statusBroadcaster);
     ~GameLoop();
     void start();
 };

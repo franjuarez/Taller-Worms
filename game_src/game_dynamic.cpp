@@ -1,7 +1,11 @@
 #include "game_dynamic.h"
 
-GameDynamic::GameDynamic(int wormPlayingID, std::vector<Worm>worms) : Game(wormPlayingID, worms), 
-wormPlayingID(wormPlayingID), worms(worms) {}
+GameDynamic::GameDynamic(int wormPlayingID, std::vector<Worm>worms) : Serializable() 
+,wormPlayingID(wormPlayingID), worms(worms) {}
+
+void GameDynamic::send(Protocol& protocol) {
+    protocol.sendDynamic(this);
+}
 
 void GameDynamic::addWorms(std::vector<Worm> wormVec) {
     worms = wormVec;
@@ -33,7 +37,7 @@ GameDynamic& GameDynamic::operator=(const GameDynamic& other) {
 }
 
 GameDynamic::GameDynamic(const GameDynamic& other) : 
-Game(other.wormPlayingID, other.worms), 
+Serializable(), 
 wormPlayingID(other.wormPlayingID), 
 worms(other.worms) {}
 

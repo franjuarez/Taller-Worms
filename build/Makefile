@@ -546,6 +546,30 @@ game_src/game_status.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/game_status.cpp.s
 .PHONY : game_src/game_status.cpp.s
 
+game_src/move_worm.o: game_src/move_worm.cpp.o
+.PHONY : game_src/move_worm.o
+
+# target to build an object file
+game_src/move_worm.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/move_worm.cpp.o
+.PHONY : game_src/move_worm.cpp.o
+
+game_src/move_worm.i: game_src/move_worm.cpp.i
+.PHONY : game_src/move_worm.i
+
+# target to preprocess a source file
+game_src/move_worm.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/move_worm.cpp.i
+.PHONY : game_src/move_worm.cpp.i
+
+game_src/move_worm.s: game_src/move_worm.cpp.s
+.PHONY : game_src/move_worm.s
+
+# target to generate assembly for a file
+game_src/move_worm.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/move_worm.cpp.s
+.PHONY : game_src/move_worm.cpp.s
+
 game_src/position.o: game_src/position.cpp.o
 .PHONY : game_src/position.o
 
@@ -1030,6 +1054,9 @@ help:
 	@echo "... game_src/game_status.o"
 	@echo "... game_src/game_status.i"
 	@echo "... game_src/game_status.s"
+	@echo "... game_src/move_worm.o"
+	@echo "... game_src/move_worm.i"
+	@echo "... game_src/move_worm.s"
 	@echo "... game_src/position.o"
 	@echo "... game_src/position.i"
 	@echo "... game_src/position.s"

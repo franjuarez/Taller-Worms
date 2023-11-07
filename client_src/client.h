@@ -19,9 +19,9 @@ class Client {
 private:
 	Protocol protocol;
 	int team;
-	// Game gameStatus;	
-	Queue<Serializable> gameStatusQueue;
-	Queue<Command> commandsQueue;
+	// Game gameStatus;
+	Queue<Serializable*> gameStatusQueue;
+	Queue<Command*> commandsQueue;
 	Sender sender;
 	Receiver receiver;
 	

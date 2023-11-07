@@ -4,42 +4,39 @@
 #include "../game_src/game.h"
 #include "../game_src/game_lobby.h"
 
-#define AMOUNT_OF_PLAYERS 2
+#define AMOUNT_OF_PLAYERS 3
 
-Lobby::Lobby(Socket& skt) : skt(skt) {}
+Lobby::Lobby(Socket& skt) : skt(skt), commandQueue(90) {}
 
 void Lobby::run() {
 
     // se deberian parsear los archivos con los mapas
-    std::vector<std::string> maps = {"joaco no sabe pensar nombres de mapas"};
+    std::vector<std::string> maps = {"segfault:1 vs joaco:0"};
     int idPlayer = 0;
 
     // Deberia el GameLoop ser una nueva thread? Sino? 
     // Deberia GaameLoop inicializar Lobby??? 
 
-    Queue<Command> commandQueue;
     StatusBroadcaster statusBroadcaster;
-    while (idPlayer < AMOUNT_OF_PLAYERS) {        
-        while(idPlayer < AMOUNT_OF_PLAYERS) {
-            try {
-                Socket peer = skt.accept();
-                idPlayer++;
-                GameLobby playerLobby(maps, idPlayer);
-                Player* player = new Player(playerLobby, std::move(peer), commandQueue);
-                // magic happens
-                statusBroadcaster.addPlayer(idPlayer, player->getPlayerQueue());
-                player->start();
+    while(idPlayer < AMOUNT_OF_PLAYERS) {
+        try {
+            Socket peer = skt.accept();
+            idPlayer++;
+            GameLobby* playerLobby = new GameLobby(maps, idPlayer);
+            Player* player = new Player(playerLobby, std::move(peer), commandQueue);
+            // magic happens
+            statusBroadcaster.addPlayer(idPlayer, player->getPlayerQueue());
+            player->start();
 
-                reapDead();
-                players.push_back(player);
-            } catch (...) {
-                // pasan mas cosas 
-            }
+            reapDead();
+            players.push_back(player);
+        } catch (...) {
+            // pasan mas cosas 
         }
-        // Inicializar el GameLoop 
-        GameLoop gameLoop(commandQueue, statusBroadcaster);
-        gameLoop.start();
     }
+    // Inicializar el GameLoop 
+    GameLoop gameLoop(commandQueue, statusBroadcaster);
+    gameLoop.start();
 
     killAll();
 }

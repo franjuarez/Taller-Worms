@@ -6,3 +6,21 @@ SelectMap::SelectMap(int team, int wormID, std::string mapName) : Command(team, 
 team(team), 
 wormID(wormID), 
 mapName(mapName) {}
+
+std::string& SelectMap::getMapName() {
+    return this->mapName;
+}
+
+void SelectMap::send(Protocol& protocol) {
+    protocol.sendSelectMap(this);
+}
+
+int SelectMap::getTeam(){
+    return this->team;
+}
+
+void SelectMap::executeCommand() {
+    std::cout << "exec SelectMap\n";
+}
+
+SelectMap::~SelectMap() {}

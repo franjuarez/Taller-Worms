@@ -3,7 +3,12 @@
 #include "constants.h"
 #include "../game_src/game_map.h"
 #include "../game_src/game_dynamic.h"
+#include "../game_src/select_map.h"
+#include  "../game_src/move.h"
 #include  "../game_src/worm.h"
+#include "../game_src/game_lobby.h"
+#include "../game_src/commands.h"
+
 
 #include <utility>
 #include <arpa/inet.h>
@@ -15,11 +20,11 @@ Protocol::Protocol(Socket&& skt) : skt(std::move(skt)) {}
 Protocol::Protocol(const std::string& hostname, const std::string& servname) :
 skt(hostname.c_str(), servname.c_str()) {}
 
-void Protocol::sendLobby(GameLobby lobby) {
+void Protocol::sendLobby(GameLobby* lobby) {
     checkClosed();
     sendUintEight(SEND_LOBBY);
-    sendUintEight(lobby.getTeam());
-    sendMapNames(lobby.getMapNames());
+    sendUintEight(lobby->getTeam());
+    sendMapNames(lobby->getMapNames());
 }
 
 GameLobby Protocol::receiveLobby() {
@@ -57,16 +62,16 @@ GameMap Protocol::receiveMap() {
     return gameMap;
 }
 
-void Protocol::sendDynamic(GameDynamic dynamic) {
+void Protocol::sendDynamic(GameDynamic* dynamic) {
     checkClosed();
 
     sendUintEight(SEND_DYNAMIC); 
-    sendUintSixteen(dynamic.getNumberOfWorms());
-    sendUintSixteen(dynamic.getWormPlayingID());
+    sendUintSixteen(dynamic->getNumberOfWorms());
+    sendUintSixteen(dynamic->getWormPlayingID());
 
-    std::vector<Worm> worms = dynamic.getWorms();
+    std::vector<Worm> worms = dynamic->getWorms();
 
-    for (int i = 0; i < dynamic.getNumberOfWorms(); i++) {
+    for (int i = 0; i < dynamic->getNumberOfWorms(); i++) {
         sendWorm(worms[i]);
     }
 }
@@ -86,24 +91,32 @@ GameDynamic Protocol::receiveDynamic() {
     return gameDynamic;
 }
 
-void Protocol::sendCommand(Command& command) {
+void Protocol::sendSelectMap(SelectMap* selectMap) {
     checkClosed();
-    sendUintEight(SEND_COMMAND);
-
-    // aca deberia intentar hacer un double dispatch ??? 
-    // o uso un simple if ?? 
-    
+    sendUintEight(SEND_COMMAND_SELECT);
+    sendUintEight(selectMap->getTeam());
+    sendString(selectMap->getMapName());
 }
 
-// Command Protocol::receiveCommand() {
-//     checkClosed();
-//     uint8_t protocolCode = receiveUintEight();
+void Protocol::sendMove(Move* move) {
+    checkClosed();
+    sendUintEight(SEND_COMMAND_MOVE);   
+    sendUintEight(move->getID());
+}
 
-//     // hay que ver como parsear esto
-//     // por ahi estaria explorar las callbacks? 
 
-//     return Command();
-// }
+Command* Protocol::receiveCommand() {
+    checkClosed();
+    uint8_t protocolCode = receiveUintEight();
+    if (protocolCode == SEND_COMMAND_MOVE) {
+        return receiveMove();
+    } else if (protocolCode == SEND_COMMAND_SELECT) {
+        return receiveSelectMap();
+    }
+    throw std::runtime_error("Invalid Command");
+}
+
+// -------------------------Private--------------------------------
 
 void Protocol::sendPosition(Position& pos) {
     sendFloat(pos.getX());
@@ -114,6 +127,19 @@ Position Protocol::receivePosition() {
     float x = receiveFloat();
     float y = receiveFloat();
     return Position(x, y);
+}
+
+Move* Protocol::receiveMove() {
+    checkClosed(); 
+    uint8_t wormId = receiveUintEight();
+    return new Move(wormId);
+}
+
+SelectMap* Protocol::receiveSelectMap() {
+    checkClosed();
+    uint8_t player = receiveUintEight();
+    std::string mapName = receiveString();
+    return new SelectMap(NO_WORM_PLAYING, player, mapName);
 }
 
 void Protocol::sendMapNames(std::vector<std::string>& allMaps) {

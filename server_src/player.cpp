@@ -1,14 +1,15 @@
 #include "player.h"
 
-Player::Player(GameLobby gameLobby, Socket&& peer, Queue<Command>& commandQueue) : 
+Player::Player(GameLobby* gameLobby, Socket&& peer, Queue<Command*>& commandQueue) : 
 protocol(std::move(peer)), 
-sender(gameLobby.getTeam(), protocol, playerQueue, talking), 
+sender(gameLobby->getTeam(), protocol, playerQueue, talking), 
 receiver(protocol, commandQueue, talking), 
-commandsQueue(commandQueue) {
+commandsQueue(commandQueue), 
+playerQueue(90) {
     playerQueue.push(gameLobby);
 }
 
-Queue<Serializable>* Player::getPlayerQueue() {
+Queue<Serializable*>* Player::getPlayerQueue() {
     return &playerQueue;
 }
 

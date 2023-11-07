@@ -13,9 +13,9 @@ class Sender : public Thread {
 
 private:
     Protocol& protocol;
-    Queue<Command>& commandsQueue;
+    Queue<Command*>& commandsQueue;
 public:
-    Sender(Protocol& protocol, Queue<Command>& q);
+    Sender(Protocol& protocol, Queue<Command*>& q);
     void run() override;
     ~Sender();
 };

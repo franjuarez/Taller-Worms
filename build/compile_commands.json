@@ -36,6 +36,11 @@
 },
 {
   "directory": "/home/martu/Facu/Taller I/Taller-Worms/build",
+  "command": "/usr/bin/g++ -DDATA_PATH=\"\\\"/home/martu/Facu/Taller I/Taller-Worms/resources\\\"\"  -g -o CMakeFiles/SharedGameLib.dir/game_src/move_worm.cpp.o -c \"/home/martu/Facu/Taller I/Taller-Worms/game_src/move_worm.cpp\"",
+  "file": "/home/martu/Facu/Taller I/Taller-Worms/game_src/move_worm.cpp"
+},
+{
+  "directory": "/home/martu/Facu/Taller I/Taller-Worms/build",
   "command": "/usr/bin/g++ -DDATA_PATH=\"\\\"/home/martu/Facu/Taller I/Taller-Worms/resources\\\"\"  -g -o CMakeFiles/SharedGameLib.dir/game_src/position.cpp.o -c \"/home/martu/Facu/Taller I/Taller-Worms/game_src/position.cpp\"",
   "file": "/home/martu/Facu/Taller I/Taller-Worms/game_src/position.cpp"
 },

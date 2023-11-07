@@ -15,7 +15,7 @@ int GameLobby::getTeam() {
 }
 
 void GameLobby::send(Protocol& protocol) {
-    protocol.sendLobby(*this);
+    protocol.sendLobby(this);
 }
 
 GameLobby& GameLobby::operator=(const GameLobby& other) {

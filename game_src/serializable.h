@@ -3,11 +3,12 @@
 
 #include "../shared_src/protocol.h"
 
+class Protocol;
+
 class Serializable {
 public:
     Serializable() {}
-    virtual ~Serializable() {}
+    ~Serializable() {}
     virtual void send(Protocol& protocol) = 0;
 };
-
 #endif

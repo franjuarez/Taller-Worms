@@ -4,6 +4,9 @@
 #include <iostream>
 #include <string>
 
+#include "../shared_src/protocol.h"
+class Protocol;
+class Move;
 class Command {
 
 private:
@@ -14,7 +17,8 @@ public:
     virtual ~Command() {}
     virtual void executeCommand() {
         std::cout << "exec mother class\n";
-    };
+    }
+    // podria hacer un override de exec q vaya al tipo que tiene que exec ... o no ? 
+    virtual void send(Protocol&) = 0;
 };
 #endif
-

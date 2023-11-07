@@ -2,15 +2,18 @@
 #define PROTOCOL_H
 
 #include "socket.h"
-#include "../game_src/game.h"
 #include "../game_src/serializable.h"
 #include "../game_src/game_map.h"
-#include "../game_src/game_dynamic.h"
-#include "../game_src/game_lobby.h"
-#include "../game_src/commands.h"
+
 
 #include <iostream>
 #include <vector>
+
+class GameLobby;
+class GameDynamic;
+class SelectMap;
+class Move;
+class Command;
 
 struct ClosedSocket : public std::runtime_error {
     ClosedSocket() : std::runtime_error("Socket is closed") {} 
@@ -44,22 +47,35 @@ private:
     void sendMapNames(std::vector<std::string>& mapNames);
     std::vector<std::string> receiveMapNames();
 
+
+    Move* receiveMove();
+    SelectMap* receiveSelectMap();
     void checkClosed();
 
 public:
+
+    // Agregar los send de los Commands.
+
     explicit Protocol(Socket&& skt);
     Protocol(const std::string& hostname, const std::string& servname);
 
     void sendMap(GameMap&);
     GameMap receiveMap();
 
-    void sendLobby(GameLobby lobby);
+    void sendLobby(GameLobby* lobby);
     GameLobby receiveLobby();
-    void sendDynamic(GameDynamic dynamic);
+
+    void sendDynamic(GameDynamic* dynamic);
     GameDynamic receiveDynamic();
 
-    void sendCommand(Command&);
-    Command receiveCommand();
+    void sendSelectMap(SelectMap* selectMap);
+    
+
+    void sendMove(Move* move);
+    
+
+    // void sendCommand(Command&);
+    Command* receiveCommand();
 
     ~Protocol();
 

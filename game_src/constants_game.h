@@ -1,0 +1,1 @@
+#define NO_TEAM_NEEDED 0

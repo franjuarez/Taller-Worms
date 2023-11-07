@@ -9,11 +9,11 @@ class Receiver : public Thread {
 
 private:
     Protocol& protocol;
-    Queue<Command>& commandsQueue;
+    Queue<Command*>& commandsQueue;
     bool& talking;
     // has the only queue of the game thread :)
 public:
-    Receiver(Protocol& protocol, Queue<Command>& commandsQueue, bool& talking);
+    Receiver(Protocol& protocol, Queue<Command*>& commandsQueue, bool& talking);
     ~Receiver();
     void run() override;
 

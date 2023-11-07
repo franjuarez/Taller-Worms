@@ -38,9 +38,11 @@ target_compile_options(server PRIVATE $<$<NOT:$<C_COMPILER_ID:MSVC>>:-Wall -Wext
 target_link_libraries(server PUBLIC box2d)
 target_link_libraries(server PUBLIC SDL2pp::SDL2pp)
 target_link_libraries(server PUBLIC SharedLib)
+target_link_libraries(server PUBLIC SharedGameLib)
 
 target_compile_options(client PRIVATE $<$<NOT:$<C_COMPILER_ID:MSVC>>:-Wall -Wextra -pedantic -ggdb -DDEBUG -pedantic-errors>)
 target_link_libraries(client PUBLIC box2d)
 target_link_libraries(client PUBLIC SDL2pp::SDL2pp)
 target_link_libraries(client PUBLIC SharedLib)
+target_link_libraries(client PUBLIC SharedGameLib)
 
