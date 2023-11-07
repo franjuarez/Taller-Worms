@@ -23,9 +23,6 @@ private:
 
     void checkWormExists(uint id);
 
-    void createBeam(float startingX, float startingY, float angle, bool large);
-
-    void createWorm(float startingX, float startingY, uint id);
 
     b2Body* createRocket(b2Body* worm, int direction);
 
@@ -41,6 +38,10 @@ public:
 
     void update();
 
+    void createBeam(float startingX, float startingY, float angle, bool large);
+
+    void createWorm(float startingX, float startingY, uint id);
+    
     void moveWormLeft(uint id);
 
     void moveWormRight(uint id);
