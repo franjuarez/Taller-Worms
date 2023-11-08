@@ -2,7 +2,7 @@
 
 #define WINDOW_NAME "Worms 2"
 
-#define FPS 30.0f
+#define FPS 60.0f
 #define RATE (1000.f / FPS)
 
 #define BACKGROUND_PATH "../resources/images/background.png"
@@ -95,7 +95,8 @@ void GameView::draw(int i) {
 }
 
 void GameView::returnKeyCase(int i) {
-	this->wormViews.at(this->currentWormId).jump(i);
+	//this->wormViews.at(this->currentWormId).jump(i);
+	std::cout << i << std::endl;
 }
 
 void GameView::mouseMovementCase(int x, int y) {
@@ -126,6 +127,7 @@ void GameView::start() {
 					this->client.execute(new Jump(currentWormId, this->lookingDir + 2));
                 	returnKeyCase(i);
                 }
+				
                 if (event.key.keysym.sym == SDLK_LEFT) {
 					this->lookingDir = 1;
                 	this->client.execute(new Move(0, LEFT_DIR));

@@ -12,6 +12,8 @@ using namespace uiConstants;
 
 MouseHandler::MouseHandler(int& camX, int& camY) : camX(camX), camY(camY) {
 	moving = false;
+	mousePosX = WINDOW_WIDTH / 2;
+	mousePosY = WINDOW_HEIGHT / 2;
 }
 
 void MouseHandler::handleMovement(int mouseX, int mouseY) {

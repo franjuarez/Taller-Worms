@@ -6,7 +6,7 @@
 #include "../game_src/game_map.h"
 #include <unistd.h>
 
-#define FPS 30.0f
+#define FPS 60.0f
 #define RATE (1000.f / FPS)  
 
 GameLoop::GameLoop(Queue<Command*>& commandsQueue, StatusBroadcaster& statusBroadcaster)
