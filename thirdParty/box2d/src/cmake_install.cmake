@@ -1,4 +1,4 @@
-# Install script for directory: /home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d/src
+# Install script for directory: /home/joaco/cuatri/taller/tp3_worms/thirdParty/box2d/src
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -37,20 +37,15 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
   set(CMAKE_CROSSCOMPILING "FALSE")
 endif()
 
-# Set default install directory permissions.
-if(NOT DEFINED CMAKE_OBJDUMP)
-  set(CMAKE_OBJDUMP "/usr/bin/objdump")
-endif()
-
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d/bin/libbox2d.a")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "/home/joaco/cuatri/taller/tp3_worms/thirdParty/box2d/bin/libbox2d.a")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/cmake/box2d/box2dConfig.cmake")
     file(DIFFERENT EXPORT_FILE_CHANGED FILES
          "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/cmake/box2d/box2dConfig.cmake"
-         "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d/src/CMakeFiles/Export/lib/cmake/box2d/box2dConfig.cmake")
+         "/home/joaco/cuatri/taller/tp3_worms/thirdParty/box2d/src/CMakeFiles/Export/lib/cmake/box2d/box2dConfig.cmake")
     if(EXPORT_FILE_CHANGED)
       file(GLOB OLD_CONFIG_FILES "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/cmake/box2d/box2dConfig-*.cmake")
       if(OLD_CONFIG_FILES)
@@ -59,13 +54,13 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
       endif()
     endif()
   endif()
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/box2d" TYPE FILE FILES "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d/src/CMakeFiles/Export/lib/cmake/box2d/box2dConfig.cmake")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/box2d" TYPE FILE FILES "/home/joaco/cuatri/taller/tp3_worms/thirdParty/box2d/src/CMakeFiles/Export/lib/cmake/box2d/box2dConfig.cmake")
   if("${CMAKE_INSTALL_CONFIG_NAME}" MATCHES "^()$")
-    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/box2d" TYPE FILE FILES "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d/src/CMakeFiles/Export/lib/cmake/box2d/box2dConfig-noconfig.cmake")
+    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/box2d" TYPE FILE FILES "/home/joaco/cuatri/taller/tp3_worms/thirdParty/box2d/src/CMakeFiles/Export/lib/cmake/box2d/box2dConfig-noconfig.cmake")
   endif()
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/box2d" TYPE FILE FILES "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d/src/box2dConfigVersion.cmake")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/box2d" TYPE FILE FILES "/home/joaco/cuatri/taller/tp3_worms/thirdParty/box2d/src/box2dConfigVersion.cmake")
 endif()
 
