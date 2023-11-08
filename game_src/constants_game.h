@@ -7,6 +7,8 @@ enum
 {
     RIGHT_DIR = 0,
     LEFT_DIR, 
+    FORWARD_DIR,
+    BACKWARD_DIR,
 };
 
 #endif

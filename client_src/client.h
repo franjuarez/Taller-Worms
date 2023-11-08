@@ -43,11 +43,7 @@ public:
 
 	void kill();
 
-	//runCommand();
-
-	//jumpCommand();
-
-	//shootCommand();
+	void join();
 
 };
 #endif

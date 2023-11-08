@@ -3,24 +3,65 @@
 #include "../game_src/game_dynamic.h"
 #include <unistd.h>
 
+#define FPS 30.0f
+#define RATE (1000.f / FPS)  
+
 GameLoop::GameLoop(Queue<Command*>& commandsQueue, StatusBroadcaster& statusBroadcaster)
 : commandsQueue(commandsQueue), statusBroadcaster(statusBroadcaster), gameWorld() {}
 
-void GameLoop::start() {
+static uint32 getTicks()
+{
+    static clock_t start_time = 0;
+    if (start_time == 0) {
+        start_time = clock();
+    }
 
+    clock_t current_time = clock();
+    return (current_time - start_time) * 1000 / CLOCKS_PER_SEC;
+}
+void GameLoop::loopLogic() {
 // se encarga de los turnos y que jugador esta al momento.
 // es el que se encarga de que gusano esta al momento
-        while (true) {
-                Command* command;
-                while (commandsQueue.try_pop(command)) {
-                        command->executeCommand(gameWorld);
-                }
-        std::vector<WormDTO> worms = gameWorld.update();
-        GameDynamic* gameDynamic = new GameDynamic(0, worms);
-        statusBroadcaster.broadcast(gameDynamic);
-        usleep(33);
-        // requerimos un sleep para no matar la compu wiiiii 
-        }
+	Command* command;
+	while (commandsQueue.try_pop(command)) {
+			command->executeCommand(gameWorld);
+	}
+	std::vector<WormDTO> worms = gameWorld.update();
+	GameDynamic* gameDynamic = new GameDynamic(0, worms);
+	statusBroadcaster.broadcast(gameDynamic);
+}
+void GameLoop::start() {
+	// int t1 = getTicks();
+        //get ticks without sdl
+	//float durationInSeconds;
+
+	while(true) {
+		loopLogic();
+		usleep(RATE*100);
+    
+		// int t2 = getTicks();
+		// float rest = RATE - (t2 - t1);
+// 
+		// if (rest < 0) { //me tomo mas tiempo del que tenia
+			// int behind = -rest; //behind -> por cuanto me pase
+			// 
+			//lo que deberia dormir para despertar justo en el inicio de la ventana de un frame
+			//// rest = RATE - fmod(behind, RATE);
+// 
+			//la cantidad de frames que me saltie y que por ende, deberia dormir
+			// float lost = behind + rest;
+			// t1 += lost;
+			////i += (int )(lost / RATE);
+            // for (int k = 0; k < (int)(lost / RATE); k++) {
+				// std::vector<WormDTO> worms = gameWorld.update();
+				// GameDynamic* gameDynamic = new GameDynamic(0, worms);
+				// statusBroadcaster.broadcast(gameDynamic);
+            // }
+		// }
+        // 
+		// t1 += RATE; //le sume lo perdido y la rate asique esta actualizado
+		// usleep(rest * 100);
+	}
 }
 
 GameLoop::~GameLoop() {}

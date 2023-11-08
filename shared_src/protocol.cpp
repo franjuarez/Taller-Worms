@@ -2,6 +2,8 @@
 #include "../game_src/game_dynamic.h"
 #include "../game_src/select_map.h"
 #include  "../game_src/move.h"
+#include  "../game_src/jump.h"
+
 #include "../game_src/game_lobby.h"
 #include "../game_src/commands.h"
 #include "../game_src/game_map.h"
@@ -101,6 +103,12 @@ void Protocol::sendMove(Move* move) {
     sendUintEight(move->getDir());
 }
 
+void Protocol::sendJump(Jump* jump) {
+    checkClosed();
+    sendUintEight(SEND_COMMAND_JUMP);   
+    sendUintEight(jump->getID());
+    sendUintEight(jump->getDir());
+}
 
 Command* Protocol::receiveCommand() {
     checkClosed();
@@ -109,6 +117,8 @@ Command* Protocol::receiveCommand() {
         return receiveMove();
     } else if (protocolCode == SEND_COMMAND_SELECT) {
         return receiveSelectMap();
+    } else if (protocolCode == SEND_COMMAND_JUMP) {
+        return receiveJump();
     }
     throw std::runtime_error("Invalid Command");
 }
@@ -126,6 +136,14 @@ Position Protocol::receivePosition() {
     return Position(x, y);
 }
 
+
+SelectMap* Protocol::receiveSelectMap() {
+    checkClosed();
+    uint8_t player = receiveUintEight();
+    std::string mapName = receiveString();
+    return new SelectMap(NO_WORM_PLAYING, player, mapName);
+}
+
 Move* Protocol::receiveMove() {
     checkClosed(); 
     uint8_t wormId = receiveUintEight();
@@ -133,11 +151,11 @@ Move* Protocol::receiveMove() {
     return new Move(wormId, dir);
 }
 
-SelectMap* Protocol::receiveSelectMap() {
-    checkClosed();
-    uint8_t player = receiveUintEight();
-    std::string mapName = receiveString();
-    return new SelectMap(NO_WORM_PLAYING, player, mapName);
+Jump* Protocol::receiveJump() {
+    checkClosed(); 
+    uint8_t wormId = receiveUintEight();
+    uint8_t dir = receiveUintEight();
+    return new Jump(wormId, dir);
 }
 
 void Protocol::sendMapNames(std::vector<std::string>& allMaps) {
@@ -267,7 +285,7 @@ void Protocol::checkClosed() {
 
 void Protocol::boom() {
     was_closed = true;
-    skt.shutdown(2);
+    skt.shutdown(SHUT_RDWR);
     skt.close();
 }
 

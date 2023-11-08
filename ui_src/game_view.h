@@ -37,6 +37,7 @@ private:
 	MouseHandler mouseHandler;
 
 	int currentWormId;
+	int lookingDir;
 
 	void updateWorms();
 	void loadWorms(std::vector<WormDTO>& recievedWorms);

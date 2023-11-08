@@ -10,12 +10,6 @@ commandsQueue(q), keepTalking(keepTalking) {}
 void Sender::run() {
     // SelectMap* select = new SelectMap(9, NO_WORM_PLAYING, "aloha" );
     // commandsQueue.push(select);
-    // Move* move = new Move(0, RIGHT_DIR);
-    // commandsQueue.push(move);
-    // Move* move2 = new Move(0, RIGHT_DIR);
-    // commandsQueue.push(move2);
-    // Move* move3 = new Move(0, RIGHT_DIR);
-    // commandsQueue.push(move3);
     //  yyyyyy aca mando los comandos 
     // como se decidiran los comandos lo sabe dios nomas
     // 2do empieza el game loop
@@ -27,8 +21,8 @@ void Sender::run() {
             command->send(protocol);    
         }
     } catch (...) {
-        std::cout << "Termina3 el Sender" << std::endl;
         keepTalking = false;
+        return;
     } 
 }
 

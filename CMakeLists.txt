@@ -18,7 +18,7 @@ add_subdirectory("thirdParty/SDL2pp")
 include_directories(${SDL2PP_INCLUDE_DIRS})
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
-file(GLOB UI "${CMAKE_CURRENT_SOURCE_DIR}/ui_src/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/ui_src/*.h")
+file(GLOB UI CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/ui_src/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/ui_src/*.h")
 
 add_library(SharedUi ${UI})
 target_link_libraries(SharedUi PUBLIC SDL2pp::SDL2pp)
@@ -28,20 +28,20 @@ file(GLOB SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/physics_src/*.c
 add_library(SharedPhysics ${SOURCES})
 target_link_libraries(SharedPhysics PUBLIC box2d)
 
-file(GLOB SHAREDGAME "${CMAKE_CURRENT_SOURCE_DIR}/game_src/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/game_src/*.h" )
+file(GLOB SHAREDGAME CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/game_src/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/game_src/*.h" )
 add_library(SharedGameLib ${SHAREDGAME})
 target_link_libraries(SharedGameLib PUBLIC SharedPhysics)
 target_link_libraries(SharedUi PUBLIC SharedGameLib)
 
-file(GLOB SHARED "${CMAKE_CURRENT_SOURCE_DIR}/shared_src/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/shared_src/*.h" )
+file(GLOB SHARED CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/shared_src/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/shared_src/*.h" )
 add_library(SharedLib ${SHARED})
 target_link_libraries(SharedLib PUBLIC SharedGameLib)
 
-file(GLOB HEADER_FILES "${CMAKE_CURRENT_SOURCE_DIR}/client_src/*.h")
-file(GLOB CLIENT "${CMAKE_CURRENT_SOURCE_DIR}/client_src/*.cpp")
+file(GLOB HEADER_FILES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/client_src/*.h")
+file(GLOB CLIENT CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/client_src/*.cpp")
 add_executable(client ${CLIENT} ${HEADER_FILES})
 
-file(GLOB SERVER "${CMAKE_CURRENT_SOURCE_DIR}/server_src/*.cpp")
+file(GLOB SERVER CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/server_src/*.cpp")
 add_executable(server ${SERVER})
 
 target_compile_options(server PRIVATE $<$<NOT:$<C_COMPILER_ID:MSVC>>:-Wall -Wextra -pedantic -ggdb -DDEBUG -pedantic-errors>)

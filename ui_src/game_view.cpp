@@ -5,14 +5,15 @@
 #define FPS 30.0f
 #define RATE (1000.f / FPS)
 
-#define BACKGROUND_PATH "resources/images/background.png"
-#define BEAM_PATH "resources/images/grdl8.png"
-#define STILL_WORM_PATH "resources/images/worm_still.png"
+#define BACKGROUND_PATH "../resources/images/background.png"
+#define BEAM_PATH "../resources/images/grdl8.png"
+#define STILL_WORM_PATH "../resources/images/worm_still.png"
 //#define STILL_WORM_PATH "../resources/images/waccuse.png"
-#define JUMPING_WORM_PATH "resources/images/worm_jump.png"
+#define JUMPING_WORM_PATH "../resources/images/worm_jump.png"
 
 #include "../game_src/constants_game.h"
 #include "../game_src/move.h"
+#include "../game_src/jump.h"
 
 GameView::GameView(const std::string& hostname, const std::string& servname) :
 		client(hostname, servname),
@@ -30,6 +31,7 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 	GameDynamic* gs = dynamic_cast<GameDynamic*>(client.getGameStatus());
 	std::vector<WormDTO> recievedWorms = gs->getWorms();
 	loadWorms(recievedWorms);
+	this->lookingDir = 0;
 
 	//camX = 0;
 	//camY = 0;
@@ -58,7 +60,6 @@ void GameView::loadWorms(std::vector<WormDTO>& recievedWorms) {
 void GameView::updateWorms() {
 	// std::cout << "pideclientes" << std::endl;
 	GameDynamic* gs = dynamic_cast<GameDynamic*>(client.getGameStatus());
-	std::cout << "+" << gs << std::endl;
 	// std::cout << "termino de pedir al cliente" << std::endl;
 	std::vector<WormDTO> recievedWorms = gs->getWorms();
 	// std::cout << "pidio worms" << std::endl;
@@ -113,15 +114,24 @@ void GameView::start() {
                     return;
                 }
                 if(event.key.keysym.sym == SDLK_RETURN) {
+					this->client.execute(new Jump(currentWormId, this->lookingDir + 2));
                 	returnKeyCase(i);
                 }
                 if (event.key.keysym.sym == SDLK_LEFT) {
-					std::cout << "se entro a SDLK_LEFT\n";
+					this->lookingDir = 1;
                 	this->client.execute(new Move(0, LEFT_DIR));
                 }
 				if (event.key.keysym.sym == SDLK_RIGHT) {
-					std::cout << "se entro a SDLK_RIGHT\n";
+					this->lookingDir = 0;
                 	this->client.execute(new Move(0, RIGHT_DIR));
+                }
+				if (event.key.keysym.sym == SDLK_d) {
+					std::cout << "se entro a SDLK_RIGHT\n";
+                	this->client.execute(new Move(1, LEFT_DIR));
+                }
+				if (event.key.keysym.sym == SDLK_a) {
+					std::cout << "se entro a SDLK_RIGHT\n";
+                	this->client.execute(new Move(1, RIGHT_DIR));
                 }
                 
                 //if ( event.type == SDL_MOUSEMOTION) {
@@ -160,20 +170,6 @@ void GameView::start() {
 		SDL_Delay(rest);
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 void GameView::join() {
 	this->client.kill();

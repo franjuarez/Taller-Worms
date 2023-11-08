@@ -18,7 +18,7 @@ int main(int argc, char** argv) {
 	Socket skt(argv[1]);
 	Lobby lobby(skt);
 	lobby.run();
-
+	
 	return 0;
 }
 

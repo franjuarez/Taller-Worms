@@ -17,6 +17,7 @@ class GameMap;
 class SelectMap;
 class Move;
 class Command;
+class Jump;
 
 struct ClosedSocket : public std::runtime_error {
     ClosedSocket() : std::runtime_error("Socket is closed") {} 
@@ -53,6 +54,7 @@ private:
 
     Move* receiveMove();
     SelectMap* receiveSelectMap();
+    Jump* receiveJump();
     void checkClosed();
 
 public:
@@ -72,9 +74,10 @@ public:
     GameDynamic* receiveDynamic();
 
     void sendSelectMap(SelectMap* selectMap);
-    
 
     void sendMove(Move* move);
+
+    void sendJump(Jump* jump);
     
 
     // void sendCommand(Command&);

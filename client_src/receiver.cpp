@@ -11,7 +11,6 @@ Receiver::Receiver(Protocol& protocol, Queue<Serializable*>& q, bool& keepTalkin
 : protocol(protocol), gameStatuses(q), keepTalking(keepTalking) {}
 
 void Receiver::run() {
-    
     try {
         // 1st get the GameLobby with the players team and the available maps
         // GameLobby lobby = protocol.receiveLobby();
@@ -34,14 +33,11 @@ void Receiver::run() {
             gameStatuses.push(gameDynamic);
         }
     } catch (const ClosedSocket& e){
-        std::cout << "Reciever: Se ha cerrado la conexion\n";
         keepTalking = false;
     } catch (const ClosedQueue& e){
-        std::cout << "Reciever: Se ha cerrado la QUEUE\n";
         keepTalking = false;
-    } catch (const std::exception& e){
+    } catch (...){
         keepTalking = false;
-        std::cout << "Error inesperado" << e.what() << std::endl;
     }
 }
 
