@@ -33,7 +33,7 @@ void GameWorld::createWorm(float startingX, float startingY, int id, int team){
     fd.density = WORM_DENSITY;
     fd.friction = WORM_FRICTION;
     body->SetFixedRotation(true);
-    fd.filter.groupIndex = WORM_GROUP_INDEX; //This way it doesn't collide with other worms
+    fd.filter.groupIndex = WORM_GROUP_INDEX; //This way it doesn't collide with other worms SALMON
     body->CreateFixture(&fd);
 
     Worm* wormEntity = new Worm(body, id, team, RIGHT); //Starts facing right

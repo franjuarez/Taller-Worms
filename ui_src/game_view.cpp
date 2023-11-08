@@ -6,7 +6,7 @@
 #define RATE (1000.f / FPS)
 
 #define BACKGROUND_PATH "../resources/images/background.png"
-#define BEAM_PATH "../resources/images/grdl8.png"
+#define BEAM_PATH "../resources/images/grdl8.png"	
 #define STILL_WORM_PATH "../resources/images/worm_still.png"
 //#define STILL_WORM_PATH "../resources/images/waccuse.png"
 #define JUMPING_WORM_PATH "../resources/images/worm_jump.png"

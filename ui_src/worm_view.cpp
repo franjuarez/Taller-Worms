@@ -64,7 +64,7 @@ void WormView::display(int i, Renderer& renderer, int camX, int camY) {
 
 	//std::cout << this->frames[this->currentFramesIndex][currentFrame] << std::endl;
 	renderer.Copy(
-		this->dynamicSpriteSheets[currentFramesIndex], 
+		this->dynamicSpriteSheets[currentFramesIndex],
 		this->frames[currentFramesIndex][currentFrame], 
 		Rect(
 			(worm.getPosition().getX() * m_to_pix_x) - camX,

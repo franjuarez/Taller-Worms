@@ -51,7 +51,7 @@ void GameLoop::start() {
     //createWorm(12.0f, 12.0f, 1, 1);
 
     beams.push_back(BeamDTO(6, Position(10.0f, 10.0f), 0));
-	beams.push_back(BeamDTO(6, Position(20.0f, 10.0f), 0));
+	beams.push_back(BeamDTO(6, Position(17.0f, 10.0f), 0));
     //beams.push_back(BeamDTO(6, pos2, 10.66));
     GameMap* map = new GameMap("aloha", beams, worms);
     statusBroadcaster.broadcast(map); 

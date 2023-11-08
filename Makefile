@@ -555,6 +555,33 @@ game_src/game_map.cpp.s:
 	$(MAKE) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/game_map.cpp.s
 .PHONY : game_src/game_map.cpp.s
 
+game_src/jump.o: game_src/jump.cpp.o
+
+.PHONY : game_src/jump.o
+
+# target to build an object file
+game_src/jump.cpp.o:
+	$(MAKE) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/jump.cpp.o
+.PHONY : game_src/jump.cpp.o
+
+game_src/jump.i: game_src/jump.cpp.i
+
+.PHONY : game_src/jump.i
+
+# target to preprocess a source file
+game_src/jump.cpp.i:
+	$(MAKE) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/jump.cpp.i
+.PHONY : game_src/jump.cpp.i
+
+game_src/jump.s: game_src/jump.cpp.s
+
+.PHONY : game_src/jump.s
+
+# target to generate assembly for a file
+game_src/jump.cpp.s:
+	$(MAKE) -f CMakeFiles/SharedGameLib.dir/build.make CMakeFiles/SharedGameLib.dir/game_src/jump.cpp.s
+.PHONY : game_src/jump.cpp.s
+
 game_src/move.o: game_src/move.cpp.o
 
 .PHONY : game_src/move.o
@@ -1230,6 +1257,33 @@ shared_src/socket.cpp.s:
 	$(MAKE) -f CMakeFiles/SharedLib.dir/build.make CMakeFiles/SharedLib.dir/shared_src/socket.cpp.s
 .PHONY : shared_src/socket.cpp.s
 
+ui_src/beam_view.o: ui_src/beam_view.cpp.o
+
+.PHONY : ui_src/beam_view.o
+
+# target to build an object file
+ui_src/beam_view.cpp.o:
+	$(MAKE) -f CMakeFiles/SharedUi.dir/build.make CMakeFiles/SharedUi.dir/ui_src/beam_view.cpp.o
+.PHONY : ui_src/beam_view.cpp.o
+
+ui_src/beam_view.i: ui_src/beam_view.cpp.i
+
+.PHONY : ui_src/beam_view.i
+
+# target to preprocess a source file
+ui_src/beam_view.cpp.i:
+	$(MAKE) -f CMakeFiles/SharedUi.dir/build.make CMakeFiles/SharedUi.dir/ui_src/beam_view.cpp.i
+.PHONY : ui_src/beam_view.cpp.i
+
+ui_src/beam_view.s: ui_src/beam_view.cpp.s
+
+.PHONY : ui_src/beam_view.s
+
+# target to generate assembly for a file
+ui_src/beam_view.cpp.s:
+	$(MAKE) -f CMakeFiles/SharedUi.dir/build.make CMakeFiles/SharedUi.dir/ui_src/beam_view.cpp.s
+.PHONY : ui_src/beam_view.cpp.s
+
 ui_src/constants.o: ui_src/constants.cpp.o
 
 .PHONY : ui_src/constants.o
@@ -1388,6 +1442,9 @@ help:
 	@echo "... game_src/game_map.o"
 	@echo "... game_src/game_map.i"
 	@echo "... game_src/game_map.s"
+	@echo "... game_src/jump.o"
+	@echo "... game_src/jump.i"
+	@echo "... game_src/jump.s"
 	@echo "... game_src/move.o"
 	@echo "... game_src/move.i"
 	@echo "... game_src/move.s"
@@ -1463,6 +1520,9 @@ help:
 	@echo "... shared_src/socket.o"
 	@echo "... shared_src/socket.i"
 	@echo "... shared_src/socket.s"
+	@echo "... ui_src/beam_view.o"
+	@echo "... ui_src/beam_view.i"
+	@echo "... ui_src/beam_view.s"
 	@echo "... ui_src/constants.o"
 	@echo "... ui_src/constants.i"
 	@echo "... ui_src/constants.s"
