@@ -3,6 +3,7 @@
 #include "../game_src/game_lobby.h"
 #include "../game_src/game_dynamic.h"
 #include "../shared_src/protocol.h"
+#include <unistd.h>
 
 #include <iostream>
 
@@ -29,15 +30,16 @@ void Receiver::run() {
         // // 3rd start receiving the game status -> with the playing worm/team, 
         // // the map stays the same and the new dynamic objects -> worms, boxes, etc
         while (keepTalking) {
-            GameDynamic gameDynamic = protocol.receiveDynamic();
-            gameStatuses.push(&gameDynamic);
-            std::cout << "worm " << gameDynamic.getWorms()[0].getId() << std::endl;
-            std::cout <<  gameDynamic.getWorms()[0].getPosition().getX() << ", ";
-            std::cout <<  gameDynamic.getWorms()[0].getPosition().getY() << "\n";
-
-            std::cout << "worm " << gameDynamic.getWorms()[1].getId() << std::endl;
-            std::cout <<  gameDynamic.getWorms()[1].getPosition().getX() << ", ";
-            std::cout <<  gameDynamic.getWorms()[1].getPosition().getY() << "\n";
+            GameDynamic* gameDynamic = protocol.receiveDynamic();
+            gameStatuses.push(gameDynamic);
+            // std::cout << "worm " << gameDynamic.getWorms()[0].getId() << std::endl;
+            // std::cout <<  gameDynamic.getWorms()[0].getPosition().getX() << ", ";
+            // std::cout <<  gameDynamic.getWorms()[0].getPosition().getY() << "\n";
+            // std::cout << "worm " << gameDynamic.getWorms()[1].getId() << std::endl;
+            // std::cout <<  gameDynamic.getWorms()[1].getPosition().getX() << ", ";
+            // std::cout <<  gameDynamic.getWorms()[1].getPosition().getY() << "\n";
+            // std::cout << ".\n"; 
+            // usleep(1000);
         }
     } catch (const ClosedSocket& e){
         std::cout << "Reciever: Se ha cerrado la conexion\n";

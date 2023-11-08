@@ -73,7 +73,7 @@ void Protocol::sendDynamic(GameDynamic* dynamic) {
     }
 }
 
-GameDynamic Protocol::receiveDynamic() {
+GameDynamic* Protocol::receiveDynamic() {
     checkClosed();
     uint8_t protocolCode = receiveUintEight();
     uint16_t numberOfWorms = receiveUintSixteen();
@@ -84,8 +84,7 @@ GameDynamic Protocol::receiveDynamic() {
         WormDTO worm = receiveWorm();
         worms.push_back(worm);
     }
-    GameDynamic gameDynamic(wormPlayingID, worms);
-    return gameDynamic;
+    return new GameDynamic(wormPlayingID, worms);
 }
 
 void Protocol::sendSelectMap(SelectMap* selectMap) {

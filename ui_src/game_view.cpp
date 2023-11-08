@@ -56,11 +56,16 @@ void GameView::loadWorms(std::vector<WormDTO>& recievedWorms) {
 }
 
 void GameView::updateWorms() {
+	// std::cout << "pideclientes" << std::endl;
 	GameDynamic* gs = dynamic_cast<GameDynamic*>(client.getGameStatus());
+	std::cout << "+" << gs << std::endl;
+	// std::cout << "termino de pedir al cliente" << std::endl;
 	std::vector<WormDTO> recievedWorms = gs->getWorms();
+	// std::cout << "pidio worms" << std::endl;
 	for (auto &worm : recievedWorms) {
 		this->wormViews.at(worm.getId()).update(worm);
 	}
+	// std::cout << "termino de parsear" << std::endl;
 }
 
 void GameView::draw(int i) {

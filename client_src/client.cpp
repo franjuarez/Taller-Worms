@@ -15,6 +15,7 @@ Serializable* Client::getGameStatus() {
         lastGameStatus = gameStatusQueue.pop();
     }
     while (gameStatusQueue.try_pop(this->lastGameStatus)) {}
+    std::cout<< "Puntero en client" << lastGameStatus << std::endl;
     return this->lastGameStatus;
 }
 

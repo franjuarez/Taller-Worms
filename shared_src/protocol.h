@@ -70,7 +70,7 @@ public:
     GameLobby receiveLobby();
 
     void sendDynamic(GameDynamic* dynamic);
-    GameDynamic receiveDynamic();
+    GameDynamic* receiveDynamic();
 
     void sendSelectMap(SelectMap* selectMap);
     
