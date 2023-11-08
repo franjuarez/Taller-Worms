@@ -1,6 +1,9 @@
 #include "game_loop.h"
 #include <chrono>
 #include "../game_src/game_dynamic.h"
+#include "../game_src/worm_dto.h"
+#include "../game_src/beam_dto.h"
+#include "../game_src/game_map.h"
 #include <unistd.h>
 
 #define FPS 30.0f
@@ -34,6 +37,24 @@ void GameLoop::start() {
 	// int t1 = getTicks();
         //get ticks without sdl
 	//float durationInSeconds;
+
+
+    std::vector<BeamDTO> beams;
+    std::vector<WormDTO> worms;
+    Position pos(9.7, 11.0);
+    Position pos2(9.89, 12.1);
+    worms.push_back(WormDTO(0, 79, 1, pos2));
+    worms.push_back(WormDTO(1, 9, 1, pos2));
+
+    //createBeam(10.0f, 10.0f, 0, true);
+    //createWorm(10.0f, 15.0f, 0, 0);
+    //createWorm(12.0f, 12.0f, 1, 1);
+
+    beams.push_back(BeamDTO(6, Position(10.0f, 10.0f), 0));
+	beams.push_back(BeamDTO(6, Position(20.0f, 10.0f), 0));
+    //beams.push_back(BeamDTO(6, pos2, 10.66));
+    GameMap* map = new GameMap("aloha", beams, worms);
+    statusBroadcaster.broadcast(map); 
 
 	while(true) {
 		loopLogic();

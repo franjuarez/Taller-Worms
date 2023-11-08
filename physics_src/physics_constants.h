@@ -25,8 +25,8 @@
 #define MAX_WALKABLE_BEAM_ANGLE 45
 
 //Worm constants
-#define WORM_WIDTH 1.0f
-#define WORM_HEIGHT 1.0f
+#define WORM_WIDTH 1.5f
+#define WORM_HEIGHT 1.5f
 #define WORM_DENSITY 1.0f
 #define WORM_FRICTION 0.3f //a revisar
 #define WORM_DAMPING 0.3f

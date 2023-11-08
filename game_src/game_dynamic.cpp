@@ -11,10 +11,6 @@ void GameDynamic::addWorms(std::vector<WormDTO> wormVec) {
     worms = wormVec;
 }
 
-void GameDynamic::setWormPlayingID(int id) {
-    this->wormPlayingID = id;
-}
-
 std::vector<WormDTO> GameDynamic::getWorms() {
     return this->worms;
 }

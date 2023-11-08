@@ -30,8 +30,6 @@ private:
     
     void removeEntities();
 
-    void moveWorm(b2Body* worm, b2Vec2 vel);
-
     void jumpWorm(b2Body* worm, float maxHeight, float distance);
 public:
     GameWorld();
@@ -40,17 +38,15 @@ public:
 
     void createBeam(float startingX, float startingY, float angle, bool large);
 
-    void createWorm(float startingX, float startingY, uint id);
+    void createWorm(float startingX, float startingY, int id, int team);
+
+    void moveWorm(int id, int direction);
+ 
+    void jumpForwardWorm(int id);
     
-    void moveWormLeft(uint id);
+    void jumpBackwardsWorm(int id);
 
-    void moveWormRight(uint id);
-
-    void jumpForwardWorm(uint id);
-    
-    void jumpBackwardsWorm(uint id);
-
-    void wormLaunchRocket(uint id, float angle, int direction, float power);
+    void wormLaunchRocket(int id, float angle, int direction, float power);
 
     ~GameWorld();
 };

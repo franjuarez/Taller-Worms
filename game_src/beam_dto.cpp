@@ -2,19 +2,15 @@
 #include "beam_dto.h"
 #include <iostream>
 
-BeamDTO::BeamDTO(int id, int lenght, Position& pos1, Position& pos2) 
-: id(id), beamLength(lenght), position1(pos1), position2(pos2) {}
+BeamDTO::BeamDTO(int lenght, Position pos, float angle) 
+: beamLength(lenght), position(pos), angle(angle) {}
 
-int BeamDTO::getId() {
-    return this->id;
+Position BeamDTO::getPosition() {
+    return this->position;
 }
 
-Position BeamDTO::getPosition1() {
-    return this->position1;
-}
-
-Position BeamDTO::getPosition2() {
-    return this->position2;
+float BeamDTO::getAngle() {
+    return this->angle;
 }
 
 int BeamDTO::getBeamLength() {

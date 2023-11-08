@@ -13,6 +13,7 @@ Client::Client(const std::string& hostname, const std::string& servname) : proto
 Serializable* Client::getGameStatus() {
     if (!lastGameStatus) {
         lastGameStatus = gameStatusQueue.pop();
+        return this->lastGameStatus;
     }
     while (gameStatusQueue.try_pop(this->lastGameStatus)) {}
     return this->lastGameStatus;

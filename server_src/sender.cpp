@@ -1,6 +1,7 @@
 #include "sender.h"
 #include "../game_src/game_lobby.h"
 #include "../game_src/game_dynamic.h"
+#include "../game_src/game_map.h"
 
 
 Sender::Sender(int id, Protocol& protocol, Queue<Serializable*>& playerQueue, bool& talking) 
@@ -11,6 +12,9 @@ void Sender::run() {
         // Serializable* gameLobbyS = playerQueue.pop();
         // GameLobby* gameLobby = dynamic_cast<GameLobby*>(gameLobbyS);
         // gameLobby->send(protocol);
+        Serializable* gameMapS = playerQueue.pop();
+        GameMap* gameMap = dynamic_cast<GameMap*>(gameMapS);
+        gameMap->send(protocol);
 
         while (talking) {
             Serializable* gameLobbySS = playerQueue.pop();

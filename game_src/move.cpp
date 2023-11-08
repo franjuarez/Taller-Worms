@@ -7,14 +7,7 @@ Move::Move(int id, int dir) : Command(NO_TEAM_NEEDED, id), wormID(id), dir(dir) 
 
 void Move::executeCommand(GameWorld& gameWorld) {
     std::cout << "exec move\n";
-    if (dir == RIGHT_DIR) {
-        gameWorld.moveWormRight(wormID);
-    } else if (dir == LEFT_DIR) {
-        gameWorld.moveWormLeft(wormID);
-    } else{
-        std::cout << "dir: " << dir << "\n";
-        throw std::runtime_error("Invalid direction!");
-    }
+    gameWorld.moveWorm(this->wormID, this->dir);
 }
 
 void Move::send(Protocol& protocol) {

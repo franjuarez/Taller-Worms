@@ -1,11 +1,12 @@
 #include "protocol.h"
-#include "../game_src/game_dynamic.h"
+
+#include "../game_src/commands.h"
 #include "../game_src/select_map.h"
 #include  "../game_src/move.h"
 #include  "../game_src/jump.h"
 
 #include "../game_src/game_lobby.h"
-#include "../game_src/commands.h"
+#include "../game_src/game_dynamic.h"
 #include "../game_src/game_map.h"
 
 
@@ -26,66 +27,61 @@ void Protocol::sendLobby(GameLobby* lobby) {
     sendMapNames(lobby->getMapNames());
 }
 
-GameLobby Protocol::receiveLobby() {
+GameLobby* Protocol::receiveLobby() {
     checkClosed();
     uint8_t protocolCode = receiveUintEight();
-    uint16_t team = receiveUintEight();
+    uint8_t team = receiveUintEight();
     std::vector<std::string> mapNames = receiveMapNames();
-    GameLobby lobby(mapNames, team);
-    return lobby;
+    return new GameLobby(mapNames, team);
 }
 
-// void Protocol::sendMap(GameMap& gameMap) {
-//     checkClosed();
-//     sendString(gameMap.getMapName());
-//     uint8_t nrOfBeams = gameMap.getNumberOfBeams();
-//     sendUintEight(nrOfBeams);
+void Protocol::sendMap(GameMap* gameMap) {
+    checkClosed();
+    sendUintEight(SEND_MAP); 
+    sendString(gameMap->getMapName());
 
-//     std::vector<Beam> beams = gameMap.getBeams(0);
-//     for (int j = 0; j < nrOfBeams; j++) {
-//         sendBeam(beams[j]);
-//     }
-// }
+    sendWorms(gameMap->getWorms());
 
-// GameMap Protocol::receiveMap() {
-//     checkClosed();
-//     std::string mapName = receiveString();
-//     uint8_t numberOfBeams = receiveUintEight();
+    sendUintEight(gameMap->getNumberOfBeams());
+    // std::cout << "4\n";
+    std::vector<BeamDTO> beams = gameMap->getBeams();
+    // std::cout << "5\n";
+    for (int i = 0; i < gameMap->getNumberOfBeams(); i++) {
+        sendBeam(beams[i]);
+    }
+    // std::cout << "6\n";
+}
 
-//     std::vector<Beam> beams;
-//     for (int j = 0; j < numberOfBeams; j++) {
-//         Beam beam = receiveBeam(j);
-//         beams.push_back(beam);
-//     }
-//     GameMap gameMap(numberOfBeams, mapName, beams);
-//     return gameMap;
-// }
+GameMap* Protocol::receiveMap() {
+    uint8_t protocolCode = receiveUintEight();
+    std::string mapName = receiveString();
+
+    std::vector<WormDTO> worms = receiveWorms();
+
+    uint8_t numberOfBeams = receiveUintEight();
+
+    std::vector<BeamDTO> beams;
+    for (int i = 0; i < numberOfBeams; i++) {
+        BeamDTO beam = receiveBeam();
+        beams.push_back(beam);
+    }
+    return new GameMap(mapName, beams, worms);
+}
+
 
 void Protocol::sendDynamic(GameDynamic* dynamic) {
     checkClosed();
-
     sendUintEight(SEND_DYNAMIC); 
-    sendUintSixteen(dynamic->getNumberOfWorms());
-    sendUintSixteen(dynamic->getWormPlayingID());
-
-    std::vector<WormDTO> worms = dynamic->getWorms();
-
-    for (int i = 0; i < dynamic->getNumberOfWorms(); i++) {
-        sendWorm(worms[i]);
-    }
+    sendUintEight(dynamic->getWormPlayingID());
+    sendWorms(dynamic->getWorms());
 }
 
 GameDynamic* Protocol::receiveDynamic() {
     checkClosed();
     uint8_t protocolCode = receiveUintEight();
-    uint16_t numberOfWorms = receiveUintSixteen();
-    uint16_t wormPlayingID = receiveUintSixteen();
+    uint8_t wormPlayingID = receiveUintEight();
 
-    std::vector<WormDTO> worms;
-    for (int i = 0; i < numberOfWorms; i++) {
-        WormDTO worm = receiveWorm();
-        worms.push_back(worm);
-    }
+    std::vector<WormDTO> worms = receiveWorms();
     return new GameDynamic(wormPlayingID, worms);
 }
 
@@ -177,38 +173,54 @@ std::vector<std::string> Protocol::receiveMapNames() {
     return allMaps;
 }
 
-void Protocol::sendWorm(WormDTO& worm) {
-    sendUintSixteen(worm.getId());
-    sendUintSixteen(worm.getTeam());
-    sendUintThirtyTwo(worm.getHealth());
-    Position pos = worm.getPosition();
-    sendPosition(pos);
+void Protocol::sendWorms(std::vector<WormDTO> worms) {
+    sendUintEight(worms.size());
+    for (int i = 0; i < worms.size(); i++) {
+        sendUintEight(worms[i].getId());
+        sendUintEight(worms[i].getTeam());
+        sendUintEight(worms[i].getHealth());
+        Position pos = worms[i].getPosition();
+        sendPosition(pos);
+    }
+
 }
 
-WormDTO Protocol::receiveWorm() {
-    uint16_t id = receiveUintSixteen();
-    uint16_t team = receiveUintSixteen();
-    uint32_t health = receiveUintThirtyTwo();
-    Position pos = receivePosition();
-
-    WormDTO worm(id, team, health, pos);
-    return worm;
+std::vector<WormDTO> Protocol::receiveWorms() {
+    uint8_t numberOfWorms = receiveUintEight();
+    std::vector<WormDTO> worms; 
+    for (int i = 0; i < numberOfWorms; i++) {
+        uint8_t id = receiveUintEight();
+        uint8_t team = receiveUintEight();
+        uint8_t health = receiveUintEight();
+        Position pos = receivePosition();
+        WormDTO worm(id, team, health, pos);
+        worms.push_back(worm);
+    }
+    return worms;
 }
 
-void Protocol::sendBeam(BeamDTO& beam) {
-    Position beamPosition1 = beam.getPosition1();
+void Protocol::sendBeam(BeamDTO beam) {
+    sendUintEight( beam.getBeamLength());
+    sendFloat(beam.getAngle());
+    Position beamPosition1 = beam.getPosition();
     sendPosition(beamPosition1);
-    Position beamPosition2 = beam.getPosition2();
-    sendPosition(beamPosition2);
-    uint8_t beamLength = beam.getBeamLength();
-    sendUintEight(beamLength);
+    
 }
 
-BeamDTO Protocol::receiveBeam(int id) {
-    Position beamPosition1 = receivePosition();
-    Position beamPosition2 = receivePosition();
+BeamDTO Protocol::receiveBeam() {
+    // uint8_t numberOfBeams = receiveUintEight();
+    // std::vector<BeamDTO> beams; 
+    // for (int i = 0; i < numberOfBeams; i++) {
+    //     uint8_t beamLength = receiveUintEight();
+    //     float angle = receiveFloat();
+    //     Position beamPosition1 = receivePosition();
+    //     BeamDTO beam(beamLength, beamPosition1, angle);
+    //     beams.push_back(beam);
+    // }
     uint8_t beamLength = receiveUintEight();
-    BeamDTO beam(id, beamLength, beamPosition1, beamPosition2);
+    float angle = receiveFloat();
+    Position beamPosition1 = receivePosition();
+    BeamDTO beam(beamLength, beamPosition1, angle);
     return beam;
 }
 

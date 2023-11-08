@@ -2,30 +2,33 @@
 
 #include <iostream>
 
-GameMap::GameMap(int numberOfBeams, std::string mapName, std::vector<BeamDTO> beamsMap ) : 
+GameMap::GameMap(std::string mapName, std::vector<BeamDTO> beamsMap, std::vector<WormDTO> worms) : 
 Serializable(), 
-numberOfBeams(numberOfBeams), 
 mapName(mapName),
-beamsMap(beamsMap) {}
-
-void GameMap::addBeam(int id, BeamDTO beam) {
-    beamsMap[id] = beam;
-}
+beamsMap(beamsMap),
+worms(worms) {}
 
 std::string GameMap::getMapName() {
     return this->mapName;
 }
 
 int GameMap::getNumberOfBeams() {
-    return this->numberOfBeams;
+    return this->beamsMap.size();
 }
 
-std::vector<BeamDTO> GameMap::getBeams(int id) {
+int GameMap::getNumberOfWorms() {
+    return this->worms.size();
+}
+
+std::vector<BeamDTO> GameMap::getBeams() {
     return this->beamsMap;
+}
+std::vector<WormDTO> GameMap::getWorms() {
+    return this->worms;
 }
 
 void GameMap::send(Protocol& protocol) {
-    // protocol.sendLobby(this);
+    protocol.sendMap(this);
 }
 
 GameMap::~GameMap() {}

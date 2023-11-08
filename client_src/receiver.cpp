@@ -18,13 +18,9 @@ void Receiver::run() {
         // std::cout <<  lobby.getMapNames().at(0) << "\n";
         
         // 2nd get the map selected by the player
-        
-        // GameMap map = protocol.receiveMap();
-        // gameStatuses.push(map);
 
-        // std::cout << map.getMapName() << "\n";
-        // std::cout << map.getNumberOfBeams() << "\n";
-        // std::cout << map.getBeams(0).at(0).getPosition2().getX() << "\n";
+        GameMap* map = protocol.receiveMap();
+        gameStatuses.push(map);
 
         // // 3rd start receiving the game status -> with the playing worm/team, 
         // // the map stays the same and the new dynamic objects -> worms, boxes, etc

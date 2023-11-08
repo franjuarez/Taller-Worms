@@ -25,27 +25,32 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 		//no usar vsync porque no voy a poder comprobar si mi loop de fps's funciona
 		renderer(window, -1 /*any driver*/, SDL_RENDERER_ACCELERATED),
 		backgroundSprite(renderer, BACKGROUND_PATH),
+		beamSprite(renderer, BEAM_PATH),
 		camX(0), camY(0), mouseHandler(camX, camY) {
 
 	client.start();
-	GameDynamic* gs = dynamic_cast<GameDynamic*>(client.getGameStatus());
+	GameMap* gs = dynamic_cast<GameMap*>(client.getGameStatus());
+	
 	std::vector<WormDTO> recievedWorms = gs->getWorms();
 	loadWorms(recievedWorms);
-	this->lookingDir = 0;
+	
 
-	//camX = 0;
-	//camY = 0;
+	std::vector<BeamDTO> beams = gs->getBeams();
+	loadBeams(beams);
+
+	this->lookingDir = 0;
 
 	dynamicSpriteSheets.push_back(Texture(renderer,Surface(STILL_WORM_PATH).SetColorKey(true, 0)));
 	dynamicSpriteSheets.push_back(Texture(renderer,Surface(JUMPING_WORM_PATH).SetColorKey(true, 0)));
 
+	this->currentWormId = 1;	
+}
 
-	this->currentWormId = 1;
-	//en la version final esto es algo que recibo en cada vuelta y capaz cuando me crean
-
-	//this->recievedWorms.push_back(Worm(1, TEAM_1, 100, Position(7, 5 + 1.5)));
-	//this->recievedWorms.push_back(Worm(2, TEAM_2, 100, Position(9, 5 + 1.5)));
-	
+void GameView::loadBeams(std::vector<BeamDTO>& beams) {
+	for (auto &beam: beams) {
+		// this->beamViews.push_back(BeamView(beam, beamSprite));
+		this->beamViews.emplace_back(beam, beamSprite);
+	}
 }
 
 void GameView::loadWorms(std::vector<WormDTO>& recievedWorms) {
@@ -58,7 +63,7 @@ void GameView::loadWorms(std::vector<WormDTO>& recievedWorms) {
 }
 
 void GameView::updateWorms() {
-	// std::cout << "pideclientes" << std::endl;
+	// std::cout << "pide clientes" << std::endl;
 	GameDynamic* gs = dynamic_cast<GameDynamic*>(client.getGameStatus());
 	// std::cout << "termino de pedir al cliente" << std::endl;
 	std::vector<WormDTO> recievedWorms = gs->getWorms();
@@ -76,11 +81,15 @@ void GameView::draw(int i) {
 	//armo la nueva pantalla
 	renderer.Copy(backgroundSprite, NullOpt, NullOpt);
 
+	for (auto it = beamViews.begin(); it != beamViews.end(); it++) {
+		//confirmar que esto esta trabajando inplace y no hace copia
+		it->display(this->renderer, camX, camY);
+	}
+
 	for (auto it = wormViews.begin(); it != wormViews.end(); it++) {
 		//confirmar que esto esta trabajando inplace y no hace copia
 		it->second.display(i, this->renderer, camX, camY);
 	}
-
 	//muestro la nueva pantalla
 	renderer.Present();
 }

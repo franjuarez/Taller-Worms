@@ -8,6 +8,7 @@
 #include "mouse_handler.h"
 #include "../game_src/game_dynamic.h"
 #include "../client_src/client.h"
+#include "beam_view.h"
 
 using namespace uiConstants;
 using namespace SDL2pp;
@@ -26,11 +27,12 @@ private:
 
 	//recursos
 	Texture backgroundSprite;
-	//Texture longBeamSprite;
-	//Texture shortBeamSprite;
+	Texture beamSprite;
+	
 	std::vector<Texture> dynamicSpriteSheets;
-
+	std::vector<BeamView> beamViews;
 	std::unordered_map<int, WormView> wormViews;
+	
 
 	int camX;
 	int camY;
@@ -41,6 +43,7 @@ private:
 
 	void updateWorms();
 	void loadWorms(std::vector<WormDTO>& recievedWorms);
+	void loadBeams(std::vector<BeamDTO>& beams);
 	void draw(int i);
 	void returnKeyCase(int i);
 	void mouseMovementCase(int x, int y);

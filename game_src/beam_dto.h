@@ -5,19 +5,14 @@
 
 class BeamDTO {
 private:
-    int id;
     int beamLength;
-    Position position1; // having both extremes to get the angle :)
-    Position position2; 
-    // float angle;
+    Position position; // having both extremes to get the angle :)
+    float angle;
 public:
-    BeamDTO(int id, int lenght, Position& pos1, Position& pos2);
-    int getId();
-    Position getPosition1();
-    Position getPosition2();
+    BeamDTO(int lenght, Position pos, float angle);
+    Position getPosition();
     int getBeamLength();
-    // void calcAngle();
-    // float getAngle();
+    float getAngle();
     ~BeamDTO();
 };
 #endif

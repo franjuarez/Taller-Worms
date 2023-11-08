@@ -13,6 +13,7 @@ int main(int argc, char** argv) {
 	}
 
 	try {
+		
 		GameView gv(argv[1], argv[2]);
 		gv.start();
 		gv.join();

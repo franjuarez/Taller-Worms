@@ -9,16 +9,19 @@
 
 class Worm : public Entity {
     private:
-    uint id;
-    // uint team; (Future update)
+    int id;
+    int team;
     float health;
     int direction;
     //weapons (Future update)
 
     void moveOnWalkableBeam(b2Body* worm, b2Vec2 normal);
 
+
+    void jump(float maxHeight, float distance);
+
     public:
-    Worm(b2Body* body, uint id, int direction);
+    Worm(b2Body* body, int id, int team, int direction);
 
 
     void beginCollisionWithBeam(Entity* otherBody, std::set<b2Body*>& entitiesToRemove) override;
@@ -43,7 +46,13 @@ class Worm : public Entity {
 
     bool isDead();
 
-    uint getId();
+    int getId();
+
+    void move(int direction);
+
+    void jumpForward();
+
+    void jumpBackwards();
 
     WormDTO getDTO();
 };

@@ -11,13 +11,8 @@
 #include <iostream>
 #include <vector>
 
-class GameLobby;
-class GameDynamic;
-class GameMap;
-class SelectMap;
-class Move;
-class Command;
-class Jump;
+class GameLobby; class GameDynamic; class GameMap;
+class Command; class SelectMap; class Move; class Jump;
 
 struct ClosedSocket : public std::runtime_error {
     ClosedSocket() : std::runtime_error("Socket is closed") {} 
@@ -42,10 +37,10 @@ private:
     std::string receiveString();
 
 
-    void sendBeam(BeamDTO& beam);
-    BeamDTO receiveBeam(int id);
-    void sendWorm(WormDTO& worm);
-    WormDTO receiveWorm();
+    void sendBeam(BeamDTO beam);
+    BeamDTO receiveBeam();
+    void sendWorms(std::vector<WormDTO> worm);
+    std::vector<WormDTO> receiveWorms();
     void sendPosition(Position& position);
     Position receivePosition();
     void sendMapNames(std::vector<std::string>& mapNames);
@@ -59,16 +54,14 @@ private:
 
 public:
 
-    // Agregar los send de los Commands.
-
     explicit Protocol(Socket&& skt);
     Protocol(const std::string& hostname, const std::string& servname);
 
-    // void sendMap(GameMap&);
-    // GameMap receiveMap();
+    void sendMap(GameMap* map);
+    GameMap* receiveMap();
 
     void sendLobby(GameLobby* lobby);
-    GameLobby receiveLobby();
+    GameLobby* receiveLobby();
 
     void sendDynamic(GameDynamic* dynamic);
     GameDynamic* receiveDynamic();

@@ -16,11 +16,11 @@ GameWorld::GameWorld() {
 
     createBeam(10.0f, 10.0f, 0, true);
     
-    createWorm(10.0f, 15.0f, 0);
-    createWorm(12.0f, 12.0f, 1);
+    createWorm(10.0f, 15.0f, 0, 0);
+    createWorm(12.0f, 12.0f, 1, 1);
 }
 
-void GameWorld::createWorm(float startingX, float startingY, uint id){
+void GameWorld::createWorm(float startingX, float startingY, int id, int team){
     b2BodyDef bd;
     bd.type = b2_dynamicBody;
     bd.position.Set(startingX, startingY);
@@ -36,17 +36,12 @@ void GameWorld::createWorm(float startingX, float startingY, uint id){
     fd.filter.groupIndex = WORM_GROUP_INDEX; //This way it doesn't collide with other worms
     body->CreateFixture(&fd);
 
-    Worm* wormEntity = new Worm(body, id, RIGHT);
+    Worm* wormEntity = new Worm(body, id, team, RIGHT); //Starts facing right
     body->GetUserData().pointer = reinterpret_cast<uintptr_t>(wormEntity);
 
     this->worms[id] = body;
 }
 
-void GameWorld::checkWormExists(uint id){
-    if(this->worms.find(id) == this->worms.end()){
-        throw std::invalid_argument("Worm with id " + std::to_string(id) + " does not exist");
-    }
-}
 
 void GameWorld::createBeam(float startingX, float startingY, float angle, bool large){
     b2BodyDef beam;
@@ -62,8 +57,8 @@ void GameWorld::createBeam(float startingX, float startingY, float angle, bool l
     float realY = sin(angleInRadians) * beamWidth;
     vs[0].Set(0, 0);
     vs[1].Set(realX, realY);
-    vs[2].Set(realX, realY + BEAM_HEIGHT);
-    vs[3].Set(0, BEAM_HEIGHT);
+    vs[2].Set(realX, realY - BEAM_HEIGHT);
+    vs[3].Set(0, -BEAM_HEIGHT);
     shape.Set(vs, 4);
     gb.shape = &shape;
     gb.friction = WORM_FRICTION;
@@ -74,6 +69,12 @@ void GameWorld::createBeam(float startingX, float startingY, float angle, bool l
     beamBody->GetUserData().pointer = reinterpret_cast<uintptr_t>(beamEntity);
 }
 
+void GameWorld::checkWormExists(uint id){ //Capaz conviene un array con pos de id? es mas rapido pero mas choto de acceder
+    if(this->worms.find(id) == this->worms.end()){
+        throw std::invalid_argument("Worm with id " + std::to_string(id) + " does not exist");
+    }
+}
+
 b2Body* GameWorld::createRocket(b2Body* worm, int direction){
     b2BodyDef bd;
     bd.type = b2_dynamicBody;
@@ -82,8 +83,8 @@ b2Body* GameWorld::createRocket(b2Body* worm, int direction){
     float posY = worm->GetPosition().y;
     bd.position.Set(posX, posY);
     b2Body* body = this->world->CreateBody(&bd);
-    body->IsBullet()
-    ;
+    body->IsBullet();
+    
     b2FixtureDef fd;
     b2PolygonShape shape;
     shape.SetAsBox(ROCKET_WIDTH, ROCKET_HEIGHT);
@@ -96,7 +97,7 @@ b2Body* GameWorld::createRocket(b2Body* worm, int direction){
     return body;
 }
 
-void GameWorld::wormLaunchRocket(uint id, float angle, int direction, float power){
+void GameWorld::wormLaunchRocket(int id, float angle, int direction, float power){
     checkWormExists(id);
     b2Body* worm = this->worms[id];
     b2Body* rocket = createRocket(worm, direction);
@@ -109,51 +110,25 @@ void GameWorld::wormLaunchRocket(uint id, float angle, int direction, float powe
     rocket->SetLinearVelocity(rocketVel);
 }
 
-void GameWorld::moveWorm(b2Body* worm, b2Vec2 vel){
-    b2Vec2 currentVel = worm->GetLinearVelocity();
-    if(currentVel.y != 0){
-        return;
-    }
-    vel = vel + currentVel;
-    worm->SetLinearVelocity(vel);
-}
-
-void GameWorld::moveWormLeft(uint id){
+void GameWorld::moveWorm(int id, int direction){
     checkWormExists(id);
     b2Body* worm = this->worms[id];
-    b2Vec2 vel = b2Vec2(-MOVE_VELOCITY, 0);
-    moveWorm(worm, vel);
+    Worm* wormData = (Worm*) worm->GetUserData().pointer;
+    wormData->move(direction);
 }
 
-void GameWorld::moveWormRight(uint id){
+void GameWorld::jumpForwardWorm(int id){
     checkWormExists(id);
     b2Body* worm = this->worms[id];
-    b2Vec2 vel = b2Vec2(MOVE_VELOCITY, 0);
-    moveWorm(worm, vel);
+    Worm* wormData = (Worm*) worm->GetUserData().pointer;
+    wormData->jumpForward();
 }
 
-void GameWorld::jumpWorm(b2Body* worm, float maxHeight, float distance){
-    b2Vec2 vel = worm->GetLinearVelocity();
-    if(vel.y != 0){
-        return;
-    }
-    //From auxiliar_physics_functions.cpp
-    b2Vec2 newVel = calculateInitialVelocityForMaxHeight(maxHeight, distance);
-    newVel.x += vel.x;
-    worm->SetLinearVelocity(newVel);
-
-}
-
-void GameWorld::jumpForwardWorm(uint id){
+void GameWorld::jumpBackwardsWorm(int id){
     checkWormExists(id);
     b2Body* worm = this->worms[id];
-    jumpWorm(worm, JUMP_FORWARD_MOVEMENT_Y, JUMP_FORWARD_MOVEMENT_X);
-}
-
-void GameWorld::jumpBackwardsWorm(uint id){
-    checkWormExists(id);
-    b2Body* worm = this->worms[id];
-    jumpWorm(worm, JUMP_BACKWARDS_MOVEMENT_Y, JUMP_BACKWARDS_MOVEMENT_X);   
+    Worm* wormData = (Worm*) worm->GetUserData().pointer;
+    wormData->jumpBackwards();
 }
 
 void GameWorld::killDeadWorms(){

@@ -9,6 +9,7 @@
 #include <vector>
 #include <atomic>
 
+class Protocol;
 
 class GameDynamic : public Serializable {
 
@@ -21,7 +22,6 @@ public:
     GameDynamic(int wormPlayingID, std::vector<WormDTO>worms);
     void send(Protocol& protocol);
     void addWorms(std::vector<WormDTO>worms); // should change to adding all worms in one to avoid a RC
-    void setWormPlayingID(int id);
     std::vector<WormDTO> getWorms();
     int getNumberOfWorms(); 
     int getWormPlayingID();

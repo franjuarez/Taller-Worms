@@ -1,6 +1,6 @@
 #include "Worm.h"
 
-Worm::Worm(b2Body* body, uint id, int direction) : Entity(body), id(id), health(WORM_INITIAL_HEALTH), direction(direction) {}
+Worm::Worm(b2Body* body, int id, int team, int direction) : Entity(body), id(id), team(team), health(WORM_INITIAL_HEALTH), direction(direction) {}
 
 
 Worm::~Worm() {}
@@ -13,8 +13,52 @@ bool Worm::isDead(){
     return this->health <= 0;
 }
 
-uint Worm::getId(){
+int Worm::getId(){
     return this->id;
+}
+
+void Worm::move(int direction){
+    this->direction = direction;
+    b2Vec2 vel;
+    if(direction == LEFT){
+        vel.x = -MOVE_VELOCITY;
+    } else {
+        vel.x = MOVE_VELOCITY;
+    }
+    
+    b2Vec2 currentVel = this->body->GetLinearVelocity();
+    if(currentVel.y != 0){
+        return;
+    }
+    vel = vel + currentVel;
+    this->body->SetLinearVelocity(vel);
+}
+
+void Worm::jump(float maxHeight, float distance){
+    b2Vec2 vel = this->body->GetLinearVelocity();
+    if(vel.y != 0){
+        return;
+    }
+    //From auxiliar_physics_functions.cpp
+    b2Vec2 newVel = calculateInitialVelocityForMaxHeight(maxHeight, distance);
+    newVel.x += vel.x;
+    this->body->SetLinearVelocity(newVel);
+}
+
+void Worm::jumpForward(){
+    if(this->direction == LEFT){
+        jump(-JUMP_FORWARD_MOVEMENT_X, JUMP_FORWARD_MOVEMENT_Y);
+    } else {
+        jump(JUMP_FORWARD_MOVEMENT_X, JUMP_FORWARD_MOVEMENT_Y);
+    }
+}
+
+void Worm::jumpBackwards(){
+    if(this->direction == LEFT){
+        jump(JUMP_BACKWARDS_MOVEMENT_X, JUMP_BACKWARDS_MOVEMENT_Y);
+    } else {
+        jump(-JUMP_BACKWARDS_MOVEMENT_X, JUMP_BACKWARDS_MOVEMENT_Y);
+    }
 }
 
 WormDTO Worm::getDTO(){
@@ -112,6 +156,7 @@ void Worm::postSolveCollisionWithWorm(Entity* otherBody, b2Contact* contact) {
 }
 
 void Worm::endCollisionWithBeam(Entity* otherBody, b2Contact* contact) {
+    std::cout << "Posicion gusano: " << this->body->GetPosition().x << " " << this->body->GetPosition().y << std::endl;
     UNUSED(otherBody);
     UNUSED(contact);
 }
