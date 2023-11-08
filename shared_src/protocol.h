@@ -8,7 +8,6 @@
 #include  "../game_src/beam_dto.h"
 #include  "../game_src/position.h"
 
-
 #include <iostream>
 #include <vector>
 

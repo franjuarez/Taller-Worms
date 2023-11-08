@@ -32,14 +32,6 @@ void Receiver::run() {
         while (keepTalking) {
             GameDynamic* gameDynamic = protocol.receiveDynamic();
             gameStatuses.push(gameDynamic);
-            // std::cout << "worm " << gameDynamic.getWorms()[0].getId() << std::endl;
-            // std::cout <<  gameDynamic.getWorms()[0].getPosition().getX() << ", ";
-            // std::cout <<  gameDynamic.getWorms()[0].getPosition().getY() << "\n";
-            // std::cout << "worm " << gameDynamic.getWorms()[1].getId() << std::endl;
-            // std::cout <<  gameDynamic.getWorms()[1].getPosition().getX() << ", ";
-            // std::cout <<  gameDynamic.getWorms()[1].getPosition().getY() << "\n";
-            // std::cout << ".\n"; 
-            // usleep(1000);
         }
     } catch (const ClosedSocket& e){
         std::cout << "Reciever: Se ha cerrado la conexion\n";
