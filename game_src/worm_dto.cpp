@@ -36,6 +36,7 @@ Position WormDTO::getPosition() {
 WormDTO& WormDTO::operator=(const WormDTO& other) {
     if (this != &other) { // Check for self-assignment
         id = other.id;
+        dir = other.dir;
         team = other.team;
         health = other.health;
         position = other.position;

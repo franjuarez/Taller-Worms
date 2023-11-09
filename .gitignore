@@ -1,4 +1,5 @@
 
+# Remove build folder
 build/
 # Remove the folder CMakeFiles
 CMakeFiles/
@@ -13,12 +14,7 @@ cmake_install.cmake
 .vscode/
 
 # Remove the executable file
-server
-client
-libSharedLib.a
-main
 Makefile
-
 
 # Prerequisites
 *.d

@@ -20,13 +20,8 @@ void Rocket::explode(std::set<b2Body*>& entitiesToRemove) {
         b2Vec2 bodyPos = body->GetPosition();
         float distance = b2Distance(rocketPos, bodyPos);
         float damage = this->damage * (1 - distance / this->radius);
-        worm->takeDamage(damage);
-        //Should fly away from the explosion
-        b2Vec2 direction = bodyPos - rocketPos;
-        direction.Normalize();
-        std::cout << "direction: " << direction.x << ", " << direction.y << std::endl;
-        std::cout << "force: " << direction.x * damage * 10 << ", " << direction.y * damage * 10 << std::endl; 
-        body->ApplyForceToCenter(b2Vec2(direction.x * damage * 10, direction.y * damage * 10), true);
+        worm->handleExplosion(damage, rocketPos);
+        // std::cout << "force: x:" << force.x << ", y:" << force.y << std::endl; 
     }
     entitiesToRemove.insert(rocket);
 }

@@ -78,7 +78,7 @@ void GameWorld::checkWormExists(uint id){ //Capaz conviene un array con pos de i
 b2Body* GameWorld::createRocket(b2Body* worm, int direction){
     b2BodyDef bd;
     bd.type = b2_dynamicBody;
-    float deltaX = (direction == LEFT) ? - WORM_WIDTH - ROCKET_WIDTH - 0.1f : WORM_WIDTH + ROCKET_WIDTH + 0.1f;
+    float deltaX = (direction == LEFT) ? - WORM_WIDTH/2 - ROCKET_WIDTH/2 - 0.1f : WORM_WIDTH/2 + ROCKET_WIDTH/2 + 0.1f;
     float posX = worm->GetPosition().x + deltaX;
     float posY = worm->GetPosition().y;
     bd.position.Set(posX, posY);

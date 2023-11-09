@@ -11,7 +11,7 @@
 #define VELOCITY_ITERATIONS 6
 #define POSITION_ITERATIONS 3
 #define INFINITE_DAMPING 1000.0f
-#define STANDARD_DAMPING 0.3f
+#define STANDARD_DAMPING 0.5f
 
 //directions
 #define LEFT 0

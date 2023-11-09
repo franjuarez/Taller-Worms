@@ -51,7 +51,7 @@ class Worm : public Entity {
 
     ~Worm() override;
 
-    void takeDamage(float damage);
+    // void takeDamage(float damage);
 
     bool isDead();
 
@@ -62,6 +62,9 @@ class Worm : public Entity {
     void jumpForward();
 
     void jumpBackwards();
+
+    void handleExplosion(float damage, b2Vec2 explosionCenter);
+
 
     WormDTO getDTO();
 };
