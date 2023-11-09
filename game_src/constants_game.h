@@ -3,16 +3,14 @@
 
 #define NO_TEAM_NEEDED 0
 
-enum 
-{
+enum /*Direction*/ {
     LEFT_DIR = 0,
     RIGHT_DIR, 
     FORWARD_DIR,
     BACKWARD_DIR,
 };
 
-enum 
-{
+enum /*PROJECTILE_TYPE*/{
     SIMPLE_ROCKET = 0,
 };
 

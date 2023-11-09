@@ -2,6 +2,7 @@
 #define PROJECTILE_DTO_H
 
 #include "position.h"
+#include "constants_game.h"
 
 class ProjectileDTO {
 private:

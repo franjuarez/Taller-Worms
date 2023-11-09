@@ -26,6 +26,13 @@ void Rocket::explode(std::set<b2Body*>& entitiesToRemove) {
     entitiesToRemove.insert(rocket);
 }
 
+ProjectileDTO Rocket::getDTO(){
+    Position pos(this->body->GetPosition().x, this->body->GetPosition().y);
+    b2Vec2 vel = this->body->GetLinearVelocity();
+    ProjectileDTO dto(0, pos, vel.x, vel.y);
+    return dto;
+}
+
 void Rocket::beginCollisionWithBeam(Entity* otherBody, std::set<b2Body*>& entitiesToRemove) {
     UNUSED(otherBody);
     explode(entitiesToRemove);

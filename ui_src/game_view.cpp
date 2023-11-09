@@ -16,6 +16,8 @@
 #include "../game_src/constants_game.h"
 #include "../game_src/move.h"
 #include "../game_src/jump.h"
+#include "../game_src/attack.h"
+
 
 GameView::GameView(const std::string& hostname, const std::string& servname) :
 		client(hostname, servname),
@@ -44,7 +46,7 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 	dynamicSpriteSheets.push_back(Texture(renderer,Surface(WALKING_WORM_PATH).SetColorKey(true,0)));
 
 	this->lookingDir = 0;
-	this->currentWormId = 1;
+	this->currentWormId = 0;
 }
 
 void GameView::loadBeams(std::vector<BeamDTO>& beams) {
@@ -63,7 +65,7 @@ void GameView::loadWorms(std::vector<WormDTO>& recievedWorms) {
 	}
 }
 
-void GameView::updateWorms() {
+void GameView::updateEntities() {
 	// std::cout << "pide clientes" << std::endl;
 	GameDynamic* gs = dynamic_cast<GameDynamic*>(client.getGameStatus());
 	// std::cout << "termino de pedir al cliente" << std::endl;
@@ -72,6 +74,8 @@ void GameView::updateWorms() {
 	for (auto &worm : recievedWorms) {
 		this->wormViews.at(worm.getId()).update(worm);
 	}
+
+	this->proy = gs->getProjectiles();
 	// std::cout << "termino de parsear" << std::endl;
 }
 
@@ -91,6 +95,18 @@ void GameView::draw(int i) {
 		//confirmar que esto esta trabajando inplace y no hace copia
 		it->second.display(i, this->renderer, camX, camY);
 	}
+
+	for (auto &p : this->proy) {
+		renderer.Copy(
+			beamSprite,
+			NullOpt,
+			Rect(
+				(p.getX()  * m_to_pix_x) - camX,
+				(p.getY() * m_to_pix_y + WINDOW_HEIGHT) - camY,
+				20, 20
+			));
+	}
+
 	//muestro la nueva pantalla
 	renderer.Present();
 }
@@ -127,40 +143,35 @@ void GameView::start() {
                 if(event.key.keysym.sym == SDLK_q) {
                     return;
                 }
-                if(event.key.keysym.sym == SDLK_RETURN) {
+                else if(event.key.keysym.sym == SDLK_RETURN) {
                 	returnKeyCase(i);
                 }
 
-				if(event.key.keysym.sym == SDLK_BACKSPACE) {
+				else if(event.key.keysym.sym == SDLK_BACKSPACE) {
 					this->client.execute(new Jump(currentWormId, 3));
                 	returnKeyCase(i);
                 }
 				
-                if (event.key.keysym.sym == SDLK_LEFT) {
+                else if (event.key.keysym.sym == SDLK_LEFT) {
 					this->lookingDir = 1;
                     this->client.execute(new Move(currentWormId, LEFT_DIR));
                     moveCase(i);
 
-                }
-				if (event.key.keysym.sym == SDLK_RIGHT) {
+                } else if (event.key.keysym.sym == SDLK_RIGHT) {
 					this->lookingDir = 0;
                     this->client.execute(new Move(currentWormId, RIGHT_DIR));
                     moveCase(i);
 
-                }
-				if (event.key.keysym.sym == SDLK_d) {
-                	this->client.execute(new Move(1, RIGHT_DIR));
-                }
-				if (event.key.keysym.sym == SDLK_a) {
-                	this->client.execute(new Move(1, LEFT_DIR));
-                }
+                } else if (event.key.keysym.sym == SDLK_SPACE) {
+					this->client.execute(new Attack(currentWormId, 1, 45.0f, 10.0f));
+				}
             }
 		}
 		// ← aca deberia actualizar Game y conseguir los gusanos actuales y guardarlos
 		//en recievedWorms
 
 		//opcion 1: pedirle a client
-		updateWorms(); 
+		updateEntities(); 
 		mouseHandler.updateCam();
 		draw(i);
 

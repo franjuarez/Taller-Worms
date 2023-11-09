@@ -2,7 +2,7 @@
 #include "game_loop.h"
 #include "status_broadcaster.h"
 #include "../game_src/game_lobby.h"
-#define AMOUNT_OF_PLAYERS 1
+#define AMOUNT_OF_PLAYERS 2
 
 Lobby::Lobby(Socket& skt) : skt(skt), commandQueue(90) {}
 

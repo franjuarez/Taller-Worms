@@ -4,6 +4,8 @@
 #include "../game_src/select_map.h"
 #include  "../game_src/move.h"
 #include  "../game_src/jump.h"
+#include "../game_src/attack.h"
+
 
 #include "../game_src/game_lobby.h"
 #include "../game_src/game_dynamic.h"
@@ -93,6 +95,16 @@ void Protocol::sendJump(Jump* jump) {
     sendUintEight(jump->getDir());
 }
 
+void Protocol::sendAttack(Attack* attack) {
+    checkClosed();
+    sendUintEight(SEND_COMMAND_ATTACK);   
+    sendUintEight(attack->getID());
+    sendUintEight(attack->getDir());
+    sendFloat(attack->getAngle());
+    sendFloat(attack->getPower());
+}
+
+
 Command* Protocol::receiveCommand() {
     checkClosed();
     uint8_t protocolCode = receiveUintEight();
@@ -102,6 +114,8 @@ Command* Protocol::receiveCommand() {
         return receiveSelectMap();
     } else if (protocolCode == SEND_COMMAND_JUMP) {
         return receiveJump();
+    } else if (protocolCode == SEND_COMMAND_ATTACK) {
+        return receiveAttack();
     }
     throw std::runtime_error("Invalid Command");
 }
@@ -139,6 +153,15 @@ Jump* Protocol::receiveJump() {
     uint8_t wormId = receiveUintEight();
     uint8_t dir = receiveUintEight();
     return new Jump(wormId, dir);
+}
+
+Attack* Protocol::receiveAttack() {
+    checkClosed();
+    uint8_t wormId = receiveUintEight();
+    uint8_t dir = receiveUintEight();
+    float angle = receiveFloat();
+    float power = receiveFloat();
+    return new Attack(wormId, dir, angle, power);
 }
 
 void Protocol::sendMapNames(std::vector<std::string>& allMaps) {

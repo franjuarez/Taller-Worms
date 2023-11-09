@@ -65,7 +65,6 @@ class Worm : public Entity {
 
     void handleExplosion(float damage, b2Vec2 explosionCenter);
 
-
     WormDTO getDTO();
 };
 

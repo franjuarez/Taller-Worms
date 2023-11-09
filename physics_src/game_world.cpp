@@ -15,9 +15,18 @@ GameWorld::GameWorld() {
     // createBeam(-1.0f, -5.0f, 68, true);
 
     createBeam(10.0f, 10.0f, 0, true);
+    createBeam(16.0f, 8.0f, 0, true);
+    createBeam(22.0f, 6.0f, 0, true);
+    createBeam(28.0f, 4.0f, 0, true);
+    createBeam(34.0f, 2.0f, 0, true);
+    createBeam(40.0f, 0.0f, 0, true);
+    createBeam(46.0f, -2.0f, 0, true);
+    // createBeam(10.0f, 12.0f, 0, false);
+    // createBeam(15.0f, 5.0f, 50, true);
+    // createBeam(10.0f, 3.0f, -10, false);
     
-    createWorm(10.0f, 15.0f, 0, 0);
-    createWorm(12.0f, 12.0f, 1, 1);
+    createWorm(14.0f, 15.0f, 0, 0);
+    // createWorm(12.0f, 12.0f, 1, 1);
 }
 
 void GameWorld::createWorm(float startingX, float startingY, int id, int team){
@@ -94,6 +103,8 @@ b2Body* GameWorld::createRocket(b2Body* worm, int direction){
 
     Rocket* rocketEntity = new Rocket(body, ROCKET_DAMAGE, ROCKET_BLAST_RADIOUS);
     body->GetUserData().pointer = reinterpret_cast<uintptr_t>(rocketEntity);
+
+    projectiles.push_back(body);
     return body;
 }
 
@@ -157,17 +168,26 @@ void GameWorld::removeEntities(){
     this->entitiesToRemove.clear();
 }
 
-std::vector<WormDTO> GameWorld::update() {
+void GameWorld::update() {
     killDeadWorms();
     removeEntities();
     this->world->Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
-    
+}
+
+GameDynamic* GameWorld::getGameStatus(int id){
     std::vector<WormDTO> wormsDTO;
     for (auto& worm : this->worms) {
         Worm* wormData = (Worm*) worm.second->GetUserData().pointer;
         wormsDTO.push_back(wormData->getDTO());
     }
-    return wormsDTO;
+
+    std::vector<ProjectileDTO> projectilesDTO;
+    for(b2Body* projectile : this->projectiles){
+        Rocket* rocketData = (Rocket*) projectile->GetUserData().pointer;
+        projectilesDTO.push_back(rocketData->getDTO());
+    }
+    GameDynamic* dynamicData = new GameDynamic(id, wormsDTO, projectilesDTO);
+    return dynamicData;
 }
 
 GameWorld::~GameWorld() {

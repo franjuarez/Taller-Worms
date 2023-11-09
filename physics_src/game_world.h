@@ -8,6 +8,7 @@
 #include "listener.h"
 #include "physics_constants.h"
 #include "auxiliar_physics_functions.h"
+#include "../game_src/game_dynamic.h"
 
 #include "Entity.h"
 #include "Worm.h"
@@ -20,6 +21,7 @@ private:
     Listener* listener;
     std::set<b2Body*> entitiesToRemove;
     std::unordered_map<uint, b2Body*> worms;
+    std::vector<b2Body*> projectiles;
 
     void checkWormExists(uint id);
 
@@ -34,7 +36,7 @@ private:
 public:
     GameWorld();
 
-    std::vector<WormDTO> update();
+    void update();
 
     void createBeam(float startingX, float startingY, float angle, bool large);
 
@@ -47,6 +49,8 @@ public:
     void jumpBackwardsWorm(int id);
 
     void wormLaunchRocket(int id, float angle, int direction, float power);
+
+    GameDynamic* getGameStatus(int id);
 
     ~GameWorld();
 };

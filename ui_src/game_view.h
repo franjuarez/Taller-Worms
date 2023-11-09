@@ -37,11 +37,11 @@ private:
 	int camX;
 	int camY;
 	MouseHandler mouseHandler;
-
+	std::vector<ProjectileDTO> proy;
 	int currentWormId;
 	int lookingDir;
 
-	void updateWorms();
+	void updateEntities();
 	void loadWorms(std::vector<WormDTO>& recievedWorms);
 	void loadBeams(std::vector<BeamDTO>& beams);
 	void draw(int i);
