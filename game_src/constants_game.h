@@ -5,10 +5,15 @@
 
 enum 
 {
-    RIGHT_DIR = 0,
-    LEFT_DIR, 
+    LEFT_DIR = 0,
+    RIGHT_DIR, 
     FORWARD_DIR,
     BACKWARD_DIR,
+};
+
+enum 
+{
+    SIMPLE_ROCKET = 0,
 };
 
 #endif

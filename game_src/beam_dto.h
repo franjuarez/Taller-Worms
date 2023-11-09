@@ -13,6 +13,8 @@ public:
     Position getPosition();
     int getBeamLength();
     float getAngle();
+    float getX();
+    float getY();
     ~BeamDTO();
 };
 #endif

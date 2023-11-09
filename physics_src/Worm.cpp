@@ -63,7 +63,7 @@ void Worm::jumpBackwards(){
 
 WormDTO Worm::getDTO(){
     Position pos(body->GetPosition().x, body->GetPosition().y);
-    WormDTO dto(id, 0, health, pos);
+    WormDTO dto(id, direction, 0, health, pos);
     return dto;
 }
 

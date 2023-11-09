@@ -17,4 +17,12 @@ int BeamDTO::getBeamLength() {
     return this->beamLength;
 }
 
+float BeamDTO::getX() {
+    return this->position.getX();
+}
+
+float BeamDTO::getY() {
+    return this->position.getY();
+}
+
 BeamDTO::~BeamDTO() {}

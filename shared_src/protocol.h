@@ -6,6 +6,7 @@
 #include "../game_src/serializable.h"
 #include  "../game_src/worm_dto.h"
 #include  "../game_src/beam_dto.h"
+#include  "../game_src/projectile_dto.h"
 #include  "../game_src/position.h"
 
 #include <iostream>
@@ -25,24 +26,34 @@ private:
     Socket skt;
     bool was_closed = false;
 
-    void sendFloat(float);
+    void sendFloat(float num);
     float receiveFloat();
+
     void sendUintEight(uint8_t num);
     uint8_t receiveUintEight();
+
     void sendUintSixteen(uint16_t num);
     uint16_t receiveUintSixteen();
+
     void sendUintThirtyTwo(uint32_t num);
     uint32_t receiveUintThirtyTwo();
+
     void sendString(const std::string& str);
     std::string receiveString();
 
 
-    void sendBeam(BeamDTO beam);
-    BeamDTO receiveBeam();
-    void sendWorms(std::vector<WormDTO> worm);
+    void sendBeams(std::vector<BeamDTO> beams);
+    std::vector<BeamDTO> receiveBeams();
+
+    void sendWorms(std::vector<WormDTO> worms);
     std::vector<WormDTO> receiveWorms();
-    void sendPosition(Position& position);
+
+    void sendProjectiles(std::vector<ProjectileDTO> proyectiles);
+    std::vector<ProjectileDTO> receiveProjectiles();
+
+    void sendPosition(Position position);
     Position receivePosition();
+
     void sendMapNames(std::vector<std::string>& mapNames);
     std::vector<std::string> receiveMapNames();
 
