@@ -62,14 +62,16 @@ void WormView::display(int i, Renderer& renderer, int camX, int camY) {
 		currentFrame = 0;
 	}
 
+	std::cout << "[" << worm.getId() << "] X: " << this->worm.getPosition().getX() << ", Y: " << this->worm.getPosition().getY();
+
 	//std::cout << this->frames[this->currentFramesIndex][currentFrame] << std::endl;
 	renderer.Copy(
 		this->dynamicSpriteSheets[currentFramesIndex],
 		this->frames[currentFramesIndex][currentFrame], 
 		Rect(
-			(worm.getPosition().getX() * m_to_pix_x) - camX,
-			(worm.getPosition().getY() * m_to_pix_y + WINDOW_HEIGHT) - camY,
-			1.5*m_to_pix_x, -1.5*m_to_pix_y
+			((worm.getPosition().getX() - 0.5)  * m_to_pix_x) - camX,
+			((worm.getPosition().getY() + 0.5) * m_to_pix_y + WINDOW_HEIGHT) - camY,
+			1*m_to_pix_x, -1*m_to_pix_y
 			)
 	);
 }

@@ -28,12 +28,12 @@ void GameWorld::createWorm(float startingX, float startingY, int id, int team){
 
     b2FixtureDef fd;
     b2PolygonShape shape;
-    shape.SetAsBox(WORM_WIDTH, WORM_HEIGHT);
+    shape.SetAsBox(WORM_WIDTH/2, WORM_HEIGHT/2);
     fd.shape = &shape;
     fd.density = WORM_DENSITY;
     fd.friction = WORM_FRICTION;
     body->SetFixedRotation(true);
-    fd.filter.groupIndex = WORM_GROUP_INDEX; //This way it doesn't collide with other worms SALMON
+    //fd.filter.groupIndex = WORM_GROUP_INDEX; //This way it doesn't collide with other worms SALMON
     body->CreateFixture(&fd);
 
     Worm* wormEntity = new Worm(body, id, team, RIGHT); //Starts facing right
@@ -87,7 +87,7 @@ b2Body* GameWorld::createRocket(b2Body* worm, int direction){
     
     b2FixtureDef fd;
     b2PolygonShape shape;
-    shape.SetAsBox(ROCKET_WIDTH, ROCKET_HEIGHT);
+    shape.SetAsBox(ROCKET_WIDTH/2, ROCKET_HEIGHT/2);
     fd.shape = &shape;
     fd.density = ROCKET_DENSITY;
     body->CreateFixture(&fd);

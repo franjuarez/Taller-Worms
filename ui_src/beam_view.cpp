@@ -20,5 +20,5 @@ void BeamView::display(Renderer& renderer, int camX, int camY) {
     );
 
     std::cout << beam.getPosition().getX() << std::endl;
-    std::cout << beam.getBeamLength() << std::endl;
+    
 }

@@ -12,16 +12,17 @@
 GameLoop::GameLoop(Queue<Command*>& commandsQueue, StatusBroadcaster& statusBroadcaster)
 : commandsQueue(commandsQueue), statusBroadcaster(statusBroadcaster), gameWorld() {}
 
-static uint32 getTicks()
-{
-    static clock_t start_time = 0;
-    if (start_time == 0) {
-        start_time = clock();
-    }
+// static uint32 getTicks()
+// {
+//     static clock_t start_time = 0;
+//     if (start_time == 0) {
+//         start_time = clock();
+//     }
 
-    clock_t current_time = clock();
-    return (current_time - start_time) * 1000 / CLOCKS_PER_SEC;
-}
+//     clock_t current_time = clock();
+//     return (current_time - start_time) * 1000 / CLOCKS_PER_SEC;
+// }
+
 void GameLoop::loopLogic() {
 // se encarga de los turnos y que jugador esta al momento.
 // es el que se encarga de que gusano esta al momento
@@ -51,14 +52,14 @@ void GameLoop::start() {
     //createWorm(12.0f, 12.0f, 1, 1);
 
     beams.push_back(BeamDTO(6, Position(10.0f, 10.0f), 0));
-	beams.push_back(BeamDTO(6, Position(17.0f, 10.0f), 0));
+	beams.push_back(BeamDTO(6, Position(17.0f, 10.0f), 45));
     //beams.push_back(BeamDTO(6, pos2, 10.66));
     GameMap* map = new GameMap("aloha", beams, worms);
     statusBroadcaster.broadcast(map); 
 
 	while(true) {
 		loopLogic();
-		usleep(RATE*100);
+		usleep(RATE*1000);
     
 		// int t2 = getTicks();
 		// float rest = RATE - (t2 - t1);

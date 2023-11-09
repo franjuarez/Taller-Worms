@@ -39,7 +39,7 @@ void Worm::jump(float maxHeight, float distance){
         return;
     }
     this->currentAction = JUMPING;
-    
+    std::cout << "Jumping" << "height" << maxHeight << "distance" << distance << std::endl;
     b2Vec2 vel = this->body->GetLinearVelocity();
     //From auxiliar_physics_functions.cpp
     b2Vec2 newVel = calculateInitialVelocityForMaxHeight(maxHeight, distance);
@@ -65,6 +65,7 @@ void Worm::jumpBackwards(){
 
 WormDTO Worm::getDTO(){
     Position pos(body->GetPosition().x, body->GetPosition().y);
+    // std::cout << "Worm position: " << body->GetPosition().x << " " <<body->GetPosition().y << std::endl;
     WormDTO dto(id, 0, health, pos);
     return dto;
 }

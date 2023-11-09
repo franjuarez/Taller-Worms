@@ -95,8 +95,7 @@ void GameView::draw(int i) {
 }
 
 void GameView::returnKeyCase(int i) {
-	//this->wormViews.at(this->currentWormId).jump(i);
-	std::cout << i << std::endl;
+	this->wormViews.at(this->currentWormId).jump(i);
 }
 
 void GameView::mouseMovementCase(int x, int y) {
@@ -124,9 +123,15 @@ void GameView::start() {
                     return;
                 }
                 if(event.key.keysym.sym == SDLK_RETURN) {
-					this->client.execute(new Jump(currentWormId, this->lookingDir + 2));
+					this->client.execute(new Jump(currentWormId, 2));
                 	returnKeyCase(i);
                 }
+
+				if(event.key.keysym.sym == SDLK_BACKSPACE) {
+					this->client.execute(new Jump(currentWormId, 3));
+                	//returnKeyCase(i);
+                }
+
 				
                 if (event.key.keysym.sym == SDLK_LEFT) {
 					this->lookingDir = 1;
@@ -137,20 +142,11 @@ void GameView::start() {
                 	this->client.execute(new Move(0, RIGHT_DIR));
                 }
 				if (event.key.keysym.sym == SDLK_d) {
-					std::cout << "se entro a SDLK_RIGHT\n";
-                	this->client.execute(new Move(1, LEFT_DIR));
-                }
-				if (event.key.keysym.sym == SDLK_a) {
-					std::cout << "se entro a SDLK_RIGHT\n";
                 	this->client.execute(new Move(1, RIGHT_DIR));
                 }
-                
-                //if ( event.type == SDL_MOUSEMOTION) {
-                //	std::cout << "mouse movement" << std::endl;
-                //	int x,y;
-				//	SDL_GetMouseState( &x, &y );
-				//	mouseMovementCase(x,y);
-                //}
+				if (event.key.keysym.sym == SDLK_a) {
+                	this->client.execute(new Move(1, LEFT_DIR));
+                }
             }
 		}
 		// ← aca deberia actualizar Game y conseguir los gusanos actuales y guardarlos
