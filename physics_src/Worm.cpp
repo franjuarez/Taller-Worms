@@ -18,27 +18,29 @@ int Worm::getId(){
 }
 
 void Worm::move(int direction){
+    if(this->currentAction == JUMPING || this->currentAction == EJECTED){
+        return;
+    }
+    
+    this->currentAction = MOVING;
     this->direction = direction;
+
     b2Vec2 vel;
     if(direction == LEFT){
         vel.x = -MOVE_VELOCITY;
     } else {
         vel.x = MOVE_VELOCITY;
     }
-    
-    b2Vec2 currentVel = this->body->GetLinearVelocity();
-    if(currentVel.y != 0){
-        return;
-    }
-    vel = vel + currentVel;
     this->body->SetLinearVelocity(vel);
 }
 
 void Worm::jump(float maxHeight, float distance){
-    b2Vec2 vel = this->body->GetLinearVelocity();
-    if(vel.y != 0){
+    if(this->currentAction == JUMPING || this->currentAction == EJECTED){
         return;
     }
+    this->currentAction = JUMPING;
+    
+    b2Vec2 vel = this->body->GetLinearVelocity();
     //From auxiliar_physics_functions.cpp
     b2Vec2 newVel = calculateInitialVelocityForMaxHeight(maxHeight, distance);
     newVel.x += vel.x;
@@ -47,17 +49,17 @@ void Worm::jump(float maxHeight, float distance){
 
 void Worm::jumpForward(){
     if(this->direction == LEFT){
-        jump(-JUMP_FORWARD_MOVEMENT_X, JUMP_FORWARD_MOVEMENT_Y);
+        jump(JUMP_FORWARD_MOVEMENT_Y, -JUMP_FORWARD_MOVEMENT_X);
     } else {
-        jump(JUMP_FORWARD_MOVEMENT_X, JUMP_FORWARD_MOVEMENT_Y);
+        jump(JUMP_FORWARD_MOVEMENT_Y, JUMP_FORWARD_MOVEMENT_X);
     }
 }
 
 void Worm::jumpBackwards(){
     if(this->direction == LEFT){
-        jump(JUMP_BACKWARDS_MOVEMENT_X, JUMP_BACKWARDS_MOVEMENT_Y);
+        jump(JUMP_BACKWARDS_MOVEMENT_Y, JUMP_BACKWARDS_MOVEMENT_X);
     } else {
-        jump(-JUMP_BACKWARDS_MOVEMENT_X, JUMP_BACKWARDS_MOVEMENT_Y);
+        jump(JUMP_BACKWARDS_MOVEMENT_Y, -JUMP_BACKWARDS_MOVEMENT_X);
     }
 }
 
@@ -95,7 +97,8 @@ void Worm::beginCollisionWithBeam(Entity* otherBody, std::set<b2Body*>& entities
 
     if(beam->isWalkable()){
         this->body->SetLinearVelocity(b2Vec2(0,0));
-        this->body->SetLinearDamping(INFINITE_DAMPING);
+        this->body->SetLinearDamping(INFINITE_DAMPING);\
+        this->currentAction = STANDING;
     }
 }
 
@@ -115,7 +118,7 @@ void Worm::preSolveCollisionWithBeam(Entity* otherBody, b2Contact* contact) {
     Beam* beam = (Beam*) otherBody;
     if(beam->isWalkable()){
         this->body->SetLinearDamping(STANDARD_DAMPING);
-        if(this->body->GetLinearVelocity().Length() <= MOVE_VELOCITY){
+        if(this->currentAction == MOVING){
             b2Vec2 normal = contact->GetManifold()->localNormal;
             moveOnWalkableBeam(this->body, normal);
         }
@@ -124,8 +127,7 @@ void Worm::preSolveCollisionWithBeam(Entity* otherBody, b2Contact* contact) {
 
 void Worm::preSolveCollisionWithRocket(Entity* otherBody, b2Contact* contact) {
     UNUSED(contact);
-    Rocket* rocket = (Rocket*) otherBody;
-    rocket->preSolveCollisionWithWorm(this, contact);
+    otherBody->preSolveCollisionWithWorm(this, contact);
 }
 
 void Worm::preSolveCollisionWithWorm(Entity* otherBody, b2Contact* contact) {
@@ -137,10 +139,11 @@ void Worm::postSolveCollisionWithBeam(Entity* otherBody, b2Contact* contact) {
     UNUSED(contact);
     Beam* beam = (Beam*) otherBody;
     if(beam->isWalkable()){
-        this->body->SetLinearDamping(STANDARD_DAMPING);
+        this->body->SetLinearDamping(INFINITE_DAMPING);
         this->body->SetGravityScale(1.0f);
         if(this->body->GetLinearVelocity().Length() < VELOCITY_SMOOTH_BREAK){ //For smooth movement
             this->body->SetLinearVelocity(b2Vec2(0,0));
+            this->currentAction = STANDING;
         }
     }
 }
@@ -156,7 +159,7 @@ void Worm::postSolveCollisionWithWorm(Entity* otherBody, b2Contact* contact) {
 }
 
 void Worm::endCollisionWithBeam(Entity* otherBody, b2Contact* contact) {
-    std::cout << "Posicion gusano: " << this->body->GetPosition().x << " " << this->body->GetPosition().y << std::endl;
+    this->body->SetLinearDamping(STANDARD_DAMPING);
     UNUSED(otherBody);
     UNUSED(contact);
 }

@@ -7,12 +7,21 @@
 #include "auxiliar_physics_functions.h"
 #include "../game_src/worm_dto.h"
 
+enum action {
+    STANDING,
+    MOVING,
+    JUMPING,
+    EJECTED,
+};
+
 class Worm : public Entity {
     private:
     int id;
     int team;
     float health;
     int direction;
+    action currentAction;
+
     //weapons (Future update)
 
     void moveOnWalkableBeam(b2Body* worm, b2Vec2 normal);
