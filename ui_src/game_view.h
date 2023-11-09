@@ -46,6 +46,7 @@ private:
 	void loadBeams(std::vector<BeamDTO>& beams);
 	void draw(int i);
 	void returnKeyCase(int i);
+	void moveCase(int i);
 	void mouseMovementCase(int x, int y);
 
 public:

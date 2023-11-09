@@ -6,7 +6,7 @@
 WormView::WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets) : 
 	worm(worm),
 	dynamicSpriteSheets(dynamicSpriteSheets),
-	frames{{},{}} {
+	frames{{},{},{}} {
 	currentFramesIndex = DEFAULT_FRAMES;
 	startingPoint = 0;
 	int x, y, w, h;
@@ -17,43 +17,45 @@ WormView::WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets) :
 		w = 22;
 		y = i*(60) + 16;
 		h = 26;
-		//stillWormFrames.emplace_back(x,y,w,h);
 		frames[STILL_FRAMES].push_back(Rect(x,y,w,h));
 	}
 
 	for (int i = 0; i < 10; i++) {
 		x = 19;
-		y = i*(60) + 12;
 		w = 22;
+		y = i*(60) + 12;
 		h = 36;
 		frames[JUMPING_FRAMES].push_back(Rect(x,y,w,h));
-		//jumpingWormFrames.emplace_back(x,y,w,h);
 	}
 
-	//std::cout << "=====prueba en constructor=====" << std::endl;
-	//std::cout << this->frames[STILL_FRAMES].at(0) << std::endl;
-	////std::cout << this->stillWormFrames.at(0) << std::endl;
-	////std::cout << this->currentFrames->at(0) << std::endl;
-	//std::cout << "===fin prueba en constructor===" << std::endl;
+	for (int i = 0; i < 15; i++) {
+		x = 11;
+		w = 28;
+		y = i*(60) + 14;
+		h = 29;
+		frames[WALKING_FRAMES].push_back(Rect(x,y,w,h));
+	}
 }
 
-//void WormView::testearAcceso() {
-//	std::cout << "=======prueba en funcion=======" << std::endl;
-//	std::cout << this->frames[STILL_FRAMES].at(0) << std::endl;
-//	std::cout << this->frames[currentFramesIndex].at(0) << std::endl;
-//	//std::cout << this->stillWormFrames.at(0) << std::endl;
-//	//std::cout << this->currentFrames->at(0) << std::endl;
-//	std::cout << "=====fin prueba en funcion=====" << std::endl;
-//}
 
 void WormView::jump(int i) {
-	this->currentFramesIndex = JUMPING_FRAMES;
+	if (currentFramesIndex == JUMPING_FRAMES)
+		return;
 	this->startingPoint = i;
+	this->currentFramesIndex = JUMPING_FRAMES;
+}
+
+void WormView::move(int i) {
+	if (currentFramesIndex == WALKING_FRAMES)
+		return;
+
+	this->startingPoint = i;
+	this->currentFramesIndex = WALKING_FRAMES;
 }
 
 
 void WormView::display(int i, Renderer& renderer, int camX, int camY) {
-	//testearAcceso();
+
 	size_t currentFrame = (i - startingPoint) / 4;
 
 	if (currentFrame >= this->frames[currentFramesIndex].size()) {
@@ -61,10 +63,8 @@ void WormView::display(int i, Renderer& renderer, int camX, int camY) {
 		currentFramesIndex = DEFAULT_FRAMES;
 		currentFrame = 0;
 	}
-
-	std::cout << "[" << worm.getId() << "] X: " << this->worm.getPosition().getX() << ", Y: " << this->worm.getPosition().getY();
-
-	//std::cout << this->frames[this->currentFramesIndex][currentFrame] << std::endl;
+	
+	//std::cout << "[" << worm.getId() << "] X: " << this->worm.getPosition().getX() << ", Y: " << this->worm.getPosition().getY();
 	renderer.Copy(
 		this->dynamicSpriteSheets[currentFramesIndex],
 		this->frames[currentFramesIndex][currentFrame], 

@@ -6,6 +6,7 @@ namespace uiConstants {
 
 extern const int STILL_FRAMES;
 extern const int JUMPING_FRAMES;
+extern const int WALKING_FRAMES;
 extern const int DEFAULT_FRAMES;
 extern const int WINDOW_WIDTH;
 extern const int WINDOW_HEIGHT;

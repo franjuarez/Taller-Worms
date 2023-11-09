@@ -10,6 +10,8 @@
 #define STILL_WORM_PATH "../resources/images/worm_still.png"
 //#define STILL_WORM_PATH "../resources/images/waccuse.png"
 #define JUMPING_WORM_PATH "../resources/images/worm_jump.png"
+//#define WALKING_WORM_PATH "../resources/images/wwalk.png"
+#define WALKING_WORM_PATH "../resources/images/worm_walk.png"
 
 #include "../game_src/constants_game.h"
 #include "../game_src/move.h"
@@ -34,16 +36,15 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 	std::vector<WormDTO> recievedWorms = gs->getWorms();
 	loadWorms(recievedWorms);
 	
-
 	std::vector<BeamDTO> beams = gs->getBeams();
 	loadBeams(beams);
 
-	this->lookingDir = 0;
-
 	dynamicSpriteSheets.push_back(Texture(renderer,Surface(STILL_WORM_PATH).SetColorKey(true, 0)));
 	dynamicSpriteSheets.push_back(Texture(renderer,Surface(JUMPING_WORM_PATH).SetColorKey(true, 0)));
+	dynamicSpriteSheets.push_back(Texture(renderer,Surface(WALKING_WORM_PATH).SetColorKey(true,0)));
 
-	this->currentWormId = 1;	
+	this->lookingDir = 0;
+	this->currentWormId = 1;
 }
 
 void GameView::loadBeams(std::vector<BeamDTO>& beams) {
@@ -95,7 +96,12 @@ void GameView::draw(int i) {
 }
 
 void GameView::returnKeyCase(int i) {
+	this->client.execute(new Jump(currentWormId, 2));
 	this->wormViews.at(this->currentWormId).jump(i);
+}
+
+void GameView::moveCase(int i) {
+    this->wormViews.at(this->currentWormId).move(i);
 }
 
 void GameView::mouseMovementCase(int x, int y) {
@@ -103,7 +109,6 @@ void GameView::mouseMovementCase(int x, int y) {
 }
 
 void GameView::start() {
-
 	int i = 0;
 	int t1 = SDL_GetTicks();
 	//float durationInSeconds;
@@ -123,23 +128,25 @@ void GameView::start() {
                     return;
                 }
                 if(event.key.keysym.sym == SDLK_RETURN) {
-					this->client.execute(new Jump(currentWormId, 2));
                 	returnKeyCase(i);
                 }
 
 				if(event.key.keysym.sym == SDLK_BACKSPACE) {
 					this->client.execute(new Jump(currentWormId, 3));
-                	//returnKeyCase(i);
+                	returnKeyCase(i);
                 }
-
 				
                 if (event.key.keysym.sym == SDLK_LEFT) {
 					this->lookingDir = 1;
-                	this->client.execute(new Move(0, LEFT_DIR));
+                    this->client.execute(new Move(currentWormId, LEFT_DIR));
+                    moveCase(i);
+
                 }
 				if (event.key.keysym.sym == SDLK_RIGHT) {
 					this->lookingDir = 0;
-                	this->client.execute(new Move(0, RIGHT_DIR));
+                    this->client.execute(new Move(currentWormId, RIGHT_DIR));
+                    moveCase(i);
+
                 }
 				if (event.key.keysym.sym == SDLK_d) {
                 	this->client.execute(new Move(1, RIGHT_DIR));
