@@ -11,4 +11,9 @@ enum
     BACKWARD_DIR,
 };
 
+enum 
+{
+    SIMPLE_ROCKET = 0,
+};
+
 #endif

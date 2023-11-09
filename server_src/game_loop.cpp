@@ -31,9 +31,13 @@ void GameLoop::loopLogic() {
 			command->executeCommand(gameWorld);
 	}
 	std::vector<WormDTO> worms = gameWorld.update();
-	GameDynamic* gameDynamic = new GameDynamic(0, worms);
+	std::vector<ProjectileDTO> projectiles;
+	ProjectileDTO projectile(0, Position(1.2, 3.4), 5.6, 7.8);
+	projectiles.push_back(projectile);
+	GameDynamic* gameDynamic = new GameDynamic(0, worms, projectiles);
 	statusBroadcaster.broadcast(gameDynamic);
 }
+
 void GameLoop::start() {
 	// int t1 = getTicks();
         //get ticks without sdl
@@ -44,8 +48,8 @@ void GameLoop::start() {
     std::vector<WormDTO> worms;
     Position pos(9.7, 11.0);
     Position pos2(9.89, 12.1);
-    worms.push_back(WormDTO(0, 79, 1, pos2));
-    worms.push_back(WormDTO(1, 9, 1, pos2));
+    worms.push_back(WormDTO(0, 0, 79, 1, pos2));
+    worms.push_back(WormDTO(1, 0, 9, 1, pos2));
 
     //createBeam(10.0f, 10.0f, 0, true);
     //createWorm(10.0f, 15.0f, 0, 0);

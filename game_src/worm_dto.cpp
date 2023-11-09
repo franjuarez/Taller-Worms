@@ -2,14 +2,15 @@
 
 #include <iostream>
 
-WormDTO::WormDTO(int id, int team, int health, Position position) 
-: id(id), team(team), health(health), position(position) {}
-
-// WormDTO::WormDTO(const WormDTO& other) 
-// : id(other.id), team(other.team), health(other.health), position(other.position) {}
+WormDTO::WormDTO(int id, int dir, int team, int health, Position position) 
+: id(id), dir(dir), team(team), health(health), position(position) {}
 
 int WormDTO::getId() {
     return this->id;
+}
+
+int WormDTO::getDir() {
+    return this->dir;
 }
 
 int WormDTO::getTeam() {
@@ -18,6 +19,14 @@ int WormDTO::getTeam() {
 
 int WormDTO::getHealth() {
     return this->health;
+}
+
+float WormDTO::getX() {
+    return this->position.getX();
+}
+
+float WormDTO::getY() {
+    return this->position.getY();
 }
 
 Position WormDTO::getPosition() {

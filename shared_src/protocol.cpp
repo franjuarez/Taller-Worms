@@ -42,29 +42,14 @@ void Protocol::sendMap(GameMap* gameMap) {
 
     sendWorms(gameMap->getWorms());
 
-    sendUintEight(gameMap->getNumberOfBeams());
-    // std::cout << "4\n";
-    std::vector<BeamDTO> beams = gameMap->getBeams();
-    // std::cout << "5\n";
-    for (int i = 0; i < gameMap->getNumberOfBeams(); i++) {
-        sendBeam(beams[i]);
-    }
-    // std::cout << "6\n";
+    sendBeams(gameMap->getBeams());
 }
 
 GameMap* Protocol::receiveMap() {
     uint8_t protocolCode = receiveUintEight();
     std::string mapName = receiveString();
-
     std::vector<WormDTO> worms = receiveWorms();
-
-    uint8_t numberOfBeams = receiveUintEight();
-
-    std::vector<BeamDTO> beams;
-    for (int i = 0; i < numberOfBeams; i++) {
-        BeamDTO beam = receiveBeam();
-        beams.push_back(beam);
-    }
+    std::vector<BeamDTO> beams = receiveBeams();
     return new GameMap(mapName, beams, worms);
 }
 
@@ -74,6 +59,7 @@ void Protocol::sendDynamic(GameDynamic* dynamic) {
     sendUintEight(SEND_DYNAMIC); 
     sendUintEight(dynamic->getWormPlayingID());
     sendWorms(dynamic->getWorms());
+    sendProjectiles(dynamic->getProjectiles());
 }
 
 GameDynamic* Protocol::receiveDynamic() {
@@ -82,7 +68,8 @@ GameDynamic* Protocol::receiveDynamic() {
     uint8_t wormPlayingID = receiveUintEight();
 
     std::vector<WormDTO> worms = receiveWorms();
-    return new GameDynamic(wormPlayingID, worms);
+    std::vector<ProjectileDTO> projectiles = receiveProjectiles();
+    return new GameDynamic(wormPlayingID, worms, projectiles);
 }
 
 void Protocol::sendSelectMap(SelectMap* selectMap) {
@@ -121,7 +108,7 @@ Command* Protocol::receiveCommand() {
 
 // -------------------------Private--------------------------------
 
-void Protocol::sendPosition(Position& pos) {
+void Protocol::sendPosition(Position pos) {
     sendFloat(pos.getX());
     sendFloat(pos.getY());
 }
@@ -173,14 +160,39 @@ std::vector<std::string> Protocol::receiveMapNames() {
     return allMaps;
 }
 
+void Protocol::sendProjectiles(std::vector<ProjectileDTO> projectiles) {
+    sendUintEight(projectiles.size());
+    for (int i = 0; i < projectiles.size(); i++) {
+        sendUintEight(projectiles[i].getType());
+        sendFloat(projectiles[i].getVelX());
+        sendFloat(projectiles[i].getVelY());
+        sendPosition(Position(projectiles[i].getX(), projectiles[i].getY()));
+    }
+}
+
+std::vector<ProjectileDTO> Protocol::receiveProjectiles() {
+    uint8_t numberOfProjectiles = receiveUintEight();
+    std::vector<ProjectileDTO> projectiles;
+    for (int i = 0; i < numberOfProjectiles; i++) {
+        int type = receiveUintEight();
+        float velX = receiveFloat();
+        float velY = receiveFloat();
+        Position pos = receivePosition();
+        ProjectileDTO projectile(type, pos, velX, velY);
+        projectiles.push_back(projectile);    
+    }
+    return projectiles;
+}
+
+
 void Protocol::sendWorms(std::vector<WormDTO> worms) {
     sendUintEight(worms.size());
     for (int i = 0; i < worms.size(); i++) {
         sendUintEight(worms[i].getId());
+        sendUintEight(worms[i].getDir());
         sendUintEight(worms[i].getTeam());
         sendUintEight(worms[i].getHealth());
-        Position pos = worms[i].getPosition();
-        sendPosition(pos);
+        sendPosition(Position(worms[i].getX(), worms[i].getY()));
     }
 
 }
@@ -190,38 +202,36 @@ std::vector<WormDTO> Protocol::receiveWorms() {
     std::vector<WormDTO> worms; 
     for (int i = 0; i < numberOfWorms; i++) {
         uint8_t id = receiveUintEight();
+        uint8_t dir = receiveUintEight();
         uint8_t team = receiveUintEight();
         uint8_t health = receiveUintEight();
         Position pos = receivePosition();
-        WormDTO worm(id, team, health, pos);
+        WormDTO worm(id, dir, team, health, pos);
         worms.push_back(worm);
     }
     return worms;
 }
 
-void Protocol::sendBeam(BeamDTO beam) {
-    sendUintEight( beam.getBeamLength());
-    sendFloat(beam.getAngle());
-    Position beamPosition1 = beam.getPosition();
-    sendPosition(beamPosition1);
-    
+void Protocol::sendBeams(std::vector<BeamDTO> beams) {
+    sendUintEight(beams.size());
+    for (int i = 0; i < beams.size(); i++) {
+        sendUintEight(beams[i].getBeamLength());
+        sendFloat(beams[i].getAngle());
+        sendPosition(Position(beams[i].getX(), beams[i].getY()));
+    }
 }
 
-BeamDTO Protocol::receiveBeam() {
-    // uint8_t numberOfBeams = receiveUintEight();
-    // std::vector<BeamDTO> beams; 
-    // for (int i = 0; i < numberOfBeams; i++) {
-    //     uint8_t beamLength = receiveUintEight();
-    //     float angle = receiveFloat();
-    //     Position beamPosition1 = receivePosition();
-    //     BeamDTO beam(beamLength, beamPosition1, angle);
-    //     beams.push_back(beam);
-    // }
-    uint8_t beamLength = receiveUintEight();
-    float angle = receiveFloat();
-    Position beamPosition1 = receivePosition();
-    BeamDTO beam(beamLength, beamPosition1, angle);
-    return beam;
+std::vector<BeamDTO> Protocol::receiveBeams() {
+    uint8_t numberOfBeams = receiveUintEight();
+    std::vector<BeamDTO> beams; 
+    for (int i = 0; i < numberOfBeams; i++) {
+        uint8_t beamLength = receiveUintEight();
+        float angle = receiveFloat();
+        Position beamPosition1 = receivePosition();
+        BeamDTO beam(beamLength, beamPosition1, angle);
+        beams.push_back(beam);
+    }
+    return beams;
 }
 
 

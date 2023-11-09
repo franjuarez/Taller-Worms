@@ -65,8 +65,7 @@ void Worm::jumpBackwards(){
 
 WormDTO Worm::getDTO(){
     Position pos(body->GetPosition().x, body->GetPosition().y);
-    // std::cout << "Worm position: " << body->GetPosition().x << " " <<body->GetPosition().y << std::endl;
-    WormDTO dto(id, 0, health, pos);
+    WormDTO dto(id, direction, 0, health, pos);
     return dto;
 }
 

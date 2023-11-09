@@ -27,6 +27,8 @@ void Receiver::run() {
         while (keepTalking) {
             GameDynamic* gameDynamic = protocol.receiveDynamic();
             gameStatuses.push(gameDynamic);
+            // std::cout <<  gameDynamic->getProjectiles().at(0).getType() << "\n";
+            // std::cout <<  gameDynamic->getProjectiles().at(0).getVelX() << "\n";
         }
     } catch (const ClosedSocket& e){
         keepTalking = false;

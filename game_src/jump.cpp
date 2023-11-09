@@ -11,7 +11,6 @@ void Jump::executeCommand(GameWorld& gameWorld) {
     } else if (dir == BACKWARD_DIR) {
         gameWorld.jumpBackwardsWorm(wormID);
     } else{
-        std::cout << "dir: " << dir << "\n";
         throw std::runtime_error("Invalid direction!");
     }
 }

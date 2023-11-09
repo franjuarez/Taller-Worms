@@ -1,7 +1,7 @@
 #include "game_dynamic.h"
 
-GameDynamic::GameDynamic(int wormPlayingID, std::vector<WormDTO>worms) : Serializable() 
-,wormPlayingID(wormPlayingID), worms(worms) {}
+GameDynamic::GameDynamic(int wormPlayingID, std::vector<WormDTO>worms, std::vector<ProjectileDTO> proyectiles)
+: Serializable() ,wormPlayingID(wormPlayingID), worms(worms), proyectiles(proyectiles) {}
 
 void GameDynamic::send(Protocol& protocol) {
     protocol.sendDynamic(this);
@@ -15,8 +15,8 @@ std::vector<WormDTO> GameDynamic::getWorms() {
     return this->worms;
 }
 
-int GameDynamic::getNumberOfWorms() {
-    return this->worms.size();
+std::vector<ProjectileDTO> GameDynamic::getProjectiles() {
+    return this->proyectiles;
 }
 
 int GameDynamic::getWormPlayingID() {

@@ -3,6 +3,12 @@ cmake_minimum_required(VERSION "3.16.3")
 set(CMAKE_CXX_STANDARD 17)
 project("PorFavorCompila")
 
+set(TESTING OFF CACHE BOOL "Enable testing mode")
+
+if(TESTING)
+    add_definitions(-DTESTING)
+endif()
+
 add_subdirectory("thirdParty/box2d")
 
 set(THREADS_PREFER_PTHREAD_FLAG ON)
@@ -54,8 +60,6 @@ target_link_libraries(client PRIVATE Threads::Threads)
 target_link_libraries(client PUBLIC SharedLib)
 target_link_libraries(client PUBLIC SharedGameLib)
 target_link_libraries(client PUBLIC SharedUi)
-
-
 
 # add_executable("ui" main.cpp worm.cpp game_view.cpp worm_view.cpp worm.cpp constants.cpp game_view.cpp mouse_handler.cpp)
 # 
