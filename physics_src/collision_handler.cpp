@@ -18,31 +18,31 @@ CollisionHandler::CollisionHandler(){
     this->endCollisionMap[std::string(typeid(Rocket).name())] = &Entity::endCollisionWithRocket;
 }
 
-void CollisionHandler::handleBeginCollision(Entity* bodyA, Entity* bodyB, std::set<b2Body*>& entitiesToRemove) {
+void CollisionHandler::handleBeginCollision(Entity* bodyA, Entity* bodyB, b2Contact* contact) {
     std::string typeA = typeid(*bodyA).name();
     std::string typeB = typeid(*bodyB).name();
     if (this->beginCollisionMap.find(typeA) == this->beginCollisionMap.end()) {
         throw std::runtime_error("No se encontro el tipo de entidad en el mapa de colisiones");
     }
-    (bodyB->*beginCollisionMap[typeA])(bodyA, entitiesToRemove);
+    (bodyB->*beginCollisionMap[typeA])(bodyA, contact);
 }
 
-void CollisionHandler::handlePreSolveCollision(Entity* bodyA, Entity* bodyB, b2Contact* contact) {
+void CollisionHandler::handlePreSolveCollision(Entity* bodyA, Entity* bodyB, b2Contact* contact, const b2Manifold* oldManifold) {
     std::string typeA = typeid(*bodyA).name();
     std::string typeB = typeid(*bodyB).name();
     if (this->preSolveCollisionMap.find(typeA) == this->preSolveCollisionMap.end()) {
         throw std::runtime_error("No se encontro el tipo de entidad en el mapa de colisiones");
     }
-    (bodyB->*preSolveCollisionMap[typeA])(bodyA, contact);
+    (bodyB->*preSolveCollisionMap[typeA])(bodyA, contact, oldManifold);
 }
 
-void CollisionHandler::handlePostSolveCollision(Entity* bodyA, Entity* bodyB, b2Contact* contact) {
+void CollisionHandler::handlePostSolveCollision(Entity* bodyA, Entity* bodyB, b2Contact* contact, const b2ContactImpulse* impulse) {
     std::string typeA = typeid(*bodyA).name();
     std::string typeB = typeid(*bodyB).name();
     if (this->postSolveCollisionMap.find(typeA) == this->postSolveCollisionMap.end()) {
         throw std::runtime_error("No se encontro el tipo de entidad en el mapa de colisiones");
     }
-    (bodyB->*postSolveCollisionMap[typeA])(bodyA, contact);
+    (bodyB->*postSolveCollisionMap[typeA])(bodyA, contact, impulse);
 }
 
 void CollisionHandler::handleEndCollision(Entity* bodyA, Entity* bodyB, b2Contact* contact) {

@@ -8,9 +8,9 @@
 #include "Rocket.h"
 #include "Worm.h"
 
-typedef void (Entity::*beginCollisionFunc)(Entity*, std::set<b2Body*>&);
-typedef void (Entity::*preSolveCollisionFunc)(Entity*, b2Contact*);
-typedef void (Entity::*postSolveCollisionFunc)(Entity*, b2Contact*);
+typedef void (Entity::*beginCollisionFunc)(Entity*, b2Contact*);
+typedef void (Entity::*preSolveCollisionFunc)(Entity*, b2Contact*, const b2Manifold*);
+typedef void (Entity::*postSolveCollisionFunc)(Entity*, b2Contact*, const b2ContactImpulse*);
 typedef void (Entity::*endCollisionFunc)(Entity*, b2Contact*);
 
 class CollisionHandler {
@@ -23,11 +23,11 @@ private:
 public:
     CollisionHandler();
     
-    void handleBeginCollision(Entity* bodyA, Entity* bodyB, std::set<b2Body*>& entitiesToRemove);
+    void handleBeginCollision(Entity* bodyA, Entity* bodyB, b2Contact* contact);
 
-    void handlePreSolveCollision(Entity* bodyA, Entity* bodyB, b2Contact* contact);
+    void handlePreSolveCollision(Entity* bodyA, Entity* bodyB, b2Contact* contact, const b2Manifold* oldManifold);
 
-    void handlePostSolveCollision(Entity* bodyA, Entity* bodyB, b2Contact* contact);
+    void handlePostSolveCollision(Entity* bodyA, Entity* bodyB, b2Contact* contact, const b2ContactImpulse* impulse);
 
     void handleEndCollision(Entity* bodyA, Entity* bodyB, b2Contact* contact);
 };

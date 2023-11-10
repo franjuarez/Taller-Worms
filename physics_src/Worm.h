@@ -26,32 +26,33 @@ class Worm : public Entity {
 
     void moveOnWalkableBeam(b2Body* worm, b2Vec2 normal);
 
-
     void jump(float maxHeight, float distance);
 
+
     public:
-    Worm(b2Body* body, int id, int team, int direction);
+    Worm(b2Body* body, std::vector<b2Body*>& entitiesToRemove, int id, int team, int direction);
 
+    virtual void beginCollisionWithBeam(Entity* otherBody, b2Contact* contact);
+    virtual void beginCollisionWithWorm(Entity* otherBody, b2Contact* contact);
+    virtual void beginCollisionWithRocket(Entity* otherBody, b2Contact* contact);
 
-    void beginCollisionWithBeam(Entity* otherBody, std::set<b2Body*>& entitiesToRemove) override;
-    void beginCollisionWithWorm(Entity* otherBody, std::set<b2Body*>& entitiesToRemove) override;
-    void beginCollisionWithRocket(Entity* otherBody, std::set<b2Body*>& entitiesToRemove) override;
+    virtual void preSolveCollisionWithBeam(Entity* otherBody, b2Contact* contact, const b2Manifold* oldManifold);
+    virtual void preSolveCollisionWithWorm(Entity* otherBody, b2Contact* contact, const b2Manifold* oldManifold);
+    virtual void preSolveCollisionWithRocket(Entity* otherBody, b2Contact* contact, const b2Manifold* oldManifold);
 
-    void preSolveCollisionWithBeam(Entity* otherBody, b2Contact* contact) override;
-    void preSolveCollisionWithWorm(Entity* otherBody, b2Contact* contact) override;
-    void preSolveCollisionWithRocket(Entity* otherBody, b2Contact* contact) override;
+    virtual void postSolveCollisionWithBeam(Entity* otherBody, b2Contact* contact, const b2ContactImpulse* impulse);
+    virtual void postSolveCollisionWithWorm(Entity* otherBody, b2Contact* contact, const b2ContactImpulse* impulse);
+    virtual void postSolveCollisionWithRocket(Entity* otherBody, b2Contact* contact, const b2ContactImpulse* impulse);
 
-    void postSolveCollisionWithBeam(Entity* otherBody, b2Contact* contact) override;
-    void postSolveCollisionWithWorm(Entity* otherBody, b2Contact* contact) override;
-    void postSolveCollisionWithRocket(Entity* otherBody, b2Contact* contact) override;
-
-    void endCollisionWithBeam(Entity* otherBody, b2Contact* contact) override;
-    void endCollisionWithWorm(Entity* otherBody, b2Contact* contact) override;
-    void endCollisionWithRocket(Entity* otherBody, b2Contact* contact) override;
+    virtual void endCollisionWithBeam(Entity* otherBody, b2Contact* contact);
+    virtual void endCollisionWithWorm(Entity* otherBody, b2Contact* contact);
+    virtual void endCollisionWithRocket(Entity* otherBody, b2Contact* contact);
 
     ~Worm() override;
 
-    // void takeDamage(float damage);
+    void takeDamage(float damage);
+
+    void applyFallDamage(b2Vec2 vel);
 
     bool isDead();
 

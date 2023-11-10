@@ -1,13 +1,26 @@
 #include "Worm.h"
 
-Worm::Worm(b2Body* body, int id, int team, int direction) : Entity(body), id(id), team(team), health(WORM_INITIAL_HEALTH), direction(direction) {}
+
+Worm::Worm(b2Body* body, std::vector<b2Body*>& entitiesToRemove, int id, int team, int direction) : 
+        Entity(body, entitiesToRemove),
+        id(id), team(team), health(WORM_INITIAL_HEALTH), 
+        direction(direction), currentAction(STANDING) {}
 
 
 Worm::~Worm() {}
 
-// void Worm::takeDamage(float damage){
-//     this->health -= damage;
-// }
+WormDTO Worm::getDTO(){
+    Position pos(body->GetPosition().x, body->GetPosition().y);
+    WormDTO dto(id, direction, 0, health, pos);
+    return dto;
+}
+
+void Worm::takeDamage(float damage){
+    this->health -= damage;
+    if(this->health < 0){
+        entitiesToRemove.push_back(this->body);
+    }
+}
 
 bool Worm::isDead(){
     return this->health <= 0;
@@ -39,7 +52,7 @@ void Worm::jump(float maxHeight, float distance){
         return;
     }
     this->currentAction = JUMPING;
-    std::cout << "Jumping" << "height" << maxHeight << "distance" << distance << std::endl;
+    
     b2Vec2 vel = this->body->GetLinearVelocity();
     //From auxiliar_physics_functions.cpp
     b2Vec2 newVel = calculateInitialVelocityForMaxHeight(maxHeight, distance);
@@ -65,17 +78,26 @@ void Worm::jumpBackwards(){
 
 void Worm::handleExplosion(float damage, b2Vec2 explosionCenter){
     this->currentAction = EJECTED;
-    this->health -= damage;
+    takeDamage(damage);
     b2Vec2 direction = this->body->GetPosition() - explosionCenter;
     direction.Normalize();
     b2Vec2 impulse = b2Vec2(direction.x * damage / 4, direction.y * damage / 4);
     this->body->ApplyLinearImpulseToCenter(impulse, true);
 }
 
-WormDTO Worm::getDTO(){
-    Position pos(body->GetPosition().x, body->GetPosition().y);
-    WormDTO dto(id, direction, 0, health, pos);
-    return dto;
+// WormDTO Worm::getDTO(){
+//     Position pos(body->GetPosition().x, body->GetPosition().y);
+//     WormDTO dto(id, 0, health, pos);
+//     return dto;
+// }
+
+void Worm::applyFallDamage(b2Vec2 vel){
+    //From auxiliar_physics_functions.cpp
+    float height = calculateFallHeightFromVelocity(vel);
+    if(height > MIN_HEIGHT_TO_DAMAGE){
+        float damage = height > MAX_HEIGHT_DAMAGE ? MAX_HEIGHT_DAMAGE : height;
+        takeDamage(damage);
+    }
 }
 
 void Worm::moveOnWalkableBeam(b2Body* worm, b2Vec2 normal){
@@ -94,16 +116,12 @@ void Worm::moveOnWalkableBeam(b2Body* worm, b2Vec2 normal){
     worm->SetLinearVelocity(b2Vec2(velX, velY));
 }
 
-void Worm::beginCollisionWithBeam(Entity* otherBody, std::set<b2Body*>& entitiesToRemove) {
-    UNUSED(entitiesToRemove);
-    Beam* beam = (Beam*) otherBody;
-    //From auxiliar_physics_functions.cpp
-    float height = calculateFallHeightFromVelocity(this->body->GetLinearVelocity());
+void Worm::beginCollisionWithBeam(Entity* otherBody, b2Contact* contact) {
+    UNUSED(contact);
 
-    if(height > MIN_HEIGHT_TO_DAMAGE){
-        float damage = height > MAX_HEIGHT_DAMAGE ? MAX_HEIGHT_DAMAGE : height;
-        this->health -= damage;
-    }
+    applyFallDamage(this->body->GetLinearVelocity());
+
+    Beam* beam = (Beam*) otherBody;
 
     if(beam->isWalkable()){
         this->body->SetLinearVelocity(b2Vec2(0,0));
@@ -112,23 +130,25 @@ void Worm::beginCollisionWithBeam(Entity* otherBody, std::set<b2Body*>& entities
     }
 }
 
-void Worm::beginCollisionWithRocket(Entity* otherBody, std::set<b2Body*>& entitiesToRemove) {
-    otherBody->beginCollisionWithWorm(this, entitiesToRemove);
+void Worm::beginCollisionWithRocket(Entity* otherBody, b2Contact* contact) {
+    applyFallDamage(this->body->GetLinearVelocity());
+    otherBody->beginCollisionWithWorm(this, contact);
 }
 
-void Worm::beginCollisionWithWorm(Entity* otherBody, std::set<b2Body*>& entitiesToRemove) {
+void Worm::beginCollisionWithWorm(Entity* otherBody, b2Contact* contact) {
+    applyFallDamage(this->body->GetLinearVelocity());
     UNUSED(otherBody);
-    UNUSED(entitiesToRemove);
+    UNUSED(contact);
 }
 
-void Worm::preSolveCollisionWithBeam(Entity* otherBody, b2Contact* contact) {
+void Worm::preSolveCollisionWithBeam(Entity* otherBody, b2Contact* contact, const b2Manifold* oldManifold) {
     Beam* beam = (Beam*) otherBody;
     if(beam->isWalkable()){
         if(this->currentAction == STANDING){
             this->body->SetLinearDamping(0.0f);
         }
         if(this->currentAction == MOVING){
-            b2Vec2 normal = contact->GetManifold()->localNormal;
+            b2Vec2 normal = oldManifold->localNormal;
             moveOnWalkableBeam(this->body, normal);
         }
         if(this->currentAction == JUMPING){
@@ -137,22 +157,22 @@ void Worm::preSolveCollisionWithBeam(Entity* otherBody, b2Contact* contact) {
         if(this->currentAction == EJECTED){
             this->body->SetGravityScale(0.0f);
             this->body->SetLinearDamping(0.0f);
-            contact->SetFriction(0.0f);
         }
     }
 }
 
-void Worm::preSolveCollisionWithRocket(Entity* otherBody, b2Contact* contact) {
-    UNUSED(contact);
-    otherBody->preSolveCollisionWithWorm(this, contact);
+void Worm::preSolveCollisionWithRocket(Entity* otherBody, b2Contact* contact, const b2Manifold* oldManifold) {
+    UNUSED(oldManifold);
+    otherBody->preSolveCollisionWithWorm(this, contact, oldManifold);
 }
 
-void Worm::preSolveCollisionWithWorm(Entity* otherBody, b2Contact* contact) {
+void Worm::preSolveCollisionWithWorm(Entity* otherBody, b2Contact* contact,  const b2Manifold* oldManifold) {
     UNUSED(otherBody);
     UNUSED(contact);
+    UNUSED(oldManifold);
 }
 
-void Worm::postSolveCollisionWithBeam(Entity* otherBody, b2Contact* contact) {
+void Worm::postSolveCollisionWithBeam(Entity* otherBody, b2Contact* contact, const b2ContactImpulse* impulse) {
     UNUSED(contact);
     Beam* beam = (Beam*) otherBody;
     if(beam->isWalkable()){
@@ -165,12 +185,12 @@ void Worm::postSolveCollisionWithBeam(Entity* otherBody, b2Contact* contact) {
     }
 }
 
-void Worm::postSolveCollisionWithRocket(Entity* otherBody, b2Contact* contact) {
+void Worm::postSolveCollisionWithRocket(Entity* otherBody, b2Contact* contact, const b2ContactImpulse* impulse) {
     UNUSED(contact);
     UNUSED(otherBody);
 }
 
-void Worm::postSolveCollisionWithWorm(Entity* otherBody, b2Contact* contact) {
+void Worm::postSolveCollisionWithWorm(Entity* otherBody, b2Contact* contact, const b2ContactImpulse* impulse) {
     UNUSED(otherBody);
     UNUSED(contact);
 }

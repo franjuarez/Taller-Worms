@@ -19,20 +19,20 @@ class GameWorld {
 private:
     b2World* world;
     Listener* listener;
-    std::set<b2Body*> entitiesToRemove;
-    std::unordered_map<uint, b2Body*> worms;
+    std::unordered_map<int, b2Body*> worms;
     std::vector<b2Body*> projectiles;
+    std::vector<b2Body*> entitiesToRemove;
 
     void checkWormExists(uint id);
 
-
     b2Body* createRocket(b2Body* worm, int direction);
 
-    void killDeadWorms();
+    void removeWorm(b2Body* worm);
+
+    void removeProjectile(b2Body* projectile);
     
     void removeEntities();
 
-    void jumpWorm(b2Body* worm, float maxHeight, float distance);
 public:
     GameWorld();
 
