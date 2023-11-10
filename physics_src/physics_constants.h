@@ -33,7 +33,7 @@
 #define WORM_INITIAL_HEALTH 100
 
 //Move constants    
-#define MOVE_VELOCITY 0.4f
+#define MOVE_VELOCITY 0.8f
 #define VELOCITY_SMOOTH_BREAK MOVE_VELOCITY/1.5f
 
 //Jump constants

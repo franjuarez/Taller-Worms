@@ -9,7 +9,7 @@ WormView::WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets) :
 	frames{{},{},{}} {
 	currentFramesIndex = DEFAULT_FRAMES;
 	startingPoint = 0;
-	int x, y, w, h;
+	float x, y, w, h;
 	
 
 	for (int i = 0; i < 35; i++) {
@@ -29,11 +29,11 @@ WormView::WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets) :
 	}
 
 	for (int i = 0; i < 15; i++) {
-		x = 11;
+		x = 11+0.5;
 		w = 28;
 		y = i*(60) + 14;
 		h = 29;
-		frames[WALKING_FRAMES].push_back(Rect(x,y,w,h));
+		frames[WALKING_FRAMES].push_back(Rect((int)x,y,w,h));
 	}
 }
 
