@@ -7,11 +7,9 @@
 
 #define BACKGROUND_PATH "../resources/images/background.png"
 #define BEAM_PATH "../resources/images/grdl8.png"	
-#define STILL_WORM_PATH "../resources/images/worm_still.png"
-//#define STILL_WORM_PATH "../resources/images/waccuse.png"
-#define JUMPING_WORM_PATH "../resources/images/worm_jump.png"
-//#define WALKING_WORM_PATH "../resources/images/wwalk.png"
-#define WALKING_WORM_PATH "../resources/images/worm_walk.png"
+#define STILL_WORM_PATH "../resources/images/stillworm.bmp"
+#define JUMPING_WORM_PATH "../resources/images/worm_jump.bmp"
+#define WALKING_WORM_PATH "../resources/images/worm_walk.bmp"
 #define ROCKET_PATH "../resources/images/rocket.bmp"
 
 #include "../game_src/constants_game.h"
