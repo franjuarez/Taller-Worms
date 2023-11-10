@@ -4,6 +4,7 @@
 
 #include <unordered_map>
 #include <math.h>
+#include <cmath>
 #include "worm_view.h"
 #include "mouse_handler.h"
 #include "../game_src/game_dynamic.h"
@@ -28,6 +29,7 @@ private:
 	//recursos
 	Texture backgroundSprite;
 	Texture beamSprite;
+	Texture rocketSprite;
 	
 	std::vector<Texture> dynamicSpriteSheets;
 	std::vector<BeamView> beamViews;

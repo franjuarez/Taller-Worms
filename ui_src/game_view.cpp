@@ -12,6 +12,7 @@
 #define JUMPING_WORM_PATH "../resources/images/worm_jump.png"
 //#define WALKING_WORM_PATH "../resources/images/wwalk.png"
 #define WALKING_WORM_PATH "../resources/images/worm_walk.png"
+#define ROCKET_PATH "../resources/images/rocket.bmp"
 
 #include "../game_src/constants_game.h"
 #include "../game_src/move.h"
@@ -30,6 +31,7 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 		renderer(window, -1 /*any driver*/, SDL_RENDERER_ACCELERATED),
 		backgroundSprite(renderer, BACKGROUND_PATH),
 		beamSprite(renderer, BEAM_PATH),
+		rocketSprite(renderer, Surface(ROCKET_PATH).SetColorKey(true,0)),
 		camX(0), camY(0), mouseHandler(camX, camY) {
 
 	client.start();
@@ -97,14 +99,17 @@ void GameView::draw(int i) {
 	}
 
 	for (auto &p : this->proy) {
+		double angle = -(atan(p.getVelY() / p.getVelX()) * (180.0 / M_PI)); //angula de vel respecto de horizontal
+		angle += 90;//quiero que si es 0 tenga una rotacion de 90 grados
+		//std::cout << angle << std::endl;
 		renderer.Copy(
-			beamSprite,
-			NullOpt,
-			Rect(
-				(p.getX()  * m_to_pix_x) - camX,
+			rocketSprite,
+			Rect(19, 13, 22, 34),
+			Rect((p.getX()  * m_to_pix_x) - camX,
 				(p.getY() * m_to_pix_y + WINDOW_HEIGHT) - camY,
-				20, 20
-			));
+				20, 20),
+			angle, Point(0, 0), 0 //
+			);
 	}
 
 	//muestro la nueva pantalla
@@ -163,7 +168,7 @@ void GameView::start() {
                     moveCase(i);
 
                 } else if (event.key.keysym.sym == SDLK_SPACE) {
-					this->client.execute(new Attack(currentWormId, 1, 45.0f, 10.0f));
+					this->client.execute(new Attack(currentWormId, 1, 60.0f, 50.0f));
 				}
             }
 		}
