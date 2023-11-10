@@ -4,7 +4,7 @@
 
 GameWorld::GameWorld() {
     this->world = new b2World(b2Vec2(WORLD_GRAVITY_X, WORLD_GRAVITY_Y));
-    this->listener = new Listener(this->world, this->entitiesToRemove); //VER SI HACE FALTA HEAP O STACK
+    this->listener = new Listener(this->world); //VER SI HACE FALTA HEAP O STACK
     this->world->SetContactListener(this->listener);
     
     //Hardcoded (for now)
@@ -45,12 +45,11 @@ void GameWorld::createWorm(float startingX, float startingY, int id, int team){
     //fd.filter.groupIndex = WORM_GROUP_INDEX; //This way it doesn't collide with other worms SALMON
     body->CreateFixture(&fd);
 
-    Worm* wormEntity = new Worm(body, id, team, RIGHT); //Starts facing right
+    Worm* wormEntity = new Worm(body, entitiesToRemove, id, team, RIGHT); //Starts facing right
     body->GetUserData().pointer = reinterpret_cast<uintptr_t>(wormEntity);
 
     this->worms[id] = body;
 }
-
 
 void GameWorld::createBeam(float startingX, float startingY, float angle, bool large){
     b2BodyDef beam;
@@ -74,14 +73,8 @@ void GameWorld::createBeam(float startingX, float startingY, float angle, bool l
     beamBody->CreateFixture(&gb);
 
     bool isWalkable = (abs(angle) > MAX_WALKABLE_BEAM_ANGLE) ? false : true;
-    Beam* beamEntity = new Beam(beamBody, isWalkable);
+    Beam* beamEntity = new Beam(beamBody, entitiesToRemove, isWalkable);
     beamBody->GetUserData().pointer = reinterpret_cast<uintptr_t>(beamEntity);
-}
-
-void GameWorld::checkWormExists(uint id){ //Capaz conviene un array con pos de id? es mas rapido pero mas choto de acceder
-    if(this->worms.find(id) == this->worms.end()){
-        throw std::invalid_argument("Worm with id " + std::to_string(id) + " does not exist");
-    }
 }
 
 b2Body* GameWorld::createRocket(b2Body* worm, int direction){
@@ -101,11 +94,17 @@ b2Body* GameWorld::createRocket(b2Body* worm, int direction){
     fd.density = ROCKET_DENSITY;
     body->CreateFixture(&fd);
 
-    Rocket* rocketEntity = new Rocket(body, ROCKET_DAMAGE, ROCKET_BLAST_RADIOUS);
+    Rocket* rocketEntity = new Rocket(body, entitiesToRemove, ROCKET_DAMAGE, ROCKET_BLAST_RADIOUS);
     body->GetUserData().pointer = reinterpret_cast<uintptr_t>(rocketEntity);
 
     projectiles.push_back(body);
     return body;
+}
+
+void GameWorld::checkWormExists(uint id){ //Capaz conviene un array con pos de id? es mas rapido pero mas choto de acceder
+    if(this->worms.find(id) == this->worms.end()){
+        throw std::invalid_argument("Worm with id " + std::to_string(id) + " does not exist");
+    }
 }
 
 void GameWorld::wormLaunchRocket(int id, float angle, int direction, float power){
@@ -142,26 +141,33 @@ void GameWorld::jumpBackwardsWorm(int id){
     wormData->jumpBackwards();
 }
 
-void GameWorld::killDeadWorms(){
-    std::vector<Worm*> wormsToRemove;
-    
-    for (auto& worm : this->worms) {
-        Worm* wormData = (Worm*) worm.second->GetUserData().pointer;
-        if (wormData->isDead()) {
-            std::cout << "Muriendo Worm con id: " << worm.first << std::endl;
-            wormsToRemove.push_back(wormData);
+void GameWorld::removeWorm(b2Body* worm){
+    for(auto it = this->worms.begin(); it != this->worms.end(); ++it){
+        if(it->second == worm){
+            this->worms.erase(it);
+            break;
         }
     }
+}
 
-    for (Worm* wormToRemove : wormsToRemove) {
-        this->entitiesToRemove.insert(this->worms.find(wormToRemove->getId())->second);
-        this->worms.erase(wormToRemove->getId());
+void GameWorld::removeProjectile(b2Body* projectile){
+    for(auto it = this->projectiles.begin(); it != this->projectiles.end(); ++it){
+        if(*it == projectile){
+            this->projectiles.erase(it);
+            break;
+        }
     }
 }
+
 
 void GameWorld::removeEntities(){
     for(b2Body* body : this->entitiesToRemove){
         Entity* entity = (Entity*) body->GetUserData().pointer;
+        if(typeid(*entity) == typeid(Worm)){
+            removeWorm(body);
+        } else if(typeid(*entity) == typeid(Rocket)){
+            removeProjectile(body);
+        }
         this->world->DestroyBody(body);
         delete entity;
     }
@@ -169,9 +175,8 @@ void GameWorld::removeEntities(){
 }
 
 void GameWorld::update() {
-    killDeadWorms();
-    removeEntities();
     this->world->Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
+    removeEntities();
 }
 
 GameDynamic* GameWorld::getGameStatus(int id){
@@ -192,7 +197,7 @@ GameDynamic* GameWorld::getGameStatus(int id){
 
 GameWorld::~GameWorld() {
     for (b2Body* body = this->world->GetBodyList(); body != NULL; body = body->GetNext()) {
-        //delete user data
+        //deleting user data
         Entity* entity = (Entity*) body->GetUserData().pointer;
         this->world->DestroyBody(body);
         delete entity;

@@ -1,10 +1,11 @@
 #include "Rocket.h"
 
-Rocket::Rocket(b2Body* body, float damage, float radius) : Entity(body), damage(damage), radius(radius) {}
+Rocket::Rocket(b2Body* body, std::vector<b2Body*>& entitiesToRemove, float damage, float radius) : 
+    Entity(body, entitiesToRemove), damage(damage), radius(radius) {}
 
 Rocket::~Rocket() {}
 
-void Rocket::explode(std::set<b2Body*>& entitiesToRemove) {
+void Rocket::explode() {
     b2Body* rocket = this->body;
     b2Vec2 rocketPos = rocket->GetPosition();
     ExplosionQueryCallback explosionCallback(rocketPos, ROCKET_BLAST_RADIOUS);
@@ -21,9 +22,8 @@ void Rocket::explode(std::set<b2Body*>& entitiesToRemove) {
         float distance = b2Distance(rocketPos, bodyPos);
         float damage = this->damage * (1 - distance / this->radius);
         worm->handleExplosion(damage, rocketPos);
-        // std::cout << "force: x:" << force.x << ", y:" << force.y << std::endl; 
     }
-    entitiesToRemove.insert(rocket);
+    this->entitiesToRemove.push_back(rocket);
 }
 
 ProjectileDTO Rocket::getDTO(){
@@ -33,47 +33,48 @@ ProjectileDTO Rocket::getDTO(){
     return dto;
 }
 
-void Rocket::beginCollisionWithBeam(Entity* otherBody, std::set<b2Body*>& entitiesToRemove) {
+void Rocket::beginCollisionWithBeam(Entity* otherBody, b2Contact* contact) {
     UNUSED(otherBody);
-    explode(entitiesToRemove);
+    explode();
 }
 
-void Rocket::beginCollisionWithWorm(Entity* otherBody, std::set<b2Body*>& entitiesToRemove) {
-    UNUSED(otherBody);
-    explode(entitiesToRemove);
+void Rocket::beginCollisionWithWorm(Entity* otherBody, b2Contact* contact) {
+    Worm* worm = (Worm*) otherBody;
+    worm->applyFallDamage(worm->body->GetLinearVelocity());
+    explode();
 }
 
-void Rocket::beginCollisionWithRocket(Entity* otherBody, std::set<b2Body*>& entitiesToRemove) {
+void Rocket::beginCollisionWithRocket(Entity* otherBody, b2Contact* contact) {
     UNUSED(otherBody);
-    explode(entitiesToRemove);
+    explode();
 }
 
-void Rocket::preSolveCollisionWithBeam(Entity* otherBody, b2Contact* contact) {
-    UNUSED(otherBody);
-    UNUSED(contact);
-}
-
-void Rocket::preSolveCollisionWithWorm(Entity* otherBody, b2Contact* contact) {
+void Rocket::preSolveCollisionWithBeam(Entity* otherBody, b2Contact* contact, const b2Manifold* oldManifold) {
     UNUSED(otherBody);
     UNUSED(contact);
 }
 
-void Rocket::preSolveCollisionWithRocket(Entity* otherBody, b2Contact* contact) {
+void Rocket::preSolveCollisionWithWorm(Entity* otherBody, b2Contact* contact, const b2Manifold* oldManifold) {
     UNUSED(otherBody);
     UNUSED(contact);
 }
 
-void Rocket::postSolveCollisionWithBeam(Entity* otherBody, b2Contact* contact) {
+void Rocket::preSolveCollisionWithRocket(Entity* otherBody, b2Contact* contact, const b2Manifold* oldManifold) {
     UNUSED(otherBody);
     UNUSED(contact);
 }
 
-void Rocket::postSolveCollisionWithWorm(Entity* otherBody, b2Contact* contact) {
+void Rocket::postSolveCollisionWithBeam(Entity* otherBody, b2Contact* contact, const b2ContactImpulse* impulse) {
     UNUSED(otherBody);
     UNUSED(contact);
 }
 
-void Rocket::postSolveCollisionWithRocket(Entity* otherBody, b2Contact* contact) {
+void Rocket::postSolveCollisionWithWorm(Entity* otherBody, b2Contact* contact, const b2ContactImpulse* impulse) {
+    UNUSED(otherBody);
+    UNUSED(contact);
+}
+
+void Rocket::postSolveCollisionWithRocket(Entity* otherBody, b2Contact* contact, const b2ContactImpulse* impulse) {
     UNUSED(otherBody);
     UNUSED(contact);
 }

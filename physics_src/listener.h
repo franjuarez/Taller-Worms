@@ -12,10 +12,9 @@
 class Listener : public b2ContactListener{
 public:
     b2World* world;
-    std::set<b2Body*>& entitiesToRemove;
     CollisionHandler collisionHandler;
 
-    Listener(b2World* world, std::set<b2Body*>& entitiesToRemove);
+    Listener(b2World* world);
 
     void BeginContact(b2Contact* contact);
 

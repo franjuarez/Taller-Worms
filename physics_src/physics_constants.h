@@ -34,7 +34,7 @@
 
 //Move constants    
 #define MOVE_VELOCITY 0.4f
-#define VELOCITY_SMOOTH_BREAK MOVE_VELOCITY/4.0f
+#define VELOCITY_SMOOTH_BREAK MOVE_VELOCITY/1.5f
 
 //Jump constants
 #define JUMP_FORWARD_MOVEMENT_X 1.0f
