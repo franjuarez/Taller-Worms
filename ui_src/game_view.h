@@ -22,11 +22,13 @@ private:
 	//basic SDL stuff
 	SDL sdl;
 	Window window;
+	Mixer mixer;
 	Renderer renderer;
 
 	
 
 	//recursos
+	Chunk sound;
 	Texture backgroundSprite;
 	Texture beamSprite;
 	Texture rocketSprite;

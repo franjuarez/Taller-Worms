@@ -5,6 +5,8 @@
 #define FPS 60.0f
 #define RATE (1000.f / FPS)
 
+#define MUSIC_PATH "../resources/music/AdhesiveWombat_Night Shade.mp3"
+
 #define BACKGROUND_PATH "../resources/images/background.png"
 #define BEAM_PATH "../resources/images/grdl8.png"	
 #define STILL_WORM_PATH "../resources/images/stillworm.bmp"
@@ -20,13 +22,16 @@
 
 GameView::GameView(const std::string& hostname, const std::string& servname) :
 		client(hostname, servname),
-		sdl(SDL_INIT_VIDEO/*, SDL_INIT_AUDIO*/),
+		sdl(SDL_INIT_VIDEO | SDL_INIT_AUDIO),
+
 		window(WINDOW_NAME,
 			SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
 			WINDOW_WIDTH, WINDOW_HEIGHT,
 			SDL_WINDOW_SHOWN),
 		//no usar vsync porque no voy a poder comprobar si mi loop de fps's funciona
 		renderer(window, -1 /*any driver*/, SDL_RENDERER_ACCELERATED),
+		mixer(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 4096),
+		sound(MUSIC_PATH), // OGG sound file
 		backgroundSprite(renderer, BACKGROUND_PATH),
 		beamSprite(renderer, BEAM_PATH),
 		rocketSprite(renderer, Surface(ROCKET_PATH).SetColorKey(true,0)),
@@ -128,6 +133,8 @@ void GameView::mouseMovementCase(int x, int y) {
 }
 
 void GameView::start() {
+	mixer.PlayChannel(-1, sound);
+
 	int i = 0;
 	int t1 = SDL_GetTicks();
 	//float durationInSeconds;
