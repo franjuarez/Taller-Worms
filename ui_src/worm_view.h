@@ -15,11 +15,12 @@ private:
 	WormDTO worm;
 	std::vector<Texture>& dynamicSpriteSheets;
 	std::vector<std::vector<Rect>> frames;
+	Font& wormsFont;
 	int startingPoint;
 	int currentFramesIndex; //indica la tira(fila) de frames que se tiene que usar ahora mismo
 
 public:
-	WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets);
+	WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets, Font& font);
 	~WormView();
 
 	//funcion de prueba para testear que no aparezca el segfault

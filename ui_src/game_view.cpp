@@ -7,6 +7,8 @@
 
 #define MUSIC_PATH "../resources/music/AdhesiveWombat_Night Shade.mp3"
 
+#define WORM_LIFE_FONT_PATH "../resources/fonts/lazy.ttf"
+
 #define BACKGROUND_PATH "../resources/images/background.png"
 #define BEAM_PATH "../resources/images/grdl8.png"	
 #define STILL_WORM_PATH "../resources/images/stillworm.bmp"
@@ -23,7 +25,7 @@
 GameView::GameView(const std::string& hostname, const std::string& servname) :
 		client(hostname, servname),
 		sdl(SDL_INIT_VIDEO | SDL_INIT_AUDIO),
-
+		sdlttf(),
 		window(WINDOW_NAME,
 			SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
 			WINDOW_WIDTH, WINDOW_HEIGHT,
@@ -32,6 +34,7 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 		renderer(window, -1 /*any driver*/, SDL_RENDERER_ACCELERATED),
 		mixer(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 4096),
 		sound(MUSIC_PATH), // OGG sound file
+		wormsFont(WORM_LIFE_FONT_PATH, 18),
 		backgroundSprite(renderer, BACKGROUND_PATH),
 		beamSprite(renderer, BEAM_PATH),
 		rocketSprite(renderer, Surface(ROCKET_PATH).SetColorKey(true,0)),
@@ -65,7 +68,7 @@ void GameView::loadWorms(std::vector<WormDTO>& recievedWorms) {
 	for (auto &worm : recievedWorms) {
 		wormViews.emplace(
 			worm.getId(),
-			WormView(worm, dynamicSpriteSheets)
+			WormView(worm, dynamicSpriteSheets, wormsFont)
 		);
 	}
 }

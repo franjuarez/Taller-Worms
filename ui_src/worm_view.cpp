@@ -3,10 +3,11 @@
 
 
 
-WormView::WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets) : 
+WormView::WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets, Font& wormsFont) : 
 	worm(worm),
 	dynamicSpriteSheets(dynamicSpriteSheets),
-	frames{{},{},{}} {
+	frames{{},{},{}},
+	wormsFont(wormsFont) {
 	currentFramesIndex = DEFAULT_FRAMES;
 	startingPoint = 0;
 	float x, y, w, h;
@@ -64,17 +65,25 @@ void WormView::display(int i, Renderer& renderer, int camX, int camY) {
 		currentFrame = 0;
 	}
 	
-	//std::cout << "[" << worm.getId() << "] X: " << this->worm.getPosition().getX() << ", Y: " << this->worm.getPosition().getY();
+	int x = ((worm.getX() - 0.5)  * m_to_pix_x) - camX;
+	int y = ((worm.getY() + 0.5) * m_to_pix_y + WINDOW_HEIGHT) - camY;
 	renderer.Copy(
 		this->dynamicSpriteSheets[currentFramesIndex],
 		this->frames[currentFramesIndex][currentFrame], 
-		Rect(
-			((worm.getX() - 0.5)  * m_to_pix_x) - camX,
-			((worm.getY() + 0.5) * m_to_pix_y + WINDOW_HEIGHT) - camY,
-			1*m_to_pix_x, -1*m_to_pix_y
-			),
+		Rect(x, y,1*m_to_pix_x, -1*m_to_pix_y),
 		0, NullOpt, worm.getDir()
 	);
+
+	//grafico la vida
+	Texture hp(renderer,
+		wormsFont.RenderText_Solid(std::__cxx11::to_string(this->worm.getHealth()),
+		SDL_Color{0,0,0}));
+	renderer.Copy(
+		hp,
+		NullOpt,
+		Rect(Point(x + 0.5*m_to_pix_x ,y - (.5 * - m_to_pix_y)), hp.GetSize())
+	);
+
 }
 
 void WormView::update(WormDTO other) {

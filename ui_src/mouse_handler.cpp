@@ -1,6 +1,6 @@
 #include "mouse_handler.h"
 
-#define MOUSE_SPEED 0
+#define MOUSE_SPEED 1
 
 #include "constants.h"
 using namespace uiConstants;
