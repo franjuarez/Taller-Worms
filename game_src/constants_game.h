@@ -12,6 +12,11 @@ enum /*Direction*/ {
 
 enum /*PROJECTILE_TYPE*/{
     SIMPLE_ROCKET = 0,
+    BASEBALL_BAT,
 };
+
+
+#define ALIVE = 0;
+#define BOOMED = 0;
 
 #endif

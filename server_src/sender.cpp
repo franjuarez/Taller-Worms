@@ -1,26 +1,17 @@
 #include "sender.h"
-#include "../game_src/game_lobby.h"
 #include "../game_src/game_dynamic.h"
 #include "../game_src/game_map.h"
 
 
-Sender::Sender(int id, Protocol& protocol, Queue<Serializable*>& playerQueue, bool& talking) 
-: id(id), protocol(protocol), playerQueue(playerQueue), talking(talking) {}
+Sender::Sender(Protocol& protocol, Queue<Serializable*>& playerQueue, bool& talking) 
+: protocol(protocol), playerQueue(playerQueue), talking(talking) {}
 
 void Sender::run() {
     try {
-        // Serializable* gameLobbyS = playerQueue.pop();
-        // GameLobby* gameLobby = dynamic_cast<GameLobby*>(gameLobbyS);
-        // gameLobby->send(protocol);
-        Serializable* gameMapS = playerQueue.pop();
-        GameMap* gameMap = dynamic_cast<GameMap*>(gameMapS);
-        gameMap->send(protocol);
-
         while (talking) {
-            Serializable* gameLobbySS = playerQueue.pop();
-            GameDynamic* gameDynamic = dynamic_cast<GameDynamic*>(gameLobbySS);
-            gameDynamic->send(protocol);
-        }
+            Serializable* gameStatus = playerQueue.pop();
+            gameStatus->send(protocol);
+        }   
     } catch (ClosedQueue& e) {
         std::cout << "Sender: Cerrada la queue\n";
     } catch (ClosedSocket& e) {

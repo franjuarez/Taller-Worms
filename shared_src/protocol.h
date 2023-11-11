@@ -6,7 +6,7 @@
 #include "../game_src/serializable.h"
 #include  "../game_src/worm_dto.h"
 #include  "../game_src/beam_dto.h"
-#include  "../game_src/projectile_dto.h"
+#include  "../game_src/weapons_dto.h"
 #include  "../game_src/position.h"
 
 #include <iostream>
@@ -48,14 +48,17 @@ private:
     void sendWorms(std::vector<WormDTO> worms);
     std::vector<WormDTO> receiveWorms();
 
-    void sendProjectiles(std::vector<ProjectileDTO> proyectiles);
-    std::vector<ProjectileDTO> receiveProjectiles();
+    void sendWeapons(std::vector<WeaponDTO> proyectiles);
+    std::vector<WeaponDTO> receiveWeapons();
 
     void sendPosition(Position position);
     Position receivePosition();
 
     void sendMapNames(std::vector<std::string>& mapNames);
     std::vector<std::string> receiveMapNames();
+
+    void sendWeaponsMap(std::map<int, int> weapons);
+    std::map<int, int> receiveWeaponsMap();
 
 
     Move* receiveMove();
@@ -71,9 +74,6 @@ public:
 
     void sendMap(GameMap* map);
     GameMap* receiveMap();
-
-    void sendLobby(GameLobby* lobby);
-    GameLobby* receiveLobby();
 
     void sendDynamic(GameDynamic* dynamic);
     GameDynamic* receiveDynamic();

@@ -40,33 +40,6 @@ void GameLoop::start() {
         //get ticks without sdl
 	//float durationInSeconds;
 
-
-    std::vector<BeamDTO> beams;
-    std::vector<WormDTO> worms;
-    Position pos(9.7, 11.0);
-    Position pos2(9.89, 12.1);
-    worms.push_back(WormDTO(0, 0, 79, 1, pos2));
-    //worms.push_back(WormDTO(1, 0, 9, 1, pos2));
-
-    //createBeam(10.0f, 10.0f, 0, true);
-    //createWorm(10.0f, 15.0f, 0, 0);
-    //createWorm(12.0f, 12.0f, 1, 1);
-
-    beams.push_back(BeamDTO(6, Position(10.0f, 10.0f), 0));
-	beams.push_back(BeamDTO(6, Position(16.0f, 8.0f), 0));
-	beams.push_back(BeamDTO(6, Position(22.0f, 6.0f), 0));
-	beams.push_back(BeamDTO(6, Position(28.0f, 4.0f), 0));
-	beams.push_back(BeamDTO(6, Position(34.0f, 2.0f), 0));
-	beams.push_back(BeamDTO(6, Position(40.0f, 0.0f), 0));
-	beams.push_back(BeamDTO(6, Position(46.0f, -2.0f), 0));
-
-    //beams.push_back(BeamDTO(3, Position(10.0f, 12.0f), 0));
-	//beams.push_back(BeamDTO(6, Position(15.0f, 5.0f), 50));
-	//beams.push_back(BeamDTO(3, Position(10.0f, 3.0f), -10));
-    //beams.push_back(BeamDTO(6, pos2, 10.66));
-    GameMap* map = new GameMap("aloha", beams, worms);
-    statusBroadcaster.broadcast(map); 
-
 	while(true) {
 		loopLogic();
 		usleep(RATE*1000);

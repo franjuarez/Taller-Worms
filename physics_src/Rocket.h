@@ -5,7 +5,7 @@
 #include <set>
 #include "Worm.h"
 #include "explosion_handler.h"
-#include "../game_src/projectile_dto.h"
+#include "../game_src/weapons_dto.h"
 
 
 class Rocket : public Entity {
@@ -33,7 +33,7 @@ public:
     virtual void endCollisionWithWorm(Entity* otherBody, b2Contact* contact);
     virtual void endCollisionWithRocket(Entity* otherBody, b2Contact* contact);
 
-    ProjectileDTO getDTO();
+    WeaponDTO getDTO();
 
     ~Rocket() override;
 };
