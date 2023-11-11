@@ -30,12 +30,12 @@ void JoinScreen::on_pushButton_clicked()
     //std::cout << this->port.toStdString() << std::endl;
     //std::cout << this->address.toStdString() << std::endl;
     try {
-    this->hide();
     GameView gv(address.toStdString(), port.toStdString());
+    this->hide();
 
     gv.start();
     gv.join();
-
+    QApplication::quit();
     } catch (const std::exception& e) {
         std::cerr << e.what() << std::endl;
     }
