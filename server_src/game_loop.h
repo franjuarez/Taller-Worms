@@ -18,6 +18,7 @@ private:
     Queue<Command*>& commandsQueue; // esta saca los comandos con try pop porque no la deberia bloquear y siempre tiene que estar loopeando
     StatusBroadcaster& statusBroadcaster;
     GameWorld gameWorld;
+    int wormPlayingID = 1;
 
     void loopLogic();
 public:

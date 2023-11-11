@@ -19,7 +19,7 @@ void Lobby::run() {
     Position pos(9.7, 11.0);
     Position pos2(9.89, 12.1);
     worms.push_back(WormDTO(0, 0, 79, 1, 0, pos2, {}));
-    //worms.push_back(WormDTO(1, 0, 9, 1, pos2));
+    // worms.push_back(WormDTO(1, 0, 9, 1, 0, pos2, {}));
 
     //createBeam(10.0f, 10.0f, 0, true);
     //createWorm(10.0f, 15.0f, 0, 0);

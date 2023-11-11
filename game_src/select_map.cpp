@@ -20,7 +20,7 @@ int SelectMap::getTeam(){
 }
 
 void SelectMap::executeCommand(GameWorld& gameWorld) {
-    std::cout << "exec SelectMap\n";
+    // std::cout << "exec SelectMap\n";
     UNUSED(gameWorld);
 }
 
