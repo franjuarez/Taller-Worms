@@ -20,6 +20,8 @@ set(SDL2PP_WITH_MIXER ON)
 set(SDL2PP_WITH_TTF ON)
 add_subdirectory("thirdParty/SDL2pp")
 
+add_subdirectory(Lobby)
+
 
 include_directories(${SDL2PP_INCLUDE_DIRS})
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
@@ -43,12 +45,21 @@ file(GLOB SHARED CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/shared_src/*.cpp
 add_library(SharedLib ${SHARED})
 target_link_libraries(SharedLib PUBLIC SharedGameLib)
 
+#file(GLOB HEADER_FILES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/Lobby/*.h")
+file(GLOB QT CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/Lobby/*.cpp")
+file(GLOB QT_UI CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/Lobby/*.ui")
+file(GLOB QT_HEADERS CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/Lobby/*.h")
+# file(GLOB QT_HEADERS CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/Lobby/*.ui")
+add_executable(client ${QT} ${QT_UI} ${QT_HEADERS})
+# add_library(Qt ${QT})
+
 file(GLOB HEADER_FILES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/client_src/*.h")
 file(GLOB CLIENT CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/client_src/*.cpp")
-add_executable(client ${CLIENT} ${HEADER_FILES})
+add_library(client_lib ${CLIENT} ${HEADER_FILES})
 
 file(GLOB SERVER CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/server_src/*.cpp")
 add_executable(server ${SERVER})
+
 
 target_compile_options(server PRIVATE $<$<NOT:$<C_COMPILER_ID:MSVC>>:-Wall -Wextra -pedantic -ggdb -DDEBUG -pedantic-errors>)
 target_link_libraries(server PRIVATE Threads::Threads)
@@ -57,9 +68,13 @@ target_link_libraries(server PUBLIC SharedGameLib)
 
 target_compile_options(client PRIVATE $<$<NOT:$<C_COMPILER_ID:MSVC>>:-Wall -Wextra -pedantic -ggdb -DDEBUG -pedantic-errors>)
 target_link_libraries(client PRIVATE Threads::Threads)
-target_link_libraries(client PUBLIC SharedLib)
-target_link_libraries(client PUBLIC SharedGameLib)
-target_link_libraries(client PUBLIC SharedUi)
+
+target_link_libraries(client_lib PUBLIC SharedLib)
+target_link_libraries(client_lib PUBLIC SharedGameLib)
+target_link_libraries(client_lib PUBLIC SharedUi)
+
+target_link_libraries(client PUBLIC client_lib)
+
 
 # add_executable("ui" main.cpp worm.cpp game_view.cpp worm_view.cpp worm.cpp constants.cpp game_view.cpp mouse_handler.cpp)
 # 

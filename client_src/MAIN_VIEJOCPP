@@ -1,4 +1,3 @@
-
 #include "../ui_src/game_view.h"
 
 #include <iostream>
