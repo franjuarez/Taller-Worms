@@ -11,7 +11,7 @@ Worm::~Worm() {}
 
 WormDTO Worm::getDTO(){
     Position pos(body->GetPosition().x, body->GetPosition().y);
-    WormDTO dto(id, direction, 0, health, pos);
+    WormDTO dto(id, direction, 0, health, 0, pos, {});
     return dto;
 }
 

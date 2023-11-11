@@ -2,11 +2,16 @@
 
 #include <iostream>
 
-GameMap::GameMap(std::string mapName, std::vector<BeamDTO> beamsMap, std::vector<WormDTO> worms) : 
+GameMap::GameMap(int team, std::string mapName, std::vector<BeamDTO> beamsMap, std::vector<WormDTO> worms) : 
 Serializable(), 
+team(team),
 mapName(mapName),
 beamsMap(beamsMap),
 worms(worms) {}
+
+int GameMap::getTeam() {
+    return this->team;
+}
 
 std::string GameMap::getMapName() {
     return this->mapName;

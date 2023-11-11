@@ -2,7 +2,7 @@
 #define GAME_DYNAMIC_H
 
 #include "worm_dto.h"
-#include "projectile_dto.h"
+#include "weapons_dto.h"
 
 #include "../shared_src/protocol.h"
 #include "serializable.h"
@@ -18,15 +18,15 @@ class GameDynamic : public Serializable {
 private:
     int wormPlayingID;
     std::vector<WormDTO> worms;
-    std::vector<ProjectileDTO> proyectiles;
+    std::vector<WeaponDTO> proyectiles;
 
 public: 
     // va a tener que ser creado ya con el vect de worms parra que no chille la herencia
-    GameDynamic(int wormPlayingID, std::vector<WormDTO>worms, std::vector<ProjectileDTO> proyectiles);
+    GameDynamic(int wormPlayingID, std::vector<WormDTO>worms, std::vector<WeaponDTO> proyectiles);
     void send(Protocol& protocol);
     void addWorms(std::vector<WormDTO>worms); // should change to adding all worms in one to avoid a RC
     std::vector<WormDTO> getWorms();
-    std::vector<ProjectileDTO> getProjectiles();
+    std::vector<WeaponDTO> getProjectiles();
     int getWormPlayingID();
     GameDynamic& operator=(const GameDynamic& other);
     GameDynamic(const GameDynamic& other);

@@ -6,8 +6,6 @@
 #include  "../game_src/jump.h"
 #include "../game_src/attack.h"
 
-
-#include "../game_src/game_lobby.h"
 #include "../game_src/game_dynamic.h"
 #include "../game_src/game_map.h"
 
@@ -22,37 +20,23 @@ Protocol::Protocol(Socket&& skt) : skt(std::move(skt)) {}
 Protocol::Protocol(const std::string& hostname, const std::string& servname) :
 skt(hostname.c_str(), servname.c_str()) {}
 
-void Protocol::sendLobby(GameLobby* lobby) {
-    checkClosed();
-    sendUintEight(SEND_LOBBY);
-    sendUintEight(lobby->getTeam());
-    sendMapNames(lobby->getMapNames());
-}
-
-GameLobby* Protocol::receiveLobby() {
-    checkClosed();
-    uint8_t protocolCode = receiveUintEight();
-    uint8_t team = receiveUintEight();
-    std::vector<std::string> mapNames = receiveMapNames();
-    return new GameLobby(mapNames, team);
-}
 
 void Protocol::sendMap(GameMap* gameMap) {
     checkClosed();
     sendUintEight(SEND_MAP); 
+    sendUintEight(gameMap->getTeam());
     sendString(gameMap->getMapName());
-
     sendWorms(gameMap->getWorms());
-
     sendBeams(gameMap->getBeams());
 }
 
 GameMap* Protocol::receiveMap() {
     uint8_t protocolCode = receiveUintEight();
+    uint8_t team = receiveUintEight();
     std::string mapName = receiveString();
     std::vector<WormDTO> worms = receiveWorms();
     std::vector<BeamDTO> beams = receiveBeams();
-    return new GameMap(mapName, beams, worms);
+    return new GameMap(team, mapName, beams, worms);
 }
 
 
@@ -61,7 +45,7 @@ void Protocol::sendDynamic(GameDynamic* dynamic) {
     sendUintEight(SEND_DYNAMIC); 
     sendUintEight(dynamic->getWormPlayingID());
     sendWorms(dynamic->getWorms());
-    sendProjectiles(dynamic->getProjectiles());
+    sendWeapons(dynamic->getProjectiles());
 }
 
 GameDynamic* Protocol::receiveDynamic() {
@@ -70,8 +54,8 @@ GameDynamic* Protocol::receiveDynamic() {
     uint8_t wormPlayingID = receiveUintEight();
 
     std::vector<WormDTO> worms = receiveWorms();
-    std::vector<ProjectileDTO> projectiles = receiveProjectiles();
-    return new GameDynamic(wormPlayingID, worms, projectiles);
+    std::vector<WeaponDTO> weapons = receiveWeapons();
+    return new GameDynamic(wormPlayingID, worms, weapons);
 }
 
 void Protocol::sendSelectMap(SelectMap* selectMap) {
@@ -183,28 +167,30 @@ std::vector<std::string> Protocol::receiveMapNames() {
     return allMaps;
 }
 
-void Protocol::sendProjectiles(std::vector<ProjectileDTO> projectiles) {
-    sendUintEight(projectiles.size());
-    for (int i = 0; i < projectiles.size(); i++) {
-        sendUintEight(projectiles[i].getType());
-        sendFloat(projectiles[i].getVelX());
-        sendFloat(projectiles[i].getVelY());
-        sendPosition(Position(projectiles[i].getX(), projectiles[i].getY()));
+void Protocol::sendWeapons(std::vector<WeaponDTO> weapons) {
+    sendUintEight(weapons.size());
+    for (int i = 0; i < weapons.size(); i++) {
+        sendUintEight(weapons[i].getType());
+        sendUintEight(weapons[i].getBoomed());
+        sendFloat(weapons[i].getVelX());
+        sendFloat(weapons[i].getVelY());
+        sendPosition(Position(weapons[i].getX(), weapons[i].getY()));
     }
 }
 
-std::vector<ProjectileDTO> Protocol::receiveProjectiles() {
+std::vector<WeaponDTO> Protocol::receiveWeapons() {
     uint8_t numberOfProjectiles = receiveUintEight();
-    std::vector<ProjectileDTO> projectiles;
+    std::vector<WeaponDTO> weapons;
     for (int i = 0; i < numberOfProjectiles; i++) {
         int type = receiveUintEight();
+        int boomed = receiveUintEight();
         float velX = receiveFloat();
         float velY = receiveFloat();
         Position pos = receivePosition();
-        ProjectileDTO projectile(type, pos, velX, velY);
-        projectiles.push_back(projectile);    
+        WeaponDTO projectile(type, boomed, pos, velX, velY);
+        weapons.push_back(projectile);    
     }
-    return projectiles;
+    return weapons;
 }
 
 
@@ -215,7 +201,9 @@ void Protocol::sendWorms(std::vector<WormDTO> worms) {
         sendUintEight(worms[i].getDir());
         sendUintEight(worms[i].getTeam());
         sendUintEight(worms[i].getHealth());
+        sendUintEight(worms[i].isAlive());
         sendPosition(Position(worms[i].getX(), worms[i].getY()));
+        sendWeaponsMap(worms[i].getWeapons());
     }
 
 }
@@ -228,8 +216,10 @@ std::vector<WormDTO> Protocol::receiveWorms() {
         uint8_t dir = receiveUintEight();
         uint8_t team = receiveUintEight();
         uint8_t health = receiveUintEight();
+        uint8_t alive = receiveUintEight();
         Position pos = receivePosition();
-        WormDTO worm(id, dir, team, health, pos);
+        std::map<int, int> weapons = receiveWeaponsMap();
+        WormDTO worm(id, dir, team, health, alive, pos, weapons);
         worms.push_back(worm);
     }
     return worms;
@@ -257,6 +247,24 @@ std::vector<BeamDTO> Protocol::receiveBeams() {
     return beams;
 }
 
+void Protocol::sendWeaponsMap(std::map<int, int> weapons) {
+    sendUintEight(weapons.size());
+    for (auto& weapon : weapons ) {
+        sendUintEight(weapon.first);
+        sendUintEight(weapon.second);
+    }
+}
+
+std::map<int, int> Protocol::receiveWeaponsMap() {
+    uint8_t weaponQuantity = receiveUintEight();
+    std::map<int, int> weaponsMap;
+    for (int i = 0; i < weaponQuantity; i++) {
+        uint8_t first = receiveUintEight();
+        uint8_t second = receiveUintEight();
+        weaponsMap[first] = second;
+    }
+    return weaponsMap;
+}
 
 void Protocol::sendFloat(float num) {
     skt.sendall(&num, sizeof(num), &was_closed);
