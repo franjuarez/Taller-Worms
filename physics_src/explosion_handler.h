@@ -2,7 +2,7 @@
 #define EXPLOSION_CALLBACK_H
 
 #include <vector>
-#include "Worm.h"
+#include "worm.h"
 
 class ExplosionQueryCallback : public b2QueryCallback {
 public:
@@ -14,5 +14,6 @@ public:
 
     bool ReportFixture(b2Fixture* fixture);
 };
+
 
 #endif

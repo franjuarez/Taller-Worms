@@ -101,7 +101,7 @@ b2Body* GameWorld::createRocket(b2Body* worm, int direction){
     return body;
 }
 
-void GameWorld::checkWormExists(uint id){ //Capaz conviene un array con pos de id? es mas rapido pero mas choto de acceder
+void GameWorld::checkWormExists(int id){ //Capaz conviene un array con pos de id? es mas rapido pero mas choto de acceder
     if(this->worms.find(id) == this->worms.end()){
         throw std::invalid_argument("Worm with id " + std::to_string(id) + " does not exist");
     }
@@ -139,6 +139,35 @@ void GameWorld::jumpBackwardsWorm(int id){
     b2Body* worm = this->worms[id];
     Worm* wormData = (Worm*) worm->GetUserData().pointer;
     wormData->jumpBackwards();
+}
+
+void GameWorld::wormHitWithBat(int id){
+    checkWormExists(id);
+    b2Body* worm = this->worms[id];
+    Worm* wormData = (Worm*) worm->GetUserData().pointer;
+    wormData->hitWithBat();
+}
+
+bool GameWorld::checkValidTpPosition(float x, float y){
+    b2AABB aabb;
+    aabb.lowerBound = b2Vec2(x - WORM_WIDTH/2, y - WORM_HEIGHT/2);
+    aabb.upperBound = b2Vec2(x + WORM_WIDTH/2, y + WORM_HEIGHT/2);
+    TeleportQueryCallback callback;
+    this->world->QueryAABB(&callback, aabb);
+    std::cout << "valid: " << callback.validTeleport << std::endl;
+    return callback.validTeleport;
+}
+
+bool GameWorld::teleportWorm(int id, float x, float y){
+    checkWormExists(id);
+    if(checkValidTpPosition(x, y)){
+    std::cout << "HALO" << std::endl;
+        b2Body* worm = this->worms[id];
+        worm->SetTransform(b2Vec2(x, y), 0);
+        worm->SetLinearVelocity(b2Vec2(0, 0));
+        return true;
+    }
+    return false;
 }
 
 void GameWorld::removeWorm(b2Body* worm){

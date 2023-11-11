@@ -1,11 +1,13 @@
 #ifndef WORM_H
 #define WORM_H
 
-#include "Entity.h"
-#include "Beam.h"
-#include "Rocket.h"
+#include "entity.h"
+#include "beam.h"
+#include "rocket.h"
 #include "auxiliar_physics_functions.h"
+#include "melee_handler.h"
 #include "../game_src/worm_dto.h"
+
 
 enum action {
     STANDING,
@@ -20,7 +22,6 @@ class Worm : public Entity {
     int team;
     float health;
     int direction;
-    action currentAction;
 
     //weapons (Future update)
 
@@ -30,23 +31,22 @@ class Worm : public Entity {
 
 
     public:
+    action currentAction;
     Worm(b2Body* body, std::vector<b2Body*>& entitiesToRemove, int id, int team, int direction);
 
+    virtual void beginCollisionWithWater(Entity* otherBody, b2Contact* contact);
     virtual void beginCollisionWithBeam(Entity* otherBody, b2Contact* contact);
     virtual void beginCollisionWithWorm(Entity* otherBody, b2Contact* contact);
     virtual void beginCollisionWithRocket(Entity* otherBody, b2Contact* contact);
 
+    virtual void preSolveCollisionWithWater(Entity* otherBody, b2Contact* contact, const b2Manifold* oldManifold);
     virtual void preSolveCollisionWithBeam(Entity* otherBody, b2Contact* contact, const b2Manifold* oldManifold);
-    virtual void preSolveCollisionWithWorm(Entity* otherBody, b2Contact* contact, const b2Manifold* oldManifold);
     virtual void preSolveCollisionWithRocket(Entity* otherBody, b2Contact* contact, const b2Manifold* oldManifold);
 
+    virtual void postSolveCollisionWithWater(Entity* otherBody, b2Contact* contact, const b2ContactImpulse* impulse);
     virtual void postSolveCollisionWithBeam(Entity* otherBody, b2Contact* contact, const b2ContactImpulse* impulse);
-    virtual void postSolveCollisionWithWorm(Entity* otherBody, b2Contact* contact, const b2ContactImpulse* impulse);
-    virtual void postSolveCollisionWithRocket(Entity* otherBody, b2Contact* contact, const b2ContactImpulse* impulse);
 
     virtual void endCollisionWithBeam(Entity* otherBody, b2Contact* contact);
-    virtual void endCollisionWithWorm(Entity* otherBody, b2Contact* contact);
-    virtual void endCollisionWithRocket(Entity* otherBody, b2Contact* contact);
 
     ~Worm() override;
 
@@ -65,6 +65,8 @@ class Worm : public Entity {
     void jumpBackwards();
 
     void handleExplosion(float damage, b2Vec2 explosionCenter);
+
+    void hitWithBat();
 
     WormDTO getDTO();
 };

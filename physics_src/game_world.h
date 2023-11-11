@@ -9,11 +9,13 @@
 #include "physics_constants.h"
 #include "auxiliar_physics_functions.h"
 #include "../game_src/game_dynamic.h"
+#include "teleport_handler.h"
 
-#include "Entity.h"
-#include "Worm.h"
-#include "Beam.h"
-#include "Rocket.h"
+#include "entity.h"
+#include "water.h"
+#include "worm.h"
+#include "beam.h"
+#include "rocket.h"
 
 class GameWorld {
 private:
@@ -23,9 +25,13 @@ private:
     std::vector<b2Body*> projectiles;
     std::vector<b2Body*> entitiesToRemove;
 
-    void checkWormExists(uint id);
+    void createWater();
 
     b2Body* createRocket(b2Body* worm, int direction);
+
+    bool checkValidTpPosition(float x, float y);
+
+    void checkWormExists(int id);
 
     void removeWorm(b2Body* worm);
 
@@ -49,6 +55,10 @@ public:
     void jumpBackwardsWorm(int id);
 
     void wormLaunchRocket(int id, float angle, int direction, float power);
+
+    void wormHitWithBat(int id);
+
+    bool teleportWorm(int id, float x, float y);
 
     GameDynamic* getGameStatus(int id);
 

@@ -21,14 +21,14 @@
 #define LARGE_BEAM_WIDTH 6
 #define SMALL_BEAM_WIDTH 3
 #define BEAM_HEIGHT 0.8f
-#define BEAM_FRICTION 0.3f //a revisar
+#define BEAM_FRICTION 0.3f
 #define MAX_WALKABLE_BEAM_ANGLE 45
 
 //Worm constants
 #define WORM_WIDTH 1.0f
 #define WORM_HEIGHT 1.0f
 #define WORM_DENSITY 1.0f
-#define WORM_FRICTION 0.3f //a revisar
+#define WORM_FRICTION 0.3f
 #define WORM_DAMPING 0.3f
 #define WORM_INITIAL_HEALTH 100
 
@@ -42,7 +42,11 @@
 #define JUMP_BACKWARDS_MOVEMENT_X 0.2f
 #define JUMP_BACKWARDS_MOVEMENT_Y 1.2f
 
-//Rocket launcher constatns
+//Height damage constants
+#define MIN_HEIGHT_TO_DAMAGE 2.0f
+#define MAX_HEIGHT_DAMAGE 25.0f
+
+//Rocket launcher constants
 #define ROCKET_BLAST_RADIOUS 2.0f
 #define ROCKET_WIDTH 0.25f
 #define ROCKET_HEIGHT 0.25f
@@ -50,8 +54,13 @@
 #define ROCKET_MAX_SPEED 20.0f
 #define ROCKET_DAMAGE 50.0f
 
-//Height damage constant
-#define MIN_HEIGHT_TO_DAMAGE 2.0f
-#define MAX_HEIGHT_DAMAGE 25.0f
+//Explosion constants
+#define EXPLOSION_IMPULSE_FACTOR 4.0f
+
+//Bat constants
+#define BAT_HEIGHT 0.2f
+#define BAT_WIDTH 1.0f
+#define BAT_DAMAGE 10.0f
+#define BAT_IMPULSE_FACTOR 1.0f
 
 #endif

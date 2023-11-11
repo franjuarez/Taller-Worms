@@ -1,4 +1,4 @@
-#include "Rocket.h"
+#include "rocket.h"
 
 Rocket::Rocket(b2Body* body, std::vector<b2Body*>& entitiesToRemove, float damage, float radius) : 
     Entity(body, entitiesToRemove), damage(damage), radius(radius) {}
@@ -33,6 +33,10 @@ ProjectileDTO Rocket::getDTO(){
     return dto;
 }
 
+void Rocket::beginCollisionWithWater(Entity* otherBody, b2Contact* contact) {
+    otherBody->beginCollisionWithRocket(this, contact);
+}
+
 void Rocket::beginCollisionWithBeam(Entity* otherBody, b2Contact* contact) {
     UNUSED(otherBody);
     explode();
@@ -48,49 +52,3 @@ void Rocket::beginCollisionWithRocket(Entity* otherBody, b2Contact* contact) {
     UNUSED(otherBody);
     explode();
 }
-
-void Rocket::preSolveCollisionWithBeam(Entity* otherBody, b2Contact* contact, const b2Manifold* oldManifold) {
-    UNUSED(otherBody);
-    UNUSED(contact);
-}
-
-void Rocket::preSolveCollisionWithWorm(Entity* otherBody, b2Contact* contact, const b2Manifold* oldManifold) {
-    UNUSED(otherBody);
-    UNUSED(contact);
-}
-
-void Rocket::preSolveCollisionWithRocket(Entity* otherBody, b2Contact* contact, const b2Manifold* oldManifold) {
-    UNUSED(otherBody);
-    UNUSED(contact);
-}
-
-void Rocket::postSolveCollisionWithBeam(Entity* otherBody, b2Contact* contact, const b2ContactImpulse* impulse) {
-    UNUSED(otherBody);
-    UNUSED(contact);
-}
-
-void Rocket::postSolveCollisionWithWorm(Entity* otherBody, b2Contact* contact, const b2ContactImpulse* impulse) {
-    UNUSED(otherBody);
-    UNUSED(contact);
-}
-
-void Rocket::postSolveCollisionWithRocket(Entity* otherBody, b2Contact* contact, const b2ContactImpulse* impulse) {
-    UNUSED(otherBody);
-    UNUSED(contact);
-}
-
-void Rocket::endCollisionWithBeam(Entity* otherBody, b2Contact* contact) {
-    UNUSED(otherBody);
-    UNUSED(contact);
-}
-
-void Rocket::endCollisionWithWorm(Entity* otherBody, b2Contact* contact) {
-    UNUSED(otherBody);
-    UNUSED(contact);
-}
-
-void Rocket::endCollisionWithRocket(Entity* otherBody, b2Contact* contact) {
-    UNUSED(otherBody);
-    UNUSED(contact);
-}
-

@@ -1,41 +1,37 @@
-#ifndef ROCKET_H
-#define ROCKET_H
+#ifndef ENTITY_H
+#define ENTITY_H
 
-#include <iostream>
-#include <set>
-#include "Worm.h"
-#include "explosion_handler.h"
-#include "../game_src/projectile_dto.h"
+#include <box2d/box2d.h>
+#include <typeinfo>
+#include <string>
+#include <vector>
 
+#include "physics_constants.h"
 
-class Rocket : public Entity {
-private:
-    float damage;
-    float radius;
+#define UNUSED(x) (void)(x)
 
-    void explode();
-public:
-    Rocket(b2Body* body, std::vector<b2Body*>& entitiesToRemove, float damage, float radius);
+class Entity {
+    public:
+    b2Body* body;
+    std::vector<b2Body*>& entitiesToRemove;
 
+    Entity(b2Body* body, std::vector<b2Body*>& entitiesToRemove);
+    
+    virtual void beginCollisionWithWater(Entity* otherBody, b2Contact* contact);
     virtual void beginCollisionWithBeam(Entity* otherBody, b2Contact* contact);
     virtual void beginCollisionWithWorm(Entity* otherBody, b2Contact* contact);
     virtual void beginCollisionWithRocket(Entity* otherBody, b2Contact* contact);
 
     virtual void preSolveCollisionWithBeam(Entity* otherBody, b2Contact* contact, const b2Manifold* oldManifold);
     virtual void preSolveCollisionWithWorm(Entity* otherBody, b2Contact* contact, const b2Manifold* oldManifold);
-    virtual void preSolveCollisionWithRocket(Entity* otherBody, b2Contact* contact, const b2Manifold* oldManifold);
 
     virtual void postSolveCollisionWithBeam(Entity* otherBody, b2Contact* contact, const b2ContactImpulse* impulse);
     virtual void postSolveCollisionWithWorm(Entity* otherBody, b2Contact* contact, const b2ContactImpulse* impulse);
-    virtual void postSolveCollisionWithRocket(Entity* otherBody, b2Contact* contact, const b2ContactImpulse* impulse);
 
     virtual void endCollisionWithBeam(Entity* otherBody, b2Contact* contact);
     virtual void endCollisionWithWorm(Entity* otherBody, b2Contact* contact);
-    virtual void endCollisionWithRocket(Entity* otherBody, b2Contact* contact);
 
-    ProjectileDTO getDTO();
-
-    ~Rocket() override;
+    virtual ~Entity();
 };
 
 #endif

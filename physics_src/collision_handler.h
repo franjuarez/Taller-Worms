@@ -2,11 +2,13 @@
 #define COLLISION_HANDLER_H
 
 #include <unordered_map>
+#include <typeinfo>
 
-#include "Entity.h"
-#include "Beam.h"
-#include "Rocket.h"
-#include "Worm.h"
+#include "entity.h"
+#include "beam.h"
+#include "rocket.h"
+#include "worm.h"
+#include "water.h"
 
 typedef void (Entity::*beginCollisionFunc)(Entity*, b2Contact*);
 typedef void (Entity::*preSolveCollisionFunc)(Entity*, b2Contact*, const b2Manifold*);
