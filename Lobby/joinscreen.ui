@@ -79,7 +79,7 @@
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap>../../resources/images/generalWormsSprites/Misc/netbreak.png</pixmap>
+    <pixmap>../resources/images/generalWormsSprites/Misc/netbreak.png</pixmap>
    </property>
   </widget>
  </widget>

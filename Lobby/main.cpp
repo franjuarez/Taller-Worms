@@ -1,5 +1,5 @@
 #include "main_lobby_window.h"
-
+#include "ui_src/game_view.h"
 #include <QApplication>
 
 int main(int argc, char *argv[])

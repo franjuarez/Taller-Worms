@@ -1,7 +1,9 @@
 #include "joinscreen.h"
 #include "ui_joinscreen.h"
 #include "iostream"
-#include "../../ui_src/game_view.h"
+#include "../ui_src/game_view.h"
+#define ERROR
+
 
 JoinScreen::JoinScreen(QWidget *parent) :
     QDialog(parent),
@@ -28,14 +30,14 @@ void JoinScreen::on_pushButton_clicked()
     //std::cout << this->port.toStdString() << std::endl;
     //std::cout << this->address.toStdString() << std::endl;
     try {
-    GameView gv(port.toStdString(), address.toStdString());
+    this->hide();
+    GameView gv(address.toStdString(), port.toStdString());
 
     gv.start();
     gv.join();
 
     } catch (const std::exception& e) {
         std::cerr << e.what() << std::endl;
-        return ERROR;
     }
 
 }

@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>../../resources/images/generalWormsSprites/Weapon Icons/thrower.2.png</normaloff>../resources/images/generalWormsSprites/Weapon Icons/thrower.2.png</iconset>
+    <normaloff>../resources/images/generalWormsSprites/Weapon Icons/thrower.2.png</normaloff> ../resources/images/generalWormsSprites/Weapon Icons/thrower.2.png</iconset>
   </property>
   <property name="autoFillBackground">
    <bool>false</bool>
@@ -40,7 +40,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>../../resources/images/Game Boy GBC - Worms Armageddon - Scenes.png</pixmap>
+     <pixmap>../resources/images/Game Boy GBC - Worms Armageddon - Scenes.png</pixmap>
     </property>
    </widget>
    <widget class="QLabel" name="label">
@@ -120,7 +120,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>../../resources/images/13597.png</pixmap>
+     <pixmap>../resources/images/13597.png</pixmap>
     </property>
    </widget>
    <widget class="QLabel" name="label_4">
@@ -136,7 +136,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>../../resources/images/13597.png</pixmap>
+     <pixmap>../resources/images/13597.png</pixmap>
     </property>
    </widget>
    <widget class="QLabel" name="label_5">
@@ -152,7 +152,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>../../resources/images/13597.png</pixmap>
+     <pixmap>../resources/images/13597.png</pixmap>
     </property>
    </widget>
    <widget class="QLabel" name="label_6">
@@ -168,7 +168,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>../../resources/images/13597.png</pixmap>
+     <pixmap>../resources/images/13597.png</pixmap>
     </property>
    </widget>
    <widget class="QLabel" name="label_7">
@@ -184,7 +184,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>../../resources/images/13597.png</pixmap>
+     <pixmap>../resources/images/13597.png</pixmap>
     </property>
    </widget>
    <widget class="QLabel" name="label_8">
@@ -200,7 +200,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>../../resources/images/13597.png</pixmap>
+     <pixmap>../resources/images/13597.png</pixmap>
     </property>
    </widget>
   </widget>
