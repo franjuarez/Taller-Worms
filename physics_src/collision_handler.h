@@ -4,11 +4,11 @@
 #include <unordered_map>
 #include <typeinfo>
 
-#include "entity.h"
-#include "beam.h"
-#include "rocket.h"
-#include "worm.h"
-#include "water.h"
+#include "entities/entity.h"
+#include "entities/beam.h"
+#include "entities/rocket.h"
+#include "entities/worm.h"
+#include "entities/water.h"
 
 typedef void (Entity::*beginCollisionFunc)(Entity*, b2Contact*);
 typedef void (Entity::*preSolveCollisionFunc)(Entity*, b2Contact*, const b2Manifold*);

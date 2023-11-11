@@ -2,7 +2,7 @@
 #define MELEE_CALLBACK_H
 
 #include <vector>
-#include "worm.h"
+#include "../entities/worm.h"
 
 class MeleeQueryCallback : public b2QueryCallback {
 public:

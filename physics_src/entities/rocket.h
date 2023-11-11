@@ -3,8 +3,8 @@
 
 #include <iostream>
 #include "worm.h"
-#include "explosion_handler.h"
-#include "../game_src/projectile_dto.h"
+#include "../query_handlers/explosion_handler.h"
+#include "../../game_src/projectile_dto.h"
 
 class Rocket : public Entity {
 private:

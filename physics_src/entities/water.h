@@ -4,7 +4,6 @@
 #include "entity.h"
 #include "worm.h"
 #include "rocket.h"
-#include <set>
 
 class Worm;
 

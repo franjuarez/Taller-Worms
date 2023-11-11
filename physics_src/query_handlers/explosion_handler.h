@@ -2,7 +2,7 @@
 #define EXPLOSION_CALLBACK_H
 
 #include <vector>
-#include "worm.h"
+#include "../entities/worm.h"
 
 class ExplosionQueryCallback : public b2QueryCallback {
 public:

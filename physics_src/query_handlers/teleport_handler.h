@@ -2,7 +2,7 @@
 #define TELEPORT_CALLBACK_H
 
 #include <vector>
-#include "beam.h"
+#include "../entities/beam.h"
 
 class TeleportQueryCallback : public b2QueryCallback {
 public:

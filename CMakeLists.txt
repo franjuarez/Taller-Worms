@@ -29,9 +29,11 @@ file(GLOB UI CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/ui_src/*.cpp" "${CMA
 add_library(SharedUi ${UI})
 target_link_libraries(SharedUi PUBLIC SDL2pp::SDL2pp)
 
-file(GLOB SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/physics_src/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/physics_src/*.h")
 
-add_library(SharedPhysics ${SOURCES})
+file(GLOB HANDLERS CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/physics_src/query_handlers/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/physics_src/*.h")
+file(GLOB ENTITIES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/physics_src/entities/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/physics_src/*.h")
+file(GLOB SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/physics_src/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/physics_src/*.h")
+add_library(SharedPhysics ${SOURCES} ${ENTITIES} ${HANDLERS})
 target_link_libraries(SharedPhysics PUBLIC box2d)
 
 file(GLOB SHAREDGAME CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/game_src/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/game_src/*.h" )

@@ -9,13 +9,13 @@
 #include "physics_constants.h"
 #include "auxiliar_physics_functions.h"
 #include "../game_src/game_dynamic.h"
-#include "teleport_handler.h"
+#include "query_handlers/teleport_handler.h"
 
-#include "entity.h"
-#include "water.h"
-#include "worm.h"
-#include "beam.h"
-#include "rocket.h"
+#include "entities/entity.h"
+#include "entities/water.h"
+#include "entities/worm.h"
+#include "entities/beam.h"
+#include "entities/rocket.h"
 
 class GameWorld {
 private:

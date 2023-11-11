@@ -4,9 +4,9 @@
 #include "entity.h"
 #include "beam.h"
 #include "rocket.h"
-#include "auxiliar_physics_functions.h"
-#include "melee_handler.h"
-#include "../game_src/worm_dto.h"
+#include "../auxiliar_physics_functions.h"
+#include "../query_handlers/melee_handler.h"
+#include "../../game_src/worm_dto.h"
 
 
 enum action {
