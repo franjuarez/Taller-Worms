@@ -1,7 +1,6 @@
 #include "protocol.h"
 
 #include "../game_src/commands.h"
-#include "../game_src/select_map.h"
 #include  "../game_src/move.h"
 #include  "../game_src/jump.h"
 #include "../game_src/attack.h"
@@ -58,13 +57,6 @@ GameDynamic* Protocol::receiveDynamic() {
     return new GameDynamic(wormPlayingID, worms, weapons);
 }
 
-void Protocol::sendSelectMap(SelectMap* selectMap) {
-    checkClosed();
-    sendUintEight(SEND_COMMAND_SELECT);
-    sendUintEight(selectMap->getTeam());
-    sendString(selectMap->getMapName());
-}
-
 void Protocol::sendMove(Move* move) {
     checkClosed();
     sendUintEight(SEND_COMMAND_MOVE);   
@@ -94,8 +86,6 @@ Command* Protocol::receiveCommand() {
     uint8_t protocolCode = receiveUintEight();
     if (protocolCode == SEND_COMMAND_MOVE) {
         return receiveMove();
-    } else if (protocolCode == SEND_COMMAND_SELECT) {
-        return receiveSelectMap();
     } else if (protocolCode == SEND_COMMAND_JUMP) {
         return receiveJump();
     } else if (protocolCode == SEND_COMMAND_ATTACK) {
@@ -117,13 +107,6 @@ Position Protocol::receivePosition() {
     return Position(x, y);
 }
 
-
-SelectMap* Protocol::receiveSelectMap() {
-    checkClosed();
-    uint8_t player = receiveUintEight();
-    std::string mapName = receiveString();
-    return new SelectMap(NO_WORM_PLAYING, player, mapName);
-}
 
 Move* Protocol::receiveMove() {
     checkClosed(); 

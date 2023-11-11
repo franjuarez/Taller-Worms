@@ -1,5 +1,4 @@
 #include "sender.h"
-#include "../game_src/select_map.h"
 #include "../game_src/move.h"
 #include "../game_src/constants_game.h"
 #include <iostream>

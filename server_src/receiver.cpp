@@ -1,6 +1,5 @@
 #include "receiver.h"
 #include "../shared_src/protocol.h"
-#include "../game_src/select_map.h"
 #include "../game_src/move.h"
 
 Receiver::Receiver(Protocol& protocol, Queue<Command*>& commandsQueue, bool& talking) 

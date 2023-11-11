@@ -7,28 +7,29 @@
 #include <unistd.h>
 
 #define FPS 60.0f
-#define RATE (1000.f / FPS)  
+#define RATE (1000.f / FPS)
 
 GameLoop::GameLoop(Queue<Command*>& commandsQueue, StatusBroadcaster& statusBroadcaster)
 : commandsQueue(commandsQueue), statusBroadcaster(statusBroadcaster), gameWorld() {}
 
-static uint32 getTicks()
-{
-    static clock_t start_time = 0;
-    if (start_time == 0) {
-        start_time = clock();
-    }
-
-    clock_t current_time = clock();
-	std::cout << current_time << std::endl;
-    return (current_time - start_time) * 1000 / CLOCKS_PER_SEC;
-}
+// static uint32 getTicks()
+// {
+//     static clock_t start_time = 0;
+//     if (start_time == 0) {
+//         start_time = clock();
+//     }
+// 
+//     clock_t current_time = clock();
+// 	std::cout << current_time << std::endl;
+//     return (current_time - start_time) * 1000 / CLOCKS_PER_SEC;
+// }
 
 void GameLoop::loopLogic() {
 // se encarga de los turnos y que jugador esta al momento.
 // es el que se encarga de que gusano esta al momento
 	Command* command;
 	while (commandsQueue.try_pop(command)) {
+		// if (commad.team() == worms[wormPlayingID].team())
 			command->executeCommand(gameWorld);
 	}
 	gameWorld.update();
@@ -40,8 +41,6 @@ void GameLoop::start() {
 
 	// static clock_t start_time = 0;
     static clock_t start_time = clock();
-
-	int loop = 1;
     while(true) {
 		loopLogic();
 		usleep(RATE*1000);
@@ -55,7 +54,6 @@ void GameLoop::start() {
 			}
 			start_time = clock();
 		}
-		loop++;
 	}
 }
 
