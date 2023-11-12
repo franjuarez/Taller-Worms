@@ -54,7 +54,7 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 	dynamicSpriteSheets.push_back(Texture(renderer,Surface(WALKING_WORM_PATH).SetColorKey(true,0)));
 
 	this->lookingDir = 0;
-	this->currentWormId = 0;
+	this->currentWormId = 1;
 }
 
 void GameView::loadBeams(std::vector<BeamDTO>& beams) {
@@ -78,6 +78,7 @@ void GameView::updateEntities() {
 	GameDynamic* gs = dynamic_cast<GameDynamic*>(client.getGameStatus());
 	// std::cout << "termino de pedir al cliente" << std::endl;
 	std::vector<WormDTO> recievedWorms = gs->getWorms();
+	this->currentWormId = gs->getWormPlayingID();
 	// std::cout << "pidio worms" << std::endl;
 	for (auto &worm : recievedWorms) {
 		this->wormViews.at(worm.getId()).update(worm);

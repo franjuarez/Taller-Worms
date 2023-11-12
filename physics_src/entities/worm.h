@@ -8,7 +8,6 @@
 #include "../query_handlers/melee_handler.h"
 #include "../../game_src/worm_dto.h"
 
-
 enum action {
     STANDING,
     MOVING,

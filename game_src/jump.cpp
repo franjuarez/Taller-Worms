@@ -5,7 +5,7 @@
 Jump::Jump(int id, int dir) : Command(NO_TEAM_NEEDED, id), wormID(id), dir(dir) {}
 
 void Jump::executeCommand(GameWorld& gameWorld) {
-    std::cout << "exec jump\n";
+    // std::cout << "exec jump\n";
     if (dir == FORWARD_DIR) {
         gameWorld.jumpForwardWorm(wormID);
     } else if (dir == BACKWARD_DIR) {

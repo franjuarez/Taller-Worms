@@ -6,7 +6,6 @@
 
 #include "../shared_src/protocol.h"
 #include "../shared_src/queue.h"
-#include "../game_src/game_lobby.h"
 #include "../game_src/commands.h"
 #include "sender.h"
 #include "receiver.h"
@@ -14,7 +13,6 @@
 
 class Player  {
 private:
-    GameLobby* gameLobby;
     Protocol protocol;
     Sender sender;
     Receiver receiver;
@@ -26,7 +24,7 @@ private:
     Queue<Serializable*> playerQueue; // la q viene del game loop tiene los nuevos estados
 
 public:
-    Player(GameLobby* gameLobby, Socket&& peer, Queue<Command*>& commandQueue);
+    Player(Socket&& peer, Queue<Command*>& commandQueue, Serializable* gameMap);
     ~Player();
     Queue<Serializable*>* getPlayerQueue();
     void start();

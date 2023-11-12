@@ -6,14 +6,14 @@
 #include "../game_src/serializable.h"
 #include  "../game_src/worm_dto.h"
 #include  "../game_src/beam_dto.h"
-#include  "../game_src/projectile_dto.h"
+#include  "../game_src/weapons_dto.h"
 #include  "../game_src/position.h"
 
 #include <iostream>
 #include <vector>
 
 class GameLobby; class GameDynamic; class GameMap;
-class Command; class SelectMap; class Move; class Jump; class Attack;
+class Command; class Move; class Jump; class Attack;
 
 struct ClosedSocket : public std::runtime_error {
     ClosedSocket() : std::runtime_error("Socket is closed") {} 
@@ -48,8 +48,8 @@ private:
     void sendWorms(std::vector<WormDTO> worms);
     std::vector<WormDTO> receiveWorms();
 
-    void sendProjectiles(std::vector<ProjectileDTO> proyectiles);
-    std::vector<ProjectileDTO> receiveProjectiles();
+    void sendWeapons(std::vector<WeaponDTO> proyectiles);
+    std::vector<WeaponDTO> receiveWeapons();
 
     void sendPosition(Position position);
     Position receivePosition();
@@ -57,9 +57,11 @@ private:
     void sendMapNames(std::vector<std::string>& mapNames);
     std::vector<std::string> receiveMapNames();
 
+    void sendWeaponsMap(std::map<int, int> weapons);
+    std::map<int, int> receiveWeaponsMap();
+
 
     Move* receiveMove();
-    SelectMap* receiveSelectMap();
     Jump* receiveJump();
     Attack* receiveAttack();
     void checkClosed();
@@ -72,13 +74,8 @@ public:
     void sendMap(GameMap* map);
     GameMap* receiveMap();
 
-    void sendLobby(GameLobby* lobby);
-    GameLobby* receiveLobby();
-
     void sendDynamic(GameDynamic* dynamic);
     GameDynamic* receiveDynamic();
-
-    void sendSelectMap(SelectMap* selectMap);
 
     void sendMove(Move* move);
 

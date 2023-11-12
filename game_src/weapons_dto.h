@@ -1,23 +1,25 @@
-#ifndef PROJECTILE_DTO_H
-#define PROJECTILE_DTO_H
+#ifndef WEAPONS_DTO_H
+#define WEAPONS_DTO_H
 
 #include "position.h"
 #include "constants_game.h"
 
-class ProjectileDTO {
+class WeaponDTO {
 private:
     int proyectileType;
+    int boomed;
     Position position;
     float velX;
     float velY;
 public:
-    ProjectileDTO(int proyectileType, Position position, float velX, float velY);
+    WeaponDTO(int proyectileType, int boomed, Position position, float velX, float velY);
     int getType();
+    int getBoomed();
     float getX();
     float getY();
     Position getPosition();
     float getVelX();
     float getVelY();
-    ~ProjectileDTO();
+    ~WeaponDTO();
 };
 #endif

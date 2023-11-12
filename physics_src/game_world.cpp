@@ -25,8 +25,8 @@ GameWorld::GameWorld() {
     // createBeam(15.0f, 5.0f, 50, true);
     // createBeam(10.0f, 3.0f, -10, false);
     
-    createWorm(14.0f, 15.0f, 0, 0);
-    // createWorm(12.0f, 12.0f, 1, 1);
+    createWorm(14.0f, 12.0f, 1, 0);
+    createWorm(17.0f, 12.0f, 2, 1);
 }
 
 void GameWorld::createWorm(float startingX, float startingY, int id, int team){
@@ -215,7 +215,7 @@ GameDynamic* GameWorld::getGameStatus(int id){
         wormsDTO.push_back(wormData->getDTO());
     }
 
-    std::vector<ProjectileDTO> projectilesDTO;
+    std::vector<WeaponDTO> projectilesDTO;
     for(b2Body* projectile : this->projectiles){
         Rocket* rocketData = (Rocket*) projectile->GetUserData().pointer;
         projectilesDTO.push_back(rocketData->getDTO());

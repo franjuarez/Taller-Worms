@@ -18,10 +18,12 @@ private:
     Queue<Command*>& commandsQueue; // esta saca los comandos con try pop porque no la deberia bloquear y siempre tiene que estar loopeando
     StatusBroadcaster& statusBroadcaster;
     GameWorld gameWorld;
+    std::vector<WormDTO> worms;
+    int wormPlayingID = 1;
 
     void loopLogic();
 public:
-    GameLoop(Queue<Command*>& commandsQueue, StatusBroadcaster& statusBroadcaster);
+    GameLoop(Queue<Command*>& commandsQueue, StatusBroadcaster& statusBroadcaster, GameMap* gameMpa);
     ~GameLoop();
     void start();
     

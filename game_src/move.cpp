@@ -6,7 +6,7 @@
 Move::Move(int id, int dir) : Command(NO_TEAM_NEEDED, id), wormID(id), dir(dir) {}
 
 void Move::executeCommand(GameWorld& gameWorld) {
-    std::cout << "exec move\n";
+    // std::cout << "exec move\n";
     gameWorld.moveWorm(this->wormID, this->dir);
 }
 

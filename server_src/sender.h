@@ -10,13 +10,12 @@
 class Sender : public Thread {
 
 private:
-    int id;
     Protocol& protocol;
     Queue<Serializable*>& playerQueue;
     bool& talking;
     // has the queue of each player
 public:
-    Sender(int id, Protocol& protocol, Queue<Serializable*>& playerQueue, bool& talking);
+    Sender(Protocol& protocol, Queue<Serializable*>& playerQueue, bool& talking);
     ~Sender();
     void run() override;
 

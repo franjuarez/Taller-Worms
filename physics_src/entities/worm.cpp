@@ -8,6 +8,12 @@ Worm::Worm(b2Body* body, std::vector<b2Body*>& entitiesToRemove, int id, int tea
 
 Worm::~Worm() {}
 
+WormDTO Worm::getDTO(){
+    Position pos(body->GetPosition().x, body->GetPosition().y);
+    WormDTO dto(id, direction, 0, health, 0, pos, {});
+    return dto;
+}
+
 void Worm::takeDamage(float damage){
     this->health -= damage;
     if(this->health < 0){
@@ -105,12 +111,6 @@ void Worm::applyFallDamage(b2Vec2 vel){
         float damage = height > MAX_HEIGHT_DAMAGE ? MAX_HEIGHT_DAMAGE : height;
         takeDamage(damage);
     }
-}
-
-WormDTO Worm::getDTO(){
-    Position pos(body->GetPosition().x, body->GetPosition().y);
-    WormDTO dto(id, this->direction, this->team, health, pos);
-    return dto;
 }
 
 void Worm::beginCollisionWithWater(Entity* otherBody, b2Contact* contact) {
