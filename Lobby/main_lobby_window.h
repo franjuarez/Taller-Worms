@@ -20,6 +20,8 @@ private slots:
 
     void on_pushButton_4_released();
 
+    void on_pushButton_2_clicked();
+
 private:
     Ui::MainLobbyWindow *ui;
 };

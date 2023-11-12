@@ -4,10 +4,10 @@
 #include "../game_src/game_map.h"
 
 
-Sender::Sender(int id, Protocol& protocol, Queue<Serializable*>& playerQueue, bool& talking) 
+ServerSender::ServerSender(int id, Protocol& protocol, Queue<Serializable*>& playerQueue, bool& talking) 
 : id(id), protocol(protocol), playerQueue(playerQueue), talking(talking) {}
 
-void Sender::run() {
+void ServerSender::run() {
     try {
         // Serializable* gameLobbyS = playerQueue.pop();
         // GameLobby* gameLobby = dynamic_cast<GameLobby*>(gameLobbyS);
@@ -22,12 +22,12 @@ void Sender::run() {
             gameDynamic->send(protocol);
         }
     } catch (ClosedQueue& e) {
-        std::cout << "Sender: Cerrada la queue\n";
+        std::cout << "ServerSender: Cerrada la queue\n";
     } catch (ClosedSocket& e) {
-        std::cout << "Sender: cerrado el socket\n";
+        std::cout << "ServerSender: cerrado el socket\n";
     } catch (std::exception& e) {
         std::cout << "error inesperado! " << e.what() << std::endl;
     }
 }
 
-Sender::~Sender() {}
+ServerSender::~ServerSender() {}

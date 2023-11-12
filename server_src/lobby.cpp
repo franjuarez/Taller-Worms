@@ -2,9 +2,14 @@
 #include "game_loop.h"
 #include "status_broadcaster.h"
 #include "../game_src/game_lobby.h"
-#define AMOUNT_OF_PLAYERS 1
 
-Lobby::Lobby(Socket& skt) : skt(skt), commandQueue(90) {}
+//Lobby::Lobby(Socket& skt, int AMOUNT_OF_PLAYERS) : , skt(skt), commandQueue(90) {
+//    this->AMOUNT_OF_PLAYERS = AMOUNT_OF_PLAYERS;
+//}
+
+Lobby::Lobby(const std::string& hostname, int AMOUNT_OF_PLAYERS) : hostname(hostname), skt(hostname.c_str()), commandQueue(90) {
+    this->AMOUNT_OF_PLAYERS = AMOUNT_OF_PLAYERS;
+}
 
 void Lobby::run() {
 

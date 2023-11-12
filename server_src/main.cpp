@@ -15,8 +15,8 @@ int main(int argc, char** argv) {
 		return 1;
 	}
 
-	Socket skt(argv[1]);
-	Lobby lobby(skt);
+	const std::string hostname(argv[1]);
+	Lobby lobby(hostname, 1);
 	lobby.run();
 	
 	return 0;

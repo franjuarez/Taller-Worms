@@ -74,12 +74,20 @@ if(TESTING)
 add_executable(client ${MAIN} ${CLIENT} ${HEADER_FILES})
 
 file(GLOB SERVER CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/server_src/*.cpp")
+add_library(serverLibrary ${SERVER})
+
+target_link_libraries(serverLibrary PRIVATE Threads::Threads)
+target_link_libraries(serverLibrary PUBLIC SharedLib)
+target_link_libraries(serverLibrary PUBLIC SharedGameLib)
+
 add_executable(server ${SERVER})
 
 target_compile_options(server PRIVATE $<$<NOT:$<C_COMPILER_ID:MSVC>>:-Wall -Wextra -pedantic -ggdb -DDEBUG -pedantic-errors>)
 target_link_libraries(server PRIVATE Threads::Threads)
 target_link_libraries(server PUBLIC SharedLib)
 target_link_libraries(server PUBLIC SharedGameLib)
+
+target_link_libraries(Lobby PUBLIC serverLibrary)
 
 target_compile_options(client PRIVATE $<$<NOT:$<C_COMPILER_ID:MSVC>>:-Wall -Wextra -pedantic -ggdb -DDEBUG -pedantic-errors>)
 target_link_libraries(client PRIVATE Threads::Threads)

@@ -2,6 +2,7 @@
 #include "./ui_main_lobby_window.h"
 #include "iostream"
 #include "joinscreen.h"
+#include "createscreen.h"
 
 MainLobbyWindow::MainLobbyWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -30,5 +31,14 @@ void MainLobbyWindow::on_pushButton_4_released()
     this->hide();
     QApplication::quit();
 
+}
+
+
+void MainLobbyWindow::on_pushButton_2_clicked()
+{
+    CreateScreen cs;
+    cs.show();
+    this->hide();
+    cs.exec();
 }
 
