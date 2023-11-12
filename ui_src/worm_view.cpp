@@ -6,13 +6,14 @@
 WormView::WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets, Font& wormsFont) : 
 	worm(worm),
 	dynamicSpriteSheets(dynamicSpriteSheets),
-	frames{{},{},{}},
+	frames{{},{},{},{}},
 	wormsFont(wormsFont) {
 	currentFramesIndex = DEFAULT_FRAMES;
 	startingPoint = 0;
+	//looping = true;
 	float x, y, w, h;
 	
-
+	//frames for still animation
 	for (int i = 0; i < 35; i++) {
 		x = 19;
 		w = 22;
@@ -21,6 +22,8 @@ WormView::WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets, Fon
 		frames[STILL_FRAMES].push_back(Rect(x,y,w,h));
 	}
 
+
+	//frames for jumping animation
 	for (int i = 0; i < 10; i++) {
 		x = 19;
 		w = 22;
@@ -29,13 +32,26 @@ WormView::WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets, Fon
 		frames[JUMPING_FRAMES].push_back(Rect(x,y,w,h));
 	}
 
+	//frames for walking animation
 	for (int i = 0; i < 15; i++) {
-		x = 11+0.5;
+		x = 11;
 		w = 28;
 		y = i*(60) + 14;
 		h = 29;
 		frames[WALKING_FRAMES].push_back(Rect((int)x,y,w,h));
 	}
+
+	//frames for dying animation
+	for (int i = 0; i < 16; i++) {
+		x = 19;
+		w = 29;
+		y = i * 60 + 7;
+		h = 36;
+		frames[DYING_FRAMES].push_back(Rect(x,y,w,h));
+	}
+	//frames[DYING_FRAMES].push_back(Rect(1,1,0,0)); //el gusano tiene que quedar aca
+
+	//frames for backflip animation
 }
 
 
@@ -52,6 +68,13 @@ void WormView::move(int i) {
 
 	this->startingPoint = i;
 	this->currentFramesIndex = WALKING_FRAMES;
+}
+
+void WormView::die(int i) {
+	if (currentFramesIndex == DYING_FRAMES)
+		return;
+	this->startingPoint = i;
+	this->currentFramesIndex = DYING_FRAMES;
 }
 
 
@@ -86,8 +109,10 @@ void WormView::display(int i, Renderer& renderer, int camX, int camY) {
 
 }
 
-void WormView::update(WormDTO other) {
+void WormView::update(WormDTO other, int i) {
 	this->worm = other;
+	if (this->worm.getHealth() <= 50)
+		die(i);
 }
 
 WormView::~WormView() {}

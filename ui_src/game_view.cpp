@@ -14,7 +14,11 @@
 #define STILL_WORM_PATH "../resources/images/stillworm.bmp"
 #define JUMPING_WORM_PATH "../resources/images/worm_jump.bmp"
 #define WALKING_WORM_PATH "../resources/images/worm_walk.bmp"
+#define DYING_WORM_PATH "../resources/images/worm_surrender.bmp"
+
+
 #define ROCKET_PATH "../resources/images/rocket.bmp"
+
 
 #include "../game_src/constants_game.h"
 #include "../game_src/move.h"
@@ -52,6 +56,7 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 	dynamicSpriteSheets.push_back(Texture(renderer,Surface(STILL_WORM_PATH).SetColorKey(true, 0)));
 	dynamicSpriteSheets.push_back(Texture(renderer,Surface(JUMPING_WORM_PATH).SetColorKey(true, 0)));
 	dynamicSpriteSheets.push_back(Texture(renderer,Surface(WALKING_WORM_PATH).SetColorKey(true,0)));
+	dynamicSpriteSheets.push_back(Texture(renderer,Surface(DYING_WORM_PATH).SetColorKey(true, 0)));
 
 	this->lookingDir = 0;
 	this->currentWormId = 1;
@@ -73,7 +78,7 @@ void GameView::loadWorms(std::vector<WormDTO>& recievedWorms) {
 	}
 }
 
-void GameView::updateEntities() {
+void GameView::updateEntities(int i) {
 	// std::cout << "pide clientes" << std::endl;
 	GameDynamic* gs = dynamic_cast<GameDynamic*>(client.getGameStatus());
 	// std::cout << "termino de pedir al cliente" << std::endl;
@@ -81,7 +86,7 @@ void GameView::updateEntities() {
 	this->currentWormId = gs->getWormPlayingID();
 	// std::cout << "pidio worms" << std::endl;
 	for (auto &worm : recievedWorms) {
-		this->wormViews.at(worm.getId()).update(worm);
+		this->wormViews.at(worm.getId()).update(worm, i);
 	}
 
 	this->proy = gs->getProjectiles();
@@ -177,7 +182,7 @@ void GameView::start() {
                     moveCase(i);
 
                 } else if (event.key.keysym.sym == SDLK_SPACE) {
-					this->client.execute(new Attack(currentWormId, 1, 60.0f, 50.0f));
+					this->client.execute(new Attack(currentWormId, 1, -60.0f, 50.0f));
 				}
             }
 		}
@@ -185,7 +190,7 @@ void GameView::start() {
 		//en recievedWorms
 
 		//opcion 1: pedirle a client
-		updateEntities(); 
+		updateEntities(i); 
 		mouseHandler.updateCam();
 		draw(i);
 
