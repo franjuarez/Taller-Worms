@@ -46,7 +46,7 @@ private:
 	int currentWormId;
 	int lookingDir;
 
-	void updateEntities();
+	void updateEntities(int i);
 	void loadWorms(std::vector<WormDTO>& recievedWorms);
 	void loadBeams(std::vector<BeamDTO>& beams);
 	void draw(int i);
