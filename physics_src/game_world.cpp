@@ -26,7 +26,7 @@ GameWorld::GameWorld() {
     // createBeam(10.0f, 3.0f, -10, false);
     
     createWorm(14.0f, 12.0f, 1, 0);
-    createWorm(17.0f, 12.0f, 0, 1);
+    createWorm(17.0f, 12.0f, 2, 1);
 }
 
 void GameWorld::createWorm(float startingX, float startingY, int id, int team){

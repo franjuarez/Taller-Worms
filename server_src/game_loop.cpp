@@ -9,8 +9,10 @@
 #define FPS 60.0f
 #define RATE (1000.f / FPS)
 
-GameLoop::GameLoop(Queue<Command*>& commandsQueue, StatusBroadcaster& statusBroadcaster)
-: commandsQueue(commandsQueue), statusBroadcaster(statusBroadcaster), gameWorld() {}
+GameLoop::GameLoop(Queue<Command*>& commandsQueue, StatusBroadcaster& statusBroadcaster, GameMap* gameMpa)
+: commandsQueue(commandsQueue), statusBroadcaster(statusBroadcaster), gameWorld(), worms() {
+	std::vector<WormDTO> worms = gameMpa->getWorms();
+}
 
 // static uint32 getTicks()
 // {
@@ -29,11 +31,10 @@ void GameLoop::loopLogic() {
 // es el que se encarga de que gusano esta al momento
 	Command* command;
 	while (commandsQueue.try_pop(command)) {
-		// if (commad.team() == worms[wormPlayingID].team())
 			command->executeCommand(gameWorld);
 	}
 	gameWorld.update();
-	GameDynamic* gameDynamic = gameWorld.getGameStatus(0);
+	GameDynamic* gameDynamic = gameWorld.getGameStatus(wormPlayingID);
 	statusBroadcaster.broadcast(gameDynamic);
 }
 
