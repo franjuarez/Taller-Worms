@@ -16,6 +16,8 @@
 #include "entities/worm.h"
 #include "entities/beam.h"
 #include "entities/rocket.h"
+#include "../game_src/game_map.h"
+#include "../game_src/beam_dto.h"
 
 class GameWorld {
 private:
@@ -40,7 +42,7 @@ private:
     void removeEntities();
 
 public:
-    GameWorld();
+    GameWorld(GameMap* gameMap);
 
     void update();
 

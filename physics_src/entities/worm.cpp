@@ -10,15 +10,20 @@ Worm::~Worm() {}
 
 WormDTO Worm::getDTO(){
     Position pos(body->GetPosition().x, body->GetPosition().y);
-    WormDTO dto(id, direction, 0, health, 0, pos, {});
+    int alive = this->health > 0 ? 1 : 0;
+    WormDTO dto(id, direction, alive, health, 0, pos, {});
     return dto;
 }
 
 void Worm::takeDamage(float damage){
     this->health -= damage;
     if(this->health < 0){
-        entitiesToRemove.push_back(this->body);
+        this->health = 0;
     }
+}
+
+void Worm::die(){
+    this->health = 0;
 }
 
 bool Worm::isDead(){
@@ -80,7 +85,7 @@ void Worm::handleExplosion(float damage, b2Vec2 explosionCenter){
     takeDamage(damage);
     b2Vec2 direction = this->body->GetPosition() - explosionCenter;
     direction.Normalize();
-    b2Vec2 impulse = b2Vec2(direction.x * damage / EXPLOSION_IMPULSE_FACTOR, direction.y * damage / EXPLOSION_IMPULSE_FACTOR);
+    b2Vec2 impulse = b2Vec2(direction.x * damage / EXPLOSION_IMPULSE_FACTOR_X, damage / EXPLOSION_IMPULSE_FACTOR_Y);
     this->body->ApplyLinearImpulseToCenter(impulse, true);
 }
 
@@ -181,7 +186,6 @@ void Worm::preSolveCollisionWithBeam(Entity* otherBody, b2Contact* contact, cons
             this->body->SetLinearDamping(STANDARD_DAMPING);
         }
         if(this->currentAction == EJECTED){
-            this->body->SetGravityScale(0.0f);
             this->body->SetLinearDamping(0.0f);
         }
     }

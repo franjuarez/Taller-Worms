@@ -2,31 +2,44 @@
 
 #define WORM_GROUP_INDEX -1
 
-GameWorld::GameWorld() {
+GameWorld::GameWorld(GameMap* gameMap) {
     this->world = new b2World(b2Vec2(WORLD_GRAVITY_X, WORLD_GRAVITY_Y));
     this->listener = new Listener(this->world); //VER SI HACE FALTA HEAP O STACK
     this->world->SetContactListener(this->listener);
-    
-    //Hardcoded (for now)
 
-    // createBeam(-11.0f, 4.0f, 0, false);
-    // createBeam(-7.5f, 1.0f, 30, true);
-    // createBeam(-4.0f, 0.0f, -30, false);
-    // createBeam(-1.0f, -5.0f, 68, true);
+    createWater();
 
-    createBeam(10.0f, 10.0f, 0, true);
-    createBeam(16.0f, 8.0f, 0, true);
-    createBeam(22.0f, 6.0f, 0, true);
-    createBeam(28.0f, 4.0f, 0, true);
-    createBeam(34.0f, 2.0f, 0, true);
-    createBeam(40.0f, 0.0f, 0, true);
-    createBeam(46.0f, -2.0f, 0, true);
-    // createBeam(10.0f, 12.0f, 0, false);
-    // createBeam(15.0f, 5.0f, 50, true);
-    // createBeam(10.0f, 3.0f, -10, false);
-    
-    createWorm(14.0f, 12.0f, 1, 0);
-    createWorm(17.0f, 12.0f, 2, 1);
+    std::vector<BeamDTO> beams = gameMap->getBeams();
+    for (BeamDTO& beam : beams) {
+        float x = beam.getPosition().getX();
+        float y = beam.getPosition().getY();
+        bool large = beam.getBeamLength() == LARGE_BEAM_WIDTH ? true : false;
+        createBeam(x, y, beam.getAngle(), large);
+    }
+
+    std::vector<WormDTO> worms = gameMap->getWorms();
+    for (WormDTO& worm : worms) {
+        float x = worm.getPosition().getX();
+        float y = worm.getPosition().getY();
+        int id = worm.getId();
+        int team = worm.getTeam();
+        createWorm(x, y, id, team);
+    }
+}
+
+void GameWorld::createWater(){
+    b2BodyDef bd;
+    bd.type = b2_staticBody;
+    bd.position.Set(WORLD_WIDTH/2, 0);
+    b2Body* body = this->world->CreateBody(&bd);
+    b2FixtureDef fd;
+    b2PolygonShape shape;
+    shape.SetAsBox(WORLD_WIDTH/2, 0.1f);
+    fd.shape = &shape;
+    body->CreateFixture(&fd);
+
+    Water* waterEntity = new Water(body, entitiesToRemove);
+    body->GetUserData().pointer = reinterpret_cast<uintptr_t>(waterEntity);
 }
 
 void GameWorld::createWorm(float startingX, float startingY, int id, int team){
@@ -42,7 +55,7 @@ void GameWorld::createWorm(float startingX, float startingY, int id, int team){
     fd.density = WORM_DENSITY;
     fd.friction = WORM_FRICTION;
     body->SetFixedRotation(true);
-    //fd.filter.groupIndex = WORM_GROUP_INDEX; //This way it doesn't collide with other worms SALMON
+    fd.filter.groupIndex = WORM_GROUP_INDEX; //This way it doesn't collide with other worms SALMON
     body->CreateFixture(&fd);
 
     Worm* wormEntity = new Worm(body, entitiesToRemove, id, team, RIGHT); //Starts facing right
@@ -102,8 +115,13 @@ b2Body* GameWorld::createRocket(b2Body* worm, int direction){
 }
 
 void GameWorld::checkWormExists(int id){ //Capaz conviene un array con pos de id? es mas rapido pero mas choto de acceder
+    //Check if the worm exists and if its dead and throw error
     if(this->worms.find(id) == this->worms.end()){
-        throw std::invalid_argument("Worm with id " + std::to_string(id) + " does not exist");
+        throw std::runtime_error("Worm does not exist");
+    }
+    Worm* worm = (Worm*) this->worms[id]->GetUserData().pointer;
+    if(worm->isDead()){
+        throw std::runtime_error("Worm is dead");
     }
 }
 
@@ -154,14 +172,12 @@ bool GameWorld::checkValidTpPosition(float x, float y){
     aabb.upperBound = b2Vec2(x + WORM_WIDTH/2, y + WORM_HEIGHT/2);
     TeleportQueryCallback callback;
     this->world->QueryAABB(&callback, aabb);
-    std::cout << "valid: " << callback.validTeleport << std::endl;
     return callback.validTeleport;
 }
 
 bool GameWorld::teleportWorm(int id, float x, float y){
     checkWormExists(id);
     if(checkValidTpPosition(x, y)){
-    std::cout << "HALO" << std::endl;
         b2Body* worm = this->worms[id];
         worm->SetTransform(b2Vec2(x, y), 0);
         worm->SetLinearVelocity(b2Vec2(0, 0));
@@ -188,13 +204,12 @@ void GameWorld::removeProjectile(b2Body* projectile){
     }
 }
 
-
+//I have this Entities stored in their respective maps, so I can't delete them here
+//I have to delete them when I erase the map
 void GameWorld::removeEntities(){
     for(b2Body* body : this->entitiesToRemove){
         Entity* entity = (Entity*) body->GetUserData().pointer;
-        if(typeid(*entity) == typeid(Worm)){
-            removeWorm(body);
-        } else if(typeid(*entity) == typeid(Rocket)){
+        if(typeid(*entity) == typeid(Rocket)){
             removeProjectile(body);
         }
         this->world->DestroyBody(body);
@@ -225,6 +240,17 @@ GameDynamic* GameWorld::getGameStatus(int id){
 }
 
 GameWorld::~GameWorld() {
+    //erase and delete worms
+    for (auto& worm : this->worms) {
+        this->world->DestroyBody(worm.second);
+        delete (Worm*) worm.second->GetUserData().pointer;
+    }
+    // //erase and delete projectiles
+    // for(b2Body* projectile : this->projectiles){
+    //     this->world->DestroyBody(projectile);
+    //     delete (Rocket*) projectile->GetUserData().pointer;
+    // }
+    //erase and delete the rest of the entities
     for (b2Body* body = this->world->GetBodyList(); body != NULL; body = body->GetNext()) {
         //deleting user data
         Entity* entity = (Entity*) body->GetUserData().pointer;
