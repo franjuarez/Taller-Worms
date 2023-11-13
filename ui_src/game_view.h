@@ -35,6 +35,7 @@ private:
 	Texture rocketSprite;
 	
 	std::vector<Texture> dynamicSpriteSheets;
+	std::vector<Texture> waterSprites;
 	std::vector<BeamView> beamViews;
 	std::unordered_map<int, WormView> wormViews;
 	

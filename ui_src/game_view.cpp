@@ -16,6 +16,18 @@
 #define WALKING_WORM_PATH "../resources/images/worm_walk.bmp"
 #define SURRENDING_WORM_PATH "../resources/images/worm_surrender.bmp"
 #define GRAVE_PATH "../resources/images/grave1.bmp"
+#define WATER_PATH_00 "../resources/images/water/blue00.bmp"
+#define WATER_PATH_01 "../resources/images/water/blue01.bmp"
+#define WATER_PATH_02 "../resources/images/water/blue02.bmp"
+#define WATER_PATH_03 "../resources/images/water/blue03.bmp"
+#define WATER_PATH_04 "../resources/images/water/blue04.bmp"
+#define WATER_PATH_05 "../resources/images/water/blue05.bmp"
+#define WATER_PATH_06 "../resources/images/water/blue06.bmp"
+#define WATER_PATH_07 "../resources/images/water/blue07.bmp"
+#define WATER_PATH_08 "../resources/images/water/blue08.bmp"
+#define WATER_PATH_09 "../resources/images/water/blue09.bmp"
+#define WATER_PATH_10 "../resources/images/water/blue10.bmp"
+#define WATER_PATH_11 "../resources/images/water/blue11.bmp"
 
 
 #define ROCKET_PATH "../resources/images/rocket.bmp"
@@ -62,6 +74,19 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 	dynamicSpriteSheets.push_back(Texture(renderer,Surface(SURRENDING_WORM_PATH).SetColorKey(true, 0)));
 	dynamicSpriteSheets.push_back(Texture(renderer,Surface(GRAVE_PATH).SetColorKey(true, 0)));
 
+	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_00).SetColorKey(true, 0)));
+	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_01).SetColorKey(true, 0)));
+	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_02).SetColorKey(true, 0)));
+	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_03).SetColorKey(true, 0)));
+	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_04).SetColorKey(true, 0)));
+	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_05).SetColorKey(true, 0)));
+	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_06).SetColorKey(true, 0)));
+	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_07).SetColorKey(true, 0)));
+	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_08).SetColorKey(true, 0)));
+	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_09).SetColorKey(true, 0)));
+	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_10).SetColorKey(true, 0)));
+	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_11).SetColorKey(true, 0)));
+
 	this->lookingDir = 0;
 	this->currentWormId = 1;
 }
@@ -103,6 +128,29 @@ void GameView::draw(int i) {
 
 	//armo la nueva pantalla
 	renderer.Copy(backgroundSprite, NullOpt, NullOpt);
+
+	renderer.FillRect(
+		0,
+		-0.5 * m_to_pix_y + WINDOW_HEIGHT - camY,
+		WINDOW_WIDTH, WINDOW_HEIGHT * 2
+	);
+
+	renderer.Copy(
+		waterSprites[(i / 4) % waterSprites.size()],
+		NullOpt,
+		Rect(0, 0.5 * m_to_pix_y + WINDOW_HEIGHT - camY, WINDOW_WIDTH, 100)
+	);
+
+	renderer.SetDrawColor(0, 0, 40);
+	//renderer.DrawLine(10, 10, 630, 10);
+
+
+	//renderer.Copy(
+	//	blueTexture,
+	//	NullOpt,
+	//	Rect(0, 0.5 * m_to_pix_y + WINDOW_HEIGHT - camY, WINDOW_WIDTH, WINDOW_HEIGHT * 2),
+	//	 0, NullOpt, true
+	//);
 
 	for (auto it = beamViews.begin(); it != beamViews.end(); it++) {
 		//confirmar que esto esta trabajando inplace y no hace copia
