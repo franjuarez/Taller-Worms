@@ -10,8 +10,7 @@ Worm::~Worm() {}
 
 WormDTO Worm::getDTO(){
     Position pos(body->GetPosition().x, body->GetPosition().y);
-    int alive = this->health > 0 ? 1 : 0;
-    WormDTO dto(id, direction, alive, health, 0, pos, {});
+    WormDTO dto(id, direction, team, health, pos, {});
     return dto;
 }
 
