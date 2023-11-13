@@ -13,13 +13,12 @@ private:
     int dir;
     int team;
     int health;
-    int alive;
     Position position;
     // type of weapon and amount
     std::map<int, int> weapons;
 
 public:
-    WormDTO(int id, int dir, int team, int health, int alive, Position position, std::map<int, int> weapons);
+    WormDTO(int id, int dir, int team, int health, Position position, std::map<int, int> weapons);
     int getId();
     int getDir();
     int getTeam();

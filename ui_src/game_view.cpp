@@ -234,7 +234,7 @@ void GameView::start() {
                     moveCase(i);
 
                 } else if (event.key.keysym.sym == SDLK_SPACE) {
-					this->client.execute(new Attack(currentWormId, 1, -60.0f, 50.0f));
+					this->client.execute(new Attack(currentWormId, 1, 30.0f, 15.0f));
 				}
             }
 		}

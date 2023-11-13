@@ -184,7 +184,6 @@ void Protocol::sendWorms(std::vector<WormDTO> worms) {
         sendUintEight(worms[i].getDir());
         sendUintEight(worms[i].getTeam());
         sendUintEight(worms[i].getHealth());
-        sendUintEight(worms[i].isAlive());
         sendPosition(Position(worms[i].getX(), worms[i].getY()));
         sendWeaponsMap(worms[i].getWeapons());
     }
@@ -199,10 +198,9 @@ std::vector<WormDTO> Protocol::receiveWorms() {
         uint8_t dir = receiveUintEight();
         uint8_t team = receiveUintEight();
         uint8_t health = receiveUintEight();
-        uint8_t alive = receiveUintEight();
         Position pos = receivePosition();
         std::map<int, int> weapons = receiveWeaponsMap();
-        WormDTO worm(id, dir, team, health, alive, pos, weapons);
+        WormDTO worm(id, dir, team, health, pos, weapons);
         worms.push_back(worm);
     }
     return worms;

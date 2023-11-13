@@ -55,7 +55,8 @@
 #define ROCKET_DAMAGE 50.0f
 
 //Explosion constants
-#define EXPLOSION_IMPULSE_FACTOR 4.0f
+#define EXPLOSION_IMPULSE_FACTOR_X 10.0f
+#define EXPLOSION_IMPULSE_FACTOR_Y 4.0f
 
 //Bat constants
 #define BAT_HEIGHT 0.2f

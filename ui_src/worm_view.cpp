@@ -126,7 +126,7 @@ void WormView::display(int i, Renderer& renderer, int camX, int camY) {
 void WormView::update(WormDTO other, int i) {
 	this->worm = other;
 
-	if ((this->worm.isAlive())) {
+	if (!(this->worm.isAlive())) {
 		die();
 	}
 

@@ -9,9 +9,9 @@
 #define FPS 60.0f
 #define RATE (1000.f / FPS)
 
-GameLoop::GameLoop(Queue<Command*>& commandsQueue, StatusBroadcaster& statusBroadcaster, GameMap* gameMpa)
-: commandsQueue(commandsQueue), statusBroadcaster(statusBroadcaster), gameWorld(), worms() {
-	std::vector<WormDTO> worms = gameMpa->getWorms();
+GameLoop::GameLoop(Queue<Command*>& commandsQueue, StatusBroadcaster& statusBroadcaster, GameMap* gameMap)
+: commandsQueue(commandsQueue), statusBroadcaster(statusBroadcaster), gameWorld(gameMap), worms() {
+	std::vector<WormDTO> worms = gameMap->getWorms();
 }
 
 // static uint32 getTicks()
@@ -46,7 +46,7 @@ void GameLoop::start() {
 		loopLogic();
 		usleep(RATE*1000);
 		clock_t current_time =  clock();
-		if ((current_time - start_time) * 1000 / CLOCKS_PER_SEC > 60) {
+		if ((current_time - start_time) * 1000 / CLOCKS_PER_SEC > 60 * 6) {
 			std::cout << wormPlayingID<< std::endl;
 			if (wormPlayingID % 2 == 0) {
 				wormPlayingID = 1;
