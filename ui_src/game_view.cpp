@@ -129,28 +129,6 @@ void GameView::draw(int i) {
 	//armo la nueva pantalla
 	renderer.Copy(backgroundSprite, NullOpt, NullOpt);
 
-	renderer.FillRect(
-		0,
-		-0.5 * m_to_pix_y + WINDOW_HEIGHT - camY,
-		WINDOW_WIDTH, WINDOW_HEIGHT * 2
-	);
-
-	renderer.Copy(
-		waterSprites[(i / 4) % waterSprites.size()],
-		NullOpt,
-		Rect(0, 0.5 * m_to_pix_y + WINDOW_HEIGHT - camY, WINDOW_WIDTH, 100)
-	);
-
-	renderer.SetDrawColor(0, 0, 40);
-	//renderer.DrawLine(10, 10, 630, 10);
-
-
-	//renderer.Copy(
-	//	blueTexture,
-	//	NullOpt,
-	//	Rect(0, 0.5 * m_to_pix_y + WINDOW_HEIGHT - camY, WINDOW_WIDTH, WINDOW_HEIGHT * 2),
-	//	 0, NullOpt, true
-	//);
 
 	for (auto it = beamViews.begin(); it != beamViews.end(); it++) {
 		//confirmar que esto esta trabajando inplace y no hace copia
@@ -175,6 +153,19 @@ void GameView::draw(int i) {
 			angle, Point(0, 0), 0 //
 			);
 	}
+
+	renderer.SetDrawColor(0, 0, 40);
+	renderer.FillRect(
+		0,
+		-0.5 * m_to_pix_y + WINDOW_HEIGHT - camY,
+		WINDOW_WIDTH, WINDOW_HEIGHT * 2
+	);
+
+	renderer.Copy(
+		waterSprites[(i / 4) % waterSprites.size()],
+		NullOpt,
+		Rect(0, 1.5 * m_to_pix_y + WINDOW_HEIGHT - camY, WINDOW_WIDTH, 100)
+	);
 
 	//muestro la nueva pantalla
 	renderer.Present();

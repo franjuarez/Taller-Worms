@@ -112,6 +112,8 @@ void WormView::display(int i, Renderer& renderer, int camX, int camY) {
 	);
 
 	//grafico la vida
+	if (!this->worm.isAlive())
+		return;
 	Texture hp(renderer,
 		wormsFont.RenderText_Solid(std::__cxx11::to_string(this->worm.getHealth()),
 		SDL_Color{0,0,0}));
