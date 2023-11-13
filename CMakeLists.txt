@@ -47,6 +47,7 @@ if(TESTING)
     target_link_libraries(SharedLib PUBLIC SharedGameLib)
     
     #QT
+    set(CMAKE_PREFIX_PATH ~/Qt/5.15.2/gcc_64/)
 
     find_package(Qt5Widgets CONFIG REQUIRED)
     # find_package(Qt5Core CONFIG REQUIRED)
