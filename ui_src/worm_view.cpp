@@ -6,9 +6,10 @@
 WormView::WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets, Font& wormsFont) : 
 	worm(worm),
 	dynamicSpriteSheets(dynamicSpriteSheets),
-	frames{{},{},{},{}},
+	frames{{},{},{},{},{}},
 	wormsFont(wormsFont) {
-	currentFramesIndex = DEFAULT_FRAMES;
+	defaultFramesIndex = STILL_FRAMES;
+	currentFramesIndex = STILL_FRAMES;
 	startingPoint = 0;
 	//looping = true;
 	float x, y, w, h;
@@ -41,15 +42,25 @@ WormView::WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets, Fon
 		frames[WALKING_FRAMES].push_back(Rect((int)x,y,w,h));
 	}
 
-	//frames for dying animation
+	//frames for surrending animation
 	for (int i = 0; i < 16; i++) {
 		x = 19;
 		w = 29;
 		y = i * 60 + 7;
 		h = 36;
-		frames[DYING_FRAMES].push_back(Rect(x,y,w,h));
+		frames[SURRENDING_FRAMES].push_back(Rect(x,y,w,h));
 	}
-	//frames[DYING_FRAMES].push_back(Rect(1,1,0,0)); //el gusano tiene que quedar aca
+	
+
+	//frames for dying animation
+	for (int i = 0; i < 20; i++) {
+		x = 18;
+		w = 23;
+		y = 60*i + 4;
+		h = 29;
+		frames[POSTMORTEM_FRAMES].push_back(Rect(x,y,w,h));
+	}
+
 
 	//frames for backflip animation
 }
@@ -70,21 +81,24 @@ void WormView::move(int i) {
 	this->currentFramesIndex = WALKING_FRAMES;
 }
 
-void WormView::die(int i) {
-	if (currentFramesIndex == DYING_FRAMES)
+void WormView::surrend() {
+	this->defaultFramesIndex = SURRENDING_FRAMES;
+}
+
+void WormView::die() {
+	if (currentFramesIndex == POSTMORTEM_FRAMES)
 		return;
-	this->startingPoint = i;
-	this->currentFramesIndex = DYING_FRAMES;
+	this->currentFramesIndex = POSTMORTEM_FRAMES;
+	this->defaultFramesIndex = POSTMORTEM_FRAMES;
 }
 
 
 void WormView::display(int i, Renderer& renderer, int camX, int camY) {
-
 	size_t currentFrame = (i - startingPoint) / 4;
 
 	if (currentFrame >= this->frames[currentFramesIndex].size()) {
 		startingPoint = i;
-		currentFramesIndex = DEFAULT_FRAMES;
+		currentFramesIndex = defaultFramesIndex;
 		currentFrame = 0;
 	}
 	
@@ -111,8 +125,13 @@ void WormView::display(int i, Renderer& renderer, int camX, int camY) {
 
 void WormView::update(WormDTO other, int i) {
 	this->worm = other;
-	if (this->worm.getHealth() <= 50)
-		die(i);
+
+	if ((this->worm.isAlive())) {
+		die();
+	}
+
+	if (this->worm.getHealth() <= 10)
+		surrend();
 }
 
 WormView::~WormView() {}

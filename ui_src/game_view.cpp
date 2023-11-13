@@ -14,7 +14,8 @@
 #define STILL_WORM_PATH "../resources/images/stillworm.bmp"
 #define JUMPING_WORM_PATH "../resources/images/worm_jump.bmp"
 #define WALKING_WORM_PATH "../resources/images/worm_walk.bmp"
-#define DYING_WORM_PATH "../resources/images/worm_surrender.bmp"
+#define SURRENDING_WORM_PATH "../resources/images/worm_surrender.bmp"
+#define GRAVE_PATH "../resources/images/grave1.bmp"
 
 
 #define ROCKET_PATH "../resources/images/rocket.bmp"
@@ -44,6 +45,8 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 		rocketSprite(renderer, Surface(ROCKET_PATH).SetColorKey(true,0)),
 		camX(0), camY(0), mouseHandler(camX, camY) {
 
+	sound.SetVolume(MUSIC_VOLUME);
+
 	client.start();
 	GameMap* gs = dynamic_cast<GameMap*>(client.getGameStatus());
 	
@@ -56,7 +59,8 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 	dynamicSpriteSheets.push_back(Texture(renderer,Surface(STILL_WORM_PATH).SetColorKey(true, 0)));
 	dynamicSpriteSheets.push_back(Texture(renderer,Surface(JUMPING_WORM_PATH).SetColorKey(true, 0)));
 	dynamicSpriteSheets.push_back(Texture(renderer,Surface(WALKING_WORM_PATH).SetColorKey(true,0)));
-	dynamicSpriteSheets.push_back(Texture(renderer,Surface(DYING_WORM_PATH).SetColorKey(true, 0)));
+	dynamicSpriteSheets.push_back(Texture(renderer,Surface(SURRENDING_WORM_PATH).SetColorKey(true, 0)));
+	dynamicSpriteSheets.push_back(Texture(renderer,Surface(GRAVE_PATH).SetColorKey(true, 0)));
 
 	this->lookingDir = 0;
 	this->currentWormId = 1;

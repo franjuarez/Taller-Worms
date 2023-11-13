@@ -18,7 +18,7 @@ private:
 	Font& wormsFont;
 	int startingPoint;
 	int currentFramesIndex; //indica la tira(fila) de frames que se tiene que usar ahora mismo
-	//bool looping;
+	int defaultFramesIndex;
 
 public:
 	WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets, Font& font);
@@ -27,7 +27,8 @@ public:
 	//funcion de prueba para testear que no aparezca el segfault
 	void jump(int i);
 	void move(int i);
-	void die(int i);
+	void surrend();
+	void die();
 	void display(int i, Renderer& renderer, int camX, int camY);
 	void update(WormDTO other, int i);
 };
