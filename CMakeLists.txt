@@ -73,32 +73,40 @@ if(TESTING)
     file(GLOB MAIN CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/main.cpp")
     file(GLOB HEADER_FILES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/client_src/*.h")
     file(GLOB CLIENT CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/client_src/*.cpp")
-add_executable(wormsremake ${MAIN} ${CLIENT} ${HEADER_FILES})
-
-
-file(GLOB SERVER CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/server_src/*.cpp")
-add_library(serverLibrary ${SERVER})
-
-target_link_libraries(serverLibrary PRIVATE Threads::Threads)
-target_link_libraries(serverLibrary PUBLIC SharedLib)
-target_link_libraries(serverLibrary PUBLIC SharedGameLib)
-
-add_executable(server ${SERVER})
-
-target_compile_options(server PRIVATE $<$<NOT:$<C_COMPILER_ID:MSVC>>:-Wall -Wextra -pedantic -ggdb -DDEBUG -pedantic-errors>)
-target_link_libraries(server PRIVATE Threads::Threads)
-target_link_libraries(server PUBLIC SharedLib)
-target_link_libraries(server PUBLIC SharedGameLib)
-
-target_link_libraries(Lobby PUBLIC serverLibrary)
-
-target_compile_options(wormsremake PRIVATE $<$<NOT:$<C_COMPILER_ID:MSVC>>:-Wall -Wextra -pedantic -ggdb -DDEBUG -pedantic-errors>)
-target_link_libraries(wormsremake PRIVATE Threads::Threads)
-target_link_libraries(wormsremake PUBLIC SharedLib)
-target_link_libraries(wormsremake PUBLIC SharedGameLib)
-target_link_libraries(wormsremake PUBLIC SharedUi)
+    list(REMOVE_ITEM CLIENT "${CMAKE_CURRENT_SOURCE_DIR}/client_src/client_main.cpp")
+    add_executable(wormsremake ${MAIN} ${CLIENT} ${HEADER_FILES})
+    
+    
+    file(GLOB SERVER CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/server_src/*.cpp")
+    add_library(serverLibrary ${SERVER})
+    
+    target_link_libraries(serverLibrary PRIVATE Threads::Threads)
+    target_link_libraries(serverLibrary PUBLIC SharedLib)
+    target_link_libraries(serverLibrary PUBLIC SharedGameLib)
+    
+    add_executable(server ${SERVER})
+    
+    target_compile_options(server PRIVATE $<$<NOT:$<C_COMPILER_ID:MSVC>>:-Wall -Wextra -pedantic -ggdb -DDEBUG -pedantic-errors>)
+    target_link_libraries(server PRIVATE Threads::Threads)
+    target_link_libraries(server PUBLIC SharedLib)
+    target_link_libraries(server PUBLIC SharedGameLib)
+    
+    target_link_libraries(Lobby PUBLIC serverLibrary)
+    
+    target_compile_options(wormsremake PRIVATE $<$<NOT:$<C_COMPILER_ID:MSVC>>:-Wall -Wextra -pedantic -ggdb -DDEBUG -pedantic-errors>)
+    target_link_libraries(wormsremake PRIVATE Threads::Threads)
+    target_link_libraries(wormsremake PUBLIC SharedLib)
+    target_link_libraries(wormsremake PUBLIC SharedGameLib)
+    target_link_libraries(wormsremake PUBLIC SharedUi)
 target_link_libraries(wormsremake PUBLIC Lobby)
 target_link_libraries(wormsremake PUBLIC Qt5::Widgets Qt5::Core)
+
+file(GLOB CLIENT_2 CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/client_src/*.cpp")
+add_executable(client ${CLIENT_2} ${HEADER_FILES})
+target_link_libraries(client PRIVATE Threads::Threads)
+target_link_libraries(client PUBLIC SharedLib)
+target_link_libraries(client PUBLIC SharedGameLib)
+target_link_libraries(client PUBLIC SharedUi)
 
 
 # add_executable("ui" main.cpp worm.cpp game_view.cpp worm_view.cpp worm.cpp constants.cpp game_view.cpp mouse_handler.cpp)
