@@ -94,8 +94,14 @@ void GameView::updateEntities(int i) {
 	}
 
 	/*
-	deberia iterar mis cohetes, por cada cohete busco su nuevo dto, si esta actualizo,
-	si no esta, le indico que explote
+	aca deberia por cada cohete recibido, verificar si esta en mis cohetes, si esta
+	no hago nada porque ya voy a actualizar en draw, si no esta lo agrego asi empiezo
+	a dibujarlo, no tengo que preocuparme por los que se sacaron esto tambien lo miro
+	a medida que actualizo
+
+	/*
+	
+
 	*/
 	//std::vector<WeaponDTO> recievedWeapons =  gs->getProjectiles();
 	//for (auto &weapon : recievedWeapons) {
@@ -135,6 +141,14 @@ void GameView::draw(int i) {
 			angle, Point(0, 0), 0 //
 			);
 	}
+
+	/*
+	aca deberia por cada cohete que tengo, verificar si esta en el map recibido
+		* si esta actualizo
+		* si no esta le indico que explote
+		*lo dibujo
+		*chequeo si su animacion de explotar termino en cuyo caso lo remuevo
+	*/
 
 	//muestro la nueva pantalla
 	renderer.Present();
