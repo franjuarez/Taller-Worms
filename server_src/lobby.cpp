@@ -1,12 +1,18 @@
 #include "lobby.h"
 #include "game_loop.h"
 #include "status_broadcaster.h"
+
 #include "../game_src/worm_dto.h"
 #include "../game_src/beam_dto.h"
 #include "../game_src/game_map.h"
 
-Lobby::Lobby(Socket& skt, int numberOfPlayers, std::string mapName) 
-: skt(skt), numberOfPlayers(numberOfPlayers), mapName(mapName), commandQueue(90) {}
+//Lobby::Lobby(Socket& skt, int AMOUNT_OF_PLAYERS) : , skt(skt), commandQueue(90) {
+//    this->AMOUNT_OF_PLAYERS = AMOUNT_OF_PLAYERS;
+//}
+
+Lobby::Lobby(const std::string& hostname, int numberOfPlayers, std::string mapName) : hostname(hostname), skt(hostname.c_str()), mapName(mapName), commandQueue(90) {
+    this->numberOfPlayers = numberOfPlayers;
+}
 
 void Lobby::run() {
 

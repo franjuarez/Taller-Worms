@@ -1,5 +1,5 @@
-#ifndef SENDER_H
-#define SENDER_H
+#ifndef SERVER_SENDER_H
+#define SERVER_SENDER_H
 
 #include "../shared_src/thread.h"
 #include "../shared_src/protocol.h"
@@ -7,7 +7,7 @@
 #include "../game_src/serializable.h"
 #include "status_broadcaster.h"
 
-class Sender : public Thread {
+class ServerSender : public Thread {
 
 private:
     Protocol& protocol;
@@ -15,8 +15,10 @@ private:
     bool& talking;
     // has the queue of each player
 public:
-    Sender(Protocol& protocol, Queue<Serializable*>& playerQueue, bool& talking);
-    ~Sender();
+
+    ServerSender(Protocol& protocol, Queue<Serializable*>& playerQueue, bool& talking);
+    ~ServerSender();
+
     void run() override;
 
 };
