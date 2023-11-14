@@ -21,7 +21,6 @@ private:
     std::vector<WeaponDTO> proyectiles;
 
 public: 
-    // va a tener que ser creado ya con el vect de worms parra que no chille la herencia
     GameDynamic(int wormPlayingID, std::vector<WormDTO>worms, std::vector<WeaponDTO> proyectiles);
     void send(Protocol& protocol);
     void addWorms(std::vector<WormDTO>worms); // should change to adding all worms in one to avoid a RC
