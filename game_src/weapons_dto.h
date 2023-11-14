@@ -6,6 +6,7 @@
 
 class WeaponDTO {
 private:
+// add un ID aca y al Protocolo
     int proyectileType;
     int boomed;
     Position position;

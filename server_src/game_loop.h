@@ -10,6 +10,7 @@
 #include "../shared_src/thread.h"
 #include "../shared_src/socket.h"
 #include "../physics_src/game_world.h"
+#include "team.h"
 
 
 class GameLoop {
@@ -18,12 +19,12 @@ private:
     Queue<Command*>& commandsQueue; // esta saca los comandos con try pop porque no la deberia bloquear y siempre tiene que estar loopeando
     StatusBroadcaster& statusBroadcaster;
     GameWorld gameWorld;
-    std::vector<WormDTO> worms;
-    int wormPlayingID = 1;
-
+    std::vector<Team> teams;
+    int teamPlayingID;
+    int wormPlayingID;
     void loopLogic();
 public:
-    GameLoop(Queue<Command*>& commandsQueue, StatusBroadcaster& statusBroadcaster, GameMap* gameMpa);
+    GameLoop(Queue<Command*>& commandsQueue, StatusBroadcaster& statusBroadcaster, GameMap* gameMap, std::vector<Team> teams);
     ~GameLoop();
     void start();
     

@@ -41,6 +41,14 @@ std::map<int, int> WormDTO::getWeapons(){
     return this->weapons;
 }
 
+void WormDTO::setTeam(int newTeam) {
+    this->team = newTeam;
+}
+
+void WormDTO::addHealth(int newHealth) {
+    this->health += newHealth;
+}
+
 
 WormDTO& WormDTO::operator=(const WormDTO& other) {
     if (this != &other) { // Check for self-assignment

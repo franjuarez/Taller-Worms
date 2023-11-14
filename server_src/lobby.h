@@ -7,6 +7,7 @@
 
 #include "player.h"
 #include "../shared_src/thread.h"
+#include "team.h"
 
 
 class Lobby {
@@ -21,6 +22,8 @@ private:
     void reapDead();
     void killAll();
 // should it have the game thread queue?
+
+    std::vector<Team> createTeams(std::vector<WormDTO>& worms);
 public:
 
     Lobby(const std::string& hostname, int numberOfPLayers, std::string mapName);

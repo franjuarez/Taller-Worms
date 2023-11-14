@@ -26,6 +26,8 @@ public:
     int isAlive();
     float getX();
     float getY();
+    void setTeam(int team);
+    void addHealth(int health);
     Position getPosition();
     std::map<int, int> getWeapons();
     WormDTO& operator=(const WormDTO& worm);

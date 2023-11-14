@@ -5,26 +5,26 @@
 #include "../game_src/beam_dto.h"
 #include "../game_src/game_map.h"
 #include <unistd.h>
+#include <chrono>
 
 #define FPS 60.0f
 #define RATE (1000.f / FPS)
+#define TURN_TIME 5
 
-GameLoop::GameLoop(Queue<Command*>& commandsQueue, StatusBroadcaster& statusBroadcaster, GameMap* gameMap)
-: commandsQueue(commandsQueue), statusBroadcaster(statusBroadcaster), gameWorld(gameMap), worms() {
-	std::vector<WormDTO> worms = gameMap->getWorms();
+GameLoop::GameLoop(Queue<Command*>& commandsQueue, StatusBroadcaster& statusBroadcaster, GameMap* gameMap, std::vector<Team> teams)
+: commandsQueue(commandsQueue), statusBroadcaster(statusBroadcaster), gameWorld(gameMap), teams(teams) {
+	this->teamPlayingID = 0;
+	this->wormPlayingID = teams[teamPlayingID].getNextWormID();
 }
 
-// static uint32 getTicks()
-// {
-//     static clock_t start_time = 0;
-//     if (start_time == 0) {
-//         start_time = clock();
-//     }
-// 
-//     clock_t current_time = clock();
-// 	std::cout << current_time << std::endl;
-//     return (current_time - start_time) * 1000 / CLOCKS_PER_SEC;
-// }
+// tener clase Team
+// ir rotando de team y de ahi de gusano 
+
+// Vector de Teams y vas camnbiando de team 
+
+// Team Playing
+
+// WormPlayingID
 
 void GameLoop::loopLogic() {
 // se encarga de los turnos y que jugador esta al momento.
@@ -36,24 +36,36 @@ void GameLoop::loopLogic() {
 	gameWorld.update();
 	GameDynamic* gameDynamic = gameWorld.getGameStatus(wormPlayingID);
 	statusBroadcaster.broadcast(gameDynamic);
+	std::vector<WormDTO> worms = gameDynamic->getWorms();
+	for (size_t i = 0; i < worms.size(); i++) {
+		int wormId = worms[i].getId();
+		int wormTeam = worms[i].getTeam();
+		if (!worms[i].isAlive() && teams[wormTeam].checkWormExists(wormId)) {
+			teams[wormTeam].removeWormID(wormId);
+		}
+	}
 }
 
-void GameLoop::start() {
 
-	// static clock_t start_time = 0;
-    static clock_t start_time = clock();
-    while(true) {
+void GameLoop::start() {
+	std::chrono::steady_clock::time_point start_time = std::chrono::steady_clock::now();
+	while(true) {
 		loopLogic();
 		usleep(RATE*1000);
-		clock_t current_time =  clock();
-		if ((current_time - start_time) * 1000 / CLOCKS_PER_SEC > 60 * 6) {
-			std::cout << wormPlayingID<< std::endl;
-			if (wormPlayingID % 2 == 0) {
-				wormPlayingID = 1;
-			} else {
-				wormPlayingID = 2;
+		auto current_time = std::chrono::steady_clock::now();
+		auto elapsed_time = std::chrono::duration_cast<std::chrono::milliseconds>(current_time - start_time).count();
+		if (elapsed_time > TURN_TIME * 1000) {
+			teamPlayingID = (teamPlayingID + 1) % teams.size();
+			for(size_t i = teamPlayingID; true ; i = (i + 1) % teams.size()){
+				if(teams[i].hasWorms()){
+					teamPlayingID = i;
+					break;
+				}
 			}
-			start_time = clock();
+			
+			wormPlayingID = teams[teamPlayingID].getNextWormID();
+			std::cout << "Changing Turn! Team: " << teamPlayingID << " Worm: " << wormPlayingID << std::endl;
+			start_time = std::chrono::steady_clock::now();
 		}
 	}
 }
