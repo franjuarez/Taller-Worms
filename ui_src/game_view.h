@@ -39,7 +39,8 @@ private:
 	std::vector<BeamView> beamViews;
 	std::unordered_map<int, WormView> wormViews;
 	
-
+	float rocketAngle;
+	bool not_closed;
 	int camX;
 	int camY;
 	MouseHandler mouseHandler;
@@ -52,14 +53,14 @@ private:
 	void loadBeams(std::vector<BeamDTO>& beams);
 	void draw(int i);
 	void returnKeyCase(int i);
-	void moveCase(int i);
-	void mouseMovementCase(int x, int y);
+	void moveCase(int i, int dir);
 
 public:
 	GameView(const std::string& hostname, const std::string& servname);
 	~GameView();
 
 	void start();
+	void stop();
 	void join();
 };
 

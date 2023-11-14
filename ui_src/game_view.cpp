@@ -57,6 +57,8 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 		rocketSprite(renderer, Surface(ROCKET_PATH).SetColorKey(true,0)),
 		camX(0), camY(0), mouseHandler(camX, camY) {
 
+	this->not_closed = true;
+	this->rocketAngle = 45.0f;
 	sound.SetVolume(MUSIC_VOLUME);
 
 	client.start();
@@ -107,6 +109,10 @@ void GameView::loadWorms(std::vector<WormDTO>& recievedWorms) {
 	}
 }
 
+void GameView::stop() {
+	this->not_closed = false;
+}
+
 void GameView::updateEntities(int i) {
 	// std::cout << "pide clientes" << std::endl;
 	GameDynamic* gs = dynamic_cast<GameDynamic*>(client.getGameStatus());
@@ -144,6 +150,7 @@ void GameView::draw(int i) {
 		double angle = -(atan(p.getVelY() / p.getVelX()) * (180.0 / M_PI)); //angula de vel respecto de horizontal
 		angle += 90;//quiero que si es 0 tenga una rotacion de 90 grados
 		//std::cout << angle << std::endl;
+		if (p.getVelX() < 0) angle -= 180;
 		renderer.Copy(
 			rocketSprite,
 			Rect(19, 13, 22, 34),
@@ -176,13 +183,12 @@ void GameView::returnKeyCase(int i) {
 	this->wormViews.at(this->currentWormId).jump(i);
 }
 
-void GameView::moveCase(int i) {
+void GameView::moveCase(int i, int dir) {
+	this->lookingDir = dir;
+	this->client.execute(new Move(currentWormId, dir));
     this->wormViews.at(this->currentWormId).move(i);
 }
 
-void GameView::mouseMovementCase(int x, int y) {
-	mouseHandler.handleMovement(x, y);
-}
 
 void GameView::start() {
 	mixer.PlayChannel(-1, sound);
@@ -191,7 +197,7 @@ void GameView::start() {
 	int t1 = SDL_GetTicks();
 	//float durationInSeconds;
 
-	while(1) {
+	while(not_closed) {
 		SDL_Event event;
         //unsigned int frame_ticks = SDL_GetTicks();
 		while (SDL_PollEvent(&event)) {
@@ -200,8 +206,9 @@ void GameView::start() {
 			}
 			int x,y;
 			SDL_GetMouseState( &x, &y );
-			mouseMovementCase(x,y);
+			mouseHandler.handleMovement(x,y);
             if (event.type == SDL_KEYDOWN) {
+				//aca deberia llamar al  handler
                 if(event.key.keysym.sym == SDLK_q) {
                     return;
                 }
@@ -215,17 +222,18 @@ void GameView::start() {
                 }
 				
                 else if (event.key.keysym.sym == SDLK_LEFT) {
-					this->lookingDir = 1;
-                    this->client.execute(new Move(currentWormId, LEFT_DIR));
-                    moveCase(i);
+                    moveCase(i, LEFT_DIR);
 
                 } else if (event.key.keysym.sym == SDLK_RIGHT) {
-					this->lookingDir = 0;
-                    this->client.execute(new Move(currentWormId, RIGHT_DIR));
-                    moveCase(i);
+                    moveCase(i, RIGHT_DIR);
 
                 } else if (event.key.keysym.sym == SDLK_SPACE) {
-					this->client.execute(new Attack(currentWormId, 1, 30.0f, 15.0f));
+					this->client.execute(new Attack(currentWormId, this->lookingDir, this->rocketAngle, 40.0f));
+
+				} else if (event.key.keysym.sym == SDLK_UP) {
+					this->rocketAngle += 1;
+				} else if (event.key.keysym.sym == SDLK_DOWN) {
+					this->rocketAngle -= 1;
 				}
             }
 		}
