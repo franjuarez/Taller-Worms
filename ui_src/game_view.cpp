@@ -93,7 +93,15 @@ void GameView::updateEntities(int i) {
 		this->wormViews.at(worm.getId()).update(worm, i);
 	}
 
-	this->proy = gs->getProjectiles();
+	/*
+	deberia iterar mis cohetes, por cada cohete busco su nuevo dto, si esta actualizo,
+	si no esta, le indico que explote
+	*/
+	//std::vector<WeaponDTO> recievedWeapons =  gs->getProjectiles();
+	//for (auto &weapon : recievedWeapons) {
+	//	this->rocketViews.try_emplace();
+	//}
+
 	// std::cout << "termino de parsear" << std::endl;
 }
 

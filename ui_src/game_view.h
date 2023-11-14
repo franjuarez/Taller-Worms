@@ -6,6 +6,7 @@
 #include <math.h>
 #include <cmath>
 #include "worm_view.h"
+#include "rocket_view.h"
 #include "mouse_handler.h"
 #include "../game_src/game_dynamic.h"
 #include "../client_src/client.h"
@@ -42,7 +43,7 @@ private:
 	int camX;
 	int camY;
 	MouseHandler mouseHandler;
-	std::vector<WeaponDTO> proy;
+	std::unordered_map<int, RocketView> rocketViews;
 	int currentWormId;
 	int lookingDir;
 
