@@ -37,6 +37,8 @@ private:
 	std::vector<Texture> waterSprites;
 	std::vector<BeamView> beamViews;
 	std::unordered_map<int, WormView> wormViews;
+	WormDTO currentWorm;
+	std::vector<Texture> hudTextures;
 	
 	float rocketAngle;
 	bool not_closed;

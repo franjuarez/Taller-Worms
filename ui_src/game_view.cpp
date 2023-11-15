@@ -29,6 +29,10 @@
 #define WATER_PATH_10 "../resources/images/water/blue10.bmp"
 #define WATER_PATH_11 "../resources/images/water/blue11.bmp"
 
+#define CURR_WORM_PATH "../resources/images/currentWormIndicator.bmp"
+#define WEAPONS_BAR_TEXTURE "../resources/images/water/blue11.bmp"
+
+#define CURRENT_WORM_INDICATOR_TEXTURE 0
 
 #define ROCKET_PATH "../resources/images/rocket.bmp"
 
@@ -55,6 +59,7 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 		backgroundSprite(renderer, BACKGROUND_PATH),
 		beamSprite(renderer, BEAM_PATH),
 		rocketSprite(renderer, Surface(ROCKET_PATH).SetColorKey(true,0)),
+		currentWorm(-1, 0, 0, 100, Position(0,0), {}), //incializo en estado invalido ver de mejorar eso con WormNull
 		camX(0), camY(0), mouseHandler(camX, camY) {
 
 	this->not_closed = true;
@@ -89,8 +94,16 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_10).SetColorKey(true, 0)));
 	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_11).SetColorKey(true, 0)));
 
+
+
+	hudTextures.push_back(Texture(renderer, Surface(CURR_WORM_PATH).SetColorKey(true, 0)));
+	//hudTextures.insert(std::make_pair(
+	//	"weaponsBar",
+	//	Texture(renderer, Surface(WEAPONS_BAR_TEXTURE).SetColorKey(true,0)))
+	//);
+
+
 	this->lookingDir = 0;
-	this->currentWormId = 1;
 }
 
 void GameView::loadBeams(std::vector<BeamDTO>& beams) {
@@ -122,6 +135,9 @@ void GameView::updateEntities(int i) {
 	// std::cout << "pidio worms" << std::endl;
 	for (auto &worm : recievedWorms) {
 		this->wormViews.at(worm.getId()).update(worm, i);
+		if (worm.getId() == this->currentWormId) {
+			this->currentWorm = worm;
+		}
 	}
 
 	this->proy = gs->getProjectiles();
@@ -175,10 +191,26 @@ void GameView::drawWater(int i) {
 }
 
 void GameView::drawUi(int i) {
-	return;
+	if (this->currentWorm.getId() == -1) {
+		//si no hay nadie jugando no dibujo esto.
+		return;
+	}
+	renderer.Copy(
+		hudTextures[CURRENT_WORM_INDICATOR_TEXTURE],
+		Rect(21, 60 * ((i/4) % 30) + 16, 19, 33),
+		Rect(
+			this->currentWorm.getX() * m_to_pix_x - camX,
+			((this->currentWorm.getY() + 1.5) * m_to_pix_y) + WINDOW_HEIGHT - camY,
+			20, 20
+			)
+		);
 }
 
 void GameView::draw(int i) {
+
+	updateEntities(i); 
+	mouseHandler.updateCam();
+
 	renderer.Clear();
 	
 	renderer.Copy(backgroundSprite, NullOpt, NullOpt);
@@ -187,7 +219,6 @@ void GameView::draw(int i) {
 	drawProjectiles(i);
 	drawWater(i);
 	drawUi(i);
-
 
 	//muestro la nueva pantalla
 	renderer.Present();
@@ -252,12 +283,7 @@ void GameView::start() {
 				}
             }
 		}
-		// ← aca deberia actualizar Game y conseguir los gusanos actuales y guardarlos
-		//en recievedWorms
-
-		//opcion 1: pedirle a client
-		updateEntities(i); 
-		mouseHandler.updateCam();
+		
 		draw(i);
 
 		int t2 = SDL_GetTicks();
