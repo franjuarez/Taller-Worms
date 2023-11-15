@@ -41,6 +41,7 @@
 #include "../game_src/commands/move.h"
 #include "../game_src/commands/jump.h"
 #include "../game_src/commands/launch_rocket.h"
+#include "../game_src/commands/teleport.h"
 
 
 GameView::GameView(const std::string& hostname, const std::string& servname) :
@@ -235,6 +236,14 @@ void GameView::moveCase(int i, int dir) {
     this->wormViews.at(this->currentWormId).move(i);
 }
 
+void GameView::backspaceKeyCase(int i) {
+	this->client.execute(new Jump(currentWormId, 3));
+}
+
+void GameView::clickCase(int i, int x, int y) {
+	Position pos((x + camX) / m_to_pix_x, ((y + camY) - WINDOW_HEIGHT) / m_to_pix_y);
+	this->client.execute(new Teleport(currentWormId, pos));
+}
 
 void GameView::start() {
 	mixer.PlayChannel(-1, sound);
@@ -255,33 +264,33 @@ void GameView::start() {
 			mouseHandler.handleMovement(x,y);
             if (event.type == SDL_KEYDOWN) {
 				//aca deberia llamar al  handler
-                if(event.key.keysym.sym == SDLK_q) {
+                if(event.key.keysym.sym == SDLK_q)
                     return;
-                }
-                else if(event.key.keysym.sym == SDLK_RETURN) {
-                	returnKeyCase(i);
-                }
 
-				else if(event.key.keysym.sym == SDLK_BACKSPACE) {
-					this->client.execute(new Jump(currentWormId, 3));
+                else if(event.key.keysym.sym == SDLK_RETURN)
                 	returnKeyCase(i);
-                }
-				
-                else if (event.key.keysym.sym == SDLK_LEFT) {
+                
+				else if(event.key.keysym.sym == SDLK_BACKSPACE) 
+                	backspaceKeyCase(i);
+                
+                else if (event.key.keysym.sym == SDLK_LEFT)
                     moveCase(i, LEFT_DIR);
 
-                } else if (event.key.keysym.sym == SDLK_RIGHT) {
+                else if (event.key.keysym.sym == SDLK_RIGHT) 
                     moveCase(i, RIGHT_DIR);
 
-                } else if (event.key.keysym.sym == SDLK_SPACE) {
+                else if (event.key.keysym.sym == SDLK_SPACE)
 					this->client.execute(new LaunchRocket(currentWormId, this->lookingDir, this->rocketAngle, 40.0f));
 
-				} else if (event.key.keysym.sym == SDLK_UP) {
-					this->rocketAngle += 1;
-				} else if (event.key.keysym.sym == SDLK_DOWN) {
-					this->rocketAngle -= 1;
-				}
-            }
+				else if (event.key.keysym.sym == SDLK_UP)
+					this->rocketAngle += 5;
+				else if (event.key.keysym.sym == SDLK_DOWN)
+					this->rocketAngle -= 5;
+					
+            } else if(event.type == SDL_MOUSEBUTTONDOWN) {
+				clickCase(i, x, y);
+			}
+
 		}
 		
 		draw(i);

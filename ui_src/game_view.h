@@ -60,6 +60,8 @@ private:
 	void drawUi(int i);
 	void returnKeyCase(int i);
 	void moveCase(int i, int dir);
+	void backspaceKeyCase(int i);
+	void clickCase(int i, int x, int y);
 
 public:
 	GameView(const std::string& hostname, const std::string& servname);
