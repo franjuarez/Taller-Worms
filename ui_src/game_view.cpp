@@ -128,24 +128,21 @@ void GameView::updateEntities(int i) {
 	// std::cout << "termino de parsear" << std::endl;
 }
 
-void GameView::draw(int i) {
-	//limpio la pantalla
-	renderer.Clear();
-
-	//armo la nueva pantalla
-	renderer.Copy(backgroundSprite, NullOpt, NullOpt);
-
-
+void GameView::drawBeams(int i) {
 	for (auto it = beamViews.begin(); it != beamViews.end(); it++) {
 		//confirmar que esto esta trabajando inplace y no hace copia
 		it->display(this->renderer, camX, camY);
 	}
+}
 
+void GameView::drawWorms(int i) {
 	for (auto it = wormViews.begin(); it != wormViews.end(); it++) {
 		//confirmar que esto esta trabajando inplace y no hace copia
 		it->second.display(i, this->renderer, camX, camY);
 	}
+}
 
+void GameView::drawProjectiles(int i) {
 	for (auto &p : this->proy) {
 		double angle = -(atan(p.getVelY() / p.getVelX()) * (180.0 / M_PI)); //angula de vel respecto de horizontal
 		angle += 90;//quiero que si es 0 tenga una rotacion de 90 grados
@@ -160,7 +157,9 @@ void GameView::draw(int i) {
 			angle, Point(0, 0), 0 //
 			);
 	}
+}
 
+void GameView::drawWater(int i) {
 	renderer.SetDrawColor(0, 0, 40);
 	renderer.FillRect(
 		0,
@@ -173,6 +172,22 @@ void GameView::draw(int i) {
 		NullOpt,
 		Rect(0, 1.5 * m_to_pix_y + WINDOW_HEIGHT - camY, WINDOW_WIDTH, 100)
 	);
+}
+
+void GameView::drawUi(int i) {
+	return;
+}
+
+void GameView::draw(int i) {
+	renderer.Clear();
+	
+	renderer.Copy(backgroundSprite, NullOpt, NullOpt);
+	drawBeams(i);
+	drawWorms(i);
+	drawProjectiles(i);
+	drawWater(i);
+	drawUi(i);
+
 
 	//muestro la nueva pantalla
 	renderer.Present();

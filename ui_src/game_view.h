@@ -26,7 +26,6 @@ private:
 	Mixer mixer;
 	Renderer renderer;
 	
-
 	//recursos
 	Font wormsFont;
 	Chunk sound;
@@ -52,6 +51,11 @@ private:
 	void loadWorms(std::vector<WormDTO>& recievedWorms);
 	void loadBeams(std::vector<BeamDTO>& beams);
 	void draw(int i);
+	void drawBeams(int i);
+	void drawWorms(int i);
+	void drawProjectiles(int i);
+	void drawWater(int i);
+	void drawUi(int i);
 	void returnKeyCase(int i);
 	void moveCase(int i, int dir);
 
