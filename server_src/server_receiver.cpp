@@ -1,6 +1,6 @@
 #include "server_receiver.h"
 #include "../shared_src/protocol.h"
-#include "../game_src/move.h"
+#include "../game_src/commands/command.h"
 
 ServerReceiver::ServerReceiver(Protocol& protocol, Queue<Command*>& commandsQueue, bool& talking) 
 : protocol(protocol), commandsQueue(commandsQueue), talking(talking) {}

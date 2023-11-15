@@ -230,7 +230,7 @@ GameDynamic* GameWorld::getGameStatus(int id){
         wormsDTO.push_back(wormData->getDTO());
     }
 
-    std::vector<WeaponDTO> projectilesDTO;
+    std::vector<ExplosivesDTO> projectilesDTO;
     for(b2Body* projectile : this->projectiles){
         Rocket* rocketData = (Rocket*) projectile->GetUserData().pointer;
         projectilesDTO.push_back(rocketData->getDTO());

@@ -1,10 +1,13 @@
 #include "protocol.h"
 
-#include "../game_src/commands.h"
-#include  "../game_src/move.h"
-#include  "../game_src/jump.h"
-#include "../game_src/attack.h"
+#include "../game_src/commands/command.h"
+#include  "../game_src/commands/move.h"
+#include  "../game_src/commands/jump.h"
+#include "../game_src/commands/launch_rocket.h"
+#include "../game_src/commands/teleport.h"
+#include "../game_src/commands/hit_upclose.h"
 
+#include "../game_src/serializable.h"
 #include "../game_src/game_dynamic.h"
 #include "../game_src/game_map.h"
 
@@ -30,7 +33,7 @@ void Protocol::sendMap(GameMap* gameMap) {
 }
 
 GameMap* Protocol::receiveMap() {
-    uint8_t protocolCode = receiveUintEight();
+    // uint8_t protocolCode = receiveUintEight();
     uint8_t team = receiveUintEight();
     std::string mapName = receiveString();
     std::vector<WormDTO> worms = receiveWorms();
@@ -49,11 +52,11 @@ void Protocol::sendDynamic(GameDynamic* dynamic) {
 
 GameDynamic* Protocol::receiveDynamic() {
     checkClosed();
-    uint8_t protocolCode = receiveUintEight();
+    // uint8_t protocolCode = receiveUintEight();
     uint8_t wormPlayingID = receiveUintEight();
 
     std::vector<WormDTO> worms = receiveWorms();
-    std::vector<WeaponDTO> weapons = receiveWeapons();
+    std::vector<ExplosivesDTO> weapons = receiveWeapons();
     return new GameDynamic(wormPlayingID, worms, weapons);
 }
 
@@ -71,7 +74,7 @@ void Protocol::sendJump(Jump* jump) {
     sendUintEight(jump->getDir());
 }
 
-void Protocol::sendAttack(Attack* attack) {
+void Protocol::sendLaunchRocket(LaunchRocket* attack) {
     checkClosed();
     sendUintEight(SEND_COMMAND_ATTACK);   
     sendUintEight(attack->getID());
@@ -80,6 +83,29 @@ void Protocol::sendAttack(Attack* attack) {
     sendFloat(attack->getPower());
 }
 
+void Protocol::sendTeleport(Teleport* teleport) {
+    checkClosed();
+    sendUintEight(SEND_COMMAND_TELEPORT);
+    sendUintEight(teleport->getID());
+    sendPosition(Position(teleport->getX(), teleport->getY()));
+}
+
+void Protocol::sendHitUpclose(HitUpclose* hitUpclose) {
+    checkClosed();
+    sendUintEight(SEND_COMMAND_HIT_UPCLOSE);
+    sendUintEight(hitUpclose->getID());
+}
+
+Serializable* Protocol::receiveSerializable() {
+    checkClosed();
+    uint8_t protocolCode = receiveUintEight();
+    if (protocolCode == SEND_MAP) {
+        return receiveMap();
+    } else if (protocolCode == SEND_DYNAMIC) {
+        return receiveDynamic();
+    }
+    throw std::runtime_error("Invalid Serializable");
+}
 
 Command* Protocol::receiveCommand() {
     checkClosed();
@@ -89,8 +115,13 @@ Command* Protocol::receiveCommand() {
     } else if (protocolCode == SEND_COMMAND_JUMP) {
         return receiveJump();
     } else if (protocolCode == SEND_COMMAND_ATTACK) {
-        return receiveAttack();
+        return receiveLaunchRocket();
+    } else if (protocolCode == SEND_COMMAND_TELEPORT) {
+        return receiveTeoleport();
+    } else if (protocolCode == SEND_COMMAND_HIT_UPCLOSE) {
+        return receiveHitUpclose();
     }
+
     throw std::runtime_error("Invalid Command");
 }
 
@@ -122,13 +153,26 @@ Jump* Protocol::receiveJump() {
     return new Jump(wormId, dir);
 }
 
-Attack* Protocol::receiveAttack() {
+LaunchRocket* Protocol::receiveLaunchRocket() {
     checkClosed();
     uint8_t wormId = receiveUintEight();
     uint8_t dir = receiveUintEight();
     float angle = receiveFloat();
     float power = receiveFloat();
-    return new Attack(wormId, dir, angle, power);
+    return new LaunchRocket(wormId, dir, angle, power);
+}
+
+Teleport* Protocol::receiveTeoleport() {
+    checkClosed();
+    uint8_t wormId = receiveUintEight();
+    Position pos = receivePosition();
+    return new Teleport(wormId, pos);
+}
+
+HitUpclose* Protocol::receiveHitUpclose() {
+    checkClosed();
+    uint8_t wormId = receiveUintEight();
+    return new HitUpclose(wormId);
 }
 
 void Protocol::sendMapNames(std::vector<std::string>& allMaps) {
@@ -150,7 +194,7 @@ std::vector<std::string> Protocol::receiveMapNames() {
     return allMaps;
 }
 
-void Protocol::sendWeapons(std::vector<WeaponDTO> weapons) {
+void Protocol::sendWeapons(std::vector<ExplosivesDTO> weapons) {
     sendUintEight(weapons.size());
     for (int i = 0; i < weapons.size(); i++) {
         sendUintEight(weapons[i].getType());
@@ -161,16 +205,16 @@ void Protocol::sendWeapons(std::vector<WeaponDTO> weapons) {
     }
 }
 
-std::vector<WeaponDTO> Protocol::receiveWeapons() {
+std::vector<ExplosivesDTO> Protocol::receiveWeapons() {
     uint8_t numberOfProjectiles = receiveUintEight();
-    std::vector<WeaponDTO> weapons;
+    std::vector<ExplosivesDTO> weapons;
     for (int i = 0; i < numberOfProjectiles; i++) {
         int type = receiveUintEight();
         int boomed = receiveUintEight();
         float velX = receiveFloat();
         float velY = receiveFloat();
         Position pos = receivePosition();
-        WeaponDTO projectile(type, boomed, pos, velX, velY);
+        ExplosivesDTO projectile(type, boomed, pos, velX, velY);
         weapons.push_back(projectile);    
     }
     return weapons;

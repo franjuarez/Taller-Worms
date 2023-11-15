@@ -1,21 +1,21 @@
-#ifndef MOVE_H
-#define MOVE_H
+#ifndef JUMP_H
+#define JUMP_H
 
-#include "commands.h"
-#include "../shared_src/protocol.h"
+#include "command.h"
+#include "../../shared_src/protocol.h"
 
 class Protocol;
 
-class Move : public Command {
+class Jump : public Command {
 private:
     int wormID;
     int dir;
 public:
-    Move(int wormID, int dir);
+    Jump(int wormID, int dir);
     void executeCommand(GameWorld& gameWorld) override;
     void send(Protocol& protocol);
     int getID();
     int getDir();
-    ~Move();
+    ~Jump();
 };
 #endif

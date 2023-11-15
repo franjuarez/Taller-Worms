@@ -26,10 +26,10 @@ void Rocket::explode() {
     this->entitiesToRemove.push_back(rocket);
 }
 
-WeaponDTO Rocket::getDTO(){
+ExplosivesDTO Rocket::getDTO(){
     Position pos(this->body->GetPosition().x, this->body->GetPosition().y);
     b2Vec2 vel = this->body->GetLinearVelocity();
-    WeaponDTO dto(0, 1, pos, vel.x, vel.y);
+    ExplosivesDTO dto(0, 1, pos, vel.x, vel.y);
     return dto;
 }
 

@@ -4,7 +4,7 @@
 #include "position.h"
 #include "constants_game.h"
 
-class WeaponDTO {
+class ExplosivesDTO {
 private:
 // add un ID aca y al Protocolo
     int proyectileType;
@@ -13,7 +13,7 @@ private:
     float velX;
     float velY;
 public:
-    WeaponDTO(int proyectileType, int boomed, Position position, float velX, float velY);
+    ExplosivesDTO(int proyectileType, int boomed, Position position, float velX, float velY);
     int getType();
     int getBoomed();
     float getX();
@@ -21,6 +21,6 @@ public:
     Position getPosition();
     float getVelX();
     float getVelY();
-    ~WeaponDTO();
+    ~ExplosivesDTO();
 };
 #endif

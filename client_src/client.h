@@ -11,7 +11,7 @@
 #include "../shared_src/protocol.h"
 #include "../game_src/game_map.h"
 #include "../game_src/game_dynamic.h"
-#include "../game_src/commands.h"
+#include "../game_src/commands/command.h"
 
 class Client {
 private:

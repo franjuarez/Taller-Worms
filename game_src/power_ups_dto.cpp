@@ -1,7 +1,7 @@
 #include "power_ups_dto.h"
 
 
-PowerUps::PowerUps(WeaponDTO content, Position pos) : content(content) , pos(pos) {}
+PowerUps::PowerUps(ExplosivesDTO content, Position pos) : content(content) , pos(pos) {}
 
 
 float PowerUps::getX() {
@@ -12,7 +12,7 @@ float PowerUps::getY() {
     return pos.getY();
 }
 
-WeaponDTO PowerUps::getContent() {
+ExplosivesDTO PowerUps::getContent() {
     return content;
 }
 
