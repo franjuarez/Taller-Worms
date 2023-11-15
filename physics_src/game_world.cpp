@@ -23,7 +23,8 @@ GameWorld::GameWorld(GameMap* gameMap) {
         float y = worm.getPosition().getY();
         int id = worm.getId();
         int team = worm.getTeam();
-        createWorm(x, y, id, team);
+        int health = worm.getHealth();
+        createWorm(x, y, id, team, health);
     }
 }
 
@@ -42,7 +43,7 @@ void GameWorld::createWater(){
     body->GetUserData().pointer = reinterpret_cast<uintptr_t>(waterEntity);
 }
 
-void GameWorld::createWorm(float startingX, float startingY, int id, int team){
+void GameWorld::createWorm(float startingX, float startingY, int id, int team, int health){
     b2BodyDef bd;
     bd.type = b2_dynamicBody;
     bd.position.Set(startingX, startingY);
@@ -58,7 +59,7 @@ void GameWorld::createWorm(float startingX, float startingY, int id, int team){
     fd.filter.groupIndex = WORM_GROUP_INDEX; //This way it doesn't collide with other worms SALMON
     body->CreateFixture(&fd);
 
-    Worm* wormEntity = new Worm(body, entitiesToRemove, id, team, RIGHT); //Starts facing right
+    Worm* wormEntity = new Worm(body, entitiesToRemove, id, team, RIGHT, health); //Starts facing right
     body->GetUserData().pointer = reinterpret_cast<uintptr_t>(wormEntity);
 
     this->worms[id] = body;
@@ -204,8 +205,6 @@ void GameWorld::removeProjectile(b2Body* projectile){
     }
 }
 
-//I have this Entities stored in their respective maps, so I can't delete them here
-//I have to delete them when I erase the map
 void GameWorld::removeEntities(){
     for(b2Body* body : this->entitiesToRemove){
         Entity* entity = (Entity*) body->GetUserData().pointer;
@@ -221,6 +220,17 @@ void GameWorld::removeEntities(){
 void GameWorld::update() {
     this->world->Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
     removeEntities();
+}
+
+bool GameWorld::allEntitiesAtRest(){
+    for (b2Body* body = this->world->GetBodyList(); body != NULL; body = body->GetNext()) {
+        if(body->GetType() == b2_dynamicBody){
+            if(!body->GetLinearVelocity().Length() == 0){
+                std::cout << "Entity at rest" << std::endl;
+                return;
+            }
+        }
+    }
 }
 
 GameDynamic* GameWorld::getGameStatus(int id){

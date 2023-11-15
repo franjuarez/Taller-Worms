@@ -1,8 +1,8 @@
 #include "worm.h"
 
-Worm::Worm(b2Body* body, std::vector<b2Body*>& entitiesToRemove, int id, int team, int direction) : 
+Worm::Worm(b2Body* body, std::vector<b2Body*>& entitiesToRemove, int id, int team, int direction, int health) : 
         Entity(body, entitiesToRemove),
-        id(id), team(team), health(WORM_INITIAL_HEALTH), 
+        id(id), team(team), health(health), 
         direction(direction), currentAction(STANDING) {}
 
 

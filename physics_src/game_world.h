@@ -29,6 +29,10 @@ private:
 
     void createWater();
 
+    void createBeam(float startingX, float startingY, float angle, bool large);
+
+    void createWorm(float startingX, float startingY, int id, int team, int health);
+
     b2Body* createRocket(b2Body* worm, int direction);
 
     bool checkValidTpPosition(float x, float y);
@@ -46,9 +50,6 @@ public:
 
     void update();
 
-    void createBeam(float startingX, float startingY, float angle, bool large);
-
-    void createWorm(float startingX, float startingY, int id, int team);
 
     void moveWorm(int id, int direction);
  
@@ -61,6 +62,8 @@ public:
     void wormHitWithBat(int id);
 
     bool teleportWorm(int id, float x, float y);
+
+    bool allEntitiesAtRest();
 
     GameDynamic* getGameStatus(int id);
 

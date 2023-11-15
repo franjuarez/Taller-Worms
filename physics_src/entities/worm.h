@@ -31,7 +31,7 @@ class Worm : public Entity {
 
     public:
     action currentAction;
-    Worm(b2Body* body, std::vector<b2Body*>& entitiesToRemove, int id, int team, int direction);
+    Worm(b2Body* body, std::vector<b2Body*>& entitiesToRemove, int id, int team, int direction, int health);
 
     virtual void beginCollisionWithWater(Entity* otherBody, b2Contact* contact);
     virtual void beginCollisionWithBeam(Entity* otherBody, b2Contact* contact);
