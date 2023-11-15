@@ -2,17 +2,17 @@
 #define POWER_UPS_DTO_H
 
 #include "position.h"
-#include "weapons_dto.h"
+#include "explosives_dto.h"
 
 class PowerUps {
 private:
-    WeaponDTO content;
+    ExplosivesDTO content;
     Position pos;
 public:
-    PowerUps(WeaponDTO content, Position pos);
+    PowerUps(ExplosivesDTO content, Position pos);
     float getX();
     float getY();
-    WeaponDTO getContent();
+    ExplosivesDTO getContent();
     ~PowerUps();
 };
 #endif

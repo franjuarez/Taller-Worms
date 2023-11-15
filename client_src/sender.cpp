@@ -1,5 +1,5 @@
 #include "sender.h"
-#include "../game_src/move.h"
+#include "../game_src/commands/command.h"
 #include "../game_src/constants_game.h"
 #include <iostream>
 

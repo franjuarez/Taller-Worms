@@ -1,6 +1,5 @@
-#include "commands.h"
 #include "jump.h"
-#include "constants_game.h"
+#include "../constants_game.h"
 
 Jump::Jump(int id, int dir) : Command(NO_TEAM_NEEDED, id), wormID(id), dir(dir) {}
 

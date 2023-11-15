@@ -1,6 +1,5 @@
-#include "commands.h"
 #include "move.h"
-#include "constants_game.h"
+#include "../constants_game.h"
 
 
 Move::Move(int id, int dir) : Command(NO_TEAM_NEEDED, id), wormID(id), dir(dir) {}

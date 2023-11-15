@@ -43,7 +43,7 @@ private:
 	int camX;
 	int camY;
 	MouseHandler mouseHandler;
-	std::vector<WeaponDTO> proy;
+	std::vector<ExplosivesDTO> proy;
 	int currentWormId;
 	int lookingDir;
 

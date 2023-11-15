@@ -38,7 +38,7 @@ if(TESTING)
     add_library(SharedPhysics ${SOURCES} ${ENTITIES} ${HANDLERS})
     target_link_libraries(SharedPhysics PUBLIC box2d)
     
-    file(GLOB SHAREDGAME CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/game_src/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/game_src/*.h" )
+    file(GLOB SHAREDGAME CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/game_src/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/game_src/*.h" "${CMAKE_CURRENT_SOURCE_DIR}/game_src/commands/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/game_src/commands/*.h" )
     add_library(SharedGameLib ${SHAREDGAME})
     target_link_libraries(SharedGameLib PUBLIC SharedPhysics)
     target_link_libraries(SharedUi PUBLIC SharedGameLib)

@@ -34,9 +34,9 @@
 
 
 #include "../game_src/constants_game.h"
-#include "../game_src/move.h"
-#include "../game_src/jump.h"
-#include "../game_src/attack.h"
+#include "../game_src/commands/move.h"
+#include "../game_src/commands/jump.h"
+#include "../game_src/commands/launch_rocket.h"
 
 
 GameView::GameView(const std::string& hostname, const std::string& servname) :
@@ -243,7 +243,7 @@ void GameView::start() {
                     moveCase(i, RIGHT_DIR);
 
                 } else if (event.key.keysym.sym == SDLK_SPACE) {
-					this->client.execute(new Attack(currentWormId, this->lookingDir, this->rocketAngle, 40.0f));
+					this->client.execute(new LaunchRocket(currentWormId, this->lookingDir, this->rocketAngle, 40.0f));
 
 				} else if (event.key.keysym.sym == SDLK_UP) {
 					this->rocketAngle += 1;

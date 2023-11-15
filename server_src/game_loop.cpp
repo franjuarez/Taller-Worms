@@ -62,9 +62,8 @@ void GameLoop::start() {
 					break;
 				}
 			}
-			
 			wormPlayingID = teams[teamPlayingID].getNextWormID();
-			std::cout << "Changing Turn! Team: " << teamPlayingID << " Worm: " << wormPlayingID << std::endl;
+			// std::cout << "Changing Turn! Team: " << teamPlayingID << " Worm: " << wormPlayingID << std::endl;
 			start_time = std::chrono::steady_clock::now();
 		}
 	}

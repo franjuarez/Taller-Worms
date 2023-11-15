@@ -4,8 +4,9 @@
 #include <iostream>
 #include <string>
 
-#include "../shared_src/protocol.h"
-#include "../physics_src/game_world.h"
+#include "../../shared_src/protocol.h"
+#include "../../physics_src/game_world.h"
+
 class Protocol;
 
 #define UNUSED(x) (void)(x)
