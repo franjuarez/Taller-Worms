@@ -226,11 +226,11 @@ bool GameWorld::allEntitiesAtRest(){
     for (b2Body* body = this->world->GetBodyList(); body != NULL; body = body->GetNext()) {
         if(body->GetType() == b2_dynamicBody){
             if(!body->GetLinearVelocity().Length() == 0){
-                std::cout << "Entity at rest" << std::endl;
-                return;
+                return false;
             }
         }
     }
+    return true;
 }
 
 GameDynamic* GameWorld::getGameStatus(int id){
