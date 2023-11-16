@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include <vector>
+#include <unordered_map>
 
 class GameDynamic; class GameMap; class Serializable;
 class Command; class Move; class Jump; class LaunchRocket;
@@ -48,8 +49,8 @@ private:
     void sendWorms(std::vector<WormDTO> worms);
     std::vector<WormDTO> receiveWorms();
 
-    void sendWeapons(std::vector<ExplosivesDTO> explosives);
-    std::vector<ExplosivesDTO> receiveWeapons();
+    void sendWeapons(std::unordered_map<int, ExplosivesDTO> explosives);
+    std::unordered_map<int, ExplosivesDTO> receiveWeapons();
 
     void sendPosition(Position position);
     Position receivePosition();

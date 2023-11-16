@@ -243,10 +243,10 @@ GameDynamic* GameWorld::getGameStatus(int id){
         wormsDTO.push_back(wormData->getDTO());
     }
 
-    std::vector<ExplosivesDTO> projectilesDTO;
+    std::unordered_map<int, ExplosivesDTO> projectilesDTO;
     for (auto& projectile : this->projectiles) {
         Rocket* rocketData = (Rocket*) projectile.second->GetUserData().pointer;
-        projectilesDTO.push_back(rocketData->getDTO());
+        projectilesDTO.emplace(projectile.first, rocketData->getDTO());
     }
     GameDynamic* dynamicData = new GameDynamic(id, wormsDTO, projectilesDTO);
     return dynamicData;

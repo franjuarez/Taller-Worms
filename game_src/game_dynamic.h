@@ -18,14 +18,14 @@ class GameDynamic : public Serializable {
 private:
     int wormPlayingID;
     std::vector<WormDTO> worms;
-    std::vector<ExplosivesDTO> explosives;
+    std::unordered_map<int, ExplosivesDTO> explosives;
 
 public: 
-    GameDynamic(int wormPlayingID, std::vector<WormDTO>worms, std::vector<ExplosivesDTO> explosives);
+    GameDynamic(int wormPlayingID, std::vector<WormDTO>worms, std::unordered_map<int, ExplosivesDTO> explosives);
     void send(Protocol& protocol);
     void addWorms(std::vector<WormDTO>worms);
     std::vector<WormDTO> getWorms();
-    std::vector<ExplosivesDTO> getProjectiles();
+    std::unordered_map<int, ExplosivesDTO> getExplosives();
     int getWormPlayingID();
     GameDynamic& operator=(const GameDynamic& other);
     GameDynamic(const GameDynamic& other);

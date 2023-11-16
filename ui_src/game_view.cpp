@@ -140,7 +140,7 @@ void GameView::updateEntities(int i) {
 		}
 	}
 
-	this->proy = gs->getProjectiles();
+	this->proy = gs->getExplosives();
 	// std::cout << "termino de parsear" << std::endl;
 }
 
