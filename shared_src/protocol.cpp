@@ -294,6 +294,7 @@ std::map<int, int> Protocol::receiveWeaponsMap() {
 void Protocol::sendFloat(float num) {
     skt.sendall(&num, sizeof(num), &was_closed);
     checkClosed();
+    // arreglar la falopeada de hacer htons y castear
 }
 
 void Protocol::sendUintEight(uint8_t num) {

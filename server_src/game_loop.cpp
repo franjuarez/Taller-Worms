@@ -1,11 +1,6 @@
 #include "game_loop.h"
-#include <chrono>
-#include "../game_src/game_dynamic.h"
-#include "../game_src/worm_dto.h"
-#include "../game_src/beam_dto.h"
-#include "../game_src/game_map.h"
-#include <unistd.h>
-#include <chrono>
+
+
 
 #define FPS 60.0f
 #define RATE (1000.f / FPS)
@@ -15,58 +10,80 @@ GameLoop::GameLoop(Queue<Command*>& commandsQueue, StatusBroadcaster& statusBroa
 : commandsQueue(commandsQueue), statusBroadcaster(statusBroadcaster), gameWorld(gameMap), teams(teams) {
 	this->teamPlayingID = 0;
 	this->wormPlayingID = teams[teamPlayingID].getNextWormID();
+	std::cout << wormPlayingID << std::endl;
+	this->wormPlayingHealth = 100;
+	this->waitingForStatic = false;
+	this->start_time = std::chrono::steady_clock::now();
 }
-
-// tener clase Team
-// ir rotando de team y de ahi de gusano 
-
-// Vector de Teams y vas camnbiando de team 
-
-// Team Playing
-
-// WormPlayingID
 
 void GameLoop::loopLogic() {
 // se encarga de los turnos y que jugador esta al momento.
 // es el que se encarga de que gusano esta al momento
+
 	Command* command;
-	while (commandsQueue.try_pop(command)) {
-			command->executeCommand(gameWorld);
+	while (commandsQueue.try_pop(command) && !waitingForStatic) {
+			waitingForStatic = command->executeCommand(gameWorld);
 	}
 	gameWorld.update();
 	GameDynamic* gameDynamic = gameWorld.getGameStatus(wormPlayingID);
 	statusBroadcaster.broadcast(gameDynamic);
+
 	std::vector<WormDTO> worms = gameDynamic->getWorms();
+	int wormPlayingNewHealth;
+
 	for (size_t i = 0; i < worms.size(); i++) {
 		int wormId = worms[i].getId();
+		if (wormId == wormPlayingID) {
+			wormPlayingNewHealth = worms[i].getHealth();
+		}
 		int wormTeam = worms[i].getTeam();
 		if (!worms[i].isAlive() && teams[wormTeam].checkWormExists(wormId)) {
 			teams[wormTeam].removeWormID(wormId);
+		}
+	}
+
+	if (wormPlayingHealth != wormPlayingNewHealth) {
+		waitingForStatic = true;
+	}
+
+	if (waitingForStatic) {
+		if(gameWorld.allEntitiesAtRest()) {
+			waitingForStatic = false;
+			changeWormPlaying();
+			for (size_t i = 0; i < worms.size(); i++) {
+				if (worms[i].getId() == wormPlayingID) {
+					this->wormPlayingHealth = worms[i].getHealth();
+					break;
+				}
+			}
 		}
 	}
 }
 
 
 void GameLoop::start() {
-	std::chrono::steady_clock::time_point start_time = std::chrono::steady_clock::now();
 	while(true) {
 		loopLogic();
 		usleep(RATE*1000);
 		auto current_time = std::chrono::steady_clock::now();
-		auto elapsed_time = std::chrono::duration_cast<std::chrono::milliseconds>(current_time - start_time).count();
+		auto elapsed_time = std::chrono::duration_cast<std::chrono::milliseconds>(current_time - this->start_time).count();
 		if (elapsed_time > TURN_TIME * 1000) {
-			teamPlayingID = (teamPlayingID + 1) % teams.size();
-			for(size_t i = teamPlayingID; true ; i = (i + 1) % teams.size()){
-				if(teams[i].hasWorms()){
-					teamPlayingID = i;
-					break;
-				}
-			}
-			wormPlayingID = teams[teamPlayingID].getNextWormID();
-			// std::cout << "Changing Turn! Team: " << teamPlayingID << " Worm: " << wormPlayingID << std::endl;
-			start_time = std::chrono::steady_clock::now();
+			changeWormPlaying();
 		}
 	}
+}
+
+void GameLoop::changeWormPlaying() {
+	teamPlayingID = (teamPlayingID + 1) % teams.size();
+	for(size_t i = teamPlayingID; true ; i = (i + 1) % teams.size()){
+		if(teams[i].hasWorms()){
+			teamPlayingID = i;
+			break;
+		}
+	}
+	wormPlayingID = teams[teamPlayingID].getNextWormID();
+	this->start_time = std::chrono::steady_clock::now();
+	std::cout << "Changing Turn! Team: " << teamPlayingID << " Worm: " << wormPlayingID << std::endl;
 }
 
 GameLoop::~GameLoop() {}

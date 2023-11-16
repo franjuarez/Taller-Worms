@@ -3,7 +3,7 @@
 
 Jump::Jump(int id, int dir) : Command(NO_TEAM_NEEDED, id), wormID(id), dir(dir) {}
 
-void Jump::executeCommand(GameWorld& gameWorld) {
+bool Jump::executeCommand(GameWorld& gameWorld) {
     // std::cout << "exec jump\n";
     if (dir == FORWARD_DIR) {
         gameWorld.jumpForwardWorm(wormID);
@@ -12,6 +12,7 @@ void Jump::executeCommand(GameWorld& gameWorld) {
     } else{
         throw std::runtime_error("Invalid direction!");
     }
+    return false;
 }
 
 void Jump::send(Protocol& protocol) {

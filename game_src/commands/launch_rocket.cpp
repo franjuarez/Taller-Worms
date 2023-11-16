@@ -6,8 +6,9 @@
 LaunchRocket::LaunchRocket(int wormID, int dir, float angle, float power) : Command(NO_TEAM_NEEDED, wormID),
 wormID(wormID),dir(dir), angle(angle), power(power) {}
 
-void LaunchRocket::executeCommand(GameWorld& gameWorld) {
+bool LaunchRocket::executeCommand(GameWorld& gameWorld) {
     gameWorld.wormLaunchRocket(wormID, angle, dir, power);
+    return true;
 }
 
 void LaunchRocket::send(Protocol& protocol) {
