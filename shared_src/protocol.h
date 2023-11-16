@@ -48,7 +48,7 @@ private:
     void sendWorms(std::vector<WormDTO> worms);
     std::vector<WormDTO> receiveWorms();
 
-    void sendWeapons(std::vector<ExplosivesDTO> proyectiles);
+    void sendWeapons(std::vector<ExplosivesDTO> explosives);
     std::vector<ExplosivesDTO> receiveWeapons();
 
     void sendPosition(Position position);

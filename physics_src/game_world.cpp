@@ -6,6 +6,7 @@ GameWorld::GameWorld(GameMap* gameMap) {
     this->world = new b2World(b2Vec2(WORLD_GRAVITY_X, WORLD_GRAVITY_Y));
     this->listener = new Listener(this->world); //VER SI HACE FALTA HEAP O STACK
     this->world->SetContactListener(this->listener);
+    this->lastProjectileId = 0;
 
     createWater();
 
@@ -108,10 +109,12 @@ b2Body* GameWorld::createRocket(b2Body* worm, int direction){
     fd.density = ROCKET_DENSITY;
     body->CreateFixture(&fd);
 
-    Rocket* rocketEntity = new Rocket(body, entitiesToRemove, ROCKET_DAMAGE, ROCKET_BLAST_RADIOUS);
+    projectiles[this->lastProjectileId] = body;
+
+    Rocket* rocketEntity = new Rocket(body, entitiesToRemove, this->lastProjectileId, ROCKET_DAMAGE, ROCKET_BLAST_RADIOUS);
     body->GetUserData().pointer = reinterpret_cast<uintptr_t>(rocketEntity);
 
-    projectiles.push_back(body);
+    this->lastProjectileId++;
     return body;
 }
 
@@ -198,7 +201,7 @@ void GameWorld::removeWorm(b2Body* worm){
 
 void GameWorld::removeProjectile(b2Body* projectile){
     for(auto it = this->projectiles.begin(); it != this->projectiles.end(); ++it){
-        if(*it == projectile){
+        if(it->second == projectile){
             this->projectiles.erase(it);
             break;
         }
@@ -241,8 +244,8 @@ GameDynamic* GameWorld::getGameStatus(int id){
     }
 
     std::vector<ExplosivesDTO> projectilesDTO;
-    for(b2Body* projectile : this->projectiles){
-        Rocket* rocketData = (Rocket*) projectile->GetUserData().pointer;
+    for (auto& projectile : this->projectiles) {
+        Rocket* rocketData = (Rocket*) projectile.second->GetUserData().pointer;
         projectilesDTO.push_back(rocketData->getDTO());
     }
     GameDynamic* dynamicData = new GameDynamic(id, wormsDTO, projectilesDTO);

@@ -198,7 +198,7 @@ void Protocol::sendWeapons(std::vector<ExplosivesDTO> weapons) {
     sendUintEight(weapons.size());
     for (int i = 0; i < weapons.size(); i++) {
         sendUintEight(weapons[i].getType());
-        sendUintEight(weapons[i].getBoomed());
+        sendUintEight(weapons[i].getID());
         sendFloat(weapons[i].getVelX());
         sendFloat(weapons[i].getVelY());
         sendPosition(Position(weapons[i].getX(), weapons[i].getY()));
@@ -206,16 +206,16 @@ void Protocol::sendWeapons(std::vector<ExplosivesDTO> weapons) {
 }
 
 std::vector<ExplosivesDTO> Protocol::receiveWeapons() {
-    uint8_t numberOfProjectiles = receiveUintEight();
+    uint8_t numberOfExplosives = receiveUintEight();
     std::vector<ExplosivesDTO> weapons;
-    for (int i = 0; i < numberOfProjectiles; i++) {
+    for (int i = 0; i < numberOfExplosives; i++) {
         int type = receiveUintEight();
-        int boomed = receiveUintEight();
+        int id = receiveUintEight();
         float velX = receiveFloat();
         float velY = receiveFloat();
         Position pos = receivePosition();
-        ExplosivesDTO projectile(type, boomed, pos, velX, velY);
-        weapons.push_back(projectile);    
+        ExplosivesDTO explosive(type, id, pos, velX, velY);
+        weapons.push_back(explosive);    
     }
     return weapons;
 }

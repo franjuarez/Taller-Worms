@@ -18,12 +18,12 @@ class GameDynamic : public Serializable {
 private:
     int wormPlayingID;
     std::vector<WormDTO> worms;
-    std::vector<ExplosivesDTO> proyectiles;
+    std::vector<ExplosivesDTO> explosives;
 
 public: 
-    GameDynamic(int wormPlayingID, std::vector<WormDTO>worms, std::vector<ExplosivesDTO> proyectiles);
+    GameDynamic(int wormPlayingID, std::vector<WormDTO>worms, std::vector<ExplosivesDTO> explosives);
     void send(Protocol& protocol);
-    void addWorms(std::vector<WormDTO>worms); // should change to adding all worms in one to avoid a RC
+    void addWorms(std::vector<WormDTO>worms);
     std::vector<WormDTO> getWorms();
     std::vector<ExplosivesDTO> getProjectiles();
     int getWormPlayingID();

@@ -8,14 +8,14 @@ class ExplosivesDTO {
 private:
 // add un ID aca y al Protocolo
     int proyectileType;
-    int boomed;
+    int id;
     Position position;
     float velX;
     float velY;
 public:
-    ExplosivesDTO(int proyectileType, int boomed, Position position, float velX, float velY);
+    ExplosivesDTO(int proyectileType, int id, Position position, float velX, float velY);
     int getType();
-    int getBoomed();
+    int getID();
     float getX();
     float getY();
     Position getPosition();
