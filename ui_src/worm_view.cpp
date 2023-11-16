@@ -6,7 +6,7 @@
 WormView::WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets, Font& wormsFont) : 
 	worm(worm),
 	dynamicSpriteSheets(dynamicSpriteSheets),
-	frames{{},{},{},{},{}},
+	frames{{},{},{},{},{},{},{}},
 	wormsFont(wormsFont) {
 	defaultFramesIndex = STILL_FRAMES;
 	currentFramesIndex = STILL_FRAMES;
@@ -52,7 +52,7 @@ WormView::WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets, Fon
 	}
 	
 
-	//frames for dying animation
+	//frames for dying/grave animation
 	for (int i = 0; i < 20; i++) {
 		x = 18;
 		w = 23;
@@ -61,8 +61,20 @@ WormView::WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets, Fon
 		frames[POSTMORTEM_FRAMES].push_back(Rect(x,y,w,h));
 	}
 
+	//frames for teleporting
+	frames[TPING_FRAMES].push_back(Rect(18, 16, 17, 32));
+	frames[TPING_FRAMES].push_back(Rect(0, 0, 59, 54));
+	frames[TPING_FRAMES].push_back(Rect(0, 60, 59, 59));
 
-	//frames for backflip animation
+
+	//frames for hitting animation
+	for (int i = 0; i < 8; i++) {
+		x = 0;
+		y = (i/2) * 83 + 23;
+		w = 85;
+		h = 63;
+		frames[HITTING_FRAMES].push_back(Rect(x,y,w,h));
+	}
 }
 
 
@@ -79,6 +91,20 @@ void WormView::move(int i) {
 
 	this->startingPoint = i;
 	this->currentFramesIndex = WALKING_FRAMES;
+}
+
+void WormView::hit(int i) {
+	if (currentFramesIndex == HITTING_FRAMES) 
+		return;
+	this->startingPoint = i;
+	this->currentFramesIndex = HITTING_FRAMES;
+}
+
+void WormView::tp(int i) {
+	if (currentFramesIndex == TPING_FRAMES)
+		return;
+	this->startingPoint = i;
+	this->currentFramesIndex = TPING_FRAMES;
 }
 
 void WormView::surrend() {

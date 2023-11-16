@@ -27,8 +27,12 @@ public:
 	//funcion de prueba para testear que no aparezca el segfault
 	void jump(int i);
 	void move(int i);
+	void hit(int i);
+	void tp(int i);
+
 	void surrend();
 	void die();
+	
 	void display(int i, Renderer& renderer, int camX, int camY);
 	void update(WormDTO other, int i);
 };

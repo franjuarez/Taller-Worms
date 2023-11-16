@@ -15,6 +15,9 @@
 #define JUMPING_WORM_PATH "../resources/images/worm_jump.bmp"
 #define WALKING_WORM_PATH "../resources/images/worm_walk.bmp"
 #define SURRENDING_WORM_PATH "../resources/images/worm_surrender.bmp"
+#define TP_WORM_PATH "../resources/images/worm_tp.bmp"
+#define WORM_HITTING_PATH "../resources/images/worm_hitting.bmp"
+
 #define GRAVE_PATH "../resources/images/grave1.bmp"
 #define WATER_PATH_00 "../resources/images/water/blue00.bmp"
 #define WATER_PATH_01 "../resources/images/water/blue01.bmp"
@@ -42,6 +45,7 @@
 #include "../game_src/commands/jump.h"
 #include "../game_src/commands/launch_rocket.h"
 #include "../game_src/commands/teleport.h"
+#include "../game_src/commands/hit_upclose.h"
 
 
 GameView::GameView(const std::string& hostname, const std::string& servname) :
@@ -81,6 +85,8 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 	dynamicSpriteSheets.push_back(Texture(renderer,Surface(WALKING_WORM_PATH).SetColorKey(true,0)));
 	dynamicSpriteSheets.push_back(Texture(renderer,Surface(SURRENDING_WORM_PATH).SetColorKey(true, 0)));
 	dynamicSpriteSheets.push_back(Texture(renderer,Surface(GRAVE_PATH).SetColorKey(true, 0)));
+	dynamicSpriteSheets.push_back(Texture(renderer,Surface(TP_WORM_PATH).SetColorKey(true, 0)));
+	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_HITTING_PATH).SetColorKey(true, 0)));
 
 	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_00).SetColorKey(true, 0)));
 	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_01).SetColorKey(true, 0)));
@@ -94,7 +100,6 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_09).SetColorKey(true, 0)));
 	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_10).SetColorKey(true, 0)));
 	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_11).SetColorKey(true, 0)));
-
 
 
 	hudTextures.push_back(Texture(renderer, Surface(CURR_WORM_PATH).SetColorKey(true, 0)));
@@ -241,8 +246,14 @@ void GameView::backspaceKeyCase(int i) {
 }
 
 void GameView::clickCase(int i, int x, int y) {
+	this->wormViews.at(this->currentWormId).tp(i);
 	Position pos((x + camX) / m_to_pix_x, ((y + camY) - WINDOW_HEIGHT) / m_to_pix_y);
 	this->client.execute(new Teleport(currentWormId, pos));
+}
+
+void GameView::bCase(int i) {
+	this->wormViews.at(this->currentWormId).hit(i);
+	this->client.execute(new HitUpclose(this->currentWormId));
 }
 
 void GameView::start() {
@@ -286,6 +297,8 @@ void GameView::start() {
 					this->rocketAngle += 5;
 				else if (event.key.keysym.sym == SDLK_DOWN)
 					this->rocketAngle -= 5;
+				else if (event.key.keysym.sym == SDLK_b)
+					bCase(i);
 					
             } else if(event.type == SDL_MOUSEBUTTONDOWN) {
 				clickCase(i, x, y);
