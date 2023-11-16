@@ -68,11 +68,11 @@ WormView::WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets, Fon
 
 
 	//frames for hitting animation
-	for (int i = 0; i < 8; i++) {
+	for (int i = 0; i < 4; i++) {
 		x = 0;
-		y = (i/2) * 83 + 23;
+		y = i * 104 + 16;
 		w = 85;
-		h = 63;
+		h = 82;
 		frames[HITTING_FRAMES].push_back(Rect(x,y,w,h));
 	}
 }
@@ -127,13 +127,26 @@ void WormView::display(int i, Renderer& renderer, int camX, int camY) {
 		currentFramesIndex = defaultFramesIndex;
 		currentFrame = 0;
 	}
+
+	int x,y,w,h;
+	if (currentFramesIndex != HITTING_FRAMES) {
+		x = ((worm.getX() - 0.5)  * m_to_pix_x) - camX;
+		y = ((worm.getY() + 0.5) * m_to_pix_y + WINDOW_HEIGHT) - camY;
+		w = 1*m_to_pix_x;
+		h = -1*m_to_pix_y;
+	} else {
+		x = (worm.getX() * m_to_pix_x - camX) - (this->frames[currentFramesIndex][currentFrame].GetW())/2;
+		y = (worm.getY() * m_to_pix_y + WINDOW_HEIGHT - camY) - (this->frames[currentFramesIndex][currentFrame].GetH()/2);
+		w = 3*m_to_pix_x;
+		h = -3*m_to_pix_y;
+	}
+	Rect destiny(x,y,w,h);
+		
 	
-	int x = ((worm.getX() - 0.5)  * m_to_pix_x) - camX;
-	int y = ((worm.getY() + 0.5) * m_to_pix_y + WINDOW_HEIGHT) - camY;
 	renderer.Copy(
 		this->dynamicSpriteSheets[currentFramesIndex],
 		this->frames[currentFramesIndex][currentFrame],
-		Rect(x, y,1*m_to_pix_x, -1*m_to_pix_y),
+		destiny,
 		0, NullOpt, worm.getDir()
 	);
 
