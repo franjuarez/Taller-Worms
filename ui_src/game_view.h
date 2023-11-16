@@ -45,7 +45,7 @@ private:
 	int camX;
 	int camY;
 	MouseHandler mouseHandler;
-	std::vector<ExplosivesDTO> proy;
+	std::unordered_map<int, ExplosivesDTO> proy;
 	int currentWormId;
 	int lookingDir;
 

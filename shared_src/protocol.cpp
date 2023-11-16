@@ -33,7 +33,6 @@ void Protocol::sendMap(GameMap* gameMap) {
 }
 
 GameMap* Protocol::receiveMap() {
-    // uint8_t protocolCode = receiveUintEight();
     uint8_t team = receiveUintEight();
     std::string mapName = receiveString();
     std::vector<WormDTO> worms = receiveWorms();
@@ -47,16 +46,15 @@ void Protocol::sendDynamic(GameDynamic* dynamic) {
     sendUintEight(SEND_DYNAMIC); 
     sendUintEight(dynamic->getWormPlayingID());
     sendWorms(dynamic->getWorms());
-    sendWeapons(dynamic->getProjectiles());
+    sendWeapons(dynamic->getExplosives());
 }
 
 GameDynamic* Protocol::receiveDynamic() {
     checkClosed();
-    // uint8_t protocolCode = receiveUintEight();
     uint8_t wormPlayingID = receiveUintEight();
 
     std::vector<WormDTO> worms = receiveWorms();
-    std::vector<ExplosivesDTO> weapons = receiveWeapons();
+    std::unordered_map<int, ExplosivesDTO> weapons = receiveWeapons();
     return new GameDynamic(wormPlayingID, worms, weapons);
 }
 
@@ -194,31 +192,31 @@ std::vector<std::string> Protocol::receiveMapNames() {
     return allMaps;
 }
 
-void Protocol::sendWeapons(std::vector<ExplosivesDTO> weapons) {
+void Protocol::sendWeapons(std::unordered_map<int, ExplosivesDTO> weapons) {
     sendUintEight(weapons.size());
-    for (int i = 0; i < weapons.size(); i++) {
-        sendUintEight(weapons[i].getType());
-        sendUintEight(weapons[i].getID());
-        sendFloat(weapons[i].getVelX());
-        sendFloat(weapons[i].getVelY());
-        sendPosition(Position(weapons[i].getX(), weapons[i].getY()));
+    for (auto& weapon : weapons ) {
+        sendUintEight(weapon.second.getType());
+        sendUintEight(weapon.first);
+        sendFloat(weapon.second.getVelX());
+        sendFloat(weapon.second.getVelY());
+        sendPosition(Position(weapon.second.getX(), weapon.second.getY()));
     }
 }
 
-std::vector<ExplosivesDTO> Protocol::receiveWeapons() {
-    uint8_t numberOfExplosives = receiveUintEight();
-    std::vector<ExplosivesDTO> weapons;
-    for (int i = 0; i < numberOfExplosives; i++) {
-        int type = receiveUintEight();
-        int id = receiveUintEight();
-        float velX = receiveFloat();
-        float velY = receiveFloat();
-        Position pos = receivePosition();
-        ExplosivesDTO explosive(type, id, pos, velX, velY);
-        weapons.push_back(explosive);    
-    }
-    return weapons;
+std::unordered_map<int, ExplosivesDTO> Protocol::receiveWeapons() {
+   uint8_t numberOfExplosives = receiveUintEight();
+   std::unordered_map<int, ExplosivesDTO> weapons;
+   for (int i = 0; i < numberOfExplosives; i++) {
+       int type = receiveUintEight();
+       int id = receiveUintEight();
+       float velX = receiveFloat();
+       float velY = receiveFloat();
+       Position pos = receivePosition();
+       weapons.emplace(id, ExplosivesDTO(type, id, pos, velX, velY));  
+   }
+   return weapons;
 }
+
 
 
 void Protocol::sendWorms(std::vector<WormDTO> worms) {
