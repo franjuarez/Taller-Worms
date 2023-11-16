@@ -9,7 +9,7 @@
 
 #define FPS 60.0f
 #define RATE (1000.f / FPS)
-#define TURN_TIME 5
+#define TURN_TIME 10
 
 GameLoop::GameLoop(Queue<Command*>& commandsQueue, StatusBroadcaster& statusBroadcaster, GameMap* gameMap, std::vector<Team> teams)
 : commandsQueue(commandsQueue), statusBroadcaster(statusBroadcaster), gameWorld(gameMap), teams(teams) {

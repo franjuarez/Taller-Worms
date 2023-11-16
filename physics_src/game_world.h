@@ -24,7 +24,8 @@ private:
     b2World* world;
     Listener* listener;
     std::unordered_map<int, b2Body*> worms;
-    std::vector<b2Body*> projectiles;
+    int lastProjectileId;
+    std::unordered_map<int, b2Body*> projectiles;
     std::vector<b2Body*> entitiesToRemove;
 
     void createWater();

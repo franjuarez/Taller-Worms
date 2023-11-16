@@ -1,7 +1,7 @@
 #include "rocket.h"
 
-Rocket::Rocket(b2Body* body, std::vector<b2Body*>& entitiesToRemove, float damage, float radius) : 
-    Entity(body, entitiesToRemove), damage(damage), radius(radius) {}
+Rocket::Rocket(b2Body* body, std::vector<b2Body*>& entitiesToRemove, int id, float damage, float radius) : 
+    Entity(body, entitiesToRemove), id(id), damage(damage), radius(radius) {}
 
 Rocket::~Rocket() {}
 
@@ -29,7 +29,7 @@ void Rocket::explode() {
 ExplosivesDTO Rocket::getDTO(){
     Position pos(this->body->GetPosition().x, this->body->GetPosition().y);
     b2Vec2 vel = this->body->GetLinearVelocity();
-    ExplosivesDTO dto(0, 1, pos, vel.x, vel.y);
+    ExplosivesDTO dto(0, id, pos, vel.x, vel.y);
     return dto;
 }
 

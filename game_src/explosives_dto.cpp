@@ -1,15 +1,15 @@
 #include "explosives_dto.h"
 
-ExplosivesDTO::ExplosivesDTO(int proyectileType, int boomed, Position position, float velX, float velY) : 
-proyectileType(proyectileType), boomed(boomed),
+ExplosivesDTO::ExplosivesDTO(int proyectileType, int id, Position position, float velX, float velY) : 
+proyectileType(proyectileType), id(id),
 position(position), velX(velX), velY(velY) {}
 
 int ExplosivesDTO::getType() {
     return this->proyectileType;
 }
 
-int ExplosivesDTO::getBoomed() {
-    return this->boomed;
+int ExplosivesDTO::getID() {
+    return this->id;
 }
 
 float ExplosivesDTO::getX() {

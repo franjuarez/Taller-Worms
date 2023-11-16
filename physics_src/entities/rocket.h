@@ -8,12 +8,13 @@
 
 class Rocket : public Entity {
 private:
+    int id;
     float damage;
     float radius;
 
     void explode();
 public:
-    Rocket(b2Body* body, std::vector<b2Body*>& entitiesToRemove, float damage, float radius);
+    Rocket(b2Body* body, std::vector<b2Body*>& entitiesToRemove, int id, float damage, float radius);
     
     virtual void beginCollisionWithWater(Entity* otherBody, b2Contact* contact);
     virtual void beginCollisionWithBeam(Entity* otherBody, b2Contact* contact);
