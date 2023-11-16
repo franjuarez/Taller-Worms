@@ -159,16 +159,17 @@ void GameView::drawWorms(int i) {
 }
 
 void GameView::drawProjectiles(int i) {
-	for (auto &p : this->proy) {
-		double angle = -(atan(p.getVelY() / p.getVelX()) * (180.0 / M_PI)); //angula de vel respecto de horizontal
+	//for (auto &p : this->proy) {
+	for (auto it = this->proy.begin(); it != proy.end(); it++) {
+		double angle = -(atan(it->second.getVelY() / it->second.getVelX()) * (180.0 / M_PI)); //angula de vel respecto de horizontal
 		angle += 90;//quiero que si es 0 tenga una rotacion de 90 grados
 		//std::cout << angle << std::endl;
-		if (p.getVelX() < 0) angle -= 180;
+		if (it->second.getVelX() < 0) angle -= 180;
 		renderer.Copy(
 			rocketSprite,
 			Rect(19, 13, 22, 34),
-			Rect((p.getX()  * m_to_pix_x) - camX,
-				(p.getY() * m_to_pix_y + WINDOW_HEIGHT) - camY,
+			Rect((it->second.getX()  * m_to_pix_x) - camX,
+				(it->second.getY() * m_to_pix_y + WINDOW_HEIGHT) - camY,
 				20, 20),
 			angle, Point(0, 0), 0 //
 			);
