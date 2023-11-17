@@ -74,6 +74,7 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 
 	client.start();
 	GameMap* gs = dynamic_cast<GameMap*>(client.getGameStatus());
+	this->team = gs->getTeam();
 
 	//rocketSPrites.push_back(/*textura de la explosion*/);
 	
@@ -304,16 +305,16 @@ void GameView::start() {
 			int x,y;
 			SDL_GetMouseState( &x, &y );
 			mouseHandler.handleMovement(x,y);
-			
-        	if (this->currentWormId == -1) {
+
+			if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_q) {
+				return;
+			}
+        	if (this->currentWormId != this->team) {
+        		//ignoro el input si no es del equipo actual
         		continue;
         	}
             if (event.type == SDL_KEYDOWN) {
-				//aca deberia llamar al  handler
-                if(event.key.keysym.sym == SDLK_q)
-                    return;
-
-                else if(event.key.keysym.sym == SDLK_RETURN)
+                if(event.key.keysym.sym == SDLK_RETURN)
                 	returnKeyCase(i);
                 
 				else if(event.key.keysym.sym == SDLK_BACKSPACE) 

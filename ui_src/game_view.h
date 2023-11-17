@@ -40,7 +40,7 @@ private:
 	std::unordered_map<int, WormView> wormViews;
 	WormDTO currentWorm;
 	std::vector<Texture> hudTextures;
-	
+	int team;
 	float rocketAngle;
 	bool not_closed;
 	int camX;
