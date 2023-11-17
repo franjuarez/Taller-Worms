@@ -190,23 +190,6 @@ void GameView::drawWorms(int i) {
 
 
 void GameView::drawProjectiles(int i) {
-/*
-	for (auto it = this->proy.begin(); it != proy.end(); it++) {
-		double angle = -(atan(it->second.getVelY() / it->second.getVelX()) * (180.0 / M_PI)); //angula de vel respecto de horizontal
-
-		angle += 90;//quiero que si es 0 tenga una rotacion de 90 grados
-		//std::cout << angle << std::endl;
-		if (it->second.getVelX() < 0) angle -= 180;
-		renderer.Copy(
-			rocketSprite,
-			Rect(19, 13, 22, 34),
-			Rect((it->second.getX()  * m_to_pix_x) - camX,
-				(it->second.getY() * m_to_pix_y + WINDOW_HEIGHT) - camY,
-				20, 20),
-			angle, Point(0, 0), 0 //
-			);
-	}
-*/
 	/*
 	por cada wormView busco si esta en los recibidos. si esta lo actualizo usando justamente
 	su nueva intancia. si no esta es porque choco y por ende tengo que indicarle que explote
@@ -239,7 +222,7 @@ void GameView::drawWater(int i) {
 }
 
 void GameView::drawUi(int i) {
-	if (this->currentWorm.getId() == -1) {
+	if (this->currentWormId == -1) {
 		//si no hay nadie jugando no dibujo esto.
 		return;
 	}
@@ -321,6 +304,10 @@ void GameView::start() {
 			int x,y;
 			SDL_GetMouseState( &x, &y );
 			mouseHandler.handleMovement(x,y);
+			
+        	if (this->currentWormId == -1) {
+        		continue;
+        	}
             if (event.type == SDL_KEYDOWN) {
 				//aca deberia llamar al  handler
                 if(event.key.keysym.sym == SDLK_q)
