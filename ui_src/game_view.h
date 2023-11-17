@@ -63,7 +63,7 @@ private:
 	void drawWorms(int i);
 	void drawProjectiles(int i);
 	void drawWater(int i);
-	void drawUi(int i);
+	void drawHud(int i);
 	void returnKeyCase(int i);
 	void moveCase(int i, int dir);
 	void backspaceKeyCase(int i);

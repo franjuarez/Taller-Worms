@@ -38,7 +38,7 @@
 #define CURRENT_WORM_INDICATOR_TEXTURE 0
 
 #define ROCKET_PATH "../resources/images/rocket.bmp"
-#define EXPLOSION_PATH "../resources/images/explosion.bmp"
+#define EXPLOSION_PATH "../resources/images/explosion3.bmp"
 
 
 #include "../game_src/constants_game.h"
@@ -189,7 +189,6 @@ void GameView::drawWorms(int i) {
 	}
 }
 
-
 void GameView::drawProjectiles(int i) {
 	/*
 	por cada wormView busco si esta en los recibidos. si esta lo actualizo usando justamente
@@ -222,11 +221,12 @@ void GameView::drawWater(int i) {
 	);
 }
 
-void GameView::drawUi(int i) {
+void GameView::drawHud(int i) {
 	if (this->currentWormId == -1) {
 		//si no hay nadie jugando no dibujo esto.
 		return;
 	}
+
 	renderer.Copy(
 		hudTextures[CURRENT_WORM_INDICATOR_TEXTURE],
 		Rect(21, 60 * ((i/4) % 30) + 16, 19, 33),
@@ -236,6 +236,23 @@ void GameView::drawUi(int i) {
 			20, 20
 			)
 		);
+
+	std::vector<int> weapons = this->currentWorm.getWeapons();
+	int toolBarH = 70;
+	int toolBarCellWidth = 70;
+	int toolBarCellMargin = 4;
+
+	renderer.SetDrawColor(0x0);
+	renderer.FillRect(0, 0, 2*toolBarCellMargin + (toolBarCellWidth + toolBarCellMargin)*weapons.size(), toolBarH);
+	//for (int i = 1; i < 3; i++) {
+	//	
+	//	renderer.DrawLine(i*(toolBarCellWidth + toolBarCellMargin),
+	//		0, 
+	//		i*(toolBarCellWidth + toolBarCellMargin),
+	//		toolBarH);
+	//}
+
+
 }
 
 void GameView::draw(int i) {
@@ -249,7 +266,7 @@ void GameView::draw(int i) {
 	drawWorms(i);
 	drawProjectiles(i);
 	drawWater(i);
-	drawUi(i);
+	drawHud(i);
 
 	/*
 	aca deberia por cada cohete que tengo, verificar si esta en el map recibido
@@ -309,7 +326,8 @@ void GameView::start() {
 			if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_q) {
 				return;
 			}
-        	if (this->currentWormId != this->team) {
+        	//if (this->currentWormId != this->team) { //<- es la linea que va, uso otra para facilitar testeo
+			if (this->currentWormId == -1){
         		//ignoro el input si no es del equipo actual
         		continue;
         	}

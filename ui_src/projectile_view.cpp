@@ -10,11 +10,14 @@ rocket(rocket), projectileSpriteSheets(projectileSpriteSheet), frames{{},{},{}} 
 	int x = 19;
 	int y;
 	int w = 21;
-	int h = 26;
-	for (int i = 0; i < 21; i++) {
-		y = 60 * i + 18;
+	int h = 27;
+	//for explosion3.bmp
+	for (int i = 0; i < 30; i++) {
+		y = 60 * i + 17;
 		frames[EXPLOSION_FRAMES].push_back(Rect(x,y,w,h));
 	}
+
+
 
 	frames[POST_EXPLOSION_FRAMES].push_back(Rect(0,0,1,1));
 
@@ -39,17 +42,26 @@ void ProjectileView::display(int i, Renderer& renderer, int camX, int camY) {
 		currentFrame = 0;
 	}
 
-	int x = ((rocket.getX())  * m_to_pix_x) - camX;
-	int y = ((rocket.getY()) * m_to_pix_y + WINDOW_HEIGHT) - camY;
-	double angle = -(atan(rocket.getVelY() / rocket.getVelX()) * (180.0 / M_PI)); 
-	angle += (rocket.getVelX() > 0) ? -90 : 90;
+	float rocketSize = currentFramesIndex == EXPLOSION_FRAMES ? 2 : 0.5;
+
+	int x = ((rocket.getX() - rocketSize/2)  * m_to_pix_x) - camX;
+	int y = ((rocket.getY() + rocketSize/2) * m_to_pix_y + WINDOW_HEIGHT) - camY;
 
 
+
+	double angle;
+	angle = -(atan(rocket.getVelY() / rocket.getVelX()) * (180.0 / M_PI)); 
+	angle += (rocket.getVelX() < 0) ? -90 : 90;
+
+
+	if (currentFramesIndex == EXPLOSION_FRAMES) {
+		angle = 0;
+	}
 	
 	Texture& texture(this->projectileSpriteSheets[currentFramesIndex]);
 	//si esto es distinto de 0 rompe aca
 	Rect origin(this->frames.at(currentFramesIndex).at(currentFrame));
-	Rect destiny(x, y,0.5*m_to_pix_x, 0.5*m_to_pix_y);
+	Rect destiny(x, y,rocketSize*m_to_pix_x, -rocketSize*m_to_pix_y);
 
 
 	renderer.Copy(texture, origin, destiny, angle, Point(0,0), false);
