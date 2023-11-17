@@ -47,6 +47,7 @@
 #include "../game_src/commands/launch_bazooka.h"
 #include "../game_src/commands/teleport.h"
 #include "../game_src/commands/hit_upclose.h"
+#include "../game_src/constants_game.h"
 
 
 GameView::GameView(const std::string& hostname, const std::string& servname) :
@@ -145,7 +146,7 @@ void GameView::updateEntities(int i) {
 
 	std::vector<WormDTO> recievedWorms = gs->getWorms();
 	this->currentWormId = gs->getWormPlayingID();
-	
+
 	for (auto &worm : recievedWorms) {
 		this->wormViews.at(worm.getId()).update(worm, i);
 		if (worm.getId() == this->currentWormId) {
@@ -338,7 +339,7 @@ void GameView::start() {
                     moveCase(i, RIGHT_DIR);
 
                 else if (event.key.keysym.sym == SDLK_SPACE)
-					this->client.execute(new LaunchRocket(currentWormId, this->lookingDir, this->rocketAngle, 40.0f));
+					this->client.execute(new LaunchRocket(BAZOOKA, currentWormId, this->lookingDir, this->rocketAngle, 40.0f));
 
 				else if (event.key.keysym.sym == SDLK_UP)
 					this->rocketAngle += 5;

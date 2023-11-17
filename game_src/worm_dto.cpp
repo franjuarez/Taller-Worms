@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-WormDTO::WormDTO(int id, int dir, int team, int health, Position position, std::map<int, int> weapons) 
+WormDTO::WormDTO(int id, int dir, int team, int health, Position position, std::vector<int> weapons) 
 : id(id), dir(dir), team(team), health(health), position(position), weapons(weapons) {}
 
 int WormDTO::getId() {
@@ -37,7 +37,7 @@ Position WormDTO::getPosition() {
     return this->position;
 }
 
-std::map<int, int> WormDTO::getWeapons(){
+std::vector<int> WormDTO::getWeapons(){
     return this->weapons;
 }
 
