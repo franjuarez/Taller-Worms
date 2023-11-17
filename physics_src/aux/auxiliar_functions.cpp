@@ -1,4 +1,4 @@
-#include "auxiliar_physics_functions.h"
+#include "auxiliar_functions.h"
 
 const b2Vec2 GRAVITY = b2Vec2(WORLD_GRAVITY_X, WORLD_GRAVITY_Y);
 
@@ -44,5 +44,14 @@ float calculateFallHeightFromVelocity(b2Vec2 velocity){
     float n = (fallVel - (gravityModule * TIME_STEP)) / (gravityModule * TIME_STEP);
     float height = 0.5f * gravityModule * pow(TIME_STEP, 2) * pow(n, 2);
     return height;
+}
+
+b2Vec2 calculatVelocityOfProjectile(float maxSpeed, float angle, float direction, float power){
+    float velX = PROJECTILE_MAX_SPEED * (power / 100.0f);
+    float velY = PROJECTILE_MAX_SPEED * (power / 100.0f);
+    int sign = (direction == LEFT) ? -1 : 1;
+    velX = cos(angle * b2_pi / 180.0f) * velX * sign;
+    velY = sin(angle * b2_pi / 180.0f) * velY;
+    return b2Vec2(velX, velY);
 }
 

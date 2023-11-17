@@ -43,7 +43,7 @@
 #include "../game_src/constants_game.h"
 #include "../game_src/commands/move.h"
 #include "../game_src/commands/jump.h"
-#include "../game_src/commands/launch_rocket.h"
+#include "../game_src/commands/launch_bazooka.h"
 #include "../game_src/commands/teleport.h"
 #include "../game_src/commands/hit_upclose.h"
 

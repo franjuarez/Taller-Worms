@@ -1,4 +1,4 @@
-#include "launch_rocket.h"
+#include "launch_bazooka.h"
 #include "../constants_game.h"
 #include "command.h"
 
@@ -7,7 +7,7 @@ LaunchRocket::LaunchRocket(int wormID, int dir, float angle, float power) : Comm
 wormID(wormID),dir(dir), angle(angle), power(power) {}
 
 void LaunchRocket::executeCommand(GameWorld& gameWorld) {
-    gameWorld.wormLaunchRocket(wormID, angle, dir, power);
+    gameWorld.wormLaunchBazooka(wormID, angle, dir, power);
 }
 
 void LaunchRocket::send(Protocol& protocol) {

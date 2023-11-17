@@ -1,8 +1,13 @@
 #include "entity.h"
 
-Entity::Entity(b2Body* body, std::vector<b2Body*>& entitiesToRemove) : body(body), entitiesToRemove(entitiesToRemove) {}
+Entity::Entity(b2Body* body, std::unordered_set<b2Body*>& entitiesToRemove, EntityType entityType) : body(body),
+ entitiesToRemove(entitiesToRemove), entityType(entityType) {}
 
 Entity::~Entity() {}
+
+EntityType Entity::getEntityType() {
+    return this->entityType;
+}
 
 void Entity::beginCollisionWithWater(Entity* otherBody, b2Contact* contact) {
     UNUSED(otherBody);
@@ -19,7 +24,7 @@ void Entity::beginCollisionWithWorm(Entity* otherBody, b2Contact* contact) {
     UNUSED(contact);
 }
 
-void Entity::beginCollisionWithRocket(Entity* otherBody, b2Contact* contact) {
+void Entity::beginCollisionWithProjectile(Entity* otherBody, b2Contact* contact) {
     UNUSED(otherBody);
     UNUSED(contact);
 }

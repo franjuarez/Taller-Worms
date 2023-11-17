@@ -57,7 +57,7 @@ void GameWorld::createWorm(float startingX, float startingY, int id, int team, i
     fd.density = WORM_DENSITY;
     fd.friction = WORM_FRICTION;
     body->SetFixedRotation(true);
-    fd.filter.groupIndex = WORM_GROUP_INDEX; //This way it doesn't collide with other worms SALMON
+    fd.filter.groupIndex = WORM_GROUP_INDEX; //This way it doesn't collide with other worms
     body->CreateFixture(&fd);
 
     Worm* wormEntity = new Worm(body, entitiesToRemove, id, team, RIGHT, health); //Starts facing right
@@ -92,56 +92,6 @@ void GameWorld::createBeam(float startingX, float startingY, float angle, bool l
     beamBody->GetUserData().pointer = reinterpret_cast<uintptr_t>(beamEntity);
 }
 
-b2Body* GameWorld::createRocket(b2Body* worm, int direction){
-    b2BodyDef bd;
-    bd.type = b2_dynamicBody;
-    float deltaX = (direction == LEFT) ? - WORM_WIDTH/2 - ROCKET_WIDTH/2 - 0.1f : WORM_WIDTH/2 + ROCKET_WIDTH/2 + 0.1f;
-    float posX = worm->GetPosition().x + deltaX;
-    float posY = worm->GetPosition().y;
-    bd.position.Set(posX, posY);
-    b2Body* body = this->world->CreateBody(&bd);
-    body->IsBullet();
-    
-    b2FixtureDef fd;
-    b2PolygonShape shape;
-    shape.SetAsBox(ROCKET_WIDTH/2, ROCKET_HEIGHT/2);
-    fd.shape = &shape;
-    fd.density = ROCKET_DENSITY;
-    body->CreateFixture(&fd);
-
-    projectiles[this->lastProjectileId] = body;
-
-    Rocket* rocketEntity = new Rocket(body, entitiesToRemove, this->lastProjectileId, ROCKET_DAMAGE, ROCKET_BLAST_RADIOUS);
-    body->GetUserData().pointer = reinterpret_cast<uintptr_t>(rocketEntity);
-
-    this->lastProjectileId++;
-    return body;
-}
-
-void GameWorld::checkWormExists(int id){ //Capaz conviene un array con pos de id? es mas rapido pero mas choto de acceder
-    //Check if the worm exists and if its dead and throw error
-    if(this->worms.find(id) == this->worms.end()){
-        throw std::runtime_error("Worm does not exist");
-    }
-    Worm* worm = (Worm*) this->worms[id]->GetUserData().pointer;
-    if(worm->isDead()){
-        throw std::runtime_error("Worm is dead");
-    }
-}
-
-void GameWorld::wormLaunchRocket(int id, float angle, int direction, float power){
-    checkWormExists(id);
-    b2Body* worm = this->worms[id];
-    b2Body* rocket = createRocket(worm, direction);
-    float velX = ROCKET_MAX_SPEED * (power / 100.0f);
-    float velY = ROCKET_MAX_SPEED * (power / 100.0f);
-    int sign = (direction == LEFT) ? -1 : 1;
-    velX = cos(angle * b2_pi / 180.0f) * velX * sign;
-    velY = sin(angle * b2_pi / 180.0f) * velY;
-    b2Vec2 rocketVel = b2Vec2(velX, velY);
-    rocket->SetLinearVelocity(rocketVel);
-}
-
 void GameWorld::moveWorm(int id, int direction){
     checkWormExists(id);
     b2Body* worm = this->worms[id];
@@ -161,6 +111,127 @@ void GameWorld::jumpBackwardsWorm(int id){
     b2Body* worm = this->worms[id];
     Worm* wormData = (Worm*) worm->GetUserData().pointer;
     wormData->jumpBackwards();
+}
+
+void GameWorld::checkWormExists(int id){
+    if(this->worms.find(id) == this->worms.end()){
+        throw std::runtime_error("Worm does not exist");
+    }
+    Worm* worm = (Worm*) this->worms[id]->GetUserData().pointer;
+    if(worm->isDead()){
+        throw std::runtime_error("Worm is dead");
+    }
+}
+
+b2Body* GameWorld::createProjectile(b2Body* worm, int direction, float width, float height, float restitution = 0.0f){
+    b2BodyDef bd;
+    bd.type = b2_dynamicBody;
+    float deltaX = (direction == LEFT) ? - WORM_WIDTH/2 - width/2 - 0.1f : WORM_WIDTH/2 + width/2 + 0.1f;
+    float posX = worm->GetPosition().x + deltaX;
+    float posY = worm->GetPosition().y;
+    bd.position.Set(posX, posY);
+    b2Body* body = this->world->CreateBody(&bd);
+    body->SetBullet(true);
+    b2FixtureDef fd;
+    b2PolygonShape shape;
+    shape.SetAsBox(width/2, height/2);
+    fd.shape = &shape;
+    fd.density = 1.0f;
+    fd.restitution = restitution;
+    body->CreateFixture(&fd);
+
+    this->projectiles[this->lastProjectileId] = body;
+    this->lastProjectileId++;
+    return body;
+}
+
+b2Body* GameWorld::createBazooka(b2Body* worm, int direction){
+    int id = this->lastProjectileId;
+    b2Body* body = createProjectile(worm, direction, BAZOOKA_WIDTH, BAZOOKA_HEIGHT);
+    Bazooka* bazookaEntity = new Bazooka(body, entitiesToRemove, entitiesToAdd, id,  BAZOOKA_DAMAGE, BAZOOKA_BLAST_RADIOUS);
+    body->GetUserData().pointer = reinterpret_cast<uintptr_t>(bazookaEntity);
+
+    return body;
+}
+
+void GameWorld::wormLaunchBazooka(int id, float angle, int direction, float power){
+    checkWormExists(id);
+    b2Body* worm = this->worms[id];
+    b2Body* bazooka = createBazooka(worm, direction);
+    b2Vec2 vel = calculatVelocityOfProjectile(PROJECTILE_MAX_SPEED, angle, direction, power);
+    bazooka->SetLinearVelocity(vel);
+}
+
+b2Body* GameWorld::createMortar(b2Body* worm, int direction){
+    int id = this->lastProjectileId;
+    b2Body* body = createProjectile(worm, direction, MORTAR_WIDTH, MORTAR_HEIGHT);
+
+    Mortar* mortarEntity = new Mortar(body, entitiesToRemove, entitiesToAdd, id, MORTAR_DAMAGE, MORTAR_BLAST_RADIOUS);
+    body->GetUserData().pointer = reinterpret_cast<uintptr_t>(mortarEntity);
+
+    return body;
+}
+
+void GameWorld::wormLaunchMortar(int id, float angle, int direction, float power){
+    checkWormExists(id);
+    b2Body* worm = this->worms[id];
+    b2Body* bazooka = createMortar(worm, direction);
+    b2Vec2 vel = calculatVelocityOfProjectile(PROJECTILE_MAX_SPEED, angle, direction, power);
+    bazooka->SetLinearVelocity(vel);
+}
+
+b2Body* GameWorld::createGreenGrenade(b2Body* worm, int direction, float explosionTimer){
+    int id = this->lastProjectileId;
+    b2Body* body = createProjectile(worm, direction, GREEN_GRENADE_WIDTH, GREEN_GRENADE_WIDTH);
+
+    GreenGrenade* greenGrenadeEntity = new GreenGrenade(body, entitiesToRemove, entitiesToAdd, id, GREEN_GRENADE_DAMAGE, GREEN_GRENADE_BLAST_RADIOUS, explosionTimer);
+    body->GetUserData().pointer = reinterpret_cast<uintptr_t>(greenGrenadeEntity);
+
+    return body;
+}
+
+void GameWorld::wormThrowGreenGrenade(int id, float angle, int direction, float power, float explosionTimer){
+    checkWormExists(id);
+    b2Body* worm = this->worms[id];
+    b2Body* granade = createGreenGrenade(worm, direction, explosionTimer);
+    b2Vec2 grenadeVel = calculatVelocityOfProjectile(PROJECTILE_MAX_SPEED, angle, direction, power);
+    granade->SetLinearVelocity(grenadeVel);
+}
+
+b2Body* GameWorld::createRedGrenade(b2Body* worm, int direction, float explosionTimer){
+    int id = this->lastProjectileId;
+    b2Body* body = createProjectile(worm, direction, GREEN_GRENADE_WIDTH, GREEN_GRENADE_WIDTH);
+
+    RedGrenade* redGrenadeEntity = new RedGrenade(body, entitiesToRemove, entitiesToAdd, id, RED_GRENADE_DAMAGE, RED_GRENADE_BLAST_RADIOUS, explosionTimer);
+    body->GetUserData().pointer = reinterpret_cast<uintptr_t>(redGrenadeEntity);
+
+    return body;
+}
+
+void GameWorld::wormThrowRedGrenade(int id, float angle, int direction, float power, float explosionTimer){
+    checkWormExists(id);
+    b2Body* worm = this->worms[id];
+    b2Body* granade = createRedGrenade(worm, direction, explosionTimer);
+    b2Vec2 grenadeVel = calculatVelocityOfProjectile(PROJECTILE_MAX_SPEED, angle, direction, power);
+    granade->SetLinearVelocity(grenadeVel);
+}
+
+b2Body* GameWorld::createBanana(b2Body* worm, int direction, float explosionTimer){
+    int id = this->lastProjectileId;
+    b2Body* body = createProjectile(worm, direction, GREEN_GRENADE_WIDTH, GREEN_GRENADE_WIDTH, BANANA_RESTITUTION);
+
+    Banana* redGrenadeEntity = new Banana(body, entitiesToRemove, entitiesToAdd, id, RED_GRENADE_DAMAGE, RED_GRENADE_BLAST_RADIOUS, explosionTimer);
+    body->GetUserData().pointer = reinterpret_cast<uintptr_t>(redGrenadeEntity);
+
+    return body;
+}
+
+void GameWorld::wormThrowBanana(int id, float angle, int direction, float power, float explosionTimer){
+    checkWormExists(id);
+    b2Body* worm = this->worms[id];
+    b2Body* banana = createBanana(worm, direction, explosionTimer);
+    b2Vec2 bananaVel = calculatVelocityOfProjectile(PROJECTILE_MAX_SPEED, angle, direction, power);
+    banana->SetLinearVelocity(bananaVel);
 }
 
 void GameWorld::wormHitWithBat(int id){
@@ -191,38 +262,44 @@ bool GameWorld::teleportWorm(int id, float x, float y){
 }
 
 void GameWorld::removeWorm(b2Body* worm){
+    bool erased = false;
     for(auto it = this->worms.begin(); it != this->worms.end(); ++it){
         if(it->second == worm){
             this->worms.erase(it);
+            erased = true;
             break;
         }
+    }
+    if(!erased){
+        throw std::invalid_argument("Projectile not found");
     }
 }
 
 void GameWorld::removeProjectile(b2Body* projectile){
+    bool erased = false;
     for(auto it = this->projectiles.begin(); it != this->projectiles.end(); ++it){
         if(it->second == projectile){
             this->projectiles.erase(it);
+            erased = true;
             break;
         }
+    }
+    if(!erased){
+        throw std::invalid_argument("Projectile not found");
     }
 }
 
 void GameWorld::removeEntities(){
     for(b2Body* body : this->entitiesToRemove){
         Entity* entity = (Entity*) body->GetUserData().pointer;
-        if(typeid(*entity) == typeid(Rocket)){
+        EntityType entityType = entity->getEntityType();
+        if(entityType == EntityInstantProjectile || entityType == EntityDelayedProjectile){
             removeProjectile(body);
         }
         this->world->DestroyBody(body);
         delete entity;
     }
     this->entitiesToRemove.clear();
-}
-
-void GameWorld::update() {
-    this->world->Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
-    removeEntities();
 }
 
 bool GameWorld::allEntitiesAtRest(){
@@ -236,6 +313,34 @@ bool GameWorld::allEntitiesAtRest(){
     return true;
 }
 
+void GameWorld::updateDelayedProjectiles(float deltaTime){
+    for(auto it = this->projectiles.begin(); it != this->projectiles.end(); ++it){
+        b2Body* projectile = it->second;
+        Entity* entity = (Entity*) projectile->GetUserData().pointer;
+        EntityType projectileType = entity->getEntityType();
+        if(projectileType == EntityDelayedProjectile){
+            DelayedProjectile* delayedProjectile = (DelayedProjectile*) entity;
+            delayedProjectile->update(deltaTime);
+        }
+    }
+}
+
+void GameWorld::addFragments(){
+    for(createEntity& fragment : this->entitiesToAdd){
+        b2Body* fragmentBody = fragment(this->lastProjectileId);
+        this->projectiles[this->lastProjectileId] = fragmentBody;
+        this->lastProjectileId++;
+    }
+    this->entitiesToAdd.clear();
+}
+
+void GameWorld::update() {
+    this->world->Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
+    updateDelayedProjectiles(TIME_STEP);
+    addFragments();
+    removeEntities();
+}
+
 GameDynamic* GameWorld::getGameStatus(int id){
     std::vector<WormDTO> wormsDTO;
     for (auto& worm : this->worms) {
@@ -245,27 +350,25 @@ GameDynamic* GameWorld::getGameStatus(int id){
 
     std::unordered_map<int, ExplosivesDTO> projectilesDTO;
     for (auto& projectile : this->projectiles) {
-        Rocket* rocketData = (Rocket*) projectile.second->GetUserData().pointer;
-        projectilesDTO.emplace(projectile.first, rocketData->getDTO());
+        Projectile* projectileData = (Projectile*) projectile.second->GetUserData().pointer;
+        projectilesDTO.emplace(projectile.first, projectileData->getDTO());
     }
     GameDynamic* dynamicData = new GameDynamic(id, wormsDTO, projectilesDTO);
     return dynamicData;
 }
 
 GameWorld::~GameWorld() {
-    //erase and delete worms
     for (auto& worm : this->worms) {
         this->world->DestroyBody(worm.second);
         delete (Worm*) worm.second->GetUserData().pointer;
     }
-    // //erase and delete projectiles
-    // for(b2Body* projectile : this->projectiles){
-    //     this->world->DestroyBody(projectile);
-    //     delete (Rocket*) projectile->GetUserData().pointer;
-    // }
-    //erase and delete the rest of the entities
+    //This shouldnt be necessary but just in case
+    for (auto& projectile : this->projectiles) {
+        this->world->DestroyBody(projectile.second);
+        delete (Projectile*) projectile.second->GetUserData().pointer;
+    }
+
     for (b2Body* body = this->world->GetBodyList(); body != NULL; body = body->GetNext()) {
-        //deleting user data
         Entity* entity = (Entity*) body->GetUserData().pointer;
         this->world->DestroyBody(body);
         delete entity;
