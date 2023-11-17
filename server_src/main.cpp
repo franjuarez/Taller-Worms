@@ -17,7 +17,7 @@ int main(int argc, char** argv) {
 
 
 	const std::string hostname(argv[1]);
-	Lobby lobby(hostname, 3, "");
+	Lobby lobby(hostname, 1, "");
 
 	lobby.run();
 	

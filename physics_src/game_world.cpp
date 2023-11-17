@@ -271,7 +271,7 @@ void GameWorld::removeWorm(b2Body* worm){
         }
     }
     if(!erased){
-        throw std::invalid_argument("Projectile not found");
+        throw std::invalid_argument("Worm not found");
     }
 }
 
@@ -293,6 +293,7 @@ void GameWorld::removeEntities(){
     for(b2Body* body : this->entitiesToRemove){
         Entity* entity = (Entity*) body->GetUserData().pointer;
         EntityType entityType = entity->getEntityType();
+        std::cout << "Removing entity of type " << entityType << std::endl;
         if(entityType == EntityInstantProjectile || entityType == EntityDelayedProjectile){
             removeProjectile(body);
         }

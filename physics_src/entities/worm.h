@@ -46,6 +46,8 @@ class Worm : public Entity {
 
     void takeDamage(float damage);
 
+    void die();
+
     void applyFallDamage(b2Vec2 vel);
 
     bool isDead();
