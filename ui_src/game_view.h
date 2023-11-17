@@ -27,7 +27,6 @@ private:
 	Mixer mixer;
 	Renderer renderer;
 	
-
 	//recursos
 	Font wormsFont;
 	Chunk sound;
@@ -36,15 +35,23 @@ private:
 	std::vector<Texture> rocketSprites;
 	
 	std::vector<Texture> dynamicSpriteSheets;
+	std::vector<Texture> waterSprites;
 	std::vector<BeamView> beamViews;
 	std::unordered_map<int, WormView> wormViews;
+	WormDTO currentWorm;
+	std::vector<Texture> hudTextures;
 	
-
+	float rocketAngle;
+	bool not_closed;
 	int camX;
 	int camY;
 	MouseHandler mouseHandler;
+
 	std::unordered_map<int, ProjectileView> projectileViews;
-	std::unordered_map<int, WeaponDTO> recievedProjectiles;
+	std::unordered_map<int, ExplosivesDTO> recievedProjectiles;
+
+	
+
 	int currentWormId;
 	int lookingDir;
 
@@ -52,15 +59,23 @@ private:
 	void loadWorms(std::vector<WormDTO>& recievedWorms);
 	void loadBeams(std::vector<BeamDTO>& beams);
 	void draw(int i);
+	void drawBeams(int i);
+	void drawWorms(int i);
+	void drawProjectiles(int i);
+	void drawWater(int i);
+	void drawUi(int i);
 	void returnKeyCase(int i);
-	void moveCase(int i);
-	void mouseMovementCase(int x, int y);
+	void moveCase(int i, int dir);
+	void backspaceKeyCase(int i);
+	void clickCase(int i, int x, int y);
+	void bCase(int i);
 
 public:
 	GameView(const std::string& hostname, const std::string& servname);
 	~GameView();
 
 	void start();
+	void stop();
 	void join();
 };
 

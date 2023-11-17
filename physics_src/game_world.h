@@ -1,37 +1,65 @@
 #ifndef GAME_WORLD_H
 #define GAME_WORLD_H
 
-#include <iostream>
-#include <unordered_map>
-
 #include <box2d/box2d.h>
+#include <iostream>
+#include <functional>
+#include <unordered_map>
+#include <unordered_set>
+
+#include "query_handlers/explosion_handler.h"
+#include "query_handlers/teleport_handler.h"
+#include "collision_handler.h"
 #include "listener.h"
 #include "physics_constants.h"
-#include "auxiliar_physics_functions.h"
-#include "../game_src/game_dynamic.h"
-#include "query_handlers/teleport_handler.h"
+#include "aux/auxiliar_functions.h"
 
-#include "entities/entity.h"
-#include "entities/water.h"
 #include "entities/worm.h"
 #include "entities/beam.h"
-#include "entities/rocket.h"
+#include "entities/water.h"
+#include "entities/projectiles/bazooka.h"
+#include "entities/projectiles/green_grenade.h"
+#include "entities/projectiles/red_grenade.h"
+#include "entities/projectiles/mortar.h"
+#include "entities/projectiles/banana.h"
+
+#include "../game_src/game_map.h"
+#include "../game_src/beam_dto.h"
+#include "../game_src/game_dynamic.h"
 
 class GameWorld {
 private:
     b2World* world;
     Listener* listener;
+    int lastProjectileId;
+    std::unordered_map<int, b2Body*> projectiles;
     std::unordered_map<int, b2Body*> worms;
-    std::vector<b2Body*> projectiles;
-    std::vector<b2Body*> entitiesToRemove;
+    std::unordered_set<b2Body*> entitiesToRemove;
+    std::vector<createEntity> entitiesToAdd;
 
     void createWater();
 
-    b2Body* createRocket(b2Body* worm, int direction);
+    void createBeam(float startingX, float startingY, float angle, bool large);
+
+    void createWorm(float startingX, float startingY, int id, int team, int health);
+
+    b2Body* createProjectile(b2Body* worm, int direction, float width, float height, float restitution);
+
+    b2Body* createBazooka(b2Body* worm, int direction);
+
+    b2Body* createMortar(b2Body* worm, int direction);
+
+    b2Body* createGreenGrenade(b2Body* worm, int direction, float explosionTimer);
+
+    b2Body* createRedGrenade(b2Body* worm, int direction, float explosionTimer);
+    
+    b2Body* createBanana(b2Body* worm, int direction, float explosionTimer);
 
     bool checkValidTpPosition(float x, float y);
 
     void checkWormExists(int id);
+
+    void updateDelayedProjectiles(float deltaTime);
 
     void removeWorm(b2Body* worm);
 
@@ -39,14 +67,13 @@ private:
     
     void removeEntities();
 
+    void addFragments();
+
 public:
-    GameWorld();
+    GameWorld(GameMap* gameMap);
 
     void update();
 
-    void createBeam(float startingX, float startingY, float angle, bool large);
-
-    void createWorm(float startingX, float startingY, int id, int team);
 
     void moveWorm(int id, int direction);
  
@@ -54,11 +81,21 @@ public:
     
     void jumpBackwardsWorm(int id);
 
-    void wormLaunchRocket(int id, float angle, int direction, float power);
+    void wormLaunchBazooka(int id, float angle, int direction, float power);
+
+    void wormLaunchMortar(int id, float angle, int direction, float power);
+    
+    void wormThrowGreenGrenade(int id, float angle, int direction, float power, float explosionTimer);
+    
+    void wormThrowRedGrenade(int id, float angle, int direction, float power, float explosionTimer);
+    
+    void wormThrowBanana(int id, float angle, int direction, float power, float explosionTimer);
 
     void wormHitWithBat(int id);
 
     bool teleportWorm(int id, float x, float y);
+
+    bool allEntitiesAtRest();
 
     GameDynamic* getGameStatus(int id);
 

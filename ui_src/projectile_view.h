@@ -3,14 +3,14 @@
 
 #include <SDL2pp/SDL2pp.hh>
 #include "constants.h"
-#include "../game_src/weapons_dto.h"
+#include "../game_src/explosives_dto.h"
 
 using namespace SDL2pp;
 using namespace uiConstants;
 
 class ProjectileView {
 private:
-	WeaponDTO rocket;
+	ExplosivesDTO rocket;
 	std::vector<Texture>& projectileSpriteSheets;
 	std::vector<std::vector<Rect>> frames;
 	int startingPoint;
@@ -21,12 +21,12 @@ private:
 public:
 
 	
-	ProjectileView(WeaponDTO& projectile, std::vector<Texture>& projectileSpriteSheets);
+	ProjectileView(ExplosivesDTO& projectile, std::vector<Texture>& projectileSpriteSheets);
 	~ProjectileView();
 
 	void explode(int i);
 	void display(int i, Renderer& renderer, int camX, int camY);
-	void update(WeaponDTO other, int i);
+	void update(ExplosivesDTO other, int i);
 
 };
 

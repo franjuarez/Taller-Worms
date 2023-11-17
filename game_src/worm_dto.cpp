@@ -2,8 +2,8 @@
 
 #include <iostream>
 
-WormDTO::WormDTO(int id, int dir, int team, int health, int alive, Position position, std::map<int, int> weapons) 
-: id(id), dir(dir), team(team), health(health), alive(alive), position(position), weapons(weapons) {}
+WormDTO::WormDTO(int id, int dir, int team, int health, Position position, std::map<int, int> weapons) 
+: id(id), dir(dir), team(team), health(health), position(position), weapons(weapons) {}
 
 int WormDTO::getId() {
     return this->id;
@@ -22,7 +22,7 @@ int WormDTO::getHealth() {
 }
 
 int WormDTO::isAlive() {
-    return this->alive;
+    return this->health > 0;
 }
 
 float WormDTO::getX() {
@@ -41,6 +41,14 @@ std::map<int, int> WormDTO::getWeapons(){
     return this->weapons;
 }
 
+void WormDTO::setTeam(int newTeam) {
+    this->team = newTeam;
+}
+
+void WormDTO::addHealth(int newHealth) {
+    this->health += newHealth;
+}
+
 
 WormDTO& WormDTO::operator=(const WormDTO& other) {
     if (this != &other) { // Check for self-assignment
@@ -48,7 +56,6 @@ WormDTO& WormDTO::operator=(const WormDTO& other) {
         dir = other.dir;
         team = other.team;
         health = other.health;
-        alive = other.alive;
         position = other.position;
     }
   return *this;

@@ -1,23 +1,24 @@
 #include "worm.h"
-
-Worm::Worm(b2Body* body, std::vector<b2Body*>& entitiesToRemove, int id, int team, int direction) : 
-        Entity(body, entitiesToRemove),
-        id(id), team(team), health(WORM_INITIAL_HEALTH), 
-        direction(direction), currentAction(STANDING) {}
+#include <iostream>
+Worm::Worm(b2Body* body, std::unordered_set<b2Body*>& entitiesToRemove, int id, int team, int direction, float health) : 
+        Entity(body, entitiesToRemove, EntityWorm),
+        id(id), team(team), health(health), 
+        direction(direction), currentAction(STANDING){}
 
 
 Worm::~Worm() {}
 
 WormDTO Worm::getDTO(){
     Position pos(body->GetPosition().x, body->GetPosition().y);
-    WormDTO dto(id, direction, 0, health, 0, pos, {});
+    WormDTO dto(id, direction, team, health, pos, {});
     return dto;
 }
 
 void Worm::takeDamage(float damage){
     this->health -= damage;
     if(this->health < 0){
-        entitiesToRemove.push_back(this->body);
+        this->health = 0;
+        entitiesToRemove.insert(this->body);
     }
 }
 
@@ -80,7 +81,7 @@ void Worm::handleExplosion(float damage, b2Vec2 explosionCenter){
     takeDamage(damage);
     b2Vec2 direction = this->body->GetPosition() - explosionCenter;
     direction.Normalize();
-    b2Vec2 impulse = b2Vec2(direction.x * damage / EXPLOSION_IMPULSE_FACTOR, direction.y * damage / EXPLOSION_IMPULSE_FACTOR);
+    b2Vec2 impulse = b2Vec2(direction.x * damage / EXPLOSION_IMPULSE_FACTOR_X, damage / EXPLOSION_IMPULSE_FACTOR_Y);
     this->body->ApplyLinearImpulseToCenter(impulse, true);
 }
 
@@ -113,6 +114,12 @@ void Worm::applyFallDamage(b2Vec2 vel){
     }
 }
 
+// WormDTO Worm::getDTO(){
+//     Position pos(body->GetPosition().x, body->GetPosition().y);
+//     WormDTO dto(id, 0, health, pos);
+//     return dto;
+// }
+
 void Worm::beginCollisionWithWater(Entity* otherBody, b2Contact* contact) {
     otherBody->beginCollisionWithWorm(this, contact);
 }
@@ -142,7 +149,7 @@ void Worm::beginCollisionWithBeam(Entity* otherBody, b2Contact* contact) {
 
     if(beam->isWalkable()){
         b2Vec2 normal = contact->GetManifold()->localNormal;
-        if(abs(normal.x) == 1){
+        if(abs(normal.x) == 1 || normal.y == -1){
             this->body->SetLinearDamping(0.0f);
             return;
         }
@@ -152,10 +159,11 @@ void Worm::beginCollisionWithBeam(Entity* otherBody, b2Contact* contact) {
     }
 }
 
-void Worm::beginCollisionWithRocket(Entity* otherBody, b2Contact* contact) {
+void Worm::beginCollisionWithProjectile(Entity* otherBody, b2Contact* contact) {
     applyFallDamage(this->body->GetLinearVelocity());
     otherBody->beginCollisionWithWorm(this, contact);
 }
+
 
 void Worm::beginCollisionWithWorm(Entity* otherBody, b2Contact* contact) {
     applyFallDamage(this->body->GetLinearVelocity());
@@ -163,36 +171,23 @@ void Worm::beginCollisionWithWorm(Entity* otherBody, b2Contact* contact) {
     UNUSED(contact);
 }
 
-void Worm::preSolveCollisionWithWater(Entity* otherBody, b2Contact* contact, const b2Manifold* oldManifold) {
-    otherBody->preSolveCollisionWithWorm(this, contact, oldManifold);
-}
-
 void Worm::preSolveCollisionWithBeam(Entity* otherBody, b2Contact* contact, const b2Manifold* oldManifold) {
     Beam* beam = (Beam*) otherBody;
     if(beam->isWalkable()){
         if(this->currentAction == STANDING){
-            this->body->SetLinearDamping(0.0f);
+            this->body->SetLinearDamping(INFINITE_DAMPING);
         }
         if(this->currentAction == MOVING){
-            b2Vec2 normal = contact->GetManifold()->localNormal;
+            b2Vec2 normal = contact->GetManifold()->localNormal;    
             moveOnWalkableBeam(this->body, normal);
         }
         if(this->currentAction == JUMPING){
             this->body->SetLinearDamping(STANDARD_DAMPING);
         }
         if(this->currentAction == EJECTED){
-            this->body->SetGravityScale(0.0f);
             this->body->SetLinearDamping(0.0f);
         }
     }
-}
-
-void Worm::preSolveCollisionWithRocket(Entity* otherBody, b2Contact* contact, const b2Manifold* oldManifold) {
-    otherBody->preSolveCollisionWithWorm(this, contact, oldManifold);
-}
-
-void Worm::postSolveCollisionWithWater(Entity* otherBody, b2Contact* contact, const b2ContactImpulse* impulse) {
-    otherBody->postSolveCollisionWithWorm(this, contact, impulse);
 }
 
 void Worm::postSolveCollisionWithBeam(Entity* otherBody, b2Contact* contact, const b2ContactImpulse* impulse) {

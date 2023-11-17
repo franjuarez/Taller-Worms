@@ -6,16 +6,16 @@
 
 #include "../shared_src/protocol.h"
 #include "../shared_src/queue.h"
-#include "../game_src/commands.h"
-#include "sender.h"
-#include "receiver.h"
+#include "../game_src/commands/command.h"
+#include "server_sender.h"
+#include "server_receiver.h"
 #include "status_broadcaster.h"
 
 class Player  {
 private:
     Protocol protocol;
-    Sender sender;
-    Receiver receiver;
+    ServerSender sender;
+    ServerReceiver receiver;
     bool talking = true;
     
 // Game queue va a ir a un monitor? no... las playerQueue van al monitos porque Queue es thread safe 

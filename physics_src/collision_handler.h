@@ -2,13 +2,9 @@
 #define COLLISION_HANDLER_H
 
 #include <unordered_map>
-#include <typeinfo>
-
+//include for runtime error
+#include <stdexcept>
 #include "entities/entity.h"
-#include "entities/beam.h"
-#include "entities/rocket.h"
-#include "entities/worm.h"
-#include "entities/water.h"
 
 typedef void (Entity::*beginCollisionFunc)(Entity*, b2Contact*);
 typedef void (Entity::*preSolveCollisionFunc)(Entity*, b2Contact*, const b2Manifold*);
@@ -17,10 +13,10 @@ typedef void (Entity::*endCollisionFunc)(Entity*, b2Contact*);
 
 class CollisionHandler {
 private:
-    std::unordered_map<std::string, beginCollisionFunc> beginCollisionMap;
-    std::unordered_map<std::string, preSolveCollisionFunc> preSolveCollisionMap;
-    std::unordered_map<std::string, postSolveCollisionFunc> postSolveCollisionMap;
-    std::unordered_map<std::string, endCollisionFunc> endCollisionMap;
+    std::unordered_map<EntityType, beginCollisionFunc> beginCollisionMap;
+    std::unordered_map<EntityType, preSolveCollisionFunc> preSolveCollisionMap;
+    std::unordered_map<EntityType, postSolveCollisionFunc> postSolveCollisionMap;
+    std::unordered_map<EntityType, endCollisionFunc> endCollisionMap;
 
 public:
     CollisionHandler();

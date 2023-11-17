@@ -1,10 +1,8 @@
 #ifndef WORM_H
 #define WORM_H
 
-#include "entity.h"
 #include "beam.h"
-#include "rocket.h"
-#include "../auxiliar_physics_functions.h"
+#include "../aux/auxiliar_functions.h"
 #include "../query_handlers/melee_handler.h"
 #include "../../game_src/worm_dto.h"
 
@@ -31,21 +29,18 @@ class Worm : public Entity {
 
     public:
     action currentAction;
-    Worm(b2Body* body, std::vector<b2Body*>& entitiesToRemove, int id, int team, int direction);
+    Worm(b2Body* body, std::unordered_set<b2Body*>& entitiesToRemove, int id, int team, int direction, float health);
 
-    virtual void beginCollisionWithWater(Entity* otherBody, b2Contact* contact);
-    virtual void beginCollisionWithBeam(Entity* otherBody, b2Contact* contact);
-    virtual void beginCollisionWithWorm(Entity* otherBody, b2Contact* contact);
-    virtual void beginCollisionWithRocket(Entity* otherBody, b2Contact* contact);
+    virtual void beginCollisionWithWater(Entity* otherBody, b2Contact* contact) override;
+    virtual void beginCollisionWithBeam(Entity* otherBody, b2Contact* contact) override;
+    virtual void beginCollisionWithWorm(Entity* otherBody, b2Contact* contact) override;
+    virtual void beginCollisionWithProjectile(Entity* otherBody, b2Contact* contact) override;
 
-    virtual void preSolveCollisionWithWater(Entity* otherBody, b2Contact* contact, const b2Manifold* oldManifold);
-    virtual void preSolveCollisionWithBeam(Entity* otherBody, b2Contact* contact, const b2Manifold* oldManifold);
-    virtual void preSolveCollisionWithRocket(Entity* otherBody, b2Contact* contact, const b2Manifold* oldManifold);
+    virtual void preSolveCollisionWithBeam(Entity* otherBody, b2Contact* contact, const b2Manifold* oldManifold) override;
 
-    virtual void postSolveCollisionWithWater(Entity* otherBody, b2Contact* contact, const b2ContactImpulse* impulse);
-    virtual void postSolveCollisionWithBeam(Entity* otherBody, b2Contact* contact, const b2ContactImpulse* impulse);
+    virtual void postSolveCollisionWithBeam(Entity* otherBody, b2Contact* contact, const b2ContactImpulse* impulse) override;
 
-    virtual void endCollisionWithBeam(Entity* otherBody, b2Contact* contact);
+    virtual void endCollisionWithBeam(Entity* otherBody, b2Contact* contact) override;
 
     ~Worm() override;
 
@@ -69,5 +64,6 @@ class Worm : public Entity {
 
     WormDTO getDTO();
 };
+
 
 #endif

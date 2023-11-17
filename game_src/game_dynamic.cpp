@@ -1,7 +1,7 @@
 #include "game_dynamic.h"
 
-GameDynamic::GameDynamic(int wormPlayingID, std::vector<WormDTO>worms, std::vector<WeaponDTO> proyectiles)
-: Serializable() ,wormPlayingID(wormPlayingID), worms(worms), proyectiles(proyectiles) {}
+GameDynamic::GameDynamic(int wormPlayingID, std::vector<WormDTO>worms, std::unordered_map<int, ExplosivesDTO> explosives)
+: Serializable() ,wormPlayingID(wormPlayingID), worms(worms), explosives(explosives) {}
 
 void GameDynamic::send(Protocol& protocol) {
     protocol.sendDynamic(this);
@@ -15,8 +15,8 @@ std::vector<WormDTO> GameDynamic::getWorms() {
     return this->worms;
 }
 
-std::vector<WeaponDTO> GameDynamic::getProjectiles() {
-    return this->proyectiles;
+std::unordered_map<int, ExplosivesDTO> GameDynamic::getExplosives() {
+    return this->explosives;
 }
 
 int GameDynamic::getWormPlayingID() {
@@ -29,6 +29,7 @@ GameDynamic& GameDynamic::operator=(const GameDynamic& other) {
     }
     this->wormPlayingID = other.wormPlayingID;
     this->worms = other.worms;
+    this->explosives = other.explosives;
     return *this;
 }
 

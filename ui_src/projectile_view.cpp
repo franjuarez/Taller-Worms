@@ -1,7 +1,7 @@
 #include "projectile_view.h"
 #include <SDL2pp/SDL2pp.hh>
 
-ProjectileView::ProjectileView(WeaponDTO& rocket, std::vector<Texture>& projectileSpriteSheet) :
+ProjectileView::ProjectileView(ExplosivesDTO& rocket, std::vector<Texture>& projectileSpriteSheet) :
 rocket(rocket), projectileSpriteSheets(projectileSpriteSheet), frames{{},{},{}} {
 	startingPoint = 0;
 
@@ -25,7 +25,7 @@ ProjectileView::~ProjectileView() {}
 void ProjectileView::explode(int i) {
 	if (currentFramesIndex != ROCKET_FRAMES)
 		return;
-	this->startingPoint = i
+	this->startingPoint = i;
 	this->currentFramesIndex = EXPLOSION_FRAMES;
 	this->defaultFramesIndex = POST_EXPLOSION_FRAMES;
 }
@@ -43,6 +43,8 @@ void ProjectileView::display(int i, Renderer& renderer, int camX, int camY) {
 	int y = ((rocket.getY()) * m_to_pix_y + WINDOW_HEIGHT) - camY;
 	double angle = -(atan(rocket.getVelY() / rocket.getVelX()) * (180.0 / M_PI)); 
 	angle += 90;
+	if (rocket.getVelX() > 0)
+		angle -= 180;
 
 	renderer.Copy(
 		this->projectileSpriteSheets[currentFramesIndex],
@@ -52,10 +54,8 @@ void ProjectileView::display(int i, Renderer& renderer, int camX, int camY) {
 	);
 }
 
-void ProjectileView::update(WeaponDTO other, int i) {
+void ProjectileView::update(ExplosivesDTO other, int i) {
 	this->rocket = other;
-	if (other.getBoomed())
-		explode();
 
 }
 

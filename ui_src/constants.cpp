@@ -1,12 +1,8 @@
 #include "constants.h"
 
+
 namespace uiConstants {
 
-const int STILL_FRAMES = 0;
-const int JUMPING_FRAMES = 1;
-const int WALKING_FRAMES = 2;
-const int SURRENDING_FRAMES = 3;
-const int POSTMORTEM_FRAMES = 4;
 //const int DEFAULT_FRAMES = STILL_FRAMES;
 
 extern const int ROCKET_FRAMES = 0;

@@ -6,7 +6,7 @@
 WormView::WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets, Font& wormsFont) : 
 	worm(worm),
 	dynamicSpriteSheets(dynamicSpriteSheets),
-	frames{{},{},{},{},{}},
+	frames{{},{},{},{},{},{},{}},
 	wormsFont(wormsFont) {
 	defaultFramesIndex = STILL_FRAMES;
 	currentFramesIndex = STILL_FRAMES;
@@ -52,7 +52,7 @@ WormView::WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets, Fon
 	}
 	
 
-	//frames for dying animation
+	//frames for dying/grave animation
 	for (int i = 0; i < 20; i++) {
 		x = 18;
 		w = 23;
@@ -61,8 +61,20 @@ WormView::WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets, Fon
 		frames[POSTMORTEM_FRAMES].push_back(Rect(x,y,w,h));
 	}
 
+	//frames for teleporting
+	frames[TPING_FRAMES].push_back(Rect(18, 16, 17, 32));
+	frames[TPING_FRAMES].push_back(Rect(0, 0, 59, 54));
+	frames[TPING_FRAMES].push_back(Rect(0, 60, 59, 59));
 
-	//frames for backflip animation
+
+	//frames for hitting animation
+	for (int i = 0; i < 4; i++) {
+		x = 0;
+		y = i * 104 + 16;
+		w = 85;
+		h = 82;
+		frames[HITTING_FRAMES].push_back(Rect(x,y,w,h));
+	}
 }
 
 
@@ -79,6 +91,20 @@ void WormView::move(int i) {
 
 	this->startingPoint = i;
 	this->currentFramesIndex = WALKING_FRAMES;
+}
+
+void WormView::hit(int i) {
+	if (currentFramesIndex == HITTING_FRAMES) 
+		return;
+	this->startingPoint = i;
+	this->currentFramesIndex = HITTING_FRAMES;
+}
+
+void WormView::tp(int i) {
+	if (currentFramesIndex == TPING_FRAMES)
+		return;
+	this->startingPoint = i;
+	this->currentFramesIndex = TPING_FRAMES;
 }
 
 void WormView::surrend() {
@@ -101,17 +127,32 @@ void WormView::display(int i, Renderer& renderer, int camX, int camY) {
 		currentFramesIndex = defaultFramesIndex;
 		currentFrame = 0;
 	}
+
+	int x,y,w,h;
+	if (currentFramesIndex != HITTING_FRAMES) {
+		x = ((worm.getX() - 0.5)  * m_to_pix_x) - camX;
+		y = ((worm.getY() + 0.5) * m_to_pix_y + WINDOW_HEIGHT) - camY;
+		w = 1*m_to_pix_x;
+		h = -1*m_to_pix_y;
+	} else {
+		x = (worm.getX() * m_to_pix_x - camX) - (this->frames[currentFramesIndex][currentFrame].GetW())/2;
+		y = (worm.getY() * m_to_pix_y + WINDOW_HEIGHT - camY) - (this->frames[currentFramesIndex][currentFrame].GetH()/2);
+		w = 3*m_to_pix_x;
+		h = -3*m_to_pix_y;
+	}
+	Rect destiny(x,y,w,h);
+		
 	
-	int x = ((worm.getX() - 0.5)  * m_to_pix_x) - camX;
-	int y = ((worm.getY() + 0.5) * m_to_pix_y + WINDOW_HEIGHT) - camY;
 	renderer.Copy(
 		this->dynamicSpriteSheets[currentFramesIndex],
-		this->frames[currentFramesIndex][currentFrame], 
-		Rect(x, y,1*m_to_pix_x, -1*m_to_pix_y),
+		this->frames[currentFramesIndex][currentFrame],
+		destiny,
 		0, NullOpt, worm.getDir()
 	);
 
 	//grafico la vida
+	if (!this->worm.isAlive())
+		return;
 	Texture hp(renderer,
 		wormsFont.RenderText_Solid(std::__cxx11::to_string(this->worm.getHealth()),
 		SDL_Color{0,0,0}));
@@ -126,7 +167,7 @@ void WormView::display(int i, Renderer& renderer, int camX, int camY) {
 void WormView::update(WormDTO other, int i) {
 	this->worm = other;
 
-	if ((this->worm.isAlive())) {
+	if (!(this->worm.isAlive())) {
 		die();
 	}
 

@@ -3,12 +3,17 @@
 
 namespace uiConstants {
 
+
 //worm animation constants
-extern const int STILL_FRAMES;
-extern const int JUMPING_FRAMES;
-extern const int WALKING_FRAMES;
-extern const int SURRENDING_FRAMES;
-extern const int POSTMORTEM_FRAMES;
+enum FrameType {
+	STILL_FRAMES = 0,
+	JUMPING_FRAMES = 1,
+	WALKING_FRAMES = 2,
+	SURRENDING_FRAMES = 3,
+	POSTMORTEM_FRAMES = 4,
+	TPING_FRAMES = 5,
+	HITTING_FRAMES = 6
+};
 
 //rocket animation constants
 extern const int ROCKET_FRAMES;
