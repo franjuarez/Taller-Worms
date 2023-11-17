@@ -1,7 +1,7 @@
 #include "team.h"
 
 Team::Team(int teamId) : teamId(teamId) {
-    this->idPosition = wormIDs.size() - 1;
+    this->idPosition = 0;
 }
 
 int Team::getNextWormID(){

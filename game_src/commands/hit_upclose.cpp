@@ -3,8 +3,9 @@
 
 HitUpclose::HitUpclose(int wormID) : Command(NO_TEAM_NEEDED, wormID), wormID(wormID) {}
 
-void HitUpclose::executeCommand(GameWorld& gameWorld) {
+bool HitUpclose::executeCommand(GameWorld& gameWorld) {
     gameWorld.wormHitWithBat(wormID);
+    return true;
 }
 
 void HitUpclose::send(Protocol& protocol) {

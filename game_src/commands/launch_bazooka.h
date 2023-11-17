@@ -14,7 +14,7 @@ private:
     float power;
 public:
     LaunchRocket(int wormID, int dir, float angle, float power);
-    void executeCommand(GameWorld& gameWorld) override;
+    bool executeCommand(GameWorld& gameWorld) override;
     void send(Protocol& protocol);
     int getID();
     int getDir();

@@ -258,7 +258,7 @@ void GameView::bCase(int i) {
 }
 
 void GameView::start() {
-	mixer.PlayChannel(-1, sound);
+	// mixer.PlayChannel(-1, sound);
 
 	int i = 0;
 	int t1 = SDL_GetTicks();

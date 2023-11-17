@@ -11,7 +11,7 @@ private:
 
     int teamId;
     int idPosition;
-    std::vector<int> wormIDs ;
+    std::vector<int> wormIDs;
 
 public:    
     explicit Team(int teamId);

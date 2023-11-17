@@ -4,9 +4,9 @@
 
 Move::Move(int id, int dir) : Command(NO_TEAM_NEEDED, id), wormID(id), dir(dir) {}
 
-void Move::executeCommand(GameWorld& gameWorld) {
-    // std::cout << "exec move\n";
+bool Move::executeCommand(GameWorld& gameWorld) {
     gameWorld.moveWorm(this->wormID, this->dir);
+    return false;
 }
 
 void Move::send(Protocol& protocol) {

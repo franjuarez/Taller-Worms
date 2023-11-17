@@ -12,7 +12,7 @@ private:
     int wormID;
 public:
     HitUpclose(int wormsID);
-    void executeCommand(GameWorld& gameWorld) override;
+    bool executeCommand(GameWorld& gameWorld) override;
     void send(Protocol& protocol);
     int getID();
     ~HitUpclose();

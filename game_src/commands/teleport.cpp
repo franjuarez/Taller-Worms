@@ -5,8 +5,9 @@
 Teleport::Teleport(int wormID, Position pos) : Command(NO_TEAM_NEEDED, wormID), wormID(wormID),
 pos(pos) {}
 
-void Teleport::executeCommand(GameWorld& gameWorld) {
+bool Teleport::executeCommand(GameWorld& gameWorld) {
     gameWorld.teleportWorm(wormID, pos.getX(), pos.getY());
+    return true;
 }
 
 void Teleport::send(Protocol& protocol) {
