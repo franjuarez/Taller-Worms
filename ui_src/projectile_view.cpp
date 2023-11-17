@@ -1,8 +1,8 @@
-#include "rocket_view.h"
+#include "projectile_view.h"
 #include <SDL2pp/SDL2pp.hh>
 
-RocketView::RocketView(WeaponDTO& rocket, std::vector<Texture>& rocketSpriteSheets) :
-rocket(rocket), dynamicSpriteSheets(rocketSpriteSheets), frames{{},{},{}} {
+ProjectileView::ProjectileView(WeaponDTO& rocket, std::vector<Texture>& projectileSpriteSheet) :
+rocket(rocket), projectileSpriteSheets(projectileSpriteSheet), frames{{},{},{}} {
 	startingPoint = 0;
 
 	frames[ROCKET_FRAMES].push_back(Rect(19,13,22,34));
@@ -20,17 +20,17 @@ rocket(rocket), dynamicSpriteSheets(rocketSpriteSheets), frames{{},{},{}} {
 
 }
 
-RocketView::~RocketView() {}
+ProjectileView::~ProjectileView() {}
 
-void RocketView::explode() {
+void ProjectileView::explode(int i) {
 	if (currentFramesIndex != ROCKET_FRAMES)
 		return;
-
+	this->startingPoint = i
 	this->currentFramesIndex = EXPLOSION_FRAMES;
 	this->defaultFramesIndex = POST_EXPLOSION_FRAMES;
 }
 
-void RocketView::display(int i, Renderer& renderer, int camX, int camY) {
+void ProjectileView::display(int i, Renderer& renderer, int camX, int camY) {
 	size_t currentFrame = (i - startingPoint) / 4;
 
 	if (currentFrame >= this->frames[currentFramesIndex].size()) {
@@ -45,14 +45,14 @@ void RocketView::display(int i, Renderer& renderer, int camX, int camY) {
 	angle += 90;
 
 	renderer.Copy(
-		this->dynamicSpriteSheets[currentFramesIndex],
+		this->projectileSpriteSheets[currentFramesIndex],
 		this->frames[currentFramesIndex][currentFrame], 
 		Rect(x, y,0.5*m_to_pix_x, 0.5*m_to_pix_y),
 		angle, Point(0, 0), false
 	);
 }
 
-void RocketView::update(WeaponDTO other, int i) {
+void ProjectileView::update(WeaponDTO other, int i) {
 	this->rocket = other;
 	if (other.getBoomed())
 		explode();

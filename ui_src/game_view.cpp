@@ -42,13 +42,15 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 		wormsFont(WORM_LIFE_FONT_PATH, 18),
 		backgroundSprite(renderer, BACKGROUND_PATH),
 		beamSprite(renderer, BEAM_PATH),
-		rocketSprite(renderer, Surface(ROCKET_PATH).SetColorKey(true,0)),
 		camX(0), camY(0), mouseHandler(camX, camY) {
 
 	sound.SetVolume(MUSIC_VOLUME);
 
 	client.start();
 	GameMap* gs = dynamic_cast<GameMap*>(client.getGameStatus());
+
+	rocketSprites.push_back(Texture(renderer, Surface(ROCKET_PATH).SetColorKey(true,0)));
+	//rocketSPrites.push_back(/*textura de la explosion*/);
 	
 	std::vector<WormDTO> recievedWorms = gs->getWorms();
 	loadWorms(recievedWorms);
@@ -83,12 +85,11 @@ void GameView::loadWorms(std::vector<WormDTO>& recievedWorms) {
 }
 
 void GameView::updateEntities(int i) {
-	// std::cout << "pide clientes" << std::endl;
 	GameDynamic* gs = dynamic_cast<GameDynamic*>(client.getGameStatus());
-	// std::cout << "termino de pedir al cliente" << std::endl;
+
 	std::vector<WormDTO> recievedWorms = gs->getWorms();
 	this->currentWormId = gs->getWormPlayingID();
-	// std::cout << "pidio worms" << std::endl;
+	
 	for (auto &worm : recievedWorms) {
 		this->wormViews.at(worm.getId()).update(worm, i);
 	}
@@ -98,11 +99,18 @@ void GameView::updateEntities(int i) {
 	no hago nada porque ya voy a actualizar en draw, si no esta lo agrego asi empiezo
 	a dibujarlo, no tengo que preocuparme por los que se sacaron esto tambien lo miro
 	a medida que actualizo
-
-	/*
-	
-
 	*/
+	
+	this->recievedProjectiles = gs->getProjectiles();
+	for (auto it = recievedProjectiles.begin(); it != recievedProjectiles.end(); it++) {
+		if (projectileViews.find(it->first) != projectileViews.end())
+			continue;
+		projectileViews.emplace(
+			it->second.getId(),
+			ProjectileView(it->second, rocketSprites)
+		);
+	}
+
 	//std::vector<WeaponDTO> recievedWeapons =  gs->getProjectiles();
 	//for (auto &weapon : recievedWeapons) {
 	//	this->rocketViews.try_emplace();
@@ -128,7 +136,8 @@ void GameView::draw(int i) {
 		it->second.display(i, this->renderer, camX, camY);
 	}
 
-	for (auto &p : this->proy) {
+	/*
+	for (auto &p : this->projectileViews) {
 		double angle = -(atan(p.getVelY() / p.getVelX()) * (180.0 / M_PI)); //angula de vel respecto de horizontal
 		angle += 90;//quiero que si es 0 tenga una rotacion de 90 grados
 		//std::cout << angle << std::endl;
@@ -140,6 +149,15 @@ void GameView::draw(int i) {
 				20, 20),
 			angle, Point(0, 0), 0 //
 			);
+	}*/
+
+	for (auto it = projectileViews.begin(); it != projectileViews.end(); it++) {
+		if (recievedProjectiles.find(it->first) != recievedProjectiles.end()) {
+			it->second.update(it->second, i);
+		} else {
+			it->second.explode(i);
+		}
+
 	}
 
 	/*
