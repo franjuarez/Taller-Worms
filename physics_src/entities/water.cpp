@@ -1,5 +1,5 @@
 #include "water.h"
-
+#include <iostream>
 Water::Water(b2Body* body, std::unordered_set<b2Body*>& entitiesToRemove) : Entity(body, entitiesToRemove, EntityWater) {}
 
 Water::~Water() {}
@@ -21,6 +21,7 @@ void Water::beginCollisionWithWorm(Entity* otherBody, b2Contact* contact) {
 }
 
 void Water::beginCollisionWithProjectile(Entity* otherBody, b2Contact* contact) {
+    std::cout << "Water::beginCollisionWithProjectile" << std::endl;
     this->entitiesToRemove.insert(otherBody->body);
     UNUSED(otherBody);
     UNUSED(contact);

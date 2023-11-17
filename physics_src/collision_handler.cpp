@@ -1,4 +1,5 @@
 #include "collision_handler.h"
+#include <iostream>
 
 CollisionHandler::CollisionHandler(){
     this->beginCollisionMap[EntityWorm] = &Entity::beginCollisionWithWorm;
@@ -20,6 +21,7 @@ CollisionHandler::CollisionHandler(){
 void CollisionHandler::handleBeginCollision(Entity* bodyA, Entity* bodyB, b2Contact* contact) {
     EntityType typeA = bodyA->getEntityType();
     EntityType typeB = bodyB->getEntityType();
+
     if (this->beginCollisionMap.find(typeA) != this->beginCollisionMap.end()) {
         (bodyB->*beginCollisionMap[typeA])(bodyA, contact);
     } else{

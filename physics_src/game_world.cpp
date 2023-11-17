@@ -36,7 +36,7 @@ void GameWorld::createWater(){
     b2Body* body = this->world->CreateBody(&bd);
     b2FixtureDef fd;
     b2PolygonShape shape;
-    shape.SetAsBox(WORLD_WIDTH/2, 0.1f);
+    shape.SetAsBox(WORLD_WIDTH * 2, 0.1f);
     fd.shape = &shape;
     body->CreateFixture(&fd);
 
@@ -293,7 +293,6 @@ void GameWorld::removeEntities(){
     for(b2Body* body : this->entitiesToRemove){
         Entity* entity = (Entity*) body->GetUserData().pointer;
         EntityType entityType = entity->getEntityType();
-        std::cout << "Removing entity of type " << entityType << std::endl;
         if(entityType == EntityInstantProjectile || entityType == EntityDelayedProjectile){
             removeProjectile(body);
         }
@@ -307,6 +306,7 @@ bool GameWorld::allEntitiesAtRest(){
     for (b2Body* body = this->world->GetBodyList(); body != NULL; body = body->GetNext()) {
         if(body->GetType() == b2_dynamicBody){
             if(!body->GetLinearVelocity().Length() == 0){
+                Entity* entity = (Entity*) body->GetUserData().pointer;
                 return false;
             }
         }

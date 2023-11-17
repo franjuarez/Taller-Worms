@@ -30,11 +30,11 @@
 #define WORM_DENSITY 1.0f
 #define WORM_FRICTION 0.3f
 #define WORM_DAMPING 0.3f
-#define WORM_INITIAL_HEALTH 1000
+#define WORM_INITIAL_HEALTH 100
 
 //Move constants    
 #define MOVE_VELOCITY 0.4f
-#define VELOCITY_SMOOTH_BREAK MOVE_VELOCITY/4.0f
+#define VELOCITY_SMOOTH_BREAK MOVE_VELOCITY/2.0f
 
 //Jump constants
 #define JUMP_FORWARD_MOVEMENT_X 1.0f
@@ -94,9 +94,9 @@
 #define EXPLOSION_IMPULSE_FACTOR_Y 4.0f
 
 //Bat constants
-#define BAT_HEIGHT 0.2f
-#define BAT_WIDTH 1.0f
+#define BAT_HEIGHT 0.4f
+#define BAT_WIDTH 1.3f
 #define BAT_DAMAGE 10.0f
-#define BAT_IMPULSE_FACTOR 1.0f
+#define BAT_IMPULSE_FACTOR 0.1f
 
 #endif

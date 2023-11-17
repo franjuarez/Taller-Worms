@@ -92,17 +92,26 @@ void Worm::hitWithBat(){
     b2Vec2 pos = this->body->GetPosition();
     MeleeQueryCallback callback;
     b2AABB aabb;
-    float batDir = this->direction == LEFT ? -BAT_WIDTH : BAT_WIDTH;
-    aabb.lowerBound = b2Vec2(pos.x, pos.y - BAT_HEIGHT/2);
+    float batDir = this->direction == LEFT ? -BAT_WIDTH: BAT_WIDTH;
+    float delta = this->direction == LEFT ? -BAT_WIDTH : 0;
+    aabb.lowerBound = b2Vec2(pos.x + delta, pos.y - BAT_HEIGHT/2);
     aabb.upperBound = b2Vec2(pos.x + batDir, pos.y + BAT_HEIGHT/2);
+    // std::cout << "Worm pos: " << pos.x << ", " << pos.y << std::endl; 
+    // std::cout << "Bat AABB: " << aabb.lowerBound.x << ", " << aabb.lowerBound.y << " - " << aabb.upperBound.x << ", " << aabb.upperBound.y << std::endl;
     b2World* world = this->body->GetWorld();
     world->QueryAABB(&callback, aabb);
     for(b2Body* hitBody : callback.foundBodies) {
-        //Assuming it just affects worms
+        //Assuming it just affects worms other than me
+        if(hitBody == this->body){
+            continue;
+        }
+
         Worm* worm = (Worm*) hitBody->GetUserData().pointer;
         b2Vec2 direction = hitBody->GetPosition() - pos;
         direction.Normalize();
-        b2Vec2 impulse = b2Vec2(direction.x * BAT_DAMAGE / BAT_IMPULSE_FACTOR, direction.y * BAT_DAMAGE / BAT_IMPULSE_FACTOR);
+        b2Vec2 impulse = b2Vec2(direction.x * BAT_DAMAGE / BAT_IMPULSE_FACTOR, 0.8 * BAT_DAMAGE / BAT_IMPULSE_FACTOR);
+        // b2Vec2 impulse = b2Vec2(1000,1000);
+        std::cout << "Applying impulse: " << impulse.x << ", " << impulse.y << std::endl;
         hitBody->ApplyLinearImpulseToCenter(impulse, true);
         worm->takeDamage(BAT_DAMAGE);
     }
