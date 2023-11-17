@@ -10,13 +10,17 @@ enum /*Direction*/ {
     BACKWARD_DIR,
 };
 
-enum /*PROJECTILE_TYPE*/{
-    SIMPLE_ROCKET = 0,
-    BASEBALL_BAT,
+enum /*WEAPON_TYPE*/{
+    BAZOOKA = 0,
+    GREEN_GRENADE,
+    BAT,
+    TP,
+    MORTAR,
+    RED_GRENADE,
+    BANANA,
 };
 
-
-#define ALIVE = 0;
-#define BOOMED = 0;
+#define AMOUNT_OF_WEAPONS 7
+#define INFINITE_AMUNITION -1
 
 #endif

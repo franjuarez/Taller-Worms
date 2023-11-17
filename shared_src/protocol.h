@@ -14,7 +14,7 @@
 
 class GameDynamic; class GameMap; class Serializable;
 class Command; class Move; class Jump; class LaunchRocket;
-class Teleport; class HitUpclose;
+class Teleport; class HitUpclose; class ThrowGrenade;
 
 struct ClosedSocket : public std::runtime_error {
     ClosedSocket() : std::runtime_error("Socket is closed") {} 
@@ -42,6 +42,9 @@ private:
     void sendString(const std::string& str);
     std::string receiveString();
 
+    void sendChar(char c);
+    char receiveChar();
+
 
     void sendBeams(std::vector<BeamDTO> beams);
     std::vector<BeamDTO> receiveBeams();
@@ -58,8 +61,8 @@ private:
     void sendMapNames(std::vector<std::string>& mapNames);
     std::vector<std::string> receiveMapNames();
 
-    void sendWeaponsMap(std::map<int, int> weapons);
-    std::map<int, int> receiveWeaponsMap();
+    void sendWeaponsMap(std::vector<int> weapons);
+    std::vector<int> receiveWeaponsMap();
 
     GameMap* receiveMap();
     GameDynamic* receiveDynamic();
@@ -67,6 +70,7 @@ private:
     Move* receiveMove();
     Jump* receiveJump();
     LaunchRocket* receiveLaunchRocket();
+    ThrowGrenade* receiveThrowGrenade();
     Teleport* receiveTeoleport();
     HitUpclose* receiveHitUpclose();
 
@@ -88,6 +92,8 @@ public:
     void sendJump(Jump* jump);
 
     void sendLaunchRocket(LaunchRocket* attack);
+
+    void sendThrowGrenade(ThrowGrenade* throwGrenade);
 
     void sendTeleport(Teleport* teleport);
     

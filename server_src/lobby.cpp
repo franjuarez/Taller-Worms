@@ -2,6 +2,7 @@
 #include "game_loop.h"
 #include "status_broadcaster.h"
 
+#include "../game_src/constants_game.h"
 #include "../game_src/worm_dto.h"
 #include "../game_src/beam_dto.h"
 #include "../game_src/game_map.h"
@@ -45,8 +46,9 @@ void Lobby::run() {
     std::vector<WormDTO> worms;
     Position pos(9.7, 11.0);
     Position pos2(9.89, 12.1);
-    worms.push_back(WormDTO(2, 0, 1, 100, pos, {}));
-    worms.push_back(WormDTO(1, 0, 2,  100, pos2, {}));
+    //  {bazooka, green grenade, bat, tp, mortar, red grenade, banana}
+    worms.push_back(WormDTO(2, 0, 1, 100, pos, {INFINITE_AMUNITION, INFINITE_AMUNITION, INFINITE_AMUNITION, INFINITE_AMUNITION, INFINITE_AMUNITION, INFINITE_AMUNITION, INFINITE_AMUNITION}));
+    worms.push_back(WormDTO(1, 0, 2,  100, pos2, {INFINITE_AMUNITION, INFINITE_AMUNITION, INFINITE_AMUNITION, INFINITE_AMUNITION, INFINITE_AMUNITION, INFINITE_AMUNITION, INFINITE_AMUNITION}));
 
     beams.push_back(BeamDTO(6, Position(10.0f, 10.0f), 0));
 	beams.push_back(BeamDTO(6, Position(16.0f, 8.0f), 0));
