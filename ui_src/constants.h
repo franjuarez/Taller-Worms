@@ -3,6 +3,8 @@
 
 namespace uiConstants {
 
+
+//worm animation constants
 enum FrameType {
 	STILL_FRAMES = 0,
 	JUMPING_FRAMES = 1,
@@ -12,6 +14,11 @@ enum FrameType {
 	TPING_FRAMES = 5,
 	HITTING_FRAMES = 6
 };
+
+//rocket animation constants
+extern const int ROCKET_FRAMES;
+extern const int EXPLOSION_FRAMES;
+extern const int POST_EXPLOSION_FRAMES;
 
 extern const int MUSIC_VOLUME;
 
