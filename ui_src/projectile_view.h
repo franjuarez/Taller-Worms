@@ -21,7 +21,7 @@ private:
 public:
 
 	
-	ProjectileView(ExplosivesDTO& projectile, std::vector<Texture>& projectileSpriteSheets);
+	ProjectileView(ExplosivesDTO projectile, std::vector<Texture>& projectileSpriteSheets);
 	~ProjectileView();
 
 	void explode(int i);
