@@ -4,13 +4,11 @@
 
 #define FPS 60.0f
 #define RATE (1000.f / FPS)
-#define TURN_TIME 10
+#define TURN_TIME 30
 
 GameLoop::GameLoop(Queue<Command*>& commandsQueue, StatusBroadcaster& statusBroadcaster, GameMap* gameMap, std::vector<Team> teams)
 : commandsQueue(commandsQueue), statusBroadcaster(statusBroadcaster), gameWorld(gameMap), teams(teams) {
 	this->teamPlayingID = 0;
-	this->wormPlayingID = teams[teamPlayingID].getNextWormID();
-	std::cout << wormPlayingID << std::endl;
 	this->wormPlayingHealth = 100;
 	this->waitingForStatic = false;
 	this->start_time = std::chrono::steady_clock::now();
@@ -62,6 +60,7 @@ void GameLoop::loopLogic() {
 
 
 void GameLoop::start() {
+	this->wormPlayingID = teams[teamPlayingID].getNextWormID();
 	while(true) {
 		loopLogic();
 		usleep(RATE*1000);
@@ -83,7 +82,7 @@ void GameLoop::changeWormPlaying() {
 	}
 	wormPlayingID = teams[teamPlayingID].getNextWormID();
 	this->start_time = std::chrono::steady_clock::now();
-	std::cout << "Changing Turn! Team: " << teamPlayingID << " Worm: " << wormPlayingID << std::endl;
+	// std::cout << "Changing Turn! Team: " << teamPlayingID << " Worm: " << wormPlayingID << std::endl;
 }
 
 GameLoop::~GameLoop() {}

@@ -1,14 +1,11 @@
 #include "team.h"
 
 Team::Team(int teamId) : teamId(teamId) {
-    this->idPosition = wormIDs.size();
-    // this->idPosition = 0;
+    this->idPosition = 0;
 }
 
 int Team::getNextWormID(){
-    std::cout <<"Position before: " << idPosition << std::endl;
     this->idPosition = (this->idPosition + 1) % this->wormIDs.size();
-    std::cout << "Position after: " << idPosition << std::endl;
     return this->wormIDs[this->idPosition];
 }
 
