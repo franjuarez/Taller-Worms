@@ -263,7 +263,6 @@ void GameView::start() {
 	int i = 0;
 	int t1 = SDL_GetTicks();
 	//float durationInSeconds;
-
 	while(not_closed) {
 		SDL_Event event;
         //unsigned int frame_ticks = SDL_GetTicks();
@@ -306,7 +305,6 @@ void GameView::start() {
 			}
 
 		}
-		
 		draw(i);
 
 		int t2 = SDL_GetTicks();

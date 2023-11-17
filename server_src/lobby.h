@@ -9,9 +9,7 @@
 #include "../shared_src/thread.h"
 #include "team.h"
 
-
 class Lobby {
-
 private:
     const std::string& hostname;
     Socket skt;

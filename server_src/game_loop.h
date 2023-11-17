@@ -29,9 +29,9 @@ private:
     int wormPlayingID;
     int wormPlayingHealth;
     bool waitingForStatic;
-    void loopLogic();
     std::chrono::steady_clock::time_point start_time; 
 
+    void loopLogic();
     void changeWormPlaying();
 public:
     GameLoop(Queue<Command*>& commandsQueue, StatusBroadcaster& statusBroadcaster, GameMap* gameMap, std::vector<Team> teams);

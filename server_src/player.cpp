@@ -7,6 +7,8 @@ receiver(protocol, commandQueue, talking),
 commandsQueue(commandQueue), 
 playerQueue(90) {
     playerQueue.push(gameMap);
+    GameDynamic* gameDynamic = new GameDynamic(-1, {}, {});
+    playerQueue.push(gameDynamic);
 }
 
 Queue<Serializable*>* Player::getPlayerQueue() {
