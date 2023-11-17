@@ -32,4 +32,15 @@ float ExplosivesDTO::getVelY() {
     return this->velY;
 }
 
+ExplosivesDTO& ExplosivesDTO::operator=(const ExplosivesDTO& other) {
+    if (this != &other) { // Check for self-assignment
+        id = other.id;
+        proyectileType = other.proyectileType;
+        velY = other.velY;
+        velX = other.velX;
+        position = other.position;
+    }
+  return *this;
+}
+
 ExplosivesDTO::~ExplosivesDTO() {}

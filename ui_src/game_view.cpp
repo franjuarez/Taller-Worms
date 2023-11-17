@@ -210,7 +210,7 @@ void GameView::drawProjectiles(int i) {
 	por cada wormView busco si esta en los recibidos. si esta lo actualizo usando justamente
 	su nueva intancia. si no esta es porque choco y por ende tengo que indicarle que explote
 	*/
-
+	
 	for (auto it = projectileViews.begin(); it != projectileViews.end(); it++) {
 		if (recievedProjectiles.find(it->first) != recievedProjectiles.end()) {
 			it->second.update(recievedProjectiles.at(it->first), i);
@@ -259,7 +259,6 @@ void GameView::draw(int i) {
 	mouseHandler.updateCam();
 
 	renderer.Clear();
-	
 	renderer.Copy(backgroundSprite, NullOpt, NullOpt);
 	drawBeams(i);
 	drawWorms(i);

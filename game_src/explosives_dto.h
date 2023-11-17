@@ -14,6 +14,7 @@ private:
     float velY;
 public:
     ExplosivesDTO(int proyectileType, int id, Position position, float velX, float velY);
+    ExplosivesDTO& operator=(const ExplosivesDTO& worm);
     int getType();
     int getID();
     float getX();
