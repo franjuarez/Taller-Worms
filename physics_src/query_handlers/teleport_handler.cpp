@@ -7,7 +7,6 @@ bool TeleportQueryCallback::ReportFixture(b2Fixture* fixture) {
     if (type->getEntityType() != EntityBeam){
         return true;
     }
-    std::cout << "Found beam" << std::endl;
     validTeleport = false;
     return false;
 }
