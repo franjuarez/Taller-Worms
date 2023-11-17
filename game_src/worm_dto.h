@@ -3,7 +3,7 @@
 
 
 #include "position.h"
-#include <map>
+#include <vector>
 // should it be locked? 
 
 class WormDTO {
@@ -15,10 +15,10 @@ private:
     int health;
     Position position;
     // type of weapon and amount
-    std::map<int, int> weapons;
+    std::vector<int> weapons;
 
 public:
-    WormDTO(int id, int dir, int team, int health, Position position, std::map<int, int> weapons);
+    WormDTO(int id, int dir, int team, int health, Position position, std::vector<int> weapons);
     int getId();
     int getDir();
     int getTeam();
@@ -29,7 +29,7 @@ public:
     void setTeam(int team);
     void addHealth(int health);
     Position getPosition();
-    std::map<int, int> getWeapons();
+    std::vector<int> getWeapons();
     WormDTO& operator=(const WormDTO& worm);
     ~WormDTO();
 };

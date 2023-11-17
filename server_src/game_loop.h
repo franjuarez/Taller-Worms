@@ -31,8 +31,8 @@ private:
     bool waitingForStatic;
     std::chrono::steady_clock::time_point start_time; 
 
-    void loopLogic();
-    void changeWormPlaying();
+    void loopLogic(int64_t passed_time);
+    void changeWormPlaying(std::vector<WormDTO> worms);
 public:
     GameLoop(Queue<Command*>& commandsQueue, StatusBroadcaster& statusBroadcaster, GameMap* gameMap, std::vector<Team> teams);
     ~GameLoop();

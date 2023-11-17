@@ -27,6 +27,7 @@ public:
     std::vector<WormDTO> getWorms();
     std::unordered_map<int, ExplosivesDTO> getExplosives();
     int getWormPlayingID();
+    void setWormPlayingID(int wormPlayingID);
     GameDynamic& operator=(const GameDynamic& other);
     GameDynamic(const GameDynamic& other);
     ~GameDynamic();

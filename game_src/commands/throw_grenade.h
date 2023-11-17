@@ -1,20 +1,21 @@
-#ifndef ATTACK_H
-#define ATTACK_H
+#ifndef THROW_GRENADE_H
+#define THROW_GRENADE_H
 
 #include "command.h"
 #include "../../shared_src/protocol.h"
 
 class Protocol;
 
-class LaunchRocket : public Command {
+class ThrowGrenade : public Command {
 private:
     int type;
     int wormID;
     int dir;
     float angle;
     float power;
+    int timer;
 public:
-    LaunchRocket(int type, int wormID, int dir, float angle, float power);
+    ThrowGrenade(int type, int wormID, int dir, float angle, float power, int timer);
     bool executeCommand(GameWorld& gameWorld) override;
     void send(Protocol& protocol);
     int getType();
@@ -22,6 +23,7 @@ public:
     int getDir();
     float getAngle();
     float getPower();
-    ~LaunchRocket();
+    int getTimer();
+    ~ThrowGrenade();
 };
 #endif

@@ -1,16 +1,17 @@
 #include "worm.h"
 #include <iostream>
-Worm::Worm(b2Body* body, std::unordered_set<b2Body*>& entitiesToRemove, int id, int team, int direction, float health) : 
+Worm::Worm(b2Body* body, std::unordered_set<b2Body*>& entitiesToRemove, int id, int team, int direction, float health, std::vector<int> weapons) : 
         Entity(body, entitiesToRemove, EntityWorm),
         id(id), team(team), health(health), 
-        direction(direction), currentAction(STANDING){}
+        direction(direction), currentAction(STANDING),
+        weapons(weapons) {}
 
 
 Worm::~Worm() {}
 
 WormDTO Worm::getDTO(){
     Position pos(body->GetPosition().x, body->GetPosition().y);
-    WormDTO dto(id, direction, team, health, pos, {});
+    WormDTO dto(id, direction, team, health, pos, {INFINITE_AMUNITION, INFINITE_AMUNITION, INFINITE_AMUNITION, INFINITE_AMUNITION, INFINITE_AMUNITION, INFINITE_AMUNITION, INFINITE_AMUNITION});
     return dto;
 }
 
@@ -31,6 +32,16 @@ bool Worm::isDead(){
 
 int Worm::getId(){
     return this->id;
+}
+
+void Worm::reduceAmmo(int weaponId){
+    if(weaponId < 0 || weaponId >= this->weapons.size()){
+        throw std::runtime_error("Invalid weapon id");
+    }
+    if(this->weapons[weaponId] == INFINITE_AMUNITION){
+        return;
+    }
+    this->weapons[weaponId]--;
 }
 
 void Worm::move(int direction){

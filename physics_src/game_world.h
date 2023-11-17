@@ -41,19 +41,19 @@ private:
 
     void createBeam(float startingX, float startingY, float angle, bool large);
 
-    void createWorm(float startingX, float startingY, int id, int team, int health);
+    void createWorm(float startingX, float startingY, int id, int team, int health, std::vector<int> weapons);
 
-    b2Body* createProjectile(b2Body* worm, int direction, float width, float height, float restitution);
+    b2Body* createProjectile(b2Body* worm, int weaponId, int direction, float width, float height, float restitution);
 
     b2Body* createBazooka(b2Body* worm, int direction);
 
     b2Body* createMortar(b2Body* worm, int direction);
 
-    b2Body* createGreenGrenade(b2Body* worm, int direction, float explosionTimer);
+    b2Body* createGreenGrenade(b2Body* worm, int direction, int explosionTimer);
 
-    b2Body* createRedGrenade(b2Body* worm, int direction, float explosionTimer);
+    b2Body* createRedGrenade(b2Body* worm, int direction, int explosionTimer);
     
-    b2Body* createBanana(b2Body* worm, int direction, float explosionTimer);
+    b2Body* createBanana(b2Body* worm, int direction, int explosionTimer);
 
     bool checkValidTpPosition(float x, float y);
 
@@ -74,7 +74,6 @@ public:
 
     void update();
 
-
     void moveWorm(int id, int direction);
  
     void jumpForwardWorm(int id);
@@ -85,11 +84,11 @@ public:
 
     void wormLaunchMortar(int id, float angle, int direction, float power);
     
-    void wormThrowGreenGrenade(int id, float angle, int direction, float power, float explosionTimer);
+    void wormThrowGreenGrenade(int id, float angle, int direction, float power, int explosionTimer);
     
-    void wormThrowRedGrenade(int id, float angle, int direction, float power, float explosionTimer);
+    void wormThrowRedGrenade(int id, float angle, int direction, float power, int explosionTimer);
     
-    void wormThrowBanana(int id, float angle, int direction, float power, float explosionTimer);
+    void wormThrowBanana(int id, float angle, int direction, float power, int explosionTimer);
 
     void wormHitWithBat(int id);
 

@@ -23,6 +23,10 @@ int GameDynamic::getWormPlayingID() {
     return this->wormPlayingID;
 }
 
+void GameDynamic::setWormPlayingID(int wormPlayingID) {
+    this->wormPlayingID = wormPlayingID;
+}
+
 GameDynamic& GameDynamic::operator=(const GameDynamic& other) {
     if (this == &other) {
         return *this;
