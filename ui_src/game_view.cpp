@@ -38,6 +38,7 @@
 #define CURRENT_WORM_INDICATOR_TEXTURE 0
 
 #define ROCKET_PATH "../resources/images/rocket.bmp"
+#define EXPLOSION_PATH "../resources/images/explosion.bmp"
 
 
 #include "../game_src/constants_game.h"
@@ -63,8 +64,7 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 		wormsFont(WORM_LIFE_FONT_PATH, 18),
 		backgroundSprite(renderer, BACKGROUND_PATH),
 		beamSprite(renderer, BEAM_PATH),
-		rocketSprite(renderer, Surface(ROCKET_PATH).SetColorKey(true,0)),
-		currentWorm(-1, 0, 0, 100, Position(0,0), {}), //incializo en estado invalido ver de mejorar eso con WormNull
+		currentWorm(-1, 0, 0, 100, Position(0,0), {}), //-1 para que se sepa que en realidad no hay alguien con turno
 		camX(0), camY(0), mouseHandler(camX, camY) {
 
 	this->not_closed = true;
@@ -73,12 +73,20 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 
 	client.start();
 	GameMap* gs = dynamic_cast<GameMap*>(client.getGameStatus());
+
+	//rocketSPrites.push_back(/*textura de la explosion*/);
 	
 	std::vector<WormDTO> recievedWorms = gs->getWorms();
 	loadWorms(recievedWorms);
 	
 	std::vector<BeamDTO> beams = gs->getBeams();
 	loadBeams(beams);
+
+
+	rocketSprites.push_back(Texture(renderer, Surface(ROCKET_PATH).SetColorKey(true,0)));
+	rocketSprites.push_back(Texture(renderer, Surface(EXPLOSION_PATH).SetColorKey(true,0)));
+	//le paso algo que pueda ser transparente si se agarra la porcion correcta para que se pueda hacer que desaparezca
+	rocketSprites.push_back(Texture(renderer, Surface(EXPLOSION_PATH).SetColorKey(true,0)));
 
 	dynamicSpriteSheets.push_back(Texture(renderer,Surface(STILL_WORM_PATH).SetColorKey(true, 0)));
 	dynamicSpriteSheets.push_back(Texture(renderer,Surface(JUMPING_WORM_PATH).SetColorKey(true, 0)));
@@ -133,12 +141,11 @@ void GameView::stop() {
 }
 
 void GameView::updateEntities(int i) {
-	// std::cout << "pide clientes" << std::endl;
 	GameDynamic* gs = dynamic_cast<GameDynamic*>(client.getGameStatus());
-	// std::cout << "termino de pedir al cliente" << std::endl;
+
 	std::vector<WormDTO> recievedWorms = gs->getWorms();
 	this->currentWormId = gs->getWormPlayingID();
-	// std::cout << "pidio worms" << std::endl;
+	
 	for (auto &worm : recievedWorms) {
 		this->wormViews.at(worm.getId()).update(worm, i);
 		if (worm.getId() == this->currentWormId) {
@@ -146,8 +153,24 @@ void GameView::updateEntities(int i) {
 		}
 	}
 
-	this->proy = gs->getExplosives();
-	// std::cout << "termino de parsear" << std::endl;
+	/*
+	aca deberia por cada cohete recibido, verificar si esta en mis cohetes, si esta
+	no hago nada porque ya voy a actualizar en draw, si no esta lo agrego asi empiezo
+	a dibujarlo, no tengo que preocuparme por los que se sacaron esto tambien lo miro
+	a medida que actualizo
+	*/
+	
+	this->recievedProjectiles = gs->getExplosives();
+	for (auto it = recievedProjectiles.begin(); it != recievedProjectiles.end(); it++) {
+		if (projectileViews.find(it->first) != projectileViews.end())
+			continue;
+		projectileViews.emplace(
+			it->second.getID(),
+			ProjectileView(it->second, rocketSprites)
+		);
+	}
+
+	
 }
 
 void GameView::drawBeams(int i) {
@@ -164,10 +187,12 @@ void GameView::drawWorms(int i) {
 	}
 }
 
+
 void GameView::drawProjectiles(int i) {
-	//for (auto &p : this->proy) {
+/*
 	for (auto it = this->proy.begin(); it != proy.end(); it++) {
 		double angle = -(atan(it->second.getVelY() / it->second.getVelX()) * (180.0 / M_PI)); //angula de vel respecto de horizontal
+
 		angle += 90;//quiero que si es 0 tenga una rotacion de 90 grados
 		//std::cout << angle << std::endl;
 		if (it->second.getVelX() < 0) angle -= 180;
@@ -179,6 +204,21 @@ void GameView::drawProjectiles(int i) {
 				20, 20),
 			angle, Point(0, 0), 0 //
 			);
+	}
+*/
+	/*
+	por cada wormView busco si esta en los recibidos. si esta lo actualizo usando justamente
+	su nueva intancia. si no esta es porque choco y por ende tengo que indicarle que explote
+	*/
+
+	for (auto it = projectileViews.begin(); it != projectileViews.end(); it++) {
+		if (recievedProjectiles.find(it->first) != recievedProjectiles.end()) {
+			it->second.update(recievedProjectiles.at(it->first), i);
+		} else {
+			it->second.explode(i);
+		}
+		it->second.display(i, renderer, camX, camY);
+
 	}
 }
 
@@ -226,6 +266,14 @@ void GameView::draw(int i) {
 	drawProjectiles(i);
 	drawWater(i);
 	drawUi(i);
+
+	/*
+	aca deberia por cada cohete que tengo, verificar si esta en el map recibido
+		* si esta actualizo
+		* si no esta le indico que explote
+		*lo dibujo
+		*chequeo si su animacion de explotar termino en cuyo caso lo remuevo
+	*/
 
 	//muestro la nueva pantalla
 	renderer.Present();

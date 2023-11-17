@@ -6,6 +6,7 @@
 #include <math.h>
 #include <cmath>
 #include "worm_view.h"
+#include "projectile_view.h"
 #include "mouse_handler.h"
 #include "../game_src/game_dynamic.h"
 #include "../client_src/client.h"
@@ -31,7 +32,7 @@ private:
 	Chunk sound;
 	Texture backgroundSprite;
 	Texture beamSprite;
-	Texture rocketSprite;
+	std::vector<Texture> rocketSprites;
 	
 	std::vector<Texture> dynamicSpriteSheets;
 	std::vector<Texture> waterSprites;
@@ -45,7 +46,12 @@ private:
 	int camX;
 	int camY;
 	MouseHandler mouseHandler;
-	std::unordered_map<int, ExplosivesDTO> proy;
+
+	std::unordered_map<int, ProjectileView> projectileViews;
+	std::unordered_map<int, ExplosivesDTO> recievedProjectiles;
+
+	
+
 	int currentWormId;
 	int lookingDir;
 
