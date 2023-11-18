@@ -20,6 +20,9 @@ enum /*WEAPON_TYPE*/{
     BANANA,
 };
 
+#define PLAYING -1
+#define ALL_LOST -2
+
 #define AMOUNT_OF_WEAPONS 7
 #define INFINITE_AMUNITION -1
 
