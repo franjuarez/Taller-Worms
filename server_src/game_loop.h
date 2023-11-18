@@ -32,6 +32,7 @@ private:
     std::chrono::steady_clock::time_point start_time; 
 
     void loopLogic(int64_t passed_time);
+    int updateWinningStatus();
     void changeWormPlaying(std::vector<WormDTO> worms);
 public:
     GameLoop(Queue<Command*>& commandsQueue, StatusBroadcaster& statusBroadcaster, GameMap* gameMap, std::vector<Team> teams);

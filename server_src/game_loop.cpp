@@ -29,8 +29,7 @@ void GameLoop::loopLogic(int64_t elapsed_time) {
 	if (waitingForStatic) {
 		gameDynamic->setWormPlayingID(NOONE_PLAYING);
 	}
-	statusBroadcaster.broadcast(gameDynamic);
-
+	
 	std::vector<WormDTO> worms = gameDynamic->getWorms();
 	int wormPlayingNewHealth;
 
@@ -47,6 +46,10 @@ void GameLoop::loopLogic(int64_t elapsed_time) {
 		}
 	}
 
+	int winningStatus = updateWinningStatus();
+	gameDynamic->setWinnerTeam(winningStatus);
+	statusBroadcaster.broadcast(gameDynamic);
+
 	if (wormPlayingHealth != wormPlayingNewHealth || elapsed_time > TURN_TIME * 1000 ) {
 		waitingForStatic = true;
 	}
@@ -57,6 +60,7 @@ void GameLoop::loopLogic(int64_t elapsed_time) {
 			changeWormPlaying(worms);
 		}
 	}
+
 }
 
 void GameLoop::start() {
@@ -64,7 +68,6 @@ void GameLoop::start() {
 	while(true) {
 		auto current_time = std::chrono::steady_clock::now();
 		auto elapsed_time = std::chrono::duration_cast<std::chrono::milliseconds>(current_time - this->start_time).count();
-
 		loopLogic(elapsed_time);
 		usleep(RATE*1000);
 
@@ -79,6 +82,7 @@ void GameLoop::changeWormPlaying(std::vector<WormDTO> worms) {
 			teamPlayingID = i;
 			break;
 		}
+
 	}
 
 	wormPlayingID = teams[teamPlayingID].getNextWormID();
@@ -90,6 +94,22 @@ void GameLoop::changeWormPlaying(std::vector<WormDTO> worms) {
 	}
 	this->start_time = std::chrono::steady_clock::now();
 	// std::cout << "Changing Turn! Team: " << teamPlayingID << " Worm: " << wormPlayingID << std::endl;
+}
+
+int GameLoop::updateWinningStatus() {
+	int teamsWithWorms = 0;
+	for (size_t i = 0; i < teams.size(); i++) {
+		if (teams[i].hasWorms()) {
+			teamsWithWorms++;
+		}
+	}
+
+	if (teamsWithWorms > 1) {
+		return PLAYING;
+	} else if (teamsWithWorms == 1) {
+		return teamPlayingID;
+	}
+	return ALL_LOST;
 }
 
 GameLoop::~GameLoop() {}
