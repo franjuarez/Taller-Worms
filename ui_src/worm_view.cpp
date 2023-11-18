@@ -10,8 +10,8 @@ WormView::WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets, Fon
 	dynamicSpriteSheets(dynamicSpriteSheets),
 	frames{11},
 	wormsFont(wormsFont) {
-	defaultFramesIndex = HOLDING_BAZOKA_FRAMES;//STILL_FRAMES;
-	currentFramesIndex = HOLDING_BAZOKA_FRAMES;//STILL_FRAMES;
+	defaultFramesIndex = STILL_FRAMES;
+	currentFramesIndex = STILL_FRAMES;
 	startingPoint = 0;
 	//looping = true;
 	float x, y, w, h;
