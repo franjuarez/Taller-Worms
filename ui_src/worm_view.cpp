@@ -1,12 +1,14 @@
 #include "worm_view.h"
 #include <SDL2pp/SDL2pp.hh>
+#include "../game_src/constants_game.h"
+
 
 
 
 WormView::WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets, Font& wormsFont) : 
 	worm(worm),
 	dynamicSpriteSheets(dynamicSpriteSheets),
-	frames{{},{},{},{},{},{},{}},
+	frames{11},
 	wormsFont(wormsFont) {
 	defaultFramesIndex = STILL_FRAMES;
 	currentFramesIndex = STILL_FRAMES;
@@ -75,8 +77,69 @@ WormView::WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets, Fon
 		h = 82;
 		frames[HITTING_FRAMES].push_back(Rect(x,y,w,h));
 	}
+
+	//frames for drawing the axe
+	for (int i = 0; i < 15; i++) {
+		x = 10;
+		y = i * 104 + 20;
+		w = 73;
+		h = 78;
+		frames[DRAWING_AXE_FRAMES].push_back(Rect(x,y,w,h));	
+	}
+
+	//frames for holding the axe still
+	for (int i = 12; i < 18; i++) {
+		x = 10;
+		y = i * 104 + 20;
+		w = 73;
+		h = 78;
+		frames[HOLDING_AXE_FRAMES].push_back(Rect(x,y,w,h));
+	}
+	for (int i = 17; i >= 12; i--) {
+		x = 10;
+		y = i * 104 + 20;
+		w = 73;
+		h = 78;
+		frames[HOLDING_AXE_FRAMES].push_back(Rect(x,y,w,h));
+	}
+
+	//frames for drawing bazoka
+	for (int i = 0; i < 7; i++) {
+		x = 13;
+		y = i*60 + 15;
+		w = 34;
+		h = 28;
+		frames[DRAWING_BAZOKA_FRAMES].push_back(Rect(x,y,w,h));
+	}
+
+	//frames for holding bazoka
+	for (int i = 0; i < 32; i++) {
+		x = 13;
+		y = i*60  + 17;
+		w = 34;
+		h = 25;
+		frames[HOLDING_BAZOKA_FRAMES].push_back(Rect(x,y,w,h));
+	}
+
 }
 
+void WormView::drawBazoka(int i) {
+	if (currentFramesIndex == DRAWING_BAZOKA_FRAMES && 
+		currentFramesIndex == HOLDING_BAZOKA_FRAMES)
+		return;
+	this->startingPoint = i;
+	this->currentFramesIndex = DRAWING_BAZOKA_FRAMES;
+	this->defaultFramesIndex = HOLDING_BAZOKA_FRAMES;
+}
+
+void WormView::drawAxe(int i) {
+	if (currentFramesIndex == DRAWING_AXE_FRAMES &&
+		currentFramesIndex == HOLDING_AXE_FRAMES)
+		return;
+	this->startingPoint = i;
+	this->currentFramesIndex = DRAWING_AXE_FRAMES;
+	this->defaultFramesIndex = HOLDING_AXE_FRAMES;
+}
 
 void WormView::jump(int i) {
 	if (currentFramesIndex == JUMPING_FRAMES)
@@ -119,17 +182,49 @@ void WormView::die() {
 }
 
 
-void WormView::display(int i, Renderer& renderer, int camX, int camY) {
-	size_t currentFrame = (i - startingPoint) / 4;
+void WormView::display(int i, Renderer& renderer, int camX, int camY, int mouseX, int mouseY) {
+	size_t currentFrame;
+	int flip;
 
-	if (currentFrame >= this->frames[currentFramesIndex].size()) {
-		startingPoint = i;
-		currentFramesIndex = defaultFramesIndex;
-		currentFrame = 0;
+	//si es un arma que estoy sosteniendo tengo que calcular los frames apuntando y la condicion de flip
+	if (currentFramesIndex == HOLDING_AXE_FRAMES
+		|| currentFramesIndex == HOLDING_BAZOKA_FRAMES) {
+
+		float dx = ((mouseX + camX) / m_to_pix_x) - this->worm.getX() ;
+		float dy = ((mouseY + camY - WINDOW_HEIGHT) / m_to_pix_y) - this->worm.getY();
+
+		flip = dx > 0 ? RIGHT_DIR : LEFT_DIR;
+
+		int angle;
+		if (dx == 0) {
+			angle = 0;
+		} else {
+			angle = atan(dy / dx) * (180 / M_PI);
+		}
+		if (dx < 0) angle *= -1;
+		
+		/*
+		ahora esta entre -90 y 90. tengo que mapear para ajustar al largo del frame de vectores actual.
+		el cual tiene -90 en las primeras posiciones y 90 en las ultimas		
+		*/
+
+		currentFrame = (((angle + 90.0f) / 180.0f) * (this->frames[currentFramesIndex].size()));
+		std::cout << currentFrame << std::endl;
+	} else { //si es una animacion calculo en base al frame en el que estoy
+		flip = worm.getDir();
+		currentFrame = (i - startingPoint) / 4;
+
+		if (currentFrame >= this->frames[currentFramesIndex].size()) {
+			startingPoint = i;
+			currentFramesIndex = defaultFramesIndex;
+			currentFrame = 0;
+		}
 	}
 
 	int x,y,w,h;
-	if (currentFramesIndex != HITTING_FRAMES) {
+	if (currentFramesIndex != HITTING_FRAMES && 
+		currentFramesIndex != DRAWING_AXE_FRAMES &&
+		currentFramesIndex != HOLDING_AXE_FRAMES) {
 		x = ((worm.getX() - 0.5)  * m_to_pix_x) - camX;
 		y = ((worm.getY() + 0.5) * m_to_pix_y + WINDOW_HEIGHT) - camY;
 		w = 1*m_to_pix_x;
@@ -147,15 +242,18 @@ void WormView::display(int i, Renderer& renderer, int camX, int camY) {
 		this->dynamicSpriteSheets[currentFramesIndex],
 		this->frames[currentFramesIndex][currentFrame],
 		destiny,
-		0, NullOpt, worm.getDir()
+		0, NullOpt, flip
 	);
 
 	//grafico la vida
+	int team = this->worm.getTeam();
+	SDL_Color color{0,255*(team / 1) ,0};
+
 	if (!this->worm.isAlive())
 		return;
 	Texture hp(renderer,
 		wormsFont.RenderText_Solid(std::__cxx11::to_string(this->worm.getHealth()),
-		SDL_Color{0,0,0}));
+		color));
 	renderer.Copy(
 		hp,
 		NullOpt,
