@@ -22,7 +22,6 @@
 #define WORM_WIDTH 1.0f
 #define WORM_DENSITY 1.0f
 #define WORM_FRICTION 0.3f
-#define WORM_INITIAL_HEALTH 100 //100 VER Q ONDA MARTU
 
 #define VELOCITY_SMOOTH_BREAK CONFIG.getWormMoveVelocity() * 0.5f
 

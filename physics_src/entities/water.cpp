@@ -21,7 +21,6 @@ void Water::beginCollisionWithWorm(Entity* otherBody, b2Contact* contact) {
 }
 
 void Water::beginCollisionWithProjectile(Entity* otherBody, b2Contact* contact) {
-    std::cout << "Water::beginCollisionWithProjectile" << std::endl;
     this->entitiesToRemove.insert(otherBody->body);
     UNUSED(otherBody);
     UNUSED(contact);

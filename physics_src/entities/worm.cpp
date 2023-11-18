@@ -121,8 +121,6 @@ void Worm::hitWithBat(){
         b2Vec2 direction = hitBody->GetPosition() - pos;
         direction.Normalize();
         b2Vec2 impulse = b2Vec2(direction.x * CONFIG.getBatDamage() / CONFIG.getBatImpulseFactorX(), 0.8 * CONFIG.getBatDamage() / CONFIG.getBatImpulseFactorX());
-        // b2Vec2 impulse = b2Vec2(1000,1000);
-        std::cout << "Applying impulse: " << impulse.x << ", " << impulse.y << std::endl;
         hitBody->ApplyLinearImpulseToCenter(impulse, true);
         worm->takeDamage(CONFIG.getBatDamage());
     }
