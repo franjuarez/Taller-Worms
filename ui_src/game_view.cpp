@@ -109,18 +109,18 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_HOLDING_BAZOKA_PATH).SetColorKey(true, 0)));
 
 
-	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_00).SetColorKey(true, 0)));
-	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_01).SetColorKey(true, 0)));
-	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_02).SetColorKey(true, 0)));
-	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_03).SetColorKey(true, 0)));
-	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_04).SetColorKey(true, 0)));
-	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_05).SetColorKey(true, 0)));
-	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_06).SetColorKey(true, 0)));
-	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_07).SetColorKey(true, 0)));
-	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_08).SetColorKey(true, 0)));
-	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_09).SetColorKey(true, 0)));
-	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_10).SetColorKey(true, 0)));
-	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_11).SetColorKey(true, 0)));
+	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_01).SetColorKey(true, 0).SetBlendMode(SDL_BLENDMODE_BLEND).SetAlphaMod(220)));
+	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_02).SetColorKey(true, 0).SetBlendMode(SDL_BLENDMODE_BLEND).SetAlphaMod(220)));
+	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_00).SetColorKey(true, 0).SetBlendMode(SDL_BLENDMODE_BLEND).SetAlphaMod(220)));
+	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_03).SetColorKey(true, 0).SetBlendMode(SDL_BLENDMODE_BLEND).SetAlphaMod(220)));
+	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_04).SetColorKey(true, 0).SetBlendMode(SDL_BLENDMODE_BLEND).SetAlphaMod(220)));
+	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_05).SetColorKey(true, 0).SetBlendMode(SDL_BLENDMODE_BLEND).SetAlphaMod(220)));
+	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_06).SetColorKey(true, 0).SetBlendMode(SDL_BLENDMODE_BLEND).SetAlphaMod(220)));
+	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_07).SetColorKey(true, 0).SetBlendMode(SDL_BLENDMODE_BLEND).SetAlphaMod(220)));
+	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_08).SetColorKey(true, 0).SetBlendMode(SDL_BLENDMODE_BLEND).SetAlphaMod(220)));
+	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_09).SetColorKey(true, 0).SetBlendMode(SDL_BLENDMODE_BLEND).SetAlphaMod(220)));
+	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_10).SetColorKey(true, 0).SetBlendMode(SDL_BLENDMODE_BLEND).SetAlphaMod(220)));
+	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_11).SetColorKey(true, 0).SetBlendMode(SDL_BLENDMODE_BLEND).SetAlphaMod(220)));
 
 
 	hudTextures.push_back(Texture(renderer, Surface(CURR_WORM_PATH).SetColorKey(true, 0)));
@@ -218,7 +218,8 @@ void GameView::drawProjectiles(int i) {
 }
 
 void GameView::drawWater(int i) {
-	renderer.SetDrawColor(0, 0, 40);
+	renderer.SetDrawBlendMode(SDL_BLENDMODE_BLEND);
+	renderer.SetDrawColor(0, 0, 40, 220);
 	renderer.FillRect(
 		0,
 		-0.5 * m_to_pix_y + WINDOW_HEIGHT - camY,
