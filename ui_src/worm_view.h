@@ -25,6 +25,8 @@ public:
 	~WormView();
 
 	//funcion de prueba para testear que no aparezca el segfault
+	void drawBazoka(int i);
+	void drawAxe(int i);
 	void jump(int i);
 	void move(int i);
 	void hit(int i);
@@ -33,7 +35,7 @@ public:
 	void surrend();
 	void die();
 	
-	void display(int i, Renderer& renderer, int camX, int camY);
+	void display(int i, Renderer& renderer, int camX, int camY, int mouseX, int mouseY);
 	void update(WormDTO other, int i);
 };
 

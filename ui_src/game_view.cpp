@@ -17,6 +17,12 @@
 #define SURRENDING_WORM_PATH "../resources/images/worm_surrender.bmp"
 #define TP_WORM_PATH "../resources/images/worm_tp.bmp"
 #define WORM_HITTING_PATH "../resources/images/worm_hitting.bmp"
+#define WORM_DRAWING_AXE_PATH "../resources/images/draw_axe.bmp"
+#define WORM_HOLDING_AXE_PATH "../resources/images/hold_axe.bmp"
+#define WORM_DRAWING_BAZOKA_PATH "../resources/images/draw_bazoka.bmp"
+#define WORM_HOLDING_BAZOKA_PATH "../resources/images/hold_bazoka.bmp"
+
+
 
 #define GRAVE_PATH "../resources/images/grave1.bmp"
 #define WATER_PATH_00 "../resources/images/water/blue00.bmp"
@@ -66,7 +72,7 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 		backgroundSprite(renderer, BACKGROUND_PATH),
 		beamSprite(renderer, BEAM_PATH),
 		currentWorm(-1, 0, 0, 100, Position(0,0), {}), //-1 para que se sepa que en realidad no hay alguien con turno
-		camX(0), camY(0), mouseHandler(camX, camY) {
+		camX(0), camY(0), mouseX(0), mouseY(0), mouseHandler(camX, camY) {
 
 	this->not_closed = true;
 	this->rocketAngle = 45.0f;
@@ -97,6 +103,11 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 	dynamicSpriteSheets.push_back(Texture(renderer,Surface(GRAVE_PATH).SetColorKey(true, 0)));
 	dynamicSpriteSheets.push_back(Texture(renderer,Surface(TP_WORM_PATH).SetColorKey(true, 0)));
 	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_HITTING_PATH).SetColorKey(true, 0)));
+	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_DRAWING_AXE_PATH).SetColorKey(true, 0)));
+	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_HOLDING_AXE_PATH).SetColorKey(true, 0)));
+	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_DRAWING_BAZOKA_PATH).SetColorKey(true, 0)));
+	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_HOLDING_BAZOKA_PATH).SetColorKey(true, 0)));
+
 
 	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_00).SetColorKey(true, 0)));
 	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_01).SetColorKey(true, 0)));
@@ -185,7 +196,7 @@ void GameView::drawBeams(int i) {
 void GameView::drawWorms(int i) {
 	for (auto it = wormViews.begin(); it != wormViews.end(); it++) {
 		//confirmar que esto esta trabajando inplace y no hace copia
-		it->second.display(i, this->renderer, camX, camY);
+		it->second.display(i, this->renderer, camX, camY, mouseX, mouseY);
 	}
 }
 
@@ -319,9 +330,8 @@ void GameView::start() {
             if (event.type == SDL_QUIT) {
 				return;
 			}
-			int x,y;
-			SDL_GetMouseState( &x, &y );
-			mouseHandler.handleMovement(x,y);
+			SDL_GetMouseState( &mouseX, &mouseY );
+			mouseHandler.handleMovement(mouseX, mouseY);
 
 			if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_q) {
 				return;
@@ -345,7 +355,7 @@ void GameView::start() {
                     moveCase(i, RIGHT_DIR);
 
                 else if (event.key.keysym.sym == SDLK_SPACE)
-					this->client.execute(new LaunchRocket(BAZOOKA, currentWormId, this->lookingDir, this->rocketAngle, 40.0f));
+					this->client.execute(new LaunchRocket(BAZOOKA, currentWormId, this->currentWorm.getDir(), this->rocketAngle, 40.0f));
 
 				else if (event.key.keysym.sym == SDLK_UP)
 					this->rocketAngle += 5;
@@ -355,7 +365,7 @@ void GameView::start() {
 					bCase(i);
 					
             } else if(event.type == SDL_MOUSEBUTTONDOWN) {
-				clickCase(i, x, y);
+				clickCase(i, mouseX, mouseY);
 			}
 
 		}
@@ -366,7 +376,6 @@ void GameView::start() {
 
 		if (rest < 0) { //me tomo mas tiempo del que tenia
 			int behind = -rest; //behind -> por cuanto me pase
-			
 			//lo que deberia dormir para despertar justo en el inicio de la ventana de un frame
 			rest = RATE - fmod(behind, RATE);
 
@@ -376,7 +385,6 @@ void GameView::start() {
 			i += (int )(lost / RATE);
 		}
 		t1 += RATE; //le sume lo perdido y la rate asique esta actualizado
-
 		i++;
 		SDL_Delay(rest);
 	}

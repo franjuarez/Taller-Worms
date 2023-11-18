@@ -45,6 +45,8 @@ private:
 	bool not_closed;
 	int camX;
 	int camY;
+	int mouseX;
+	int mouseY;
 	MouseHandler mouseHandler;
 
 	std::unordered_map<int, ProjectileView> projectileViews;
