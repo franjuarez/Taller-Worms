@@ -8,9 +8,9 @@ class ExplosionQueryCallback : public b2QueryCallback {
 public:
     std::vector<b2Body*> foundBodies;
     b2Vec2 explosionCenter;
-    float blastRadious;
+    float blastRadius;
 
-    ExplosionQueryCallback(b2Vec2 explosionCenter, float blastRadious);
+    ExplosionQueryCallback(b2Vec2 explosionCenter, float blastRadius);
 
     bool ReportFixture(b2Fixture* fixture);
 };

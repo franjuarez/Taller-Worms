@@ -11,13 +11,15 @@ set(TESTING OFF CACHE BOOL "Enable testing mode")
 if(TESTING)
     add_definitions(-DTESTING)
     endif()
-    
-    add_subdirectory("thirdParty/box2d")
-    
+
     set(THREADS_PREFER_PTHREAD_FLAG ON)
     find_package(Threads REQUIRED)
     
-    
+    add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/thirdParty/box2d")
+    add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/thirdParty/yaml-cpp-0.8.0")
+    include_directories("${CMAKE_CURRENT_SOURCE_DIR}/thirdParty/yaml-cpp-0.8.0/include")
+
+   
     set(SDL2PP_WITH_IMAGE ON)
     set(SDL2PP_WITH_MIXER ON)
     set(SDL2PP_WITH_TTF ON)
@@ -27,27 +29,33 @@ if(TESTING)
     include_directories(${SDL2PP_INCLUDE_DIRS})
     include_directories(${CMAKE_CURRENT_SOURCE_DIR})
     
+    #UI
     file(GLOB UI CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/ui_src/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/ui_src/*.h")
-    
     add_library(SharedUi ${UI})
     target_link_libraries(SharedUi PUBLIC SDL2pp::SDL2pp)
     
+    #SHARED
+    file(GLOB SHARED CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/shared_src/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/shared_src/*.h" )
+    add_library(SharedLib ${SHARED})
+    target_link_libraries(SharedLib PUBLIC yaml-cpp)
+    
+    #PHYSICS
     file(GLOB HANDLERS CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/physics_src/query_handlers/*.cpp")
     file(GLOB ENTITIES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/physics_src/entities/*.cpp")
     file(GLOB PROJECTILES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/physics_src/entities/projectiles/*.cpp")
     file(GLOB AUX CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/physics_src/aux/*.cpp")
     file(GLOB SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/physics_src/*.cpp")
     add_library(SharedPhysics ${SOURCES} ${ENTITIES} ${PROJECTILES} ${HANDLERS} ${AUX})
-    target_link_libraries(SharedPhysics PUBLIC box2d)
+    target_link_libraries(SharedPhysics PUBLIC box2d SharedLib)
     
+    #GAME
     file(GLOB SHAREDGAME CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/game_src/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/game_src/*.h" "${CMAKE_CURRENT_SOURCE_DIR}/game_src/commands/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/game_src/commands/*.h" )
     add_library(SharedGameLib ${SHAREDGAME})
+    target_link_libraries(SharedLib PUBLIC SharedGameLib)
+    target_link_libraries(SharedPhysics PUBLIC SharedGameLib)
     target_link_libraries(SharedGameLib PUBLIC SharedPhysics)
     target_link_libraries(SharedUi PUBLIC SharedGameLib)
     
-    file(GLOB SHARED CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/shared_src/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/shared_src/*.h" )
-    add_library(SharedLib ${SHARED})
-    target_link_libraries(SharedLib PUBLIC SharedGameLib)
     
     #QT
     set(CMAKE_PREFIX_PATH ~/Qt/5.15.2/gcc_64/)
@@ -88,20 +96,23 @@ if(TESTING)
     
     add_executable(server ${SERVER})
     
-    target_compile_options(server PRIVATE $<$<NOT:$<C_COMPILER_ID:MSVC>>:-Wall -Wextra -pedantic -ggdb -DDEBUG -pedantic-errors>)
     target_link_libraries(server PRIVATE Threads::Threads)
     target_link_libraries(server PUBLIC SharedLib)
     target_link_libraries(server PUBLIC SharedGameLib)
-    
+    target_link_libraries(server PRIVATE yaml-cpp)
+    target_compile_options(server PRIVATE $<$<NOT:$<C_COMPILER_ID:MSVC>>:-Wall -Wextra -pedantic -ggdb -DDEBUG -pedantic-errors>)
+
     target_link_libraries(Lobby PUBLIC serverLibrary)
     
-    target_compile_options(wormsremake PRIVATE $<$<NOT:$<C_COMPILER_ID:MSVC>>:-Wall -Wextra -pedantic -ggdb -DDEBUG -pedantic-errors>)
     target_link_libraries(wormsremake PRIVATE Threads::Threads)
     target_link_libraries(wormsremake PUBLIC SharedLib)
     target_link_libraries(wormsremake PUBLIC SharedGameLib)
     target_link_libraries(wormsremake PUBLIC SharedUi)
-target_link_libraries(wormsremake PUBLIC Lobby)
-target_link_libraries(wormsremake PUBLIC Qt5::Widgets Qt5::Core)
+    target_link_libraries(wormsremake PUBLIC Lobby)
+    target_link_libraries(wormsremake PUBLIC Qt5::Widgets Qt5::Core)
+    target_link_libraries(wormsremake PRIVATE yaml-cpp)
+    target_compile_options(wormsremake PRIVATE $<$<NOT:$<C_COMPILER_ID:MSVC>>:-Wall -Wextra -pedantic -ggdb -DDEBUG -pedantic-errors>)
+
 
 file(GLOB CLIENT_2 CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/client_src/*.cpp")
 add_executable(client ${CLIENT_2} ${HEADER_FILES})
@@ -109,9 +120,7 @@ target_link_libraries(client PRIVATE Threads::Threads)
 target_link_libraries(client PUBLIC SharedLib)
 target_link_libraries(client PUBLIC SharedGameLib)
 target_link_libraries(client PUBLIC SharedUi)
+target_link_libraries(client PRIVATE yaml-cpp)
+target_compile_options(client PRIVATE $<$<NOT:$<C_COMPILER_ID:MSVC>>:-Wall -Wextra -pedantic -ggdb -DDEBUG -pedantic-errors>)
 
 
-# add_executable("ui" main.cpp worm.cpp game_view.cpp worm_view.cpp worm.cpp constants.cpp game_view.cpp mouse_handler.cpp)
-# 
-# target_compile_options("ui" PRIVATE $<$<NOT:$<C_COMPILER_ID:MSVC>>: -ggdb -Wall -Wextra -pedantic -pedantic-errors>)
-# target_link_libraries("ui" PUBLIC SDL2pp::SDL2pp)

@@ -1,6 +1,6 @@
 #include "auxiliar_functions.h"
 
-const b2Vec2 GRAVITY = b2Vec2(WORLD_GRAVITY_X, WORLD_GRAVITY_Y);
+const b2Vec2 GRAVITY = b2Vec2(CONFIG.getWorldGravityX(), CONFIG.getWorldGravityY());
 
 float calculateVerticalVelocityForHeight(float desiredHeight){
     if (desiredHeight <= 0)
@@ -32,14 +32,14 @@ b2Vec2 calculateInitialVelocityForMaxHeight(float maxHeight, float distance){
     float verticalVelocity = calculateVerticalVelocityForHeight(maxHeight);
     b2Vec2 velStep = b2Vec2(0, verticalVelocity);
     float timeToTop = getTimestepsToTop(velStep);
-    float horizontalVelocity = distance / timeToTop * TIME_HERTZ /2;
+    float horizontalVelocity = distance / timeToTop * CONFIG.getFps() /2;
     velStep.x = horizontalVelocity;
     return velStep;
 }
 
 float calculateFallHeightFromVelocity(b2Vec2 velocity){
     float fallVel = abs(velocity.y);
-    float gravityModule = abs(WORLD_GRAVITY_Y);
+    float gravityModule = abs(GRAVITY.y);
     
     float n = (fallVel - (gravityModule * TIME_STEP)) / (gravityModule * TIME_STEP);
     float height = 0.5f * gravityModule * pow(TIME_STEP, 2) * pow(n, 2);
@@ -47,8 +47,8 @@ float calculateFallHeightFromVelocity(b2Vec2 velocity){
 }
 
 b2Vec2 calculatVelocityOfProjectile(float maxSpeed, float angle, float direction, float power){
-    float velX = PROJECTILE_MAX_SPEED * (power / 100.0f);
-    float velY = PROJECTILE_MAX_SPEED * (power / 100.0f);
+    float velX = CONFIG.getProjectileMaxSpeed() * (power / 100.0f);
+    float velY = CONFIG.getProjectileMaxSpeed() * (power / 100.0f);
     int sign = (direction == LEFT) ? -1 : 1;
     velX = cos(angle * b2_pi / 180.0f) * velX * sign;
     velY = sin(angle * b2_pi / 180.0f) * velY;

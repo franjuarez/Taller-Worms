@@ -1,10 +1,8 @@
 #include "game_loop.h"
 
-#define FPS 60.0f
-#define RATE (1000.f / FPS)
-#define TURN_TIME 10.0f
-#define NOONE_PLAYING -1
+#define CONFIG ConfigLoader::getInstance()
 
+#define RATE (1000.f / CONFIG.getFps())
 
 GameLoop::GameLoop(Queue<Command*>& commandsQueue, StatusBroadcaster& statusBroadcaster, GameMap* gameMap, std::vector<Team> teams)
 : commandsQueue(commandsQueue), statusBroadcaster(statusBroadcaster), gameWorld(gameMap), teams(teams) {
@@ -27,7 +25,7 @@ void GameLoop::loopLogic(int64_t elapsed_time) {
  
 	GameDynamic* gameDynamic = gameWorld.getGameStatus(wormPlayingID);
 	if (waitingForStatic) {
-		gameDynamic->setWormPlayingID(NOONE_PLAYING);
+		gameDynamic->setWormPlayingID(NO_WORM_PLAYING);
 	}
 	statusBroadcaster.broadcast(gameDynamic);
 
@@ -47,7 +45,7 @@ void GameLoop::loopLogic(int64_t elapsed_time) {
 		}
 	}
 
-	if (wormPlayingHealth != wormPlayingNewHealth || elapsed_time > TURN_TIME * 1000 ) {
+	if (wormPlayingHealth != wormPlayingNewHealth || elapsed_time > CONFIG.getTurnTime() * 1000 ) {
 		waitingForStatic = true;
 	}
 
