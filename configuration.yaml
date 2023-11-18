@@ -74,7 +74,7 @@ banana:
 
 bat:
   damage: 10
-  impulse_factor_x: 0.1
+  impulse_factor: 0.1
   starting_ammo: -1
 
 holy_grenade:

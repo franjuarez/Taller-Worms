@@ -84,7 +84,7 @@ private:
 
     //bat
     float bat_damage;
-    float bat_impulse_factor_x;
+    float bat_impulse_factor;
     int bat_starting_ammo;
 
     //holy grenade
@@ -184,7 +184,7 @@ public:
     
     //bat
     float getBatDamage();
-    float getBatImpulseFactorX();
+    float getBatImpulseFactor();
     int getBatStartingAmmo();
 
     //holy grenade

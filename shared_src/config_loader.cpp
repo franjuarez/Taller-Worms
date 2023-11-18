@@ -1,64 +1,5 @@
 #include "config_loader.h"
 
-// ConfigLoader::ConfigLoader(const YAML::Node& node) :
-//     fps(node["game"]["fps"].as<int>()),
-//     turn_time(node["game"]["turn_time"].as<int>()),
-//     viewfield_x(node["camera"]["viewfield_x"].as<int>()),
-//     viewfield_y(node["camera"]["viewfield_y"].as<int>()),
-//     camera_speed(node["camera"]["camera_speed"].as<int>()),
-//     world_width(node["world"]["width"].as<int>()),
-//     world_height(node["world"]["height"].as<int>()),
-//     world_gravity_x(node["world"]["gravity_x"].as<float>()),
-//     world_gravity_y(node["world"]["gravity_y"].as<float>()),
-//     beam_large_length(node["beam"]["large_length"].as<float>()),
-//     beam_small_length(node["beam"]["small_length"].as<float>()),
-//     beam_friction(node["beam"]["friction"].as<float>()),
-//     beam_max_walkable_angle(node["beam"]["max_walkable_angle"].as<int>()),
-//     worm_initial_health(node["worm"]["initial_health"].as<int>()),
-//     worm_move_velocity(node["move"]["move_velocity"].as<float>()),
-//     jump_forward_movement_x(node["jump"]["jump_forward_movement_x"].as<float>()),
-//     jump_forward_movement_y(node["jump"]["jump_forward_movement_y"].as<float>()),
-//     jump_backwards_movement_x(node["jump"]["jump_backwards_movement_x"].as<float>()),
-//     jump_backwards_movement_y(node["jump"]["jump_backwards_movement_y"].as<float>()),
-//     min_height_to_damage(node["height_damage"]["min_height_to_damage"].as<float>()),
-//     max_height_damage(node["height_damage"]["max_height_damage"].as<float>()),
-//     projectile_max_speed(node["projectile"]["max_speed"].as<float>()),
-//     projectile_impulse_factor_x(node["projectile"]["impulse_factor_x"].as<float>()),
-//     projectile_impulse_factor_y(node["projectile"]["impulse_factor_y"].as<float>()),
-//     bazooka_radius(node["bazooka"]["radius"].as<float>()),
-//     bazooka_damage(node["bazooka"]["damage"].as<float>()),
-//     bazooka_starting_ammo(node["bazooka"]["starting_ammo"].as<int>()),
-//     green_grenade_radius(node["green_grenade"]["radius"].as<float>()),
-//     green_grenade_damage(node["green_grenade"]["damage"].as<float>()),
-//     green_grenade_starting_ammo(node["green_grenade"]["starting_ammo"].as<int>()),
-//     mortar_radius(node["mortar"]["radius"].as<float>()),
-//     mortar_damage(node["mortar"]["damage"].as<float>()),
-//     mortar_starting_ammo(node["mortar"]["starting_ammo"].as<int>()),
-//     red_grenade_radius(node["red_grenade"]["radius"].as<float>()),
-//     red_grenade_damage(node["red_grenade"]["damage"].as<float>()),
-//     red_grenade_fragments(node["red_grenade"]["fragments"].as<int>()),
-//     red_grenade_starting_ammo(node["red_grenade"]["starting_ammo"].as<int>()),
-//     fragment_damage(node["fragment"]["damage"].as<float>()),
-//     fragment_radius(node["fragment"]["radius"].as<float>()),
-//     banana_radius(node["banana"]["radius"].as<float>()),
-//     banana_damage(node["banana"]["damage"].as<float>()),
-//     banana_starting_ammo(node["banana"]["starting_ammo"].as<int>()),
-//     banana_bounciness(node["banana"]["bounciness"].as<float>()),
-//     bat_damage(node["bat"]["damage"].as<float>()),
-//     bat_impulse_factor_x(node["bat"]["impulse_factor_x"].as<float>()),
-//     bat_starting_ammo(node["bat"]["starting_ammo"].as<int>()),
-//     holy_grenade_radius(node["holy_grenade"]["radius"].as<float>()),
-//     holy_grenade_damage(node["holy_grenade"]["damage"].as<float>()),
-//     holy_grenade_starting_ammo(node["holy_grenade"]["starting_ammo"].as<int>()),
-//     dynamite_radius(node["dynamite"]["radius"].as<float>()),
-//     dynamite_damage(node["dynamite"]["damage"].as<float>()),
-//     dynamite_starting_ammo(node["dynamite"]["starting_ammo"].as<int>()),
-//     air_attack_missiles(node["air_attack"]["missiles"].as<int>()),
-//     air_attack_starting_ammo(node["air_attack"]["starting_ammo"].as<int>()),
-//     air_attack_missile_radius(node["air_attack"]["missile_radius"].as<float>()),
-//     air_attack_missile_damage(node["air_attack"]["missile_damage"].as<float>()) {}
-    
-
 ConfigLoader::ConfigLoader(const YAML::Node& node) :
     //game
     fps(node["game"]["FPS"].as<int>()),
@@ -136,7 +77,7 @@ ConfigLoader::ConfigLoader(const YAML::Node& node) :
     
     //bat
     bat_damage(node["bat"]["damage"].as<float>()),
-    bat_impulse_factor_x(node["bat"]["impulse_factor_x"].as<float>()),
+    bat_impulse_factor(node["bat"]["impulse_factor"].as<float>()),
     bat_starting_ammo(node["bat"]["starting_ammo"].as<int>()),
     
     //holy grenade
@@ -344,8 +285,8 @@ float ConfigLoader::getBatDamage() {
     return bat_damage;
 }
 
-float ConfigLoader::getBatImpulseFactorX() {
-    return bat_impulse_factor_x;
+float ConfigLoader::getBatImpulseFactor() {
+    return bat_impulse_factor;
 }
 
 int ConfigLoader::getBatStartingAmmo() {

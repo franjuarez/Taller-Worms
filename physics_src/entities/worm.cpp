@@ -120,7 +120,7 @@ void Worm::hitWithBat(){
         Worm* worm = (Worm*) hitBody->GetUserData().pointer;
         b2Vec2 direction = hitBody->GetPosition() - pos;
         direction.Normalize();
-        b2Vec2 impulse = b2Vec2(direction.x * CONFIG.getBatDamage() / CONFIG.getBatImpulseFactorX(), 0.8 * CONFIG.getBatDamage() / CONFIG.getBatImpulseFactorX());
+        b2Vec2 impulse = b2Vec2(direction.x * CONFIG.getBatDamage() / CONFIG.getBatImpulseFactor(), 0.8 * CONFIG.getBatDamage() / CONFIG.getBatImpulseFactor());
         hitBody->ApplyLinearImpulseToCenter(impulse, true);
         worm->takeDamage(CONFIG.getBatDamage());
     }
