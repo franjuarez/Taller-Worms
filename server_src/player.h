@@ -24,7 +24,7 @@ private:
     Queue<Serializable*> playerQueue; // la q viene del game loop tiene los nuevos estados
 
 public:
-    Player(Socket&& peer, Queue<Command*>& commandQueue, Serializable* gameMap);
+    Player(Socket&& peer, Queue<Command*>& commandQueue, GameMap* gameMap);
     ~Player();
     Queue<Serializable*>* getPlayerQueue();
     void start();

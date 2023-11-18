@@ -1,13 +1,13 @@
 #include "player.h"
 
-Player::Player(Socket&& peer, Queue<Command*>& commandQueue, Serializable* gameMap) : 
+Player::Player(Socket&& peer, Queue<Command*>& commandQueue, GameMap* gameMap) : 
 protocol(std::move(peer)), 
 sender(protocol, playerQueue, talking), 
 receiver(protocol, commandQueue, talking), 
 commandsQueue(commandQueue), 
 playerQueue(90) {
     playerQueue.push(gameMap);
-    GameDynamic* gameDynamic = new GameDynamic(-1, {}, {});
+    GameDynamic* gameDynamic = new GameDynamic(-1, gameMap->getWorms(), {});
     playerQueue.push(gameDynamic);
 }
 
