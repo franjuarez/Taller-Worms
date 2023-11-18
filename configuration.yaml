@@ -1,0 +1,94 @@
+game:
+  FPS: 60
+  turn_time: 10
+
+camera:
+  viewfield_x: 25
+  viewfield_y: 25
+  camera_speed: 0
+
+world:
+  width: 100
+  height: 70
+  gravity_x: 0
+  gravity_y: -9.8
+  
+beam:
+  large_length: 6
+  small_length: 3
+  friction: 0.3
+  max_walkable_angle: 45
+
+worm:
+  initial_health: 100
+
+move:
+  move_velocity: 0.4
+
+jump:
+  jump_forward_movement_x: 1
+  jump_forward_movement_y: 0.5
+  jump_backwards_movement_x: 0.2
+  jump_backwards_movement_y: 1.2
+
+height_damage:
+  min_height_to_damage: 2
+  max_height_damage: 25
+
+projectile:
+  max_speed: 20
+  impulse_factor_x: 10
+  impulse_factor_y: 4
+
+bazooka:
+  radius: 2
+  damage: 50
+  starting_ammo: -1
+
+green_grenade:
+  radius: 2
+  damage: 30
+  starting_ammo: -1
+
+mortar:
+  radius: 2
+  damage: 50
+  fragments: 6
+  starting_ammo: 10
+
+red_grenade:
+  radius: 2
+  damage: 30
+  fragments: 6
+  starting_ammo: 10
+
+fragments:
+  radius: 2
+  damage: 10
+
+banana:
+  radius: 4
+  damage: 70
+  bounciness: 0.9
+  starting_ammo: 5
+
+bat:
+  damage: 10
+  impulse_factor_x: 0.1
+  starting_ammo: -1
+
+holy_grenade:
+  radius: 8
+  damage: 110
+  starting_ammo: 2
+
+dynamite:
+  radius: 4
+  damage: 50
+  starting_ammo: 5
+
+air_attack:
+  missiles: 6
+  starting_ammo: 2
+  missile_radius: 2
+  missile_damage: 40

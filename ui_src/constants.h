@@ -1,8 +1,12 @@
 #ifndef UI_CONSTANTS_H
 #define UI_CONSTANTS_H
 
+// #include "../shared_src/constants.h"
+#include "../shared_src/config_loader.h"
+
 namespace uiConstants {
 
+#define CONFIG ConfigLoader::getInstance()
 
 //worm animation constants
 enum FrameType {
@@ -24,8 +28,6 @@ extern const int MUSIC_VOLUME;
 
 extern const int WINDOW_WIDTH;
 extern const int WINDOW_HEIGHT;
-extern const int VIEWFIELD_X;
-extern const int VIEWFIELD_Y;
 extern const float m_to_pix_x;
 extern const float m_to_pix_y;
 extern const int TEAM_1;

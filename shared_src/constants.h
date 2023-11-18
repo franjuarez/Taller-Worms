@@ -1,5 +1,11 @@
+#pragma once
 #ifndef CONSTANTS_H
 #define CONSTANTS_h
+
+#include "config_loader.h"
+
+#define CONFIG ConfigLoader::getInstance()
+
 enum 
 {
   READ_MAP = 0,		
@@ -16,6 +22,11 @@ enum
   SEND_COMMAND_GRENADE,
 };
 
-#define NO_WORM_PLAYING 0
+#define NO_WORM_PLAYING -1
+
+// directions
+#define LEFT 0 
+#define RIGHT 1
+
 
 #endif

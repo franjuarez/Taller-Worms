@@ -54,9 +54,9 @@ void Worm::move(int direction){
 
     b2Vec2 vel;
     if(direction == LEFT){
-        vel.x = -MOVE_VELOCITY;
+        vel.x = -CONFIG.getWormMoveVelocity();
     } else {
-        vel.x = MOVE_VELOCITY;
+        vel.x = CONFIG.getWormMoveVelocity();
     }
     this->body->SetLinearVelocity(vel);
 }
@@ -76,17 +76,17 @@ void Worm::jump(float maxHeight, float distance){
 
 void Worm::jumpForward(){
     if(this->direction == LEFT){
-        jump(JUMP_FORWARD_MOVEMENT_Y, -JUMP_FORWARD_MOVEMENT_X);
+        jump(CONFIG.getJumpForwardMovementY(), - CONFIG.getJumpForwardMovementX());
     } else {
-        jump(JUMP_FORWARD_MOVEMENT_Y, JUMP_FORWARD_MOVEMENT_X);
+        jump(CONFIG.getJumpForwardMovementY(), CONFIG.getJumpForwardMovementX());
     }
 }
 
 void Worm::jumpBackwards(){
     if(this->direction == LEFT){
-        jump(JUMP_BACKWARDS_MOVEMENT_Y, JUMP_BACKWARDS_MOVEMENT_X);
+        jump(CONFIG.getJumpBackwardsMovementY(), CONFIG.getJumpBackwardsMovementX());
     } else {
-        jump(JUMP_BACKWARDS_MOVEMENT_Y, -JUMP_BACKWARDS_MOVEMENT_X);
+        jump(CONFIG.getJumpBackwardsMovementY(), -CONFIG.getJumpBackwardsMovementX());
     }
 }
 
@@ -95,7 +95,7 @@ void Worm::handleExplosion(float damage, b2Vec2 explosionCenter){
     takeDamage(damage);
     b2Vec2 direction = this->body->GetPosition() - explosionCenter;
     direction.Normalize();
-    b2Vec2 impulse = b2Vec2(direction.x * damage / EXPLOSION_IMPULSE_FACTOR_X, damage / EXPLOSION_IMPULSE_FACTOR_Y);
+    b2Vec2 impulse = b2Vec2(direction.x * damage / CONFIG.getProjectileImpulseFactorX(), damage / CONFIG.getProjectileImpulseFactorY());
     this->body->ApplyLinearImpulseToCenter(impulse, true);
 }
 
@@ -120,28 +120,22 @@ void Worm::hitWithBat(){
         Worm* worm = (Worm*) hitBody->GetUserData().pointer;
         b2Vec2 direction = hitBody->GetPosition() - pos;
         direction.Normalize();
-        b2Vec2 impulse = b2Vec2(direction.x * BAT_DAMAGE / BAT_IMPULSE_FACTOR, 0.8 * BAT_DAMAGE / BAT_IMPULSE_FACTOR);
+        b2Vec2 impulse = b2Vec2(direction.x * CONFIG.getBatDamage() / CONFIG.getBatImpulseFactorX(), 0.8 * CONFIG.getBatDamage() / CONFIG.getBatImpulseFactorX());
         // b2Vec2 impulse = b2Vec2(1000,1000);
         std::cout << "Applying impulse: " << impulse.x << ", " << impulse.y << std::endl;
         hitBody->ApplyLinearImpulseToCenter(impulse, true);
-        worm->takeDamage(BAT_DAMAGE);
+        worm->takeDamage(CONFIG.getBatDamage());
     }
 }
 
 void Worm::applyFallDamage(b2Vec2 vel){
     //From auxiliar_physics_functions.cpp
     float height = calculateFallHeightFromVelocity(vel);
-    if(height > MIN_HEIGHT_TO_DAMAGE){
-        float damage = height > MAX_HEIGHT_DAMAGE ? MAX_HEIGHT_DAMAGE : height;
+    if(height > CONFIG.getMinHeightToDamage()){
+        float damage = height > CONFIG.getMaxHeightDamage() ? CONFIG.getMaxHeightDamage() : height;
         takeDamage(damage);
     }
 }
-
-// WormDTO Worm::getDTO(){
-//     Position pos(body->GetPosition().x, body->GetPosition().y);
-//     WormDTO dto(id, 0, health, pos);
-//     return dto;
-// }
 
 void Worm::beginCollisionWithWater(Entity* otherBody, b2Contact* contact) {
     otherBody->beginCollisionWithWorm(this, contact);

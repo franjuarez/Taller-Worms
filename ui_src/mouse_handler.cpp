@@ -1,8 +1,5 @@
 #include "mouse_handler.h"
 
-#define MOUSE_SPEED 0
-
-#include "constants.h"
 using namespace uiConstants;
 
 //	int& camX;
@@ -27,15 +24,15 @@ void MouseHandler::updateCam() {
 	//mouse esta en las zonas de movimiento
 	
 	if (this->mousePosX > WINDOW_WIDTH * 0.9) {
-		this->camX += MOUSE_SPEED;
+		this->camX += CONFIG.getCameraSpeed();
 	} else if (this->mousePosX < WINDOW_WIDTH * 0.1) {
-		this->camX -= MOUSE_SPEED;
+		this->camX -= CONFIG.getCameraSpeed();
 	}
 
 	if (this->mousePosY > WINDOW_HEIGHT * 0.9) {
-		this->camY += MOUSE_SPEED;
+		this->camY += CONFIG.getCameraSpeed();
 	} else if (this->mousePosY < WINDOW_HEIGHT * 0.1) {
-		this->camY -= MOUSE_SPEED;
+		this->camY -= CONFIG.getCameraSpeed();
 	}
 
 }

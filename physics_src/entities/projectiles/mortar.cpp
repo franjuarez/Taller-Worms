@@ -7,9 +7,9 @@ Mortar::Mortar(b2Body* body, std::unordered_set<b2Body*>& entitiesToRemove, std:
 Mortar::~Mortar() {}
 
 void Mortar::leaveFragments(){
-    for(int i = 0; i < MORTAR_FRAGMENTS; i++){
+    for(int i = 0; i < CONFIG.getMortarFragments(); i++){
        entitiesToAdd.push_back([this](int newId) -> b2Body* {
-           ProjectileFragment* fragment = new ProjectileFragment(this->body, this->entitiesToRemove, this->entitiesToAdd, newId, FRAGMENT_DAMAGE, FRAGMENT_BLAST_RADIOUS);
+           ProjectileFragment* fragment = new ProjectileFragment(this->body, this->entitiesToRemove, this->entitiesToAdd, newId, CONFIG.getFragmentDamage(), CONFIG.getFragmentRadius());
            return fragment->createFragment();
        });
     }

@@ -3,7 +3,7 @@
 #define WORM_GROUP_INDEX -1
 
 GameWorld::GameWorld(GameMap* gameMap) {
-    this->world = new b2World(b2Vec2(WORLD_GRAVITY_X, WORLD_GRAVITY_Y));
+    this->world = new b2World(b2Vec2(CONFIG.getWorldGravityX(), CONFIG.getWorldGravityY()));
     this->listener = new Listener(this->world);
     this->world->SetContactListener(this->listener);
     this->lastProjectileId = 0;
@@ -14,7 +14,7 @@ GameWorld::GameWorld(GameMap* gameMap) {
     for (BeamDTO& beam : beams) {
         float x = beam.getPosition().getX();
         float y = beam.getPosition().getY();
-        bool large = beam.getBeamLength() == LARGE_BEAM_WIDTH ? true : false;
+        bool large = beam.getBeamLength() == CONFIG.getBeamLargeLength() ? true : false;
         createBeam(x, y, beam.getAngle(), large);
     }
 
@@ -25,7 +25,7 @@ GameWorld::GameWorld(GameMap* gameMap) {
         int id = worm.getId();
         int team = worm.getTeam();
         int health = worm.getHealth();
-        std::vector weapons = worm.getWeapons();
+        std::vector<int> weapons = worm.getWeapons();
         createWorm(x, y, id, team, health, weapons);
     }
 }
@@ -74,7 +74,7 @@ void GameWorld::createBeam(float startingX, float startingY, float angle, bool l
     b2Body* beamBody = this->world->CreateBody(&beam);
     b2FixtureDef gb;
     b2PolygonShape shape;
-    float beamWidth = large ? LARGE_BEAM_WIDTH : SMALL_BEAM_WIDTH;
+    float beamWidth = large ? CONFIG.getBeamLargeLength() : CONFIG.getBeamSmallLength();
     b2Vec2 vs[4];
     float angleInRadians = angle * b2_pi / 180.0f;
     float realX = cos(angleInRadians) * beamWidth;
@@ -88,7 +88,7 @@ void GameWorld::createBeam(float startingX, float startingY, float angle, bool l
     gb.friction = WORM_FRICTION;
     beamBody->CreateFixture(&gb);
 
-    bool isWalkable = (abs(angle) > MAX_WALKABLE_BEAM_ANGLE) ? false : true;
+    bool isWalkable = (abs(angle) > CONFIG.getBeamMaxWalkableAngle()) ? false : true;
     Beam* beamEntity = new Beam(beamBody, entitiesToRemove, isWalkable);
     beamBody->GetUserData().pointer = reinterpret_cast<uintptr_t>(beamEntity);
 }
@@ -151,7 +151,7 @@ b2Body* GameWorld::createProjectile(b2Body* worm, int weaponId, int direction, f
 b2Body* GameWorld::createBazooka(b2Body* worm, int direction){
     int id = this->lastProjectileId;
     b2Body* body = createProjectile(worm, BAZOOKA, direction, BAZOOKA_WIDTH, BAZOOKA_HEIGHT);
-    Bazooka* bazookaEntity = new Bazooka(body, entitiesToRemove, entitiesToAdd, id,  BAZOOKA_DAMAGE, BAZOOKA_BLAST_RADIOUS);
+    Bazooka* bazookaEntity = new Bazooka(body, entitiesToRemove, entitiesToAdd, id,  CONFIG.getBazookaDamage(), CONFIG.getBazookaRadius());
     body->GetUserData().pointer = reinterpret_cast<uintptr_t>(bazookaEntity);
 
     return body;
@@ -161,7 +161,7 @@ void GameWorld::wormLaunchBazooka(int id, float angle, int direction, float powe
     checkWormExists(id);
     b2Body* worm = this->worms[id];
     b2Body* bazooka = createBazooka(worm, direction);
-    b2Vec2 vel = calculatVelocityOfProjectile(PROJECTILE_MAX_SPEED, angle, direction, power);
+    b2Vec2 vel = calculatVelocityOfProjectile(CONFIG.getProjectileMaxSpeed(), angle, direction, power);
     bazooka->SetLinearVelocity(vel);
 }
 
@@ -169,7 +169,7 @@ b2Body* GameWorld::createMortar(b2Body* worm, int direction){
     int id = this->lastProjectileId;
     b2Body* body = createProjectile(worm, MORTAR, direction, MORTAR_WIDTH, MORTAR_HEIGHT);
 
-    Mortar* mortarEntity = new Mortar(body, entitiesToRemove, entitiesToAdd, id, MORTAR_DAMAGE, MORTAR_BLAST_RADIOUS);
+    Mortar* mortarEntity = new Mortar(body, entitiesToRemove, entitiesToAdd, id, CONFIG.getMortarDamage(), CONFIG.getMortarRadius());
     body->GetUserData().pointer = reinterpret_cast<uintptr_t>(mortarEntity);
 
     return body;
@@ -179,7 +179,7 @@ void GameWorld::wormLaunchMortar(int id, float angle, int direction, float power
     checkWormExists(id);
     b2Body* worm = this->worms[id];
     b2Body* bazooka = createMortar(worm, direction);
-    b2Vec2 vel = calculatVelocityOfProjectile(PROJECTILE_MAX_SPEED, angle, direction, power);
+    b2Vec2 vel = calculatVelocityOfProjectile(CONFIG.getProjectileMaxSpeed(), angle, direction, power);
     bazooka->SetLinearVelocity(vel);
 }
 
@@ -187,7 +187,7 @@ b2Body* GameWorld::createGreenGrenade(b2Body* worm, int direction, int explosion
     int id = this->lastProjectileId;
     b2Body* body = createProjectile(worm, GREEN_GRENADE, direction, GREEN_GRENADE_WIDTH, GREEN_GRENADE_WIDTH);
 
-    GreenGrenade* greenGrenadeEntity = new GreenGrenade(body, entitiesToRemove, entitiesToAdd, id, GREEN_GRENADE_DAMAGE, GREEN_GRENADE_BLAST_RADIOUS, explosionTimer);
+    GreenGrenade* greenGrenadeEntity = new GreenGrenade(body, entitiesToRemove, entitiesToAdd, id, CONFIG.getGreenGrenadeDamage(),CONFIG.getGreenGrenadeRadius(), explosionTimer);
     body->GetUserData().pointer = reinterpret_cast<uintptr_t>(greenGrenadeEntity);
 
     return body;
@@ -197,7 +197,7 @@ void GameWorld::wormThrowGreenGrenade(int id, float angle, int direction, float 
     checkWormExists(id);
     b2Body* worm = this->worms[id];
     b2Body* granade = createGreenGrenade(worm, direction, explosionTimer);
-    b2Vec2 grenadeVel = calculatVelocityOfProjectile(PROJECTILE_MAX_SPEED, angle, direction, power);
+    b2Vec2 grenadeVel = calculatVelocityOfProjectile(CONFIG.getProjectileMaxSpeed(), angle, direction, power);
     granade->SetLinearVelocity(grenadeVel);
 }
 
@@ -205,7 +205,7 @@ b2Body* GameWorld::createRedGrenade(b2Body* worm, int direction, int explosionTi
     int id = this->lastProjectileId;
     b2Body* body = createProjectile(worm, RED_GRENADE, direction, GREEN_GRENADE_WIDTH, GREEN_GRENADE_WIDTH);
 
-    RedGrenade* redGrenadeEntity = new RedGrenade(body, entitiesToRemove, entitiesToAdd, id, RED_GRENADE_DAMAGE, RED_GRENADE_BLAST_RADIOUS, explosionTimer);
+    RedGrenade* redGrenadeEntity = new RedGrenade(body, entitiesToRemove, entitiesToAdd, id, CONFIG.getRedGrenadeDamage(), CONFIG.getRedGrenadeRadius(), explosionTimer);
     body->GetUserData().pointer = reinterpret_cast<uintptr_t>(redGrenadeEntity);
 
     return body;
@@ -215,15 +215,15 @@ void GameWorld::wormThrowRedGrenade(int id, float angle, int direction, float po
     checkWormExists(id);
     b2Body* worm = this->worms[id];
     b2Body* granade = createRedGrenade(worm, direction, explosionTimer);
-    b2Vec2 grenadeVel = calculatVelocityOfProjectile(PROJECTILE_MAX_SPEED, angle, direction, power);
+    b2Vec2 grenadeVel = calculatVelocityOfProjectile(CONFIG.getProjectileMaxSpeed(), angle, direction, power);
     granade->SetLinearVelocity(grenadeVel);
 }
 
 b2Body* GameWorld::createBanana(b2Body* worm, int direction, int explosionTimer){
     int id = this->lastProjectileId;
-    b2Body* body = createProjectile(worm, BANANA, direction, GREEN_GRENADE_WIDTH, GREEN_GRENADE_WIDTH, BANANA_RESTITUTION);
+    b2Body* body = createProjectile(worm, BANANA, direction, GREEN_GRENADE_WIDTH, GREEN_GRENADE_WIDTH, CONFIG.getBananaBounciness());
 
-    Banana* redGrenadeEntity = new Banana(body, entitiesToRemove, entitiesToAdd, id, RED_GRENADE_DAMAGE, RED_GRENADE_BLAST_RADIOUS, explosionTimer);
+    Banana* redGrenadeEntity = new Banana(body, entitiesToRemove, entitiesToAdd, id, CONFIG.getBananaDamage(), CONFIG.getBananaRadius(), explosionTimer);
     body->GetUserData().pointer = reinterpret_cast<uintptr_t>(redGrenadeEntity);
 
     return body;
@@ -233,7 +233,7 @@ void GameWorld::wormThrowBanana(int id, float angle, int direction, float power,
     checkWormExists(id);
     b2Body* worm = this->worms[id];
     b2Body* banana = createBanana(worm, direction, explosionTimer);
-    b2Vec2 bananaVel = calculatVelocityOfProjectile(PROJECTILE_MAX_SPEED, angle, direction, power);
+    b2Vec2 bananaVel = calculatVelocityOfProjectile(CONFIG.getProjectileMaxSpeed(), angle, direction, power);
     banana->SetLinearVelocity(bananaVel);
 }
 
