@@ -1,5 +1,7 @@
 #include "worm_view.h"
 #include <SDL2pp/SDL2pp.hh>
+#include "../game_src/constants_game.h"
+
 
 
 
@@ -8,8 +10,8 @@ WormView::WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets, Fon
 	dynamicSpriteSheets(dynamicSpriteSheets),
 	frames{11},
 	wormsFont(wormsFont) {
-	defaultFramesIndex = //STILL_FRAMES;
-	currentFramesIndex = //STILL_FRAMES;
+	defaultFramesIndex = HOLDING_BAZOKA_FRAMES;//STILL_FRAMES;
+	currentFramesIndex = HOLDING_BAZOKA_FRAMES;//STILL_FRAMES;
 	startingPoint = 0;
 	//looping = true;
 	float x, y, w, h;
@@ -111,7 +113,7 @@ WormView::WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets, Fon
 	}
 
 	//frames for holding bazoka
-	for (int i = 0; i < 35; i++) {
+	for (int i = 0; i < 32; i++) {
 		x = 13;
 		y = i*60  + 17;
 		w = 34;
@@ -182,12 +184,34 @@ void WormView::die() {
 
 void WormView::display(int i, Renderer& renderer, int camX, int camY, int mouseX, int mouseY) {
 	size_t currentFrame;
-	//si es un arma que estoy sosteniendo tengo que calcular los frames apuntando
+	int flip;
+
+	//si es un arma que estoy sosteniendo tengo que calcular los frames apuntando y la condicion de flip
 	if (currentFramesIndex == HOLDING_AXE_FRAMES
-		&& currentFramesIndex == HOLDING_BAZOKA_FRAMES) {
+		|| currentFramesIndex == HOLDING_BAZOKA_FRAMES) {
 
+		float dx = ((mouseX + camX) / m_to_pix_x) - this->worm.getX() ;
+		float dy = ((mouseY + camY - WINDOW_HEIGHT) / m_to_pix_y) - this->worm.getY();
+
+		flip = dx > 0 ? RIGHT_DIR : LEFT_DIR;
+
+		int angle;
+		if (dx == 0) {
+			angle = 0;
+		} else {
+			angle = atan(dy / dx) * (180 / M_PI);
+		}
+		if (dx < 0) angle *= -1;
+		
+		/*
+		ahora esta entre -90 y 90. tengo que mapear para ajustar al largo del frame de vectores actual.
+		el cual tiene -90 en las primeras posiciones y 90 en las ultimas		
+		*/
+
+		currentFrame = (((angle + 90.0f) / 180.0f) * (this->frames[currentFramesIndex].size()));
+		std::cout << currentFrame << std::endl;
 	} else { //si es una animacion calculo en base al frame en el que estoy
-
+		flip = worm.getDir();
 		currentFrame = (i - startingPoint) / 4;
 
 		if (currentFrame >= this->frames[currentFramesIndex].size()) {
@@ -218,7 +242,7 @@ void WormView::display(int i, Renderer& renderer, int camX, int camY, int mouseX
 		this->dynamicSpriteSheets[currentFramesIndex],
 		this->frames[currentFramesIndex][currentFrame],
 		destiny,
-		0, NullOpt, worm.getDir()
+		0, NullOpt, flip
 	);
 
 	//grafico la vida

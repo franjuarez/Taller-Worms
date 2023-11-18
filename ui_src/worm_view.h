@@ -6,6 +6,7 @@
 #include <SDL2pp/SDL2pp.hh>
 #include "constants.h"
 #include "../game_src/worm_dto.h"
+#include <cmath>
 
 using namespace SDL2pp;
 using namespace uiConstants;
