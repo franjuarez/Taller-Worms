@@ -20,12 +20,15 @@ private:
 	int startingPoint;
 	int currentFramesIndex; //indica la tira(fila) de frames que se tiene que usar ahora mismo
 	int defaultFramesIndex;
+	int angle;
 
 public:
 	WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets, Font& font);
 	~WormView();
 
 	//funcion de prueba para testear que no aparezca el segfault
+	int shoot(int i);
+	void toDefault(int i);
 	void drawBazoka(int i);
 	void drawAxe(int i);
 	void jump(int i);

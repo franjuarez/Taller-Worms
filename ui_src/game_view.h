@@ -55,7 +55,8 @@ private:
 	
 
 	int currentWormId;
-	int lookingDir;
+
+	int inputState;
 
 	void updateEntities(int i);
 	void loadWorms(std::vector<WormDTO>& recievedWorms);
@@ -71,6 +72,8 @@ private:
 	void backspaceKeyCase(int i);
 	void clickCase(int i, int x, int y);
 	void bCase(int i);
+
+	void processInput(SDL_Event event, int i);
 
 public:
 	GameView(const std::string& hostname, const std::string& servname);

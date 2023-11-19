@@ -23,6 +23,27 @@ enum FrameType {
 	HOLDING_BAZOKA_FRAMES = 10
 };
 
+enum hudSprites {
+	CURRENT_WORM_INDICATOR_TEXTURE = 0,
+	BAZOOKA_ICON,
+	GGRENADE_ICON,
+	BAT_ICON,
+	TP_ICON,
+	MORTAR_ICON,
+	RGRENADE_ICON,
+	BANANA_ICON
+};
+
+enum commands {
+	BAZOOKA_CODE = 1,
+	GGRENADE_CODE,
+	BAT_CODE,
+	TP_CODE,
+	MORTAR_CODE,
+	RGRENADE_CODE,
+	BANANA_CODE
+};
+
 //rocket animation constants
 extern const int ROCKET_FRAMES;
 extern const int EXPLOSION_FRAMES;
