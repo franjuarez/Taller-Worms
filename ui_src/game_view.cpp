@@ -346,7 +346,7 @@ void GameView::clickCase(int i, int mouseX, int mouseY) {
 
 	//rl
 	int angle = wormViews.at(currentWormId).shoot(i);
-	int dir = (((mouseX + camY) / m_to_pix_x) < this->currentWorm.getX()) ? LEFT_DIR : RIGHT_DIR ;
+	int dir = (((mouseX + camX) / m_to_pix_x) < this->currentWorm.getX()) ? LEFT_DIR : RIGHT_DIR ;
 	//tp
 	Position pos((mouseX + camX) / m_to_pix_x, ((mouseY + camY) - WINDOW_HEIGHT) / m_to_pix_y);
 
