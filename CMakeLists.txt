@@ -54,7 +54,7 @@ target_link_libraries(SharedLib PUBLIC SharedGameLib)
 target_link_libraries(SharedUi PUBLIC SharedGameLib)
 
 #QT
-set(CMAKE_PREFIX_PATH ~/Qt/5.15.2/gcc_64/)
+set(CMAKE_PREFIX_PATH ${CMAKE_CURRENT_SOURCE_DIR}/thirdParty/Qt/5.15.2/gcc_64/)
 
 find_package(Qt5Widgets CONFIG REQUIRED)
 include_directories(${PROJECT_SOURCE_DIR}/Lobby  ${Qt5Widgets_INCLUDE_DIRS})
