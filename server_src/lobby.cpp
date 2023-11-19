@@ -103,7 +103,6 @@ void Lobby::run() {
 void Lobby::reapDead() {}
 
 void Lobby::killAll() {
-    std::cout << "Killing all players" << std::endl;
     for (auto& player : players ) {
         if (player->isAlive()) {
             player->kill();
