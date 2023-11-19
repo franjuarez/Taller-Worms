@@ -20,8 +20,9 @@ void CreateScreen::on_pushButton_clicked()
     QString port = ui->lineEdit->text();
     QString map = ui->comboBox->currentText();
     int players = ui->spinBox->value();
+    bool playing = true;
 
-    Lobby lobby(port.toStdString() , players, map.toStdString());
+    Lobby lobby(port.toStdString() , players, map.toStdString(), &playing);
     lobby.run();
     //std::cout << port.toStdString() << std::endl;
     //std::cout << map.toStdString() << std::endl;

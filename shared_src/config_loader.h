@@ -2,12 +2,16 @@
 #define CONFIG_G
 
 #include <yaml-cpp/yaml.h>
+#include <string>
 
 class ConfigLoader{
 private:
     ConfigLoader(const YAML::Node& node);
     ~ConfigLoader();
-
+    
+    //maps
+    std::string maps_file;
+    
     //game
     int fps;
     int turn_time;
@@ -31,6 +35,7 @@ private:
 
     //worm
     int worm_initial_health;
+    int worm_additional_health;
     
     //move
     float worm_move_velocity;
@@ -108,6 +113,8 @@ public:
 
     static ConfigLoader& getInstance();
 
+    //maps
+    std::string getMapsFile();
     //game
     int getFps();
     int getTurnTime();
@@ -131,6 +138,7 @@ public:
 
     //worm
     int getWormInitialHealth();
+    int getWormAdditionalHealth();
 
     //move
     float getWormMoveVelocity();
