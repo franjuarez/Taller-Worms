@@ -39,9 +39,14 @@
 #define WATER_PATH_11 "../resources/images/water/blue11.bmp"
 
 #define CURR_WORM_PATH "../resources/images/currentWormIndicator.bmp"
-#define WEAPONS_BAR_TEXTURE "../resources/images/water/blue11.bmp"
+#define BAZOOKA_ICON_PATH "../resources/images/icons/rocket.bmp"
+#define GGRENADE_ICON_PATH "../resources/images/icons/gg.bmp"
+#define BAT_ICON_PATH "../resources/images/icons/axe.bmp"
+#define TP_ICON_PATH "../resources/images/icons/tp.bmp"
+#define MORTAR_ICON_PATH "../resources/images/icons/mortar.bmp"
+#define RGRENADE_ICON_PATH "../resources/images/icons/rg.bmp"
+#define BANANA_ICON_PATH "../resources/images/icons/banana.bmp"
 
-#define CURRENT_WORM_INDICATOR_TEXTURE 0
 
 #define ROCKET_PATH "../resources/images/rocket.bmp"
 #define EXPLOSION_PATH "../resources/images/explosion3.bmp"
@@ -96,6 +101,7 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 	//le paso algo que pueda ser transparente si se agarra la porcion correcta para que se pueda hacer que desaparezca
 	rocketSprites.push_back(Texture(renderer, Surface(EXPLOSION_PATH).SetColorKey(true,0)));
 
+	//para los gusanos. EXTRAER A SU PROPIA CLASE
 	dynamicSpriteSheets.push_back(Texture(renderer,Surface(STILL_WORM_PATH).SetColorKey(true, 0)));
 	dynamicSpriteSheets.push_back(Texture(renderer,Surface(JUMPING_WORM_PATH).SetColorKey(true, 0)));
 	dynamicSpriteSheets.push_back(Texture(renderer,Surface(WALKING_WORM_PATH).SetColorKey(true,0)));
@@ -124,10 +130,13 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 
 
 	hudTextures.push_back(Texture(renderer, Surface(CURR_WORM_PATH).SetColorKey(true, 0)));
-	//hudTextures.insert(std::make_pair(
-	//	"weaponsBar",
-	//	Texture(renderer, Surface(WEAPONS_BAR_TEXTURE).SetColorKey(true,0)))
-	//);
+	hudTextures.push_back(Texture(renderer, Surface(BAZOOKA_ICON_PATH).SetColorKey(true, 0)));
+	hudTextures.push_back(Texture(renderer, Surface(GGRENADE_ICON_PATH).SetColorKey(true, 0)));
+	hudTextures.push_back(Texture(renderer, Surface(BAT_ICON_PATH).SetColorKey(true, 0)));
+	hudTextures.push_back(Texture(renderer, Surface(TP_ICON_PATH).SetColorKey(true, 0)));
+	hudTextures.push_back(Texture(renderer, Surface(MORTAR_ICON_PATH).SetColorKey(true, 0)));
+	hudTextures.push_back(Texture(renderer, Surface(RGRENADE_ICON_PATH).SetColorKey(true, 0)));
+	hudTextures.push_back(Texture(renderer, Surface(BANANA_ICON_PATH).SetColorKey(true, 0)));
 
 
 	this->lookingDir = 0;
@@ -155,9 +164,14 @@ void GameView::stop() {
 
 void GameView::updateEntities(int i) {
 	GameDynamic* gs = dynamic_cast<GameDynamic*>(client.getGameStatus());
+	int oldid = this->currentWormId;
 
 	std::vector<WormDTO> recievedWorms = gs->getWorms();
+
 	this->currentWormId = gs->getWormPlayingID();
+	if (oldid != currentWormId) {
+		inputState = 0;
+	}
 
 	for (auto &worm : recievedWorms) {
 		this->wormViews.at(worm.getId()).update(worm, i);
@@ -250,19 +264,28 @@ void GameView::drawHud(int i) {
 		);
 
 	std::vector<int> weapons = this->currentWorm.getWeapons();
+	int verticalMargin = 2;
 	int toolBarH = 70;
 	int toolBarCellWidth = 70;
 	int toolBarCellMargin = 4;
 
-	renderer.SetDrawColor(0x0);
-	renderer.FillRect(0, 0, 2*toolBarCellMargin + (toolBarCellWidth + toolBarCellMargin)*weapons.size(), toolBarH);
-	//for (int i = 1; i < 3; i++) {
-	//	
-	//	renderer.DrawLine(i*(toolBarCellWidth + toolBarCellMargin),
-	//		0, 
-	//		i*(toolBarCellWidth + toolBarCellMargin),
-	//		toolBarH);
-	//}
+	renderer.SetDrawColor(3,3,3, 255);
+	renderer.FillRect(0, 0, 
+		2*toolBarCellMargin + (toolBarCellWidth + toolBarCellMargin)*weapons.size(),
+		toolBarH + 2 * verticalMargin);
+
+	renderer.SetDrawColor(15,15,15,175);
+
+	for (int i = 0; i < weapons.size(); i++) {
+		Rect to(
+			i*(toolBarCellWidth + toolBarCellMargin) + toolBarCellMargin,
+			verticalMargin,
+			toolBarCellWidth,
+			toolBarH);
+		renderer.Copy(hudTextures[i+1], NullOpt, to);
+		if (weapons[i] == 0)
+			renderer.FillRect(to);
+	}
 
 
 }
@@ -307,15 +330,82 @@ void GameView::backspaceKeyCase(int i) {
 	this->client.execute(new Jump(currentWormId, 3));
 }
 
-void GameView::clickCase(int i, int x, int y) {
-	this->wormViews.at(this->currentWormId).tp(i);
-	Position pos((x + camX) / m_to_pix_x, ((y + camY) - WINDOW_HEIGHT) / m_to_pix_y);
-	this->client.execute(new Teleport(currentWormId, pos));
+void GameView::clickCase(int i, int mouseX, int mouseY) {
+	//this->wormViews.at(this->currentWormId).tp(i);
+	//Position pos((x + camX) / m_to_pix_x, ((y + camY) - WINDOW_HEIGHT) / m_to_pix_y);
+	//this->client.execute(new Teleport(currentWormId, pos));
+
+	switch (inputState) {
+	case BAZOOKA_CODE:
+		int angle = wormViews.at(currentWormId).shoot(i);
+		int dir = (((mouseX + camY) / m_to_pix_x) < this->currentWorm.getX()) ? LEFT_DIR : RIGHT_DIR ;
+		
+		this->client.execute(new LaunchRocket(BAZOOKA, currentWormId, dir, angle, 40.0f));
+
+
+
+	}
 }
 
 void GameView::bCase(int i) {
 	this->wormViews.at(this->currentWormId).hit(i);
 	this->client.execute(new HitUpclose(this->currentWormId));
+}
+
+void GameView::processInput(SDL_Event event, int i) {
+	//if (this->currentWorm.getTeam() != this->team) { revisar la condicion
+	if (this->currentWormId == -1) {
+		return;
+	}
+	if (event.type == SDL_MOUSEBUTTONDOWN) {
+		if (inputState == 0)
+			return;
+
+		clickCase(i, mouseX, mouseY);
+	}
+
+	if (event.type == SDL_KEYDOWN) {
+		switch(event.key.keysym.sym) {
+		case SDLK_RETURN:
+			returnKeyCase(i);
+			break;
+		case SDLK_BACKSPACE:
+			backspaceKeyCase(i);
+			break;
+		case SDLK_LEFT:
+			moveCase(i, LEFT_DIR);
+			break;
+		case SDLK_RIGHT:
+			moveCase(i, RIGHT_DIR);
+			break;
+		case SDLK_1: //podria ser un mapa pero seria igual de feo en el constructor
+			inputState = BAZOOKA_CODE;
+			this->wormViews.at(currentWormId).drawBazoka(i);
+			break;
+		case SDLK_2:
+			inputState = GGRENADE_CODE;
+			break;
+		case SDLK_3:
+			inputState = BAT_CODE;
+			wormViews.at(currentWormId).drawAxe(i);
+			break;
+		case SDLK_4:
+			inputState = TP_CODE;
+			break;
+		case SDLK_5:
+			inputState = MORTAR_CODE;
+			break;
+		case SDLK_6:
+			inputState = RGRENADE_CODE;
+			break;
+		case SDLK_7:
+			inputState = BANANA_CODE;
+			break;
+
+		std::cout << inputState << std::endl;
+		}
+
+	}
 }
 
 void GameView::start() {
@@ -337,37 +427,36 @@ void GameView::start() {
 			if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_q) {
 				return;
 			}
-        	//if (this->currentWormId != this->team) { //<- es la linea que va, uso otra para facilitar testeo
-			if (this->currentWormId == -1){
-        		//ignoro el input si no es del equipo actual
-        		continue;
-        	}
-            if (event.type == SDL_KEYDOWN) {
-                if(event.key.keysym.sym == SDLK_RETURN)
-                	returnKeyCase(i);
-                
-				else if(event.key.keysym.sym == SDLK_BACKSPACE) 
-                	backspaceKeyCase(i);
-                
-                else if (event.key.keysym.sym == SDLK_LEFT)
-                    moveCase(i, LEFT_DIR);
 
-                else if (event.key.keysym.sym == SDLK_RIGHT) 
-                    moveCase(i, RIGHT_DIR);
+			processInput(event, i);
+        	////if (this->currentWormId != this->team) { //<- es la linea que va, uso otra para facilitar testeo
 
-                else if (event.key.keysym.sym == SDLK_SPACE)
-					this->client.execute(new LaunchRocket(BAZOOKA, currentWormId, this->currentWorm.getDir(), this->rocketAngle, 40.0f));
-
-				else if (event.key.keysym.sym == SDLK_UP)
-					this->rocketAngle += 5;
-				else if (event.key.keysym.sym == SDLK_DOWN)
-					this->rocketAngle -= 5;
-				else if (event.key.keysym.sym == SDLK_b)
-					bCase(i);
-					
-            } else if(event.type == SDL_MOUSEBUTTONDOWN) {
-				clickCase(i, mouseX, mouseY);
-			}
+			//if (this->currentWormId == -1){
+        	//	//ignoro el input si no es del equipo actual
+        	//	continue;
+        	//}
+            //if (event.type == SDL_KEYDOWN) {
+            //    if(event.key.keysym.sym == SDLK_RETURN)
+            //    	returnKeyCase(i);
+            //    
+			//	else if(event.key.keysym.sym == SDLK_BACKSPACE) 
+            //    	backspaceKeyCase(i);
+            //    
+            //    else if (event.key.keysym.sym == SDLK_LEFT)
+            //        moveCase(i, LEFT_DIR);
+            //    else if (event.key.keysym.sym == SDLK_RIGHT) 
+            //        moveCase(i, RIGHT_DIR);
+            //    else if (event.key.keysym.sym == SDLK_SPACE)
+			//		this->client.execute(new LaunchRocket(BAZOOKA, currentWormId, this->currentWorm.getDir(), this->rocketAngle, 40.0f));
+			//	else if (event.key.keysym.sym == SDLK_UP)
+			//		this->rocketAngle += 5;
+			//	else if (event.key.keysym.sym == SDLK_DOWN)
+			//		this->rocketAngle -= 5;
+			//	else if (event.key.keysym.sym == SDLK_b)
+			//		bCase(i);		
+            //} else if(event.type == SDL_MOUSEBUTTONDOWN) {
+			//	clickCase(i, mouseX, mouseY);
+			//}
 
 		}
 		draw(i);

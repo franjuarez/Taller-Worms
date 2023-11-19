@@ -13,6 +13,7 @@ WormView::WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets, Fon
 	defaultFramesIndex = STILL_FRAMES;
 	currentFramesIndex = STILL_FRAMES;
 	startingPoint = 0;
+	angle = 0;
 	//looping = true;
 	float x, y, w, h;
 	
@@ -123,6 +124,18 @@ WormView::WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets, Fon
 
 }
 
+int WormView::shoot(int i) {
+	int aux = angle;
+	toDefault(i);
+	return aux;
+}
+
+void WormView::toDefault(int i) {
+	this->startingPoint = i;
+	this->currentFramesIndex = STILL_FRAMES;
+	this->defaultFramesIndex = STILL_FRAMES;
+}
+
 void WormView::drawBazoka(int i) {
 	if (currentFramesIndex == DRAWING_BAZOKA_FRAMES && 
 		currentFramesIndex == HOLDING_BAZOKA_FRAMES)
@@ -195,7 +208,6 @@ void WormView::display(int i, Renderer& renderer, int camX, int camY, int mouseX
 
 		flip = dx > 0 ? RIGHT_DIR : LEFT_DIR;
 
-		int angle;
 		if (dx == 0) {
 			angle = 0;
 		} else {
@@ -209,7 +221,6 @@ void WormView::display(int i, Renderer& renderer, int camX, int camY, int mouseX
 		*/
 
 		currentFrame = (((angle + 90.0f) / 180.0f) * (this->frames[currentFramesIndex].size()));
-		std::cout << currentFrame << std::endl;
 	} else { //si es una animacion calculo en base al frame en el que estoy
 		flip = worm.getDir();
 		currentFrame = (i - startingPoint) / 4;
