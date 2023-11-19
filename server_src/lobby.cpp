@@ -7,7 +7,8 @@
 #include "../game_src/beam_dto.h"
 #include "../game_src/game_map.h"
 
-Lobby::Lobby(const std::string& hostname, int numberOfPlayers, std::string mapName) : hostname(hostname), skt(hostname.c_str()), mapName(mapName), commandQueue(90) {
+Lobby::Lobby(const std::string& hostname, int numberOfPlayers, std::string mapName, bool* playing) 
+: hostname(hostname), skt(hostname.c_str()), mapName(mapName), commandQueue(90), playing(playing) {
     this->numberOfPlayers = numberOfPlayers;
 }
 
@@ -72,10 +73,18 @@ void Lobby::run() {
     // momento eleccion Mapa
     GameMap* map = new GameMap(0, "aloha", beams, worms);
     // Inicializar el GameLoop 
-    GameLoop gameLoop(commandQueue, statusBroadcaster, map, teams);
+    bool loopActive = true;
+    GameLoop gameLoop(commandQueue, statusBroadcaster, map, teams, &loopActive);
     gameLoop.start();
 
+
+    while (*playing) {}
+
+    loopActive = false;
+
     killAll();
+
+    gameLoop.join();
 }
 
 void Lobby::reapDead() {}
@@ -91,4 +100,4 @@ void Lobby::killAll() {
     players.clear();
 }
 
-Lobby::~Lobby() {}
+Lobby::~Lobby() {killAll();}

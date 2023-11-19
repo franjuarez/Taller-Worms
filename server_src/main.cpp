@@ -17,9 +17,15 @@ int main(int argc, char** argv) {
 
 
 	const std::string hostname(argv[1]);
-	Lobby lobby(hostname, 1, "");
+	bool playing = true;
+	Lobby lobby(hostname, 1, "", &playing);
 
-	lobby.run();
+	lobby.start();
+
+	while (std::cin.get() != 'q') {}
+
+	playing = false;
+	lobby.join();
 	
 	return 0;
 }
