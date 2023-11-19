@@ -9,7 +9,9 @@
 #include "../shared_src/thread.h"
 #include "team.h"
 
-class Lobby {
+#include <atomic>
+
+class Lobby : public Thread {
 private:
     const std::string& hostname;
     Socket skt;
@@ -22,11 +24,13 @@ private:
 // should it have the game thread queue?
 
     std::vector<Team> createTeams(std::vector<WormDTO>& worms);
+
+    bool* playing;
 public:
 
-    Lobby(const std::string& hostname, int numberOfPLayers, std::string mapName);
+    Lobby(const std::string& hostname, int numberOfPLayers, std::string mapName, bool* playing);
 
     ~Lobby();
-    void run();
+    void run() override;
 };
 #endif
