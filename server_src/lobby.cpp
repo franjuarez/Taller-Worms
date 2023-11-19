@@ -1,7 +1,7 @@
 #include "lobby.h"
 #include "game_loop.h"
 #include "status_broadcaster.h"
-
+#include <string>
 #include "../game_src/constants_game.h"
 #include "../game_src/worm_dto.h"
 #include "../game_src/beam_dto.h"
@@ -41,22 +41,11 @@ std::vector<Team> Lobby::createTeams(std::vector<WormDTO>& worms) {
 void Lobby::run() {
 
     // YA TENGO EL NRO DE PLAYERS -> YA ASIGNO A LOS GUSANOS A SUS TEAMS
-
-    std::vector<BeamDTO> beams;
-    std::vector<WormDTO> worms;
-    Position pos(9.7, 11.0);
-    Position pos2(9.89, 12.1);
-    //  {bazooka, green grenade, bat, tp, mortar, red grenade, banana}
-    worms.push_back(WormDTO(2, 0, 1, CONFIG.getWormInitialHealth(), pos, {INFINITE_AMUNITION, INFINITE_AMUNITION, INFINITE_AMUNITION, INFINITE_AMUNITION, INFINITE_AMUNITION, INFINITE_AMUNITION, INFINITE_AMUNITION}));
-    worms.push_back(WormDTO(1, 0, 2,  CONFIG.getWormInitialHealth(), pos2, {INFINITE_AMUNITION, INFINITE_AMUNITION, INFINITE_AMUNITION, INFINITE_AMUNITION, INFINITE_AMUNITION, INFINITE_AMUNITION, INFINITE_AMUNITION}));
-
-    beams.push_back(BeamDTO(6, Position(10.0f, 10.0f), 0));
-	beams.push_back(BeamDTO(6, Position(16.0f, 8.0f), 0));
-	beams.push_back(BeamDTO(6, Position(22.0f, 6.0f), 0));
-	beams.push_back(BeamDTO(6, Position(28.0f, 4.0f), 0));
-	beams.push_back(BeamDTO(6, Position(34.0f, 2.0f), 0));
-	beams.push_back(BeamDTO(6, Position(40.0f, 0.0f), 0));
-	beams.push_back(BeamDTO(6, Position(46.0f, -2.0f), 0));
+    MapsLoader mapsLoader(CONFIG.getMapsFile());
+    std::vector<std::string> mapNames = mapsLoader.getMapsNames();
+    GameMap gameMap = mapsLoader.loadMap("test");
+    std::vector<WormDTO> worms = gameMap.getWorms();
+    std::vector<BeamDTO> beams = gameMap.getBeams();
 
     std::vector<Team> teams = createTeams(worms);
 

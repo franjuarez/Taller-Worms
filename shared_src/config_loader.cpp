@@ -1,6 +1,8 @@
 #include "config_loader.h"
 
 ConfigLoader::ConfigLoader(const YAML::Node& node) :
+    //maps
+    maps_file(node["maps_file"].as<std::string>()),
     //game
     fps(node["game"]["FPS"].as<int>()),
     turn_time(node["game"]["turn_time"].as<int>()),
@@ -104,6 +106,10 @@ ConfigLoader& ConfigLoader::getInstance() {
 }
 
 ConfigLoader::~ConfigLoader() {}
+
+std::string ConfigLoader::getMapsFile() {
+    return maps_file;
+}
 
 int ConfigLoader::getFps() {
     return fps;

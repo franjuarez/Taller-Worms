@@ -7,6 +7,7 @@
 
 #include "player.h"
 #include "../shared_src/thread.h"
+#include "../game_src/map_loading/maps_loader.h"
 #include "team.h"
 
 class Lobby {

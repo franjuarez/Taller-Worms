@@ -2,12 +2,16 @@
 #define CONFIG_G
 
 #include <yaml-cpp/yaml.h>
+#include <string>
 
 class ConfigLoader{
 private:
     ConfigLoader(const YAML::Node& node);
     ~ConfigLoader();
-
+    
+    //maps
+    std::string maps_file;
+    
     //game
     int fps;
     int turn_time;
@@ -108,6 +112,8 @@ public:
 
     static ConfigLoader& getInstance();
 
+    //maps
+    std::string getMapsFile();
     //game
     int getFps();
     int getTurnTime();

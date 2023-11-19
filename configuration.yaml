@@ -1,3 +1,5 @@
+maps_file: map_names.yaml
+
 game:
   FPS: 60
   turn_time: 10
@@ -5,7 +7,7 @@ game:
 camera:
   viewfield_x: 25
   viewfield_y: 25
-  camera_speed: 0
+  camera_speed: 5
 
 world:
   width: 100
