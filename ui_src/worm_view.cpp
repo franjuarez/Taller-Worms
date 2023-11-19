@@ -89,20 +89,20 @@ WormView::WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets, Fon
 	}
 
 	//frames for holding the axe still
-	for (int i = 12; i < 18; i++) {
+	for (int i = 0; i < 18; i++) {
 		x = 10;
 		y = i * 104 + 20;
 		w = 73;
 		h = 78;
 		frames[HOLDING_AXE_FRAMES].push_back(Rect(x,y,w,h));
 	}
-	for (int i = 17; i >= 12; i--) {
-		x = 10;
-		y = i * 104 + 20;
-		w = 73;
-		h = 78;
-		frames[HOLDING_AXE_FRAMES].push_back(Rect(x,y,w,h));
-	}
+	//for (int i = 17; i >= 0; i--) {
+	//	x = 10;
+	//	y = i * 104 + 20;
+	//	w = 73;
+	//	h = 78;
+	//	frames[HOLDING_AXE_FRAMES].push_back(Rect(x,y,w,h));
+	//}
 
 	//frames for drawing bazoka
 	for (int i = 0; i < 7; i++) {
@@ -131,8 +131,12 @@ int WormView::shoot(int i) {
 }
 
 void WormView::toDefault(int i) {
-	this->startingPoint = i;
-	this->currentFramesIndex = STILL_FRAMES;
+	if (currentFramesIndex == HOLDING_AXE_FRAMES ||
+		currentFramesIndex == HOLDING_BAZOKA_FRAMES) {
+		currentFramesIndex = STILL_FRAMES;
+		this->startingPoint = i;
+	}
+
 	this->defaultFramesIndex = STILL_FRAMES;
 }
 
@@ -174,6 +178,7 @@ void WormView::hit(int i) {
 		return;
 	this->startingPoint = i;
 	this->currentFramesIndex = HITTING_FRAMES;
+	this->defaultFramesIndex = STILL_FRAMES;
 }
 
 void WormView::tp(int i) {
@@ -181,6 +186,7 @@ void WormView::tp(int i) {
 		return;
 	this->startingPoint = i;
 	this->currentFramesIndex = TPING_FRAMES;
+	this->defaultFramesIndex = STILL_FRAMES;
 }
 
 void WormView::surrend() {

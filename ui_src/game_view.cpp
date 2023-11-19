@@ -138,8 +138,8 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 	hudTextures.push_back(Texture(renderer, Surface(RGRENADE_ICON_PATH).SetColorKey(true, 0)));
 	hudTextures.push_back(Texture(renderer, Surface(BANANA_ICON_PATH).SetColorKey(true, 0)));
 
+	this->currentWormId = -1;
 
-	this->lookingDir = 0;
 }
 
 void GameView::loadBeams(std::vector<BeamDTO>& beams) {
@@ -169,8 +169,12 @@ void GameView::updateEntities(int i) {
 	std::vector<WormDTO> recievedWorms = gs->getWorms();
 
 	this->currentWormId = gs->getWormPlayingID();
+	std::cout << "currentWormId: " << currentWormId << std::endl;
 	if (oldid != currentWormId) {
 		inputState = 0;
+		if (oldid != -1) { //si se termino el turno
+			wormViews.at(oldid).toDefault(0);
+		}
 	}
 
 	for (auto &worm : recievedWorms) {
@@ -321,7 +325,6 @@ void GameView::returnKeyCase(int i) {
 }
 
 void GameView::moveCase(int i, int dir) {
-	this->lookingDir = dir;
 	this->client.execute(new Move(currentWormId, dir));
     this->wormViews.at(this->currentWormId).move(i);
 }
@@ -335,15 +338,36 @@ void GameView::clickCase(int i, int mouseX, int mouseY) {
 	//Position pos((x + camX) / m_to_pix_x, ((y + camY) - WINDOW_HEIGHT) / m_to_pix_y);
 	//this->client.execute(new Teleport(currentWormId, pos));
 
+	//rl
+	int angle = wormViews.at(currentWormId).shoot(i);
+	int dir = (((mouseX + camY) / m_to_pix_x) < this->currentWorm.getX()) ? LEFT_DIR : RIGHT_DIR ;
+	//tp
+	Position pos((mouseX + camX) / m_to_pix_x, ((mouseY + camY) - WINDOW_HEIGHT) / m_to_pix_y);
+
+
 	switch (inputState) {
 	case BAZOOKA_CODE:
-		int angle = wormViews.at(currentWormId).shoot(i);
-		int dir = (((mouseX + camY) / m_to_pix_x) < this->currentWorm.getX()) ? LEFT_DIR : RIGHT_DIR ;
-		
 		this->client.execute(new LaunchRocket(BAZOOKA, currentWormId, dir, angle, 40.0f));
+		return;
+	case GGRENADE_CODE:
+		return;
+	case BAT_CODE:
+		this->wormViews.at(this->currentWormId).hit(i);
+		this->client.execute(new HitUpclose(this->currentWormId));
+		return;
+	case TP_CODE:
+		this->wormViews.at(this->currentWormId).tp(i);
+		this->client.execute(new Teleport(currentWormId, pos));		
+		return;
+	case MORTAR_CODE:
+		return;
+	case RGRENADE_CODE:
+		return;
+	case BANANA_CODE:
+		return;
 
-
-
+	default:
+		return;
 	}
 }
 

@@ -55,7 +55,6 @@ private:
 	
 
 	int currentWormId;
-	int lookingDir;
 
 	int inputState;
 
