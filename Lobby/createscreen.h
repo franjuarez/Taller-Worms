@@ -20,6 +20,7 @@ private slots:
 
 private:
     Ui::CreateScreen *ui;
+    bool playing;
 };
 
 #endif // CREATESCREEN_H

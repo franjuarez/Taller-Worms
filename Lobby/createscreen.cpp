@@ -23,7 +23,11 @@ void CreateScreen::on_pushButton_clicked()
     bool playing = true;
 
     Lobby lobby(port.toStdString() , players, map.toStdString(), &playing);
-    lobby.run();
+    lobby.start();
+
+    while (std::cin.get() != 'q') {}
+    playing = false;
+    lobby.join();
     //std::cout << port.toStdString() << std::endl;
     //std::cout << map.toStdString() << std::endl;
     //std::cout << players << std::endl;
