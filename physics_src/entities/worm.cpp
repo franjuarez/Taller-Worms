@@ -4,7 +4,7 @@ Worm::Worm(b2Body* body, std::unordered_set<b2Body*>& entitiesToRemove, int id, 
         Entity(body, entitiesToRemove, EntityWorm),
         id(id), team(team), health(health), 
         direction(direction), currentAction(STANDING),
-        weapons(weapons) {}
+        weapons(weapons), invincible(false) {}
 
 
 Worm::~Worm() {}
@@ -16,6 +16,9 @@ WormDTO Worm::getDTO(){
 }
 
 void Worm::takeDamage(float damage){
+    if(this->invincible){
+        return;
+    }
     this->health -= damage;
     if(this->health < 0){
         this->health = 0;
@@ -23,11 +26,18 @@ void Worm::takeDamage(float damage){
 }
 
 void Worm::die(){
+    if(this->invincible){
+        return;
+    }
     this->health = 0;
 }
 
 void Worm::addHealth(int health){
     this->health += CONFIG.getWormAdditionalHealth();
+}
+
+void Worm::makeInvincible(){
+    this->invincible = true;
 }
 
 bool Worm::isDead(){

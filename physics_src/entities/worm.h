@@ -20,6 +20,7 @@ class Worm : public Entity {
     float health;
     int direction;
     std::vector<int> weapons;
+    bool invincible;
 
     void moveOnWalkableBeam(b2Body* worm, b2Vec2 normal);
 
@@ -63,11 +64,15 @@ class Worm : public Entity {
 
     void hitWithBat();
 
-    void addHealth(int health);
     
     void reduceAmmo(int weaponId);
 
+    //cheats
+    void addHealth(int health);
+    
     void getAllWeapons();
+
+    void makeInvincible();
 
     WormDTO getDTO();
 };

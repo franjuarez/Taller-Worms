@@ -282,6 +282,13 @@ void GameWorld::wormGetAllWeapons(int id){
     wormData->getAllWeapons();
 }
 
+void GameWorld::makeWormsInvincible(){
+    for(auto it = this->worms.begin(); it != this->worms.end(); ++it){
+        Worm* wormData = (Worm*) it->second->GetUserData().pointer;
+        wormData->makeInvincible();
+    }
+}
+
 void GameWorld::removeWorm(b2Body* worm){
     bool erased = false;
     for(auto it = this->worms.begin(); it != this->worms.end(); ++it){

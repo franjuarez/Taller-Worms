@@ -94,17 +94,21 @@ public:
 
     bool teleportWorm(int id, float x, float y);
 
+    bool allEntitiesAtRest();
+
+    GameDynamic* getGameStatus(int id);
+
+    ~GameWorld();
+
+    //Cheats
     void ceroGravity();
 
     void addHealthToWorm(int id, int health);
     
     void wormGetAllWeapons(int id);
 
-    bool allEntitiesAtRest();
+    void makeWormsInvincible();
 
-    GameDynamic* getGameStatus(int id);
-
-    ~GameWorld();
 };
 
 #endif
