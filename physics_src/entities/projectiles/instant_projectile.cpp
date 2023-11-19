@@ -1,8 +1,8 @@
 #include "instant_projectile.h"
 
 InstantProjectile::InstantProjectile(b2Body* body, std::unordered_set<b2Body*>& entitiesToRemove,
- std::vector<createEntity>& entitiesToAdd, int id, float damage, float radius) : 
-    Projectile(body, entitiesToRemove, entitiesToAdd, EntityInstantProjectile, id, damage, radius) {}
+ std::vector<createEntity>& entitiesToAdd, int projectileType, int id, float damage, float radius) : 
+    Projectile(body, entitiesToRemove, entitiesToAdd, EntityInstantProjectile, projectileType, id, damage, radius) {}
 
 void InstantProjectile::beginCollisionWithWater(Entity* otherBody, b2Contact* contact) {
     otherBody->beginCollisionWithProjectile(this, contact);

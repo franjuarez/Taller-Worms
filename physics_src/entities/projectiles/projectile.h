@@ -12,13 +12,14 @@ typedef std::function<b2Body*(int newId)> createEntity;
 class Projectile : public Entity {
 protected:
     std::vector<createEntity>& entitiesToAdd;
+    int projectileType;
     int id;
     float damage;
     float radius;
 
 public:
     Projectile(b2Body* body, std::unordered_set<b2Body*>& entitiesToRemove, std::vector<createEntity>& entitiesToAdd,
-     EntityType projectileType, int id, float damage, float radius);
+     EntityType entityType, int projectileType, int id, float damage, float radius);
     
     virtual void explode();
     virtual void leaveFragments();

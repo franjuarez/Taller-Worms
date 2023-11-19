@@ -17,6 +17,7 @@ enum /*WEAPON_TYPE*/{
     TP,
     MORTAR,
     RED_GRENADE,
+    FRAGMENT,
     BANANA,
 };
 

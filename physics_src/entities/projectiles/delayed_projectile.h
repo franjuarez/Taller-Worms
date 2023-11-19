@@ -11,7 +11,7 @@ protected:
 
 public:
     DelayedProjectile(b2Body* body, std::unordered_set<b2Body*>& entitiesToRemove, 
-    std::vector<createEntity>& entitiesToAdd, int id, float damage, float radius, float explosionTimer);
+    std::vector<createEntity>& entitiesToAdd, int projectileType, int id, float damage, float radius, float explosionTimer);
     
     void update(float deltaTime);
     
