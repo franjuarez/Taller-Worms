@@ -167,6 +167,10 @@ int ConfigLoader::getWormInitialHealth() {
     return worm_initial_health;
 }
 
+int ConfigLoader::getWormAdditionalHealth() {
+    return worm_additional_health;
+}
+
 float ConfigLoader::getWormMoveVelocity() {
     return worm_move_velocity;
 }

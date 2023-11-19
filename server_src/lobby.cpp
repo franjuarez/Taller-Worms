@@ -7,8 +7,6 @@
 #include "../game_src/beam_dto.h"
 #include "../game_src/game_map.h"
 
-#define ADDITIONAL_HEALTH 25
-
 Lobby::Lobby(const std::string& hostname, int numberOfPlayers, std::string mapName) : hostname(hostname), skt(hostname.c_str()), mapName(mapName), commandQueue(90) {
     this->numberOfPlayers = numberOfPlayers;
 }
@@ -31,7 +29,7 @@ std::vector<Team> Lobby::createTeams(std::vector<WormDTO>& worms) {
     for (; currentTeam < numberOfPlayers; currentTeam++){
         std::vector<int> teamWormsIDs = teams[currentTeam].getWormIDs();
         for(size_t i = 0; i < teamWormsIDs.size(); i++){
-            worms[teamWormsIDs[i]].addHealth(ADDITIONAL_HEALTH);
+            worms[teamWormsIDs[i]].addHealth(CONFIG.getWormAdditionalHealth());
         }
     }
 

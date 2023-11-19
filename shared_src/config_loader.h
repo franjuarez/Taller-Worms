@@ -35,6 +35,7 @@ private:
 
     //worm
     int worm_initial_health;
+    int worm_additional_health;
     
     //move
     float worm_move_velocity;
@@ -137,6 +138,7 @@ public:
 
     //worm
     int getWormInitialHealth();
+    int getWormAdditionalHealth();
 
     //move
     float getWormMoveVelocity();

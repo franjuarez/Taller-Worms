@@ -23,6 +23,7 @@ beam:
 
 worm:
   initial_health: 100
+  additional_health: 25
 
 move:
   move_velocity: 0.4
