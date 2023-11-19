@@ -264,6 +264,31 @@ bool GameWorld::teleportWorm(int id, float x, float y){
     return false;
 }
 
+void GameWorld::ceroGravity(){
+    this->world->SetGravity(b2Vec2(0, 0));
+}
+
+void GameWorld::reviveWorm(int id){
+    checkWormExists(id);
+    b2Body* worm = this->worms[id];
+    Worm* wormData = (Worm*) worm->GetUserData().pointer;
+    wormData->revive();
+}
+
+void GameWorld::addHealthToWorm(int id, int health){
+    checkWormExists(id);
+    b2Body* worm = this->worms[id];
+    Worm* wormData = (Worm*) worm->GetUserData().pointer;
+    wormData->addHealth(health);
+}
+
+void GameWorld::wormGetAllWeapons(int id){
+    checkWormExists(id);
+    b2Body* worm = this->worms[id];
+    Worm* wormData = (Worm*) worm->GetUserData().pointer;
+    wormData->getAllWeapons();
+}
+
 void GameWorld::removeWorm(b2Body* worm){
     bool erased = false;
     for(auto it = this->worms.begin(); it != this->worms.end(); ++it){

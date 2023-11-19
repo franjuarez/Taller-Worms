@@ -26,12 +26,26 @@ void Worm::die(){
     this->health = 0;
 }
 
+void Worm::revive(){
+    this->health = CONFIG.getWormInitialHealth();
+}
+
+void Worm::addHealth(int health){
+    this->health += health;
+}
+
 bool Worm::isDead(){
     return this->health <= 0;
 }
 
 int Worm::getId(){
     return this->id;
+}
+
+void Worm::getAllWeapons(){
+    for(int i = 0; i < this->weapons.size(); i++){
+        this->weapons[i] = INFINITE_AMUNITION;
+    }
 }
 
 void Worm::reduceAmmo(int weaponId){

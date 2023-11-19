@@ -94,6 +94,14 @@ public:
 
     bool teleportWorm(int id, float x, float y);
 
+    void ceroGravity();
+
+    void reviveWorm(int id);
+
+    void addHealthToWorm(int id, int health);
+    
+    void wormGetAllWeapons(int id);
+
     bool allEntitiesAtRest();
 
     GameDynamic* getGameStatus(int id);

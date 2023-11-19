@@ -62,9 +62,14 @@ class Worm : public Entity {
     void handleExplosion(float damage, b2Vec2 explosionCenter);
 
     void hitWithBat();
+
+    void revive();
+    
+    void addHealth(int health);
     
     void reduceAmmo(int weaponId);
 
+    void getAllWeapons();
 
     WormDTO getDTO();
 };
