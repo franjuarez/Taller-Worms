@@ -268,13 +268,6 @@ void GameWorld::ceroGravity(){
     this->world->SetGravity(b2Vec2(0, 0));
 }
 
-void GameWorld::reviveWorm(int id){
-    checkWormExists(id);
-    b2Body* worm = this->worms[id];
-    Worm* wormData = (Worm*) worm->GetUserData().pointer;
-    wormData->revive();
-}
-
 void GameWorld::addHealthToWorm(int id, int health){
     checkWormExists(id);
     b2Body* worm = this->worms[id];

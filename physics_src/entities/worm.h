@@ -63,8 +63,6 @@ class Worm : public Entity {
 
     void hitWithBat();
 
-    void revive();
-    
     void addHealth(int health);
     
     void reduceAmmo(int weaponId);

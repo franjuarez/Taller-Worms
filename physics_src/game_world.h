@@ -96,8 +96,6 @@ public:
 
     void ceroGravity();
 
-    void reviveWorm(int id);
-
     void addHealthToWorm(int id, int health);
     
     void wormGetAllWeapons(int id);

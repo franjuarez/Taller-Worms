@@ -26,12 +26,8 @@ void Worm::die(){
     this->health = 0;
 }
 
-void Worm::revive(){
-    this->health = CONFIG.getWormInitialHealth();
-}
-
 void Worm::addHealth(int health){
-    this->health += health;
+    this->health += CONFIG.getWormAdditionalHealth();
 }
 
 bool Worm::isDead(){
