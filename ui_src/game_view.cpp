@@ -5,6 +5,8 @@
 #define FPS 60.0f
 #define RATE (1000.f / FPS)
 
+
+
 #define MUSIC_PATH "../resources/music/AdhesiveWombat_Night Shade.mp3"
 
 #define WORM_LIFE_FONT_PATH "../resources/fonts/lazy.ttf"
@@ -59,6 +61,7 @@
 #include "../game_src/commands/launch_bazooka.h"
 #include "../game_src/commands/teleport.h"
 #include "../game_src/commands/hit_upclose.h"
+#include "../game_src/commands/throw_grenade.h"
 #include "../game_src/constants_game.h"
 
 
@@ -101,6 +104,7 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 	rocketSprites.push_back(Texture(renderer, Surface(EXPLOSION_PATH).SetColorKey(true,0)));
 	//le paso algo que pueda ser transparente si se agarra la porcion correcta para que se pueda hacer que desaparezca
 	rocketSprites.push_back(Texture(renderer, Surface(EXPLOSION_PATH).SetColorKey(true,0)));
+	rocketSprites.push_back(Texture(renderer, Surface(RGRENADE_ICON_PATH).SetColorKey(true,0)));
 
 	//para los gusanos. EXTRAER A SU PROPIA CLASE
 	dynamicSpriteSheets.push_back(Texture(renderer,Surface(STILL_WORM_PATH).SetColorKey(true, 0)));
@@ -172,7 +176,6 @@ void GameView::updateEntities(int i) {
 	std::vector<WormDTO> recievedWorms = gs->getWorms();
 
 	this->currentWormId = gs->getWormPlayingID();
-	std::cout << "currentWormId: " << currentWormId << std::endl;
 	if (oldid != currentWormId) {
 		inputState = 0;
 		if (oldid != -1) { //si se termino el turno
@@ -365,7 +368,9 @@ void GameView::clickCase(int i, int mouseX, int mouseY) {
 	case MORTAR_CODE:
 		return;
 	case RGRENADE_CODE:
-		return;
+		this->client.execute(new ThrowGrenade(RED_GRENADE,
+			this->currentWormId,
+			dir, angle, 40.0f, 3));
 	case BANANA_CODE:
 		return;
 
@@ -424,6 +429,7 @@ void GameView::processInput(SDL_Event event, int i) {
 			break;
 		case SDLK_6:
 			inputState = RGRENADE_CODE;
+			this->wormViews.at(currentWormId).drawRedGrenade(i);
 			break;
 		case SDLK_7:
 			inputState = BANANA_CODE;

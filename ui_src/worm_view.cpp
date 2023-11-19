@@ -123,7 +123,7 @@ WormView::WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets, Fon
 		y = 60*i + 16;
 		w = 29;
 		h = 27;
-		frames[DRAWING_RG].push_back(Rect(x,y,w,h));
+		frames[DRAWING_RG_FRAMES].push_back(Rect(x,y,w,h));
 	}
 
 	//frames for holding red grenade
@@ -132,7 +132,7 @@ WormView::WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets, Fon
 		y = i * 60 + 12;
 		w = 34;
 		h = 31;
-		frames[HOLDING_RG].push_back(Rect(x,y,w,h));
+		frames[HOLDING_RG_FRAMES].push_back(Rect(x,y,w,h));
 	}
 
 }
@@ -143,9 +143,19 @@ int WormView::shoot(int i) {
 	return aux;
 }
 
+void WormView::drawRedGrenade(int i) {
+	if (currentFramesIndex == DRAWING_RG_FRAMES ||
+		currentFramesIndex == HOLDING_RG_FRAMES)
+		return;
+	this->startingPoint = i;
+	this->currentFramesIndex = DRAWING_RG_FRAMES;
+	this->defaultFramesIndex = HOLDING_RG_FRAMES;
+}
+
 void WormView::toDefault(int i) {
 	if (currentFramesIndex == HOLDING_AXE_FRAMES ||
-		currentFramesIndex == HOLDING_BAZOKA_FRAMES) {
+		currentFramesIndex == HOLDING_BAZOKA_FRAMES ||
+		currentFramesIndex == HOLDING_RG_FRAMES) {
 		currentFramesIndex = STILL_FRAMES;
 		this->startingPoint = i;
 	}
@@ -154,7 +164,7 @@ void WormView::toDefault(int i) {
 }
 
 void WormView::drawBazoka(int i) {
-	if (currentFramesIndex == DRAWING_BAZOKA_FRAMES && 
+	if (currentFramesIndex == DRAWING_BAZOKA_FRAMES || 
 		currentFramesIndex == HOLDING_BAZOKA_FRAMES)
 		return;
 	this->startingPoint = i;
@@ -163,7 +173,7 @@ void WormView::drawBazoka(int i) {
 }
 
 void WormView::drawAxe(int i) {
-	if (currentFramesIndex == DRAWING_AXE_FRAMES &&
+	if (currentFramesIndex == DRAWING_AXE_FRAMES ||
 		currentFramesIndex == HOLDING_AXE_FRAMES)
 		return;
 	this->startingPoint = i;
@@ -220,7 +230,8 @@ void WormView::display(int i, Renderer& renderer, int camX, int camY, int mouseX
 
 	//si es un arma que estoy sosteniendo tengo que calcular los frames apuntando y la condicion de flip
 	if (currentFramesIndex == HOLDING_AXE_FRAMES
-		|| currentFramesIndex == HOLDING_BAZOKA_FRAMES) {
+		|| currentFramesIndex == HOLDING_BAZOKA_FRAMES
+		|| currentFramesIndex == HOLDING_RG_FRAMES) {
 
 		float dx = ((mouseX + camX) / m_to_pix_x) - this->worm.getX() ;
 		float dy = ((mouseY + camY - WINDOW_HEIGHT) / m_to_pix_y) - this->worm.getY();

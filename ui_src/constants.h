@@ -21,8 +21,8 @@ enum FrameType {
 	HOLDING_AXE_FRAMES = 8,
 	DRAWING_BAZOKA_FRAMES = 9,
 	HOLDING_BAZOKA_FRAMES = 10,
-	DRAWING_RG = 11,
-	HOLDING_RG = 12
+	DRAWING_RG_FRAMES = 11,
+	HOLDING_RG_FRAMES = 12
 };
 
 enum hudSprites {
@@ -47,9 +47,13 @@ enum commands {
 };
 
 //rocket animation constants
-extern const int ROCKET_FRAMES;
-extern const int EXPLOSION_FRAMES;
-extern const int POST_EXPLOSION_FRAMES;
+enum projectileType {
+	ROCKET_FRAMES = 0,
+	EXPLOSION_FRAMES,
+	POST_EXPLOSION_FRAMES,
+	RED_GRENADE_FRAMES
+
+};
 
 extern const int MUSIC_VOLUME;
 

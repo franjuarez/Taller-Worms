@@ -1,11 +1,22 @@
 #include "projectile_view.h"
+#include "../game_src/constants_game.h"
 #include <SDL2pp/SDL2pp.hh>
 
 ProjectileView::ProjectileView(ExplosivesDTO rocket, std::vector<Texture>& projectileSpriteSheet) :
-rocket(rocket), projectileSpriteSheets(projectileSpriteSheet), frames{{},{},{}} {
+rocket(rocket), projectileSpriteSheets(projectileSpriteSheet), frames{4} {
 	startingPoint = 0;
-	currentFramesIndex = defaultFramesIndex = ROCKET_FRAMES;
+	std::cout << rocket.getType() << std::endl;
+	if (rocket.getType() == BAZOOKA) {
+		currentFramesIndex = defaultFramesIndex = ROCKET_FRAMES;
+	} else if (rocket.getType() == RED_GRENADE) {
+		currentFramesIndex = defaultFramesIndex = RED_GRENADE_FRAMES;
+	} else {
+		currentFramesIndex = defaultFramesIndex = RED_GRENADE_FRAMES;
+	}
+
+	
 	frames[ROCKET_FRAMES].push_back(Rect(19,13,22,34));
+
 
 	int x = 19;
 	int y;
@@ -16,18 +27,15 @@ rocket(rocket), projectileSpriteSheets(projectileSpriteSheet), frames{{},{},{}} 
 		y = 60 * i + 17;
 		frames[EXPLOSION_FRAMES].push_back(Rect(x,y,w,h));
 	}
-
-
-
 	frames[POST_EXPLOSION_FRAMES].push_back(Rect(0,0,1,1));
 
-
+	frames[RED_GRENADE_FRAMES].push_back(Rect(7,4,14,24));
 }
 
 ProjectileView::~ProjectileView() {}
 
 void ProjectileView::explode(int i) {
-	if (currentFramesIndex != ROCKET_FRAMES)
+	if (currentFramesIndex != ROCKET_FRAMES && currentFramesIndex != RED_GRENADE_FRAMES)
 		return;
 	this->startingPoint = i;
 	this->currentFramesIndex = EXPLOSION_FRAMES;
@@ -49,9 +57,14 @@ void ProjectileView::display(int i, Renderer& renderer, int camX, int camY) {
 
 
 
-	double angle;
-	angle = -(atan(rocket.getVelY() / rocket.getVelX()) * (180.0 / M_PI)); 
-	angle += (rocket.getVelX() < 0) ? -90 : 90;
+	double angle = 0;
+	if (rocket.getType() == BAZOOKA) {
+		angle = -(atan(rocket.getVelY() / rocket.getVelX()) * (180.0 / M_PI)); 
+		angle += (rocket.getVelX() < 0) ? -90 : 90;
+	}
+	if (rocket.getType() == RED_GRENADE) {
+		angle = i % 180;
+	}
 
 
 	if (currentFramesIndex == EXPLOSION_FRAMES) {
