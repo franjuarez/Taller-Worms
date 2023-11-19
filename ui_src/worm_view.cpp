@@ -8,7 +8,7 @@
 WormView::WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets, Font& wormsFont) : 
 	worm(worm),
 	dynamicSpriteSheets(dynamicSpriteSheets),
-	frames{11},
+	frames{13},
 	wormsFont(wormsFont) {
 	defaultFramesIndex = STILL_FRAMES;
 	currentFramesIndex = STILL_FRAMES;
@@ -96,13 +96,7 @@ WormView::WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets, Fon
 		h = 78;
 		frames[HOLDING_AXE_FRAMES].push_back(Rect(x,y,w,h));
 	}
-	//for (int i = 17; i >= 0; i--) {
-	//	x = 10;
-	//	y = i * 104 + 20;
-	//	w = 73;
-	//	h = 78;
-	//	frames[HOLDING_AXE_FRAMES].push_back(Rect(x,y,w,h));
-	//}
+	
 
 	//frames for drawing bazoka
 	for (int i = 0; i < 7; i++) {
@@ -120,6 +114,25 @@ WormView::WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets, Fon
 		w = 34;
 		h = 25;
 		frames[HOLDING_BAZOKA_FRAMES].push_back(Rect(x,y,w,h));
+	}
+
+
+	//frames for drawing red grenade
+	for (int i = 0; i < 10; i++)  {
+		x = 18;
+		y = 60*i + 16;
+		w = 29;
+		h = 27;
+		frames[DRAWING_RG].push_back(Rect(x,y,w,h));
+	}
+
+	//frames for holding red grenade
+	for (int i = 0; i < 32; i++) {
+		x = 13;
+		y = i * 60 + 12;
+		w = 34;
+		h = 31;
+		frames[HOLDING_RG].push_back(Rect(x,y,w,h));
 	}
 
 }

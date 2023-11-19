@@ -21,7 +21,8 @@
 #define WORM_HOLDING_AXE_PATH "../resources/images/hold_axe.bmp"
 #define WORM_DRAWING_BAZOKA_PATH "../resources/images/draw_bazoka.bmp"
 #define WORM_HOLDING_BAZOKA_PATH "../resources/images/hold_bazoka.bmp"
-
+#define WORM_DRAWING_RG_PATH "../resources/images/draw_rg.bmp"
+#define WORM_HOLDING_RG_PATH "../resources/images/hold_rg.bmp"
 
 
 #define GRAVE_PATH "../resources/images/grave1.bmp"
@@ -113,6 +114,8 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_HOLDING_AXE_PATH).SetColorKey(true, 0)));
 	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_DRAWING_BAZOKA_PATH).SetColorKey(true, 0)));
 	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_HOLDING_BAZOKA_PATH).SetColorKey(true, 0)));
+	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_DRAWING_RG_PATH).SetColorKey(true, 0)));
+	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_HOLDING_RG_PATH).SetColorKey(true, 0)));
 
 
 	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_01).SetColorKey(true, 0).SetBlendMode(SDL_BLENDMODE_BLEND).SetAlphaMod(220)));
