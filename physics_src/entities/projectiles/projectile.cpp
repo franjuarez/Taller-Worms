@@ -3,13 +3,14 @@
 #include <cstdlib>
 
 Projectile::Projectile(b2Body* body, std::unordered_set<b2Body*>& entitiesToRemove,
-    std::vector<createEntity>& entitiesToAdd, EntityType projectileType, int id,float damage, float radius) : 
-    Entity(body, entitiesToRemove, projectileType), entitiesToAdd(entitiesToAdd), id(id), damage(damage), radius(radius) {}
+    std::vector<createEntity>& entitiesToAdd, EntityType entityType, int projectileType, int id,float damage, float radius) : 
+    Entity(body, entitiesToRemove, entityType), entitiesToAdd(entitiesToAdd), 
+    projectileType(projectileType), id(id), damage(damage), radius(radius) {}
 
 ExplosivesDTO Projectile::getDTO(){
     Position pos(this->body->GetPosition().x, this->body->GetPosition().y);
     b2Vec2 vel = this->body->GetLinearVelocity();
-    ExplosivesDTO dto(0, id, pos, vel.x, vel.y);
+    ExplosivesDTO dto(projectileType, id, pos, vel.x, vel.y);
     return dto;
 }
 
