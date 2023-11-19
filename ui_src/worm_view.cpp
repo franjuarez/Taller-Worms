@@ -8,7 +8,7 @@
 WormView::WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets, Font& wormsFont) : 
 	worm(worm),
 	dynamicSpriteSheets(dynamicSpriteSheets),
-	frames{13},
+	frames{15},
 	wormsFont(wormsFont) {
 	defaultFramesIndex = STILL_FRAMES;
 	currentFramesIndex = STILL_FRAMES;
@@ -135,12 +135,51 @@ WormView::WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets, Fon
 		frames[HOLDING_RG_FRAMES].push_back(Rect(x,y,w,h));
 	}
 
+	//drawing banana
+	for (int i = 0; i < 10; i++) {
+		x = 20;
+		w = 32;
+		y = 60 * i + 15;
+		h = 27;
+		frames[DRAWING_BANANA_FRAMES].push_back(Rect(x,y,w,h));
+	}
+	//holding banana
+	for (int i = 0; i < 32; i++) {
+		x = 13;
+		y = i*60 + 15;
+		w = 34;
+		h = 27;
+		frames[HOLDING_BANANA_FRAMES].push_back(Rect(x,y,w,h));
+	}
 }
 
 int WormView::shoot(int i) {
 	int aux = angle;
 	toDefault(i);
 	return aux;
+}
+
+
+void WormView::toDefault(int i) {
+	if (currentFramesIndex == HOLDING_AXE_FRAMES ||
+		currentFramesIndex == HOLDING_BAZOKA_FRAMES ||
+		currentFramesIndex == HOLDING_RG_FRAMES ||
+		currentFramesIndex == HOLDING_BANANA_FRAMES) {
+
+		currentFramesIndex = STILL_FRAMES;
+		this->startingPoint = i;
+	}
+
+	this->defaultFramesIndex = STILL_FRAMES;
+}
+
+void WormView::drawBanana(int i) {
+	if (currentFramesIndex == DRAWING_BANANA_FRAMES ||
+		currentFramesIndex == HOLDING_BANANA_FRAMES)
+		return;
+	this->startingPoint = i;
+	this->currentFramesIndex = DRAWING_BANANA_FRAMES;
+	this->defaultFramesIndex = HOLDING_BANANA_FRAMES;
 }
 
 void WormView::drawRedGrenade(int i) {
@@ -150,17 +189,6 @@ void WormView::drawRedGrenade(int i) {
 	this->startingPoint = i;
 	this->currentFramesIndex = DRAWING_RG_FRAMES;
 	this->defaultFramesIndex = HOLDING_RG_FRAMES;
-}
-
-void WormView::toDefault(int i) {
-	if (currentFramesIndex == HOLDING_AXE_FRAMES ||
-		currentFramesIndex == HOLDING_BAZOKA_FRAMES ||
-		currentFramesIndex == HOLDING_RG_FRAMES) {
-		currentFramesIndex = STILL_FRAMES;
-		this->startingPoint = i;
-	}
-
-	this->defaultFramesIndex = STILL_FRAMES;
 }
 
 void WormView::drawBazoka(int i) {
@@ -231,7 +259,8 @@ void WormView::display(int i, Renderer& renderer, int camX, int camY, int mouseX
 	//si es un arma que estoy sosteniendo tengo que calcular los frames apuntando y la condicion de flip
 	if (currentFramesIndex == HOLDING_AXE_FRAMES
 		|| currentFramesIndex == HOLDING_BAZOKA_FRAMES
-		|| currentFramesIndex == HOLDING_RG_FRAMES) {
+		|| currentFramesIndex == HOLDING_RG_FRAMES
+		|| currentFramesIndex == HOLDING_BANANA_FRAMES) {
 
 		float dx = ((mouseX + camX) / m_to_pix_x) - this->worm.getX() ;
 		float dy = ((mouseY + camY - WINDOW_HEIGHT) / m_to_pix_y) - this->worm.getY();
