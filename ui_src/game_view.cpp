@@ -25,6 +25,8 @@
 #define WORM_HOLDING_BAZOKA_PATH "../resources/images/hold_bazoka.bmp"
 #define WORM_DRAWING_RG_PATH "../resources/images/draw_rg.bmp"
 #define WORM_HOLDING_RG_PATH "../resources/images/hold_rg.bmp"
+#define WORM_DRAWING_BANANA_PATH "../resources/images/draw_banana.bmp"
+#define WORM_HOLDING_BANANA_PATH "../resources/images/hold_banana.bmp"
 
 
 #define GRAVE_PATH "../resources/images/grave1.bmp"
@@ -120,7 +122,8 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_HOLDING_BAZOKA_PATH).SetColorKey(true, 0)));
 	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_DRAWING_RG_PATH).SetColorKey(true, 0)));
 	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_HOLDING_RG_PATH).SetColorKey(true, 0)));
-
+	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_DRAWING_BANANA_PATH).SetColorKey(true, 0)));
+	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_HOLDING_BANANA_PATH).SetColorKey(true, 0)));
 
 	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_01).SetColorKey(true, 0).SetBlendMode(SDL_BLENDMODE_BLEND).SetAlphaMod(220)));
 	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_02).SetColorKey(true, 0).SetBlendMode(SDL_BLENDMODE_BLEND).SetAlphaMod(220)));
@@ -348,7 +351,7 @@ void GameView::clickCase(int i, int mouseX, int mouseY) {
 
 	//rl
 	int angle = wormViews.at(currentWormId).shoot(i);
-	int dir = (((mouseX + camY) / m_to_pix_x) < this->currentWorm.getX()) ? LEFT_DIR : RIGHT_DIR ;
+	int dir = (((mouseX + camX) / m_to_pix_x) < this->currentWorm.getX()) ? LEFT_DIR : RIGHT_DIR ;
 	//tp
 	Position pos((mouseX + camX) / m_to_pix_x, ((mouseY + camY) - WINDOW_HEIGHT) / m_to_pix_y);
 
@@ -373,7 +376,11 @@ void GameView::clickCase(int i, int mouseX, int mouseY) {
 		this->client.execute(new ThrowGrenade(RED_GRENADE,
 			this->currentWormId,
 			dir, angle, 40.0f, 3));
+		return;
 	case BANANA_CODE:
+		this->client.execute(new ThrowGrenade(BANANA,
+			this->currentWormId,
+			dir, angle, 40.0f, 3));
 		return;
 
 	default:
@@ -435,11 +442,9 @@ void GameView::processInput(SDL_Event event, int i) {
 			break;
 		case SDLK_7:
 			inputState = BANANA_CODE;
+			this->wormViews.at(currentWormId).drawBanana(i);
 			break;
-
-		std::cout << inputState << std::endl;
 		}
-
 	}
 }
 

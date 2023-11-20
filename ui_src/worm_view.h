@@ -29,6 +29,7 @@ public:
 	//funcion de prueba para testear que no aparezca el segfault
 	int shoot(int i);
 	void toDefault(int i);
+	void drawBanana(int i);
 	void drawRedGrenade(int i);
 	void drawBazoka(int i);
 	void drawAxe(int i);

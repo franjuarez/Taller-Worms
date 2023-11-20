@@ -4,8 +4,8 @@
 
 #define RATE (1000.f / CONFIG.getFps())
 
-GameLoop::GameLoop(Queue<Command*>& commandsQueue, StatusBroadcaster& statusBroadcaster, GameMap* gameMap, std::vector<Team> teams)
-: commandsQueue(commandsQueue), statusBroadcaster(statusBroadcaster), gameWorld(gameMap), teams(teams) {
+GameLoop::GameLoop(Queue<Command*>& commandsQueue, StatusBroadcaster& statusBroadcaster, GameMap* gameMap, std::vector<Team> teams, bool* playing)
+: commandsQueue(commandsQueue), statusBroadcaster(statusBroadcaster), gameWorld(gameMap), teams(teams), playing(playing) {
 	this->teamPlayingID = 0;
 	this->wormPlayingHealth = 100;
 	this->waitingForStatic = false;
@@ -62,14 +62,17 @@ void GameLoop::loopLogic(int64_t elapsed_time) {
 
 }
 
-void GameLoop::start() {
+void GameLoop::run() {
 	this->wormPlayingID = teams[teamPlayingID].getNextWormID();
-	while(true) {
+	while(playing) {
 		auto current_time = std::chrono::steady_clock::now();
 		auto elapsed_time = std::chrono::duration_cast<std::chrono::milliseconds>(current_time - this->start_time).count();
-		loopLogic(elapsed_time);
-		usleep(RATE*1000);
-
+		try {
+			loopLogic(elapsed_time);
+			usleep(RATE*1000);
+		} catch (...) {
+			return;
+		}
 	}
 }
 

@@ -2,7 +2,7 @@
 #include <iostream>
 ProjectileFragment::ProjectileFragment(b2Body* fatherBody, std::unordered_set<b2Body*>& entitiesToRemove,
  std::vector<createEntity>& entitiesToAdd, int id, float damage, float radius) : 
-        InstantProjectile(fatherBody, entitiesToRemove, entitiesToAdd, id, damage, radius) { }
+        InstantProjectile(fatherBody, entitiesToRemove, entitiesToAdd, FRAGMENT, id, damage, radius) { }
 
 float randomFloat(float lower, float upper) {
    float random = ((float) std::rand()) / (float) RAND_MAX;

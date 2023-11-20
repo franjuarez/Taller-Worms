@@ -46,14 +46,15 @@ target_link_libraries(SharedPhysics PUBLIC box2d SharedLib)
 #GAME
 file(GLOB SHAREDGAME CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/game_src/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/game_src/*.h" "${CMAKE_CURRENT_SOURCE_DIR}/game_src/commands/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/game_src/commands/*.h" )
 file(GLOB COMMANDS CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/game_src/commands/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/game_src/commands/*.h" )
-add_library(SharedGameLib ${SHAREDGAME} ${COMMANDS})
+file(GLOB MAPS CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/game_src/map_loading/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/game_src/map_loading/*.h" )
+add_library(SharedGameLib ${SHAREDGAME} ${COMMANDS} ${MAPS})
 target_link_libraries(SharedGameLib PUBLIC SharedPhysics)
+target_link_libraries(SharedGameLib PUBLIC yaml-cpp)
 target_link_libraries(SharedLib PUBLIC SharedGameLib)
 target_link_libraries(SharedUi PUBLIC SharedGameLib)
 
-
 #QT
-set(CMAKE_PREFIX_PATH ~/Qt/5.15.2/gcc_64/)
+set(CMAKE_PREFIX_PATH ${CMAKE_CURRENT_SOURCE_DIR}/thirdParty/Qt/5.15.2/gcc_64/)
 
 find_package(Qt5Widgets CONFIG REQUIRED)
 include_directories(${PROJECT_SOURCE_DIR}/Lobby  ${Qt5Widgets_INCLUDE_DIRS})

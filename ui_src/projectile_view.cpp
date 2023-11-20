@@ -5,7 +5,8 @@
 ProjectileView::ProjectileView(ExplosivesDTO rocket, std::vector<Texture>& projectileSpriteSheet) :
 rocket(rocket), projectileSpriteSheets(projectileSpriteSheet), frames{4} {
 	startingPoint = 0;
-	std::cout << rocket.getType() << std::endl;
+
+
 	if (rocket.getType() == BAZOOKA) {
 		currentFramesIndex = defaultFramesIndex = ROCKET_FRAMES;
 	} else if (rocket.getType() == RED_GRENADE) {
@@ -13,8 +14,6 @@ rocket(rocket), projectileSpriteSheets(projectileSpriteSheet), frames{4} {
 	} else {
 		currentFramesIndex = defaultFramesIndex = RED_GRENADE_FRAMES;
 	}
-
-	
 	frames[ROCKET_FRAMES].push_back(Rect(19,13,22,34));
 
 

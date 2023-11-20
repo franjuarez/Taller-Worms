@@ -17,8 +17,9 @@
 #include "../game_src/game_map.h"
 #include <unistd.h>
 #include <chrono>
+#include <atomic>
 
-class GameLoop {
+class GameLoop : public Thread {
 
 private: 
     Queue<Command*>& commandsQueue; // esta saca los comandos con try pop porque no la deberia bloquear y siempre tiene que estar loopeando
@@ -34,10 +35,11 @@ private:
     void loopLogic(int64_t passed_time);
     int updateWinningStatus();
     void changeWormPlaying(std::vector<WormDTO> worms);
+
+    std::atomic<bool> playing;
 public:
-    GameLoop(Queue<Command*>& commandsQueue, StatusBroadcaster& statusBroadcaster, GameMap* gameMap, std::vector<Team> teams);
+    GameLoop(Queue<Command*>& commandsQueue, StatusBroadcaster& statusBroadcaster, GameMap* gameMap, std::vector<Team> teams, bool* playing);
     ~GameLoop();
-    void start();
-    
+    void run() override;
 };
 #endif

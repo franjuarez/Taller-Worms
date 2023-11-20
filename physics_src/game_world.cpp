@@ -308,8 +308,9 @@ void GameWorld::removeEntities(){
 bool GameWorld::allEntitiesAtRest(){
     for (b2Body* body = this->world->GetBodyList(); body != NULL; body = body->GetNext()) {
         if(body->GetType() == b2_dynamicBody){
-            if(!body->GetLinearVelocity().Length() == 0){
-                Entity* entity = (Entity*) body->GetUserData().pointer;
+            EntityType entityType = ((Entity*) body->GetUserData().pointer)->getEntityType();
+            float velModule = body->GetLinearVelocity().Length();
+            if(velModule != 0 || entityType == EntityDelayedProjectile){
                 return false;
             }
         }
