@@ -19,23 +19,28 @@ void Projectile::leaveFragments(){ }
 void Projectile::explode(){
     b2Body* projectile = this->body;
     b2Vec2 projectilePos = projectile->GetPosition();
-    ExplosionQueryCallback explosionCallback(projectilePos, this->radius);
-    b2AABB aabb;
-    aabb.lowerBound = projectilePos - b2Vec2(this->radius, this->radius);
-    aabb.upperBound = projectilePos + b2Vec2(this->radius, this->radius);
     b2World* world = projectile->GetWorld();
-    world->QueryAABB( &explosionCallback, aabb);
-    
-    for(b2Body* body : explosionCallback.foundBodies) {
-        //Assuming it just affects worms
-        Worm* worm = (Worm*) body->GetUserData().pointer;
-        b2Vec2 bodyPos = body->GetPosition();
-        float distance = b2Distance(projectilePos, bodyPos);
-        float damage = this->damage * (1 - distance / this->radius);
-        worm->handleExplosion(damage, projectilePos);
+    int numberOfRays = 20;
+    float DEGTORAD = 0.0174532925199432957f;
+    for(int i = 0; i < numberOfRays; i++){
+        float angle = (i / (float)numberOfRays) * 360 * DEGTORAD;
+        b2Vec2 rayDir( sinf(angle), cosf(angle) );
+        b2Vec2 rayEnd = projectilePos + this->radius * rayDir;
+        ExplosionQueryCallback callback;
+        world->RayCast(&callback, projectilePos, rayEnd);
+        for(collisionData data : callback.foundBodies) {
+            b2Body* body = data.body;
+            //Assuming it just affects worms
+            Worm* worm = (Worm*) body->GetUserData().pointer;
+            b2Vec2 bodyPos = body->GetPosition();
+            float distance = b2Distance(projectilePos, bodyPos);
+            float damage = this->damage * (1 - distance / this->radius);
+            worm->handleExplosion(damage, projectilePos);
+        }
     }
     leaveFragments();
     this->entitiesToRemove.insert(projectile);
+    
 }
 
 Projectile::~Projectile() {}

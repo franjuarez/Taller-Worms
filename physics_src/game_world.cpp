@@ -221,10 +221,10 @@ void GameWorld::wormThrowRedGrenade(int id, float angle, int direction, float po
 
 b2Body* GameWorld::createBanana(b2Body* worm, int direction, int explosionTimer){
     int id = this->lastProjectileId;
-    b2Body* body = createProjectile(worm, BANANA, direction, GREEN_GRENADE_WIDTH, GREEN_GRENADE_WIDTH, CONFIG.getBananaBounciness());
+    b2Body* body = createProjectile(worm, BANANA, direction, BANANA_WIDTH, BANANA_WIDTH, CONFIG.getBananaBounciness());
 
-    Banana* redGrenadeEntity = new Banana(body, entitiesToRemove, entitiesToAdd, id, CONFIG.getBananaDamage(), CONFIG.getBananaRadius(), explosionTimer);
-    body->GetUserData().pointer = reinterpret_cast<uintptr_t>(redGrenadeEntity);
+    Banana* bananaEntity = new Banana(body, entitiesToRemove, entitiesToAdd, id, CONFIG.getBananaDamage(), CONFIG.getBananaRadius(), explosionTimer);
+    body->GetUserData().pointer = reinterpret_cast<uintptr_t>(bananaEntity);
 
     return body;
 }
