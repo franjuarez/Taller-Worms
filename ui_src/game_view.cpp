@@ -88,7 +88,8 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 	sound.SetVolume(MUSIC_VOLUME);
 
 	client.start();
-	GameMap* gs = dynamic_cast<GameMap*>(client.getGameStatus());
+	std::shared_ptr<GameMap> gs = std::dynamic_pointer_cast<GameMap>(client.getGameStatus());
+
 	this->team = gs->getTeam();
 
 	//rocketSPrites.push_back(/*textura de la explosion*/);
@@ -170,7 +171,7 @@ void GameView::stop() {
 }
 
 void GameView::updateEntities(int i) {
-	GameDynamic* gs = dynamic_cast<GameDynamic*>(client.getGameStatus());
+	std::shared_ptr<GameDynamic> gs = std::dynamic_pointer_cast<GameDynamic>(client.getGameStatus());
 	int oldid = this->currentWormId;
 
 	std::vector<WormDTO> recievedWorms = gs->getWorms();
@@ -198,6 +199,7 @@ void GameView::updateEntities(int i) {
 	*/
 	
 	this->recievedProjectiles = gs->getExplosives();
+	std::cout << "recievedProjectiles size: " << recievedProjectiles.size() << std::endl;
 	for (auto it = recievedProjectiles.begin(); it != recievedProjectiles.end(); it++) {
 		if (projectileViews.find(it->first) != projectileViews.end())
 			continue;
@@ -326,17 +328,17 @@ void GameView::draw(int i) {
 }
 
 void GameView::returnKeyCase(int i) {
-	this->client.execute(new Jump(currentWormId, 2));
+	this->client.execute(std::make_shared<Jump>(Jump(currentWormId, 2)));
 	this->wormViews.at(this->currentWormId).jump(i);
 }
 
 void GameView::moveCase(int i, int dir) {
-	this->client.execute(new Move(currentWormId, dir));
+	this->client.execute(std::make_shared<Move>(Move(currentWormId, dir)));
     this->wormViews.at(this->currentWormId).move(i);
 }
 
 void GameView::backspaceKeyCase(int i) {
-	this->client.execute(new Jump(currentWormId, 3));
+	this->client.execute(std::make_shared<Jump>(Jump(currentWormId, 3)));
 }
 
 void GameView::clickCase(int i, int mouseX, int mouseY) {
@@ -353,24 +355,24 @@ void GameView::clickCase(int i, int mouseX, int mouseY) {
 
 	switch (inputState) {
 	case BAZOOKA_CODE:
-		this->client.execute(new LaunchRocket(BAZOOKA, currentWormId, dir, angle, 40.0f));
+		this->client.execute(std::make_shared<LaunchRocket>(LaunchRocket(BAZOOKA, currentWormId, dir, angle, 40.0f)));
 		return;
 	case GGRENADE_CODE:
 		return;
 	case BAT_CODE:
 		this->wormViews.at(this->currentWormId).hit(i);
-		this->client.execute(new HitUpclose(this->currentWormId));
+		this->client.execute(std::make_shared<HitUpclose>(HitUpclose(this->currentWormId)));
 		return;
 	case TP_CODE:
 		this->wormViews.at(this->currentWormId).tp(i);
-		this->client.execute(new Teleport(currentWormId, pos));		
+		this->client.execute(std::make_shared<Teleport>(Teleport(currentWormId, pos)));		
 		return;
 	case MORTAR_CODE:
 		return;
 	case RGRENADE_CODE:
-		this->client.execute(new ThrowGrenade(RED_GRENADE,
+		this->client.execute(std::make_shared<ThrowGrenade>(ThrowGrenade(RED_GRENADE,
 			this->currentWormId,
-			dir, angle, 40.0f, 3));
+			dir, angle, 40.0f, 3)));
 	case BANANA_CODE:
 		return;
 
@@ -381,7 +383,7 @@ void GameView::clickCase(int i, int mouseX, int mouseY) {
 
 void GameView::bCase(int i) {
 	this->wormViews.at(this->currentWormId).hit(i);
-	this->client.execute(new HitUpclose(this->currentWormId));
+	this->client.execute(std::make_shared<HitUpclose>(HitUpclose(this->currentWormId)));
 }
 
 void GameView::processInput(SDL_Event event, int i) {

@@ -22,7 +22,7 @@
 class GameLoop : public Thread {
 
 private: 
-    Queue<Command*>& commandsQueue; // esta saca los comandos con try pop porque no la deberia bloquear y siempre tiene que estar loopeando
+    Queue<std::shared_ptr<Command>>& commandsQueue; // esta saca los comandos con try pop porque no la deberia bloquear y siempre tiene que estar loopeando
     StatusBroadcaster& statusBroadcaster;
     GameWorld gameWorld;
     std::vector<Team> teams;
@@ -38,7 +38,7 @@ private:
 
     std::atomic<bool> playing;
 public:
-    GameLoop(Queue<Command*>& commandsQueue, StatusBroadcaster& statusBroadcaster, GameMap* gameMap, std::vector<Team> teams, bool* playing);
+    GameLoop(Queue<std::shared_ptr<Command>>& commandsQueue, StatusBroadcaster& statusBroadcaster, std::shared_ptr<GameMap> gameMap, std::vector<Team> teams, bool* playing);
     ~GameLoop();
     void run() override;
 };

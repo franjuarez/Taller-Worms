@@ -67,7 +67,7 @@ class QUndoCommandPrivate
 {
 public:
     QUndoCommandPrivate() : id(-1), obsolete(false) {}
-    QList<QUndoCommand*> child_list;
+    QList<QUndostd::shared_ptr<Command>> child_list;
     QString text;
     QString actionText;
     int id;
@@ -82,8 +82,8 @@ class QUndoStackPrivate : public QObjectPrivate
 public:
     QUndoStackPrivate() : index(0), clean_index(0), group(nullptr), undo_limit(0) {}
 
-    QList<QUndoCommand*> command_list;
-    QList<QUndoCommand*> macro_stack;
+    QList<QUndostd::shared_ptr<Command>> command_list;
+    QList<QUndostd::shared_ptr<Command>> macro_stack;
     int index;
     int clean_index;
     QUndoGroup *group;

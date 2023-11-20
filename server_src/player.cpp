@@ -1,17 +1,18 @@
 #include "player.h"
+#include <memory>
 
-Player::Player(Socket&& peer, Queue<Command*>& commandQueue, GameMap* gameMap) : 
+Player::Player(Socket&& peer, Queue<std::shared_ptr<Command>>& commandQueue, std::shared_ptr<GameMap> gameMap) : 
 protocol(std::move(peer)), 
 sender(protocol, playerQueue, talking), 
 receiver(protocol, commandQueue, talking), 
 commandsQueue(commandQueue), 
 playerQueue(90) {
     playerQueue.push(gameMap);
-    GameDynamic* gameDynamic = new GameDynamic(-1, gameMap->getWorms(), {});
+    std::shared_ptr<GameDynamic> gameDynamic = std::make_shared<GameDynamic>(GameDynamic(-1, gameMap->getWorms(), {}));
     playerQueue.push(gameDynamic);
 }
 
-Queue<Serializable*>* Player::getPlayerQueue() {
+Queue<std::shared_ptr<Serializable>>* Player::getPlayerQueue() {
     return &playerQueue;
 }
 

@@ -11,6 +11,7 @@
 #include <iostream>
 #include <vector>
 #include <unordered_map>
+#include <memory>
 
 class GameDynamic; class GameMap; class Serializable;
 class Command; class Move; class Jump; class LaunchRocket;
@@ -64,15 +65,15 @@ private:
     void sendWeaponsMap(std::vector<int> weapons);
     std::vector<int> receiveWeaponsMap();
 
-    GameMap* receiveMap();
-    GameDynamic* receiveDynamic();
+    std::shared_ptr<GameMap> receiveMap();
+    std::shared_ptr<GameDynamic> receiveDynamic();
 
-    Move* receiveMove();
-    Jump* receiveJump();
-    LaunchRocket* receiveLaunchRocket();
-    ThrowGrenade* receiveThrowGrenade();
-    Teleport* receiveTeoleport();
-    HitUpclose* receiveHitUpclose();
+    std::shared_ptr<Move> receiveMove();
+    std::shared_ptr<Jump>  receiveJump();
+    std::shared_ptr<LaunchRocket> receiveLaunchRocket();
+    std::shared_ptr<ThrowGrenade> receiveThrowGrenade();
+    std::shared_ptr<Teleport> receiveTeoleport();
+    std::shared_ptr<HitUpclose> receiveHitUpclose();
 
     void checkClosed();
 
@@ -85,7 +86,7 @@ public:
 
     void sendDynamic(GameDynamic* dynamic);
     
-    Serializable* receiveSerializable();
+    std::shared_ptr<Serializable> receiveSerializable();
 
     void sendMove(Move* move);
 
@@ -99,7 +100,7 @@ public:
     
     void sendHitUpclose(HitUpclose* hitUpclose);
 
-    Command* receiveCommand();
+    std::shared_ptr<Command> receiveCommand();
 
     ~Protocol();
 

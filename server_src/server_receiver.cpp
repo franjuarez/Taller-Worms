@@ -2,13 +2,13 @@
 #include "../shared_src/protocol.h"
 #include "../game_src/commands/command.h"
 
-ServerReceiver::ServerReceiver(Protocol& protocol, Queue<Command*>& commandsQueue, bool& talking) 
+ServerReceiver::ServerReceiver(Protocol& protocol, Queue<std::shared_ptr<Command>>& commandsQueue, bool& talking) 
 : protocol(protocol), commandsQueue(commandsQueue), talking(talking) {}
 
 void ServerReceiver::run() {
     try{
         while (talking) {
-            Command* command = protocol.receiveCommand();
+            std::shared_ptr<Command> command = protocol.receiveCommand();
             commandsQueue.push(command);
         }
     } catch (const ClosedSocket& e){

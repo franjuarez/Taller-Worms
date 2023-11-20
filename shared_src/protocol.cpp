@@ -33,12 +33,12 @@ void Protocol::sendMap(GameMap* gameMap) {
     sendBeams(gameMap->getBeams());
 }
 
-GameMap* Protocol::receiveMap() {
+std::shared_ptr<GameMap> Protocol::receiveMap() {
     uint8_t team = receiveUintEight();
     std::string mapName = receiveString();
     std::vector<WormDTO> worms = receiveWorms();
     std::vector<BeamDTO> beams = receiveBeams();
-    return new GameMap(team, mapName, beams, worms);
+    return std::make_shared<GameMap>(GameMap(team, mapName, beams, worms));
 }
 
 
@@ -51,13 +51,13 @@ void Protocol::sendDynamic(GameDynamic* dynamic) {
     sendWeapons(dynamic->getExplosives());
 }
 
-GameDynamic* Protocol::receiveDynamic() {
+std::shared_ptr<GameDynamic> Protocol::receiveDynamic() {
     checkClosed();
     char wormPlayingID = receiveChar();
     char winnerTeam = receiveChar();
     std::vector<WormDTO> worms = receiveWorms();
     std::unordered_map<int, ExplosivesDTO> weapons = receiveWeapons();
-    return new GameDynamic(wormPlayingID, winnerTeam, worms, weapons);
+    return std::make_shared<GameDynamic>(GameDynamic(wormPlayingID, winnerTeam, worms, weapons));
 }
 
 void Protocol::sendMove(Move* move) {
@@ -108,7 +108,7 @@ void Protocol::sendHitUpclose(HitUpclose* hitUpclose) {
     sendUintEight(hitUpclose->getID());
 }
 
-Serializable* Protocol::receiveSerializable() {
+std::shared_ptr<Serializable> Protocol::receiveSerializable() {
     checkClosed();
     uint8_t protocolCode = receiveUintEight();
     if (protocolCode == SEND_MAP) {
@@ -119,7 +119,7 @@ Serializable* Protocol::receiveSerializable() {
     throw std::runtime_error("Invalid Serializable");
 }
 
-Command* Protocol::receiveCommand() {
+std::shared_ptr<Command> Protocol::receiveCommand() {
     checkClosed();
     uint8_t protocolCode = receiveUintEight();
     if (protocolCode == SEND_COMMAND_MOVE) {
@@ -153,31 +153,31 @@ Position Protocol::receivePosition() {
 }
 
 
-Move* Protocol::receiveMove() {
+std::shared_ptr<Move> Protocol::receiveMove() {
     checkClosed(); 
     uint8_t wormId = receiveUintEight();
     uint8_t dir = receiveUintEight();
-    return new Move(wormId, dir);
+    return std::make_shared<Move>(Move(wormId, dir));
 }
 
-Jump* Protocol::receiveJump() {
+std::shared_ptr<Jump> Protocol::receiveJump() {
     checkClosed(); 
     uint8_t wormId = receiveUintEight();
     uint8_t dir = receiveUintEight();
-    return new Jump(wormId, dir);
+    return std::make_shared<Jump>(Jump(wormId, dir));
 }
 
-LaunchRocket* Protocol::receiveLaunchRocket() {
+std::shared_ptr<LaunchRocket> Protocol::receiveLaunchRocket() {
     checkClosed();
     uint8_t type = receiveUintEight();
     uint8_t wormId = receiveUintEight();
     uint8_t dir = receiveUintEight();
     float angle = receiveFloat();
     float power = receiveFloat();
-    return new LaunchRocket(type, wormId, dir, angle, power);
+    return std::make_shared<LaunchRocket>(LaunchRocket(type, wormId, dir, angle, power));
 }
 
-ThrowGrenade* Protocol::receiveThrowGrenade() {
+std::shared_ptr<ThrowGrenade> Protocol::receiveThrowGrenade() {
     checkClosed();
     uint8_t type = receiveUintEight();
     uint8_t wormId = receiveUintEight();
@@ -185,20 +185,20 @@ ThrowGrenade* Protocol::receiveThrowGrenade() {
     float angle = receiveFloat();
     float power = receiveFloat();
     int timer = receiveUintEight();
-    return new ThrowGrenade(type, wormId, dir, angle, power, timer);
+    return std::make_shared<ThrowGrenade>(ThrowGrenade(type, wormId, dir, angle, power, timer));
 }
 
-Teleport* Protocol::receiveTeoleport() {
+std::shared_ptr<Teleport> Protocol::receiveTeoleport() {
     checkClosed();
     uint8_t wormId = receiveUintEight();
     Position pos = receivePosition();
-    return new Teleport(wormId, pos);
+    return std::make_shared<Teleport>(Teleport(wormId, pos));
 }
 
-HitUpclose* Protocol::receiveHitUpclose() {
+std::shared_ptr<HitUpclose> Protocol::receiveHitUpclose() {
     checkClosed();
     uint8_t wormId = receiveUintEight();
-    return new HitUpclose(wormId);
+    return std::make_shared<HitUpclose>(HitUpclose(wormId));
 }
 
 void Protocol::sendMapNames(std::vector<std::string>& allMaps) {

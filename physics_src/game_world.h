@@ -70,7 +70,7 @@ private:
     void addFragments();
 
 public:
-    GameWorld(GameMap* gameMap);
+    GameWorld(std::shared_ptr<GameMap> gameMap);
 
     void update();
 

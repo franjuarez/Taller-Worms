@@ -6,13 +6,13 @@
 
 #include <iostream>
 
-Receiver::Receiver(Protocol& protocol, Queue<Serializable*>& q, bool& keepTalking) 
+Receiver::Receiver(Protocol& protocol, Queue<std::shared_ptr<Serializable>>& q, bool& keepTalking) 
 : protocol(protocol), gameStatuses(q), keepTalking(keepTalking) {}
 
 void Receiver::run() {
     try {
         while (keepTalking) {
-            Serializable* gameDynamic = protocol.receiveSerializable();
+            std::shared_ptr<Serializable> gameDynamic = protocol.receiveSerializable();
             gameStatuses.push(gameDynamic);
         }
     } catch (const ClosedSocket& e){
