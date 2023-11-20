@@ -138,7 +138,7 @@ b2Body* GameWorld::createProjectile(b2Body* worm, int weaponId, int direction, f
     shape.SetAsBox(width/2, height/2);
     fd.shape = &shape;
     fd.density = 1.0f;
-    //fd.restitution = restitution;
+    fd.restitution = restitution;
     body->CreateFixture(&fd);
 
     this->projectiles[this->lastProjectileId] = body;
@@ -203,7 +203,7 @@ void GameWorld::wormThrowGreenGrenade(int id, float angle, int direction, float 
 
 b2Body* GameWorld::createRedGrenade(b2Body* worm, int direction, int explosionTimer){
     int id = this->lastProjectileId;
-    b2Body* body = createProjectile(worm, RED_GRENADE, direction, GREEN_GRENADE_WIDTH, GREEN_GRENADE_WIDTH);
+    b2Body* body = createProjectile(worm, RED_GRENADE, direction, RED_GRENADE_WIDTH, RED_GRENADE_HEIGHT);
 
     RedGrenade* redGrenadeEntity = new RedGrenade(body, entitiesToRemove, entitiesToAdd, id, CONFIG.getRedGrenadeDamage(), CONFIG.getRedGrenadeRadius(), explosionTimer);
     body->GetUserData().pointer = reinterpret_cast<uintptr_t>(redGrenadeEntity);
@@ -221,26 +221,19 @@ void GameWorld::wormThrowRedGrenade(int id, float angle, int direction, float po
 }
 
 b2Body* GameWorld::createBanana(b2Body* worm, int direction, int explosionTimer){
-    std::cout << "1" << std::endl;
     int id = this->lastProjectileId;
-    std::cout << "2" << std::endl;
-    b2Body* body = createProjectile(worm, BANANA, direction, BANANA_WIDTH, BANANA_WIDTH, CONFIG.getBananaBounciness());
-    std::cout << "3" << std::endl;
+    b2Body* body = createProjectile(worm, BANANA, direction, BANANA_WIDTH, BANANA_HEIGHT, CONFIG.getBananaBounciness());
+
     Banana* redGrenadeEntity = new Banana(body, entitiesToRemove, entitiesToAdd, id, CONFIG.getBananaDamage(), CONFIG.getBananaRadius(), explosionTimer);
-    std::cout << "4" << std::endl;
     body->GetUserData().pointer = reinterpret_cast<uintptr_t>(redGrenadeEntity);
-    std::cout << "5" << std::endl;
 
     return body;
 }
 
 void GameWorld::wormThrowBanana(int id, float angle, int direction, float power, int explosionTimer){
     checkWormExists(id);
-    std::cout << "b" << std::endl;
     b2Body* worm = this->worms[id];
-    std::cout << "c" << std::endl;
     b2Body* banana = createBanana(worm, direction, explosionTimer);
-    std::cout << "d" << std::endl;
     b2Vec2 bananaVel = calculatVelocityOfProjectile(CONFIG.getProjectileMaxSpeed(), angle, direction, power);
     banana->SetLinearVelocity(bananaVel);
 }
