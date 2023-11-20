@@ -45,7 +45,8 @@ GameDynamic& GameDynamic::operator=(const GameDynamic& other) {
     this->wormPlayingID = other.wormPlayingID;
     this->winnerTeam = other.winnerTeam;
     this->worms = other.worms;
-    this->explosives = other.explosives;
+    this->explosives.clear();
+    this->explosives.insert(other.explosives.begin(), other.explosives.end());
     return *this;
 }
 

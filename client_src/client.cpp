@@ -10,7 +10,7 @@ Client::Client(const std::string& hostname, const std::string& servname) : proto
     lastGameStatus = NULL;
 }
 
-std::shared_ptr<GameDynamic> Client::getGameStatus() {
+std::shared_ptr<Serializable> Client::getGameStatus() {
     if (!lastGameStatus) {
         lastGameStatus = gameStatusQueue.pop();
         return this->lastGameStatus;

@@ -57,6 +57,7 @@ std::shared_ptr<GameDynamic> Protocol::receiveDynamic() {
     char winnerTeam = receiveChar();
     std::vector<WormDTO> worms = receiveWorms();
     std::unordered_map<int, ExplosivesDTO> weapons = receiveWeapons();
+    std::cout << "weapons size: " << weapons.size() << std::endl;
     return std::make_shared<GameDynamic>(GameDynamic(wormPlayingID, winnerTeam, worms, weapons));
 }
 

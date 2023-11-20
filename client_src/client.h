@@ -35,9 +35,8 @@ public:
 	
 	//game funciona como monitor y para empaquetar todo lo que se tiene que graficar
 
-	std::shared_ptr<GameDynamic> getGameStatus();
-
-	std::shared_ptr<GameMap> getStatic();
+	std::shared_ptr<Serializable> getGameStatus();
+	
 
 	void execute(std::shared_ptr<Command> command);
 
