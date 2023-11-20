@@ -14,6 +14,7 @@ bool ThrowGrenade::executeCommand(GameWorld& gameWorld) {
     } else if (type == GREEN_GRENADE) {
         gameWorld.wormThrowGreenGrenade(wormID, angle, dir, power, timer);
     } else if (type == BANANA) {
+        std::cout << "en throw_grenade.cpp" << std::endl;
         gameWorld.wormThrowBanana(wormID, angle, dir, power, timer);
     }
     return true;

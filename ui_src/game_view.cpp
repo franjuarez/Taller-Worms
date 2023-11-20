@@ -208,7 +208,6 @@ void GameView::updateEntities(int i) {
 			it->second.getID(),
 			ProjectileView(it->second, rocketSprites)
 		);
-		std::cout << "nuevo proyectil" << std::endl;
 
 	}
 
@@ -380,7 +379,9 @@ void GameView::clickCase(int i, int mouseX, int mouseY) {
 	case BANANA_CODE:
 		this->client.execute(new ThrowGrenade(BANANA,
 			this->currentWormId,
-			dir, angle, 40.0f, 3));
+			dir, angle, 40.0f, 2/3));
+		std::cout << "nanana" << std::endl;
+
 		return;
 
 	default:
