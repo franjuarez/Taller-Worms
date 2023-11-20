@@ -14,10 +14,13 @@ void ServerSender::run() {
         }   
     } catch (ClosedQueue& e) {
         std::cout << "ServerSender: Cerrada la queue\n";
+        talking = false;
     } catch (ClosedSocket& e) {
         std::cout << "ServerSender: cerrado el socket\n";
+        talking = false;
     } catch (std::exception& e) {
         std::cout << "error inesperado! " << e.what() << std::endl;
+        talking = false;
     }
 }
 

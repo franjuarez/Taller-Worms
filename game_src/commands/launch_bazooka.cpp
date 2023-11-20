@@ -3,7 +3,7 @@
 #include "command.h"
 
 
-LaunchRocket::LaunchRocket(int type, int wormID, int dir, float angle, float power) : Command(NO_TEAM_NEEDED, wormID), type(type),
+LaunchRocket::LaunchRocket(int type, int wormID, int dir, float angle, float power) : Command(wormID), type(type),
 wormID(wormID),dir(dir), angle(angle), power(power) {}
 
 

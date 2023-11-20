@@ -7,6 +7,7 @@
 #include "../game_src/commands/teleport.h"
 #include "../game_src/commands/hit_upclose.h"
 #include "../game_src/commands/throw_grenade.h"
+#include "../game_src/commands/cheats.h"
 
 #include "../game_src/serializable.h"
 #include "../game_src/game_dynamic.h"
@@ -108,6 +109,14 @@ void Protocol::sendHitUpclose(HitUpclose* hitUpclose) {
     sendUintEight(hitUpclose->getID());
 }
 
+void Protocol::sendCheats(Cheats* cheat) {
+    checkClosed();
+    sendUintEight(SEND_COMMAND_CHEAT);
+    sendUintEight(cheat->getID());
+    sendUintEight(cheat->getCheatID());
+    sendUintEight(cheat->getHealth());
+}
+
 Serializable* Protocol::receiveSerializable() {
     checkClosed();
     uint8_t protocolCode = receiveUintEight();
@@ -199,6 +208,14 @@ HitUpclose* Protocol::receiveHitUpclose() {
     checkClosed();
     uint8_t wormId = receiveUintEight();
     return new HitUpclose(wormId);
+}
+
+Cheats* Protocol::receiveCheats() {
+    checkClosed();
+    uint8_t wormId = receiveUintEight();
+    uint8_t cheatId = receiveUintEight();
+    uint8_t health = receiveUintEight();
+    return new Cheats(wormId, cheatId, health);
 }
 
 void Protocol::sendMapNames(std::vector<std::string>& allMaps) {

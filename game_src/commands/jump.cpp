@@ -1,7 +1,7 @@
 #include "jump.h"
 #include "../constants_game.h"
 
-Jump::Jump(int id, int dir) : Command(NO_TEAM_NEEDED, id), wormID(id), dir(dir) {}
+Jump::Jump(int id, int dir) : Command(id), wormID(id), dir(dir) {}
 
 bool Jump::executeCommand(GameWorld& gameWorld) {
     // std::cout << "exec jump\n";

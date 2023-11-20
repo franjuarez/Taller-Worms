@@ -1,7 +1,6 @@
 #ifndef CONSTANTS_GAME_H
 #define CONSTANTS_GAME_H
 
-#define NO_TEAM_NEEDED 0
 
 enum /*Direction*/ {
     LEFT_DIR = 0,
@@ -19,6 +18,13 @@ enum /*WEAPON_TYPE*/{
     RED_GRENADE,
     FRAGMENT,
     BANANA,
+};
+
+enum /* CHEATS */ {
+    CERO_GRAVITY = 0,
+    ADD_HEALTH,
+    ALL_WEAPONS,
+    ALL_INVINCIBLE,
 };
 
 #define PLAYING -1

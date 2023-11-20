@@ -16,7 +16,7 @@ private:
     int team;
     int wormID;
 public:
-    Command(int team, int wormID) : team(team), wormID(wormID) {}
+    Command(int wormID) : wormID(wormID) {}
     virtual ~Command() {}
     virtual bool executeCommand(GameWorld&) {
         std::cout << "exec mother class\n";

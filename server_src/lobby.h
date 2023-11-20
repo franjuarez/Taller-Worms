@@ -18,7 +18,7 @@ private:
     Socket skt;
     int numberOfPlayers;
     std::string mapName;
-    std::vector<Player*> players;
+    std::list<Player*> players;
     Queue<Command*> commandQueue;
     void reapDead();
     void killAll();

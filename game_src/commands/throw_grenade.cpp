@@ -4,7 +4,7 @@
 #include "command.h"
 
 
-ThrowGrenade::ThrowGrenade(int type, int wormID, int dir, float angle, float power, int timer) : Command(NO_TEAM_NEEDED, wormID),
+ThrowGrenade::ThrowGrenade(int type, int wormID, int dir, float angle, float power, int timer) : Command(wormID),
 type(type), wormID(wormID),dir(dir), angle(angle), power(power), timer(timer) {}
 
 

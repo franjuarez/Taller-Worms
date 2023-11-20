@@ -2,7 +2,7 @@
 #include "../constants_game.h"
 
 
-Move::Move(int id, int dir) : Command(NO_TEAM_NEEDED, id), wormID(id), dir(dir) {}
+Move::Move(int id, int dir) : Command(id), wormID(id), dir(dir) {}
 
 bool Move::executeCommand(GameWorld& gameWorld) {
     gameWorld.moveWorm(this->wormID, this->dir);

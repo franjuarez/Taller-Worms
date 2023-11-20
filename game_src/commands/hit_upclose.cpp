@@ -1,7 +1,7 @@
 #include "hit_upclose.h"
 #include "../constants_game.h"
 
-HitUpclose::HitUpclose(int wormID) : Command(NO_TEAM_NEEDED, wormID), wormID(wormID) {}
+HitUpclose::HitUpclose(int wormID) : Command(wormID), wormID(wormID) {}
 
 bool HitUpclose::executeCommand(GameWorld& gameWorld) {
     gameWorld.wormHitWithBat(wormID);
