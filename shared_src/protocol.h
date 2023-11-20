@@ -65,8 +65,8 @@ private:
     void sendWeaponsMap(std::vector<int> weapons);
     std::vector<int> receiveWeaponsMap();
 
-    std::shared_ptr<GameMap> receiveMap();
-    std::shared_ptr<GameDynamic> receiveDynamic();
+    GameMap* receiveMap();
+    GameDynamic* receiveDynamic();
 
     std::shared_ptr<Move> receiveMove();
     std::shared_ptr<Jump>  receiveJump();
@@ -86,7 +86,7 @@ public:
 
     void sendDynamic(GameDynamic* dynamic);
     
-    std::shared_ptr<Serializable> receiveSerializable();
+    Serializable* receiveSerializable();
 
     void sendMove(Move* move);
 

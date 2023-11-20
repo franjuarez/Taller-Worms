@@ -33,12 +33,12 @@ void Protocol::sendMap(GameMap* gameMap) {
     sendBeams(gameMap->getBeams());
 }
 
-std::shared_ptr<GameMap> Protocol::receiveMap() {
+GameMap* Protocol::receiveMap() {
     uint8_t team = receiveUintEight();
     std::string mapName = receiveString();
     std::vector<WormDTO> worms = receiveWorms();
     std::vector<BeamDTO> beams = receiveBeams();
-    return std::make_shared<GameMap>(GameMap(team, mapName, beams, worms));
+    return new GameMap(team, mapName, beams, worms);
 }
 
 
@@ -51,14 +51,13 @@ void Protocol::sendDynamic(GameDynamic* dynamic) {
     sendWeapons(dynamic->getExplosives());
 }
 
-std::shared_ptr<GameDynamic> Protocol::receiveDynamic() {
+GameDynamic* Protocol::receiveDynamic() {
     checkClosed();
     char wormPlayingID = receiveChar();
     char winnerTeam = receiveChar();
     std::vector<WormDTO> worms = receiveWorms();
     std::unordered_map<int, ExplosivesDTO> weapons = receiveWeapons();
-    std::cout << "weapons size: " << weapons.size() << std::endl;
-    return std::make_shared<GameDynamic>(GameDynamic(wormPlayingID, winnerTeam, worms, weapons));
+    return new GameDynamic(wormPlayingID, winnerTeam, worms, weapons);
 }
 
 void Protocol::sendMove(Move* move) {
@@ -109,13 +108,14 @@ void Protocol::sendHitUpclose(HitUpclose* hitUpclose) {
     sendUintEight(hitUpclose->getID());
 }
 
-std::shared_ptr<Serializable> Protocol::receiveSerializable() {
+Serializable* Protocol::receiveSerializable() {
     checkClosed();
     uint8_t protocolCode = receiveUintEight();
     if (protocolCode == SEND_MAP) {
         return receiveMap();
     } else if (protocolCode == SEND_DYNAMIC) {
-        return receiveDynamic();
+        GameDynamic* dynamic = receiveDynamic();
+        return dynamic;
     }
     throw std::runtime_error("Invalid Serializable");
 }

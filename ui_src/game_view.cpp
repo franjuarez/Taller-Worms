@@ -199,7 +199,6 @@ void GameView::updateEntities(int i) {
 	*/
 	
 	this->recievedProjectiles = gs->getExplosives();
-	std::cout << "recievedProjectiles size: " << recievedProjectiles.size() << std::endl;
 	for (auto it = recievedProjectiles.begin(); it != recievedProjectiles.end(); it++) {
 		if (projectileViews.find(it->first) != projectileViews.end())
 			continue;

@@ -12,7 +12,7 @@ Receiver::Receiver(Protocol& protocol, Queue<std::shared_ptr<Serializable>>& q, 
 void Receiver::run() {
     try {
         while (keepTalking) {
-            std::shared_ptr<Serializable> gameDynamic = protocol.receiveSerializable();
+            std::shared_ptr<Serializable>gameDynamic(protocol.receiveSerializable());
             gameStatuses.push(gameDynamic);
         }
     } catch (const ClosedSocket& e){
