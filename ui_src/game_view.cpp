@@ -205,6 +205,8 @@ void GameView::updateEntities(int i) {
 			it->second.getID(),
 			ProjectileView(it->second, rocketSprites)
 		);
+		std::cout << "nuevo proyectil" << std::endl;
+
 	}
 
 	
