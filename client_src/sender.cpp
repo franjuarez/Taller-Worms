@@ -3,7 +3,7 @@
 #include "../game_src/constants_game.h"
 #include <iostream>
 
-Sender::Sender(Protocol& protocol, Queue<Command*>& q, bool& keepTalking) : protocol(protocol), 
+Sender::Sender(Protocol& protocol, Queue<std::shared_ptr<Command>>& q, bool& keepTalking) : protocol(protocol), 
 commandsQueue(q), keepTalking(keepTalking) {}
 
 void Sender::run() {
@@ -16,7 +16,7 @@ void Sender::run() {
     try {
         // 1ro mando el chosen map
         while (keepTalking) {
-            Command* command = commandsQueue.pop();
+            std::shared_ptr<Command> command = commandsQueue.pop();
             command->send(protocol);    
         }
     } catch (...) {

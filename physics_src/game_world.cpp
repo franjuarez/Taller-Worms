@@ -2,7 +2,7 @@
 
 #define WORM_GROUP_INDEX -1
 
-GameWorld::GameWorld(GameMap* gameMap) {
+GameWorld::GameWorld(std::shared_ptr<GameMap> gameMap) {
     this->world = new b2World(b2Vec2(CONFIG.getWorldGravityX(), CONFIG.getWorldGravityY()));
     this->listener = new Listener(this->world);
     this->world->SetContactListener(this->listener);
@@ -359,8 +359,7 @@ GameDynamic* GameWorld::getGameStatus(int id){
         Projectile* projectileData = (Projectile*) projectile.second->GetUserData().pointer;
         projectilesDTO.emplace(projectile.first, projectileData->getDTO());
     }
-    GameDynamic* dynamicData = new GameDynamic(id, wormsDTO, projectilesDTO);
-    return dynamicData;
+    return new GameDynamic(id, wormsDTO, projectilesDTO);
 }
 
 GameWorld::~GameWorld() {

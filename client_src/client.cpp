@@ -10,7 +10,7 @@ Client::Client(const std::string& hostname, const std::string& servname) : proto
     lastGameStatus = NULL;
 }
 
-Serializable* Client::getGameStatus() {
+std::shared_ptr<Serializable> Client::getGameStatus() {
     if (!lastGameStatus) {
         lastGameStatus = gameStatusQueue.pop();
         return this->lastGameStatus;
@@ -41,7 +41,7 @@ void Client::join() {
     sender.join();
 }
 
-void Client::execute(Command* command) {
+void Client::execute(std::shared_ptr<Command> command) {
     commandsQueue.push(command);
 }
 

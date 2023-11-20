@@ -15,10 +15,10 @@ class Receiver : public Thread {
 
 private:
     Protocol& protocol;
-    Queue<Serializable*>& gameStatuses;
+    Queue<std::shared_ptr<Serializable>>& gameStatuses;
     bool& keepTalking;
 public:
-    Receiver(Protocol& protocol, Queue<Serializable*>& q, bool& keepTaliking);
+    Receiver(Protocol& protocol, Queue<std::shared_ptr<Serializable>>& q, bool& keepTaliking);
     void run() override;
     ~Receiver();
 };

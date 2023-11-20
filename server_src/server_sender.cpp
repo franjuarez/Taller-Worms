@@ -3,13 +3,13 @@
 #include "../game_src/game_map.h"
 
 
-ServerSender::ServerSender(Protocol& protocol, Queue<Serializable*>& playerQueue, bool& talking) 
+ServerSender::ServerSender(Protocol& protocol, Queue<std::shared_ptr<Serializable>>& playerQueue, bool& talking) 
 : protocol(protocol), playerQueue(playerQueue), talking(talking) {}
 
 void ServerSender::run() {
     try {
         while (talking) {
-            Serializable* gameStatus = playerQueue.pop();
+            std::shared_ptr<Serializable> gameStatus = playerQueue.pop();
             gameStatus->send(protocol);
         }   
     } catch (ClosedQueue& e) {

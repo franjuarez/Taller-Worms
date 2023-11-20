@@ -6,6 +6,7 @@
 #include "../game_src/worm_dto.h"
 #include "../game_src/beam_dto.h"
 #include "../game_src/game_map.h"
+#include <memory>
 
 Lobby::Lobby(const std::string& hostname, int numberOfPlayers, std::string mapName, bool* playing) 
 : hostname(hostname), skt(hostname.c_str()), mapName(mapName), commandQueue(90), playing(playing) {
@@ -58,7 +59,7 @@ void Lobby::run() {
         try {
             Socket peer = skt.accept();
             idPlayer++;
-            GameMap* map = new GameMap(idPlayer, "aloha", beams, worms);
+            std::shared_ptr<GameMap> map =std::make_shared<GameMap>(GameMap(idPlayer, "aloha", beams, worms));
             Player* player = new Player(std::move(peer), commandQueue, map);
             // magic happens
             statusBroadcaster.addPlayer(idPlayer, player->getPlayerQueue());
@@ -71,7 +72,7 @@ void Lobby::run() {
         }
     }
     // momento eleccion Mapa
-    GameMap* map = new GameMap(0, "aloha", beams, worms);
+    std::shared_ptr<GameMap> map = std::make_shared<GameMap>(GameMap(0, "aloha", beams, worms));
     // Inicializar el GameLoop 
     bool loopActive = true;
     GameLoop gameLoop(commandQueue, statusBroadcaster, map, teams, &loopActive);
