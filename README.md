@@ -11,10 +11,10 @@
 
 Al instalarse todas las dependencias ejecutar desde la carpeta raiz del proyecto ejecutar:
 
-`mkdir build`
-`cd build`
-`cmake ..`
-`make -j4`
+* `mkdir build`
+* `cd build`
+* `cmake ..`
+* `make -j4`
 
 Al hacer esto hay 2 formas de ejecutar _actualmente_  el juego:
 
@@ -23,7 +23,7 @@ Ejecutar:
 
 `./wormsremake`
 
-Y en el lobby crear una partida, eligiendo el mapa y la cantidad de jugadores adecuada.
+Y en el lobby crear una partida, eligiendo la direccion, el puerto el mapa y la cantidad de jugadores adecuada.
 
 Luego desde otra terminal ejecutar el mismo comando
 
