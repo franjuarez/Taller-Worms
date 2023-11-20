@@ -8,6 +8,8 @@
 #include <utility>
 #include <arpa/inet.h>
 
+#define HARDCODED_PLAYERS 1
+
 int main(int argc, char** argv) {
 
 	if (argc < 2) {
@@ -18,7 +20,7 @@ int main(int argc, char** argv) {
 
 	const std::string hostname(argv[1]);
 	bool playing = true;
-	Lobby lobby(hostname, 1, "", &playing);
+	Lobby lobby(hostname, HARDCODED_PLAYERS, "", &playing);
 
 	lobby.start();
 
