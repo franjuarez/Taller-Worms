@@ -379,7 +379,7 @@ void GameView::clickCase(int i, int mouseX, int mouseY) {
 	case BANANA_CODE:
 		this->client.execute(new ThrowGrenade(BANANA,
 			this->currentWormId,
-			dir, angle, 40.0f, 2/3));
+			dir, angle, 40.0f, 3));
 		std::cout << "nanana" << std::endl;
 
 		return;
