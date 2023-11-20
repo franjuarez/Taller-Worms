@@ -258,7 +258,7 @@ bool GameWorld::teleportWorm(int id, float x, float y){
     if(checkValidTpPosition(x, y)){
         b2Body* worm = this->worms[id];
         worm->SetTransform(b2Vec2(x, y), 0);
-        worm->SetLinearVelocity(b2Vec2(0, -0.01f));
+        worm->SetLinearVelocity(b2Vec2(0, -0.01f)); //So it falls
         return true;
     }
     return false;

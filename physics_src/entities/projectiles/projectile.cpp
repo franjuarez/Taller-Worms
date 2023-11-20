@@ -26,7 +26,7 @@ void Projectile::explode(){
         float angle = (i / (float)numberOfRays) * 360 * DEGTORAD;
         b2Vec2 rayDir( sinf(angle), cosf(angle) );
         b2Vec2 rayEnd = projectilePos + this->radius * rayDir;
-        ExplosionQueryCallback callback;
+        ExplosionQueryCallback callback(projectilePos, this->radius);
         world->RayCast(&callback, projectilePos, rayEnd);
         for(collisionData data : callback.foundBodies) {
             b2Body* body = data.body;
@@ -35,6 +35,7 @@ void Projectile::explode(){
             b2Vec2 bodyPos = body->GetPosition();
             float distance = b2Distance(projectilePos, bodyPos);
             float damage = this->damage * (1 - distance / this->radius);
+            std::cout << "daniando" << std::endl;
             worm->handleExplosion(damage, projectilePos);
         }
     }
