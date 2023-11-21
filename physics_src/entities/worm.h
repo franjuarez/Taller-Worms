@@ -53,7 +53,10 @@ class Worm : public Entity {
 
     int getId();
 
+    void changeDirection(int direction);
+    
     void move(int direction);
+    
 
     void jumpForward();
 
@@ -61,7 +64,7 @@ class Worm : public Entity {
 
     void handleExplosion(float damage, b2Vec2 explosionCenter);
 
-    void hitWithBat();
+    void hitWithBat(int direction);
     
     void reduceAmmo(int weaponId);
 

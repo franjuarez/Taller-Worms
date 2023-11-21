@@ -361,14 +361,14 @@ void GameView::backspaceKeyCase(int i) {
 	this->client.execute(std::make_shared<Jump>(Jump(currentWormId, 3)));
 }
 
+
 void GameView::clickCase(int i, int mouseX, int mouseY) {
 	//this->wormViews.at(this->currentWormId).tp(i);
 	//Position pos((x + camX) / m_to_pix_x, ((y + camY) - WINDOW_HEIGHT) / m_to_pix_y);
 	//this->client.execute(new Teleport(currentWormId, pos));
-
 	//rl
 	int angle = wormViews.at(currentWormId).shoot(i);
-	int dir = (((mouseX + camX) / m_to_pix_x) < this->currentWorm.getX()) ? LEFT_DIR : RIGHT_DIR ;
+	int dir = (((mouseX + camX) / m_to_pix_x) < this->currentWorm.getX()) ? LEFT_DIR : RIGHT_DIR;
 	//tp
 	Position pos((mouseX + camX) / m_to_pix_x, ((mouseY + camY) - WINDOW_HEIGHT) / m_to_pix_y);
 
@@ -384,7 +384,7 @@ void GameView::clickCase(int i, int mouseX, int mouseY) {
 		return;
 	case BAT_CODE:
 		this->wormViews.at(this->currentWormId).hit(i);
-		this->client.execute(std::make_shared<HitUpclose>(HitUpclose(this->currentWormId)));
+		this->client.execute(std::make_shared<HitUpclose>(HitUpclose(this->currentWormId, dir)));
 		return;
 	case TP_CODE:
 		this->wormViews.at(this->currentWormId).tp(i);
@@ -409,10 +409,6 @@ void GameView::clickCase(int i, int mouseX, int mouseY) {
 	}
 }
 
-void GameView::bCase(int i) {
-	this->wormViews.at(this->currentWormId).hit(i);
-	this->client.execute(std::make_shared<HitUpclose>(HitUpclose(this->currentWormId)));
-}
 
 void GameView::processInput(SDL_Event event, int i) {
 	//if (this->currentWorm.getTeam() != this->team) { revisar la condicion

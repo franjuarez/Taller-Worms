@@ -15,7 +15,8 @@ enum EntityType{
     EntityBeam, //1
     EntityWater, //2
     EntityInstantProjectile, //3
-    EntityDelayedProjectile //4
+    EntityDelayedProjectile, //4
+    EntityCount, //5
 };
 
 class Entity {

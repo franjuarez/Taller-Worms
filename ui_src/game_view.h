@@ -71,7 +71,6 @@ private:
 	void moveCase(int i, int dir);
 	void backspaceKeyCase(int i);
 	void clickCase(int i, int x, int y);
-	void bCase(int i);
 
 	void processInput(SDL_Event event, int i);
 

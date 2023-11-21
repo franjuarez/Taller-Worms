@@ -10,11 +10,13 @@ class Protocol;
 class HitUpclose : public Command {
 private:
     int wormID;
+    int dir;
 public:
-    HitUpclose(int wormsID);
+    HitUpclose(int wormsID, int dir);
     bool executeCommand(GameWorld& gameWorld) override;
     void send(Protocol& protocol);
     int getID();
+    int getDir();
     ~HitUpclose();
 };
 #endif

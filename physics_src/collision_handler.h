@@ -13,10 +13,10 @@ typedef void (Entity::*endCollisionFunc)(Entity*, b2Contact*);
 
 class CollisionHandler {
 private:
-    std::unordered_map<EntityType, beginCollisionFunc> beginCollisionMap;
-    std::unordered_map<EntityType, preSolveCollisionFunc> preSolveCollisionMap;
-    std::unordered_map<EntityType, postSolveCollisionFunc> postSolveCollisionMap;
-    std::unordered_map<EntityType, endCollisionFunc> endCollisionMap;
+    beginCollisionFunc beginCollisionArr[EntityCount];
+    preSolveCollisionFunc preSolveCollisionArr[EntityCount];
+    postSolveCollisionFunc postSolveCollisionArr[EntityCount];
+    endCollisionFunc endCollisionArr[EntityCount];
 
 public:
     CollisionHandler();

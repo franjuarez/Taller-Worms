@@ -61,8 +61,6 @@ private:
 
     void updateDelayedProjectiles(float deltaTime);
 
-    void removeWorm(b2Body* worm);
-
     void removeProjectile(b2Body* projectile);
     
     void removeEntities();
@@ -90,7 +88,7 @@ public:
     
     void wormThrowBanana(int id, float angle, int direction, float power, int explosionTimer);
 
-    void wormHitWithBat(int id);
+    void wormHitWithBat(int id, int direction);
 
     bool teleportWorm(int id, float x, float y);
 
