@@ -1,5 +1,4 @@
 #include "maps_loader.h"
-#include <iostream>
 
 #define PATH "../maps/"
 

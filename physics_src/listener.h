@@ -2,7 +2,6 @@
 #define LISTENER_H
 
 #include <box2d/box2d.h>
-#include <iostream>
 #include "physics_constants.h"
 #include "collision_handler.h"
 

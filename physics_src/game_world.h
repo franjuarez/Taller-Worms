@@ -78,15 +78,15 @@ public:
     
     void jumpBackwardsWorm(int id);
 
-    void wormLaunchBazooka(int id, float angle, int direction, float power);
+    bool wormLaunchBazooka(int id, float angle, int direction, float power);
 
-    void wormLaunchMortar(int id, float angle, int direction, float power);
+    bool wormLaunchMortar(int id, float angle, int direction, float power);
     
-    void wormThrowGreenGrenade(int id, float angle, int direction, float power, int explosionTimer);
+    bool wormThrowGreenGrenade(int id, float angle, int direction, float power, int explosionTimer);
     
-    void wormThrowRedGrenade(int id, float angle, int direction, float power, int explosionTimer);
+    bool wormThrowRedGrenade(int id, float angle, int direction, float power, int explosionTimer);
     
-    void wormThrowBanana(int id, float angle, int direction, float power, int explosionTimer);
+    bool wormThrowBanana(int id, float angle, int direction, float power, int explosionTimer);
 
     void wormHitWithBat(int id, int direction);
 

@@ -1,5 +1,5 @@
 #include "collision_handler.h"
-#include <iostream>
+
 CollisionHandler::CollisionHandler(){
     this->beginCollisionArr[EntityWorm] = &Entity::beginCollisionWithWorm;
     this->beginCollisionArr[EntityBeam] = &Entity::beginCollisionWithBeam;

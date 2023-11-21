@@ -56,7 +56,6 @@ class Worm : public Entity {
     void changeDirection(int direction);
     
     void move(int direction);
-    
 
     void jumpForward();
 
@@ -66,6 +65,8 @@ class Worm : public Entity {
 
     void hitWithBat(int direction);
     
+    bool hasAmmo(int weaponId);
+
     void reduceAmmo(int weaponId);
 
 

@@ -9,12 +9,12 @@ wormID(wormID),dir(dir), angle(angle), power(power) {}
 
 bool LaunchRocket::executeCommand(GameWorld& gameWorld) {
     if (type == BAZOOKA) {
-        gameWorld.wormLaunchBazooka(wormID, angle, dir, power);
+        return gameWorld.wormLaunchBazooka(wormID, angle, dir, power);
     } else if (type == MORTAR) {
-        gameWorld.wormLaunchMortar(wormID, angle, dir, power);
+        return gameWorld.wormLaunchMortar(wormID, angle, dir, power);
     }
     
-    return true;
+    return false;
 }
 
 void LaunchRocket::send(Protocol& protocol) {

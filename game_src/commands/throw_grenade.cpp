@@ -10,13 +10,13 @@ type(type), wormID(wormID),dir(dir), angle(angle), power(power), timer(timer) {}
 
 bool ThrowGrenade::executeCommand(GameWorld& gameWorld) {
     if (type == RED_GRENADE) {
-        gameWorld.wormThrowRedGrenade(wormID, angle, dir, power, timer);
+        return gameWorld.wormThrowRedGrenade(wormID, angle, dir, power, timer);
     } else if (type == GREEN_GRENADE) {
-        gameWorld.wormThrowGreenGrenade(wormID, angle, dir, power, timer);
+        return gameWorld.wormThrowGreenGrenade(wormID, angle, dir, power, timer);
     } else if (type == BANANA) {
-        gameWorld.wormThrowBanana(wormID, angle, dir, power, timer);
+        return gameWorld.wormThrowBanana(wormID, angle, dir, power, timer);
     }
-    return true;
+    return false;
 }
 
 void ThrowGrenade::send(Protocol& protocol) {

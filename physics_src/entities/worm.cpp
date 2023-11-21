@@ -34,6 +34,13 @@ int Worm::getId(){
     return this->id;
 }
 
+bool Worm::hasAmmo(int weaponId){
+    if(weaponId < 0 || weaponId >= this->weapons.size()){
+        throw std::runtime_error("Invalid weapon id");
+    }
+    return this->weapons[weaponId] > 0 || this->weapons[weaponId] == INFINITE_AMUNITION;
+}
+
 void Worm::reduceAmmo(int weaponId){
     if(weaponId < 0 || weaponId >= this->weapons.size()){
         throw std::runtime_error("Invalid weapon id");
@@ -41,7 +48,7 @@ void Worm::reduceAmmo(int weaponId){
     if(this->weapons[weaponId] == INFINITE_AMUNITION){
         return;
     }
-    this->weapons[weaponId]--;
+    this->weapons[weaponId] = this->weapons[weaponId] == 0 ? 0 : this->weapons[weaponId] - 1;
 }
 
 void Worm::changeDirection(int direction){

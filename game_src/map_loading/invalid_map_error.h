@@ -1,5 +1,4 @@
 #include <exception>
-#include <iostream>
 #include <string>
 
 class InvalidMap: public std::exception {
