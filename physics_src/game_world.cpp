@@ -163,6 +163,7 @@ void GameWorld::wormLaunchBazooka(int id, float angle, int direction, float powe
     b2Body* bazooka = createBazooka(worm, direction);
     b2Vec2 vel = calculatVelocityOfProjectile(CONFIG.getProjectileMaxSpeed(), angle, direction, power);
     bazooka->SetLinearVelocity(vel);
+    ((Worm*) worm->GetUserData().pointer)->changeDirection(direction);
 }
 
 b2Body* GameWorld::createMortar(b2Body* worm, int direction){
@@ -181,6 +182,7 @@ void GameWorld::wormLaunchMortar(int id, float angle, int direction, float power
     b2Body* bazooka = createMortar(worm, direction);
     b2Vec2 vel = calculatVelocityOfProjectile(CONFIG.getProjectileMaxSpeed(), angle, direction, power);
     bazooka->SetLinearVelocity(vel);
+    ((Worm*) worm->GetUserData().pointer)->changeDirection(direction);
 }
 
 b2Body* GameWorld::createGreenGrenade(b2Body* worm, int direction, int explosionTimer){
@@ -199,6 +201,7 @@ void GameWorld::wormThrowGreenGrenade(int id, float angle, int direction, float 
     b2Body* granade = createGreenGrenade(worm, direction, explosionTimer);
     b2Vec2 grenadeVel = calculatVelocityOfProjectile(CONFIG.getProjectileMaxSpeed(), angle, direction, power);
     granade->SetLinearVelocity(grenadeVel);
+    ((Worm*) worm->GetUserData().pointer)->changeDirection(direction);\
 }
 
 b2Body* GameWorld::createRedGrenade(b2Body* worm, int direction, int explosionTimer){
@@ -217,6 +220,7 @@ void GameWorld::wormThrowRedGrenade(int id, float angle, int direction, float po
     b2Body* granade = createRedGrenade(worm, direction, explosionTimer);
     b2Vec2 grenadeVel = calculatVelocityOfProjectile(CONFIG.getProjectileMaxSpeed(), angle, direction, power);
     granade->SetLinearVelocity(grenadeVel);
+    ((Worm*) worm->GetUserData().pointer)->changeDirection(direction);
 }
 
 b2Body* GameWorld::createBanana(b2Body* worm, int direction, int explosionTimer){
@@ -235,6 +239,7 @@ void GameWorld::wormThrowBanana(int id, float angle, int direction, float power,
     b2Body* banana = createBanana(worm, direction, explosionTimer);
     b2Vec2 bananaVel = calculatVelocityOfProjectile(CONFIG.getProjectileMaxSpeed(), angle, direction, power);
     banana->SetLinearVelocity(bananaVel);
+    ((Worm*) worm->GetUserData().pointer)->changeDirection(direction);
 }
 
 void GameWorld::wormHitWithBat(int id, int direction){

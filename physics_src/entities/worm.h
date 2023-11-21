@@ -53,7 +53,10 @@ class Worm : public Entity {
 
     int getId();
 
+    void changeDirection(int direction);
+    
     void move(int direction);
+    
 
     void jumpForward();
 

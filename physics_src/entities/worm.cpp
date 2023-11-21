@@ -44,6 +44,10 @@ void Worm::reduceAmmo(int weaponId){
     this->weapons[weaponId]--;
 }
 
+void Worm::changeDirection(int direction){
+    this->direction = direction;
+}
+
 void Worm::move(int direction){
     if(this->currentAction == JUMPING || this->currentAction == EJECTED){
         return;
