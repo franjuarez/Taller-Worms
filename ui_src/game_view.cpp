@@ -458,6 +458,7 @@ void GameView::processInput(SDL_Event event, int i) {
 			break;
 		case SDLK_4:
 			inputState = TP_CODE;
+			wormViews.at(currentWormId).drawTp(i);
 			break;
 		case SDLK_5:
 			inputState = MORTAR_CODE;

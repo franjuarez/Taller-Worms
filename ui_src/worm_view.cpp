@@ -198,7 +198,7 @@ WormView::WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets, Fon
 	}
 
 	//frames for holding tp
-	for (int i = 0; i < 48; i++) {
+	for (int i = 4; i < 45; i += 2) {
 		x = 13;
 		y = i * 60 + 12;
 		w = 29;
@@ -206,7 +206,7 @@ WormView::WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets, Fon
 		frames[HOLDING_TP_FRAMES].push_back(Rect(x,y,w,h));
 	}
 
-	for (int i = 47; i >= 0; i--) {
+	for (int i = 44; i >= 4; i -= 2) {
 		x = 13;
 		y = i * 60 + 12;
 		w = 29;
@@ -255,7 +255,7 @@ void WormView::drawTp(int i) {
 		return;
 	this->startingPoint = i;
 	this->currentFramesIndex = DRAWING_TP_FRAMES;
-	this->currentFramesIndex = HOLDING_TP_FRAMES;
+	this->defaultFramesIndex = HOLDING_TP_FRAMES;
 }
 
 void WormView::drawBanana(int i) {
@@ -378,7 +378,8 @@ void WormView::display(int i, Renderer& renderer, int camX, int camY, int mouseX
 		currentFrame = (((angle + 90.0f) / 180.0f) * (this->frames[currentFramesIndex].size()));
 	} else { //si es una animacion calculo en base al frame en el que estoy
 		flip = worm.getDir();
-		currentFrame = (i - startingPoint) / 4;
+		int animationSpeed = (currentFramesIndex == HOLDING_TP_FRAMES) ? 2 : 4;
+		currentFrame = (i - startingPoint) / animationSpeed;
 
 		if (currentFrame >= this->frames[currentFramesIndex].size()) {
 			startingPoint = i;
