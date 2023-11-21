@@ -60,6 +60,7 @@ private:
 	int inputState;
 	int bombTimer;
 	int winnerTeam;
+	int nteams;
 
 	void updateEntities(int i);
 	void loadWorms(std::vector<WormDTO>& recievedWorms);

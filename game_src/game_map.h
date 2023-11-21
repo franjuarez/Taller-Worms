@@ -17,12 +17,14 @@ class GameMap : public Serializable{
 
 private:
     int team;
+    int numberTeams;
     std::string mapName;
     std::vector<BeamDTO> beamsMap;
     std::vector<WormDTO> worms;
 public:
-    GameMap(int team, std::string mapName, std::vector<BeamDTO> beamsMap, std::vector<WormDTO> worms);
+    GameMap(int team, int numberTeams, std::string mapName, std::vector<BeamDTO> beamsMap, std::vector<WormDTO> worms);
     int getTeam();
+    int getNumberTeams();
     std::string getMapName();
     std::vector<BeamDTO> getBeams();
     std::vector<WormDTO> getWorms();

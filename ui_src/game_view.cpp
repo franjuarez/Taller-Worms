@@ -108,6 +108,7 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 	std::shared_ptr<GameMap> gs = std::dynamic_pointer_cast<GameMap>(client.getGameStatus());
 
 	this->team = gs->getTeam();
+	this->nteams = gs->getNumberTeams();
 
 	//rocketSPrites.push_back(/*textura de la explosion*/);
 	
@@ -368,14 +369,13 @@ void GameView::drawLosingScreen(int i) {
 
 
 void GameView::draw(int i) {
-
 	updateEntities(i); 
-	if (this->winnerTeam == -1) {
+	if (this->winnerTeam == -1 || nteams == 1) {
 		drawGame(i);
 		return;
 	}
 
-	if (this->winnerTeam  >= 0) {
+	if ((this->winnerTeam  >= 0)) {
 		drawWinningScreen(i);
 		return;
 	}
@@ -434,9 +434,12 @@ void GameView::clickCase(int i, int mouseX, int mouseY) {
 	//tp
 	Position pos((mouseX + camX) / m_to_pix_x, ((mouseY + camY) - WINDOW_HEIGHT) / m_to_pix_y);
 
-
+	if (this->currentWorm.getWeapons()[inputState - 1] == 0) {
+		return;
+	}
 	switch (inputState) {
 	case BAZOOKA_CODE:
+		
 		this->client.execute(std::make_shared<LaunchRocket>(LaunchRocket(BAZOOKA, currentWormId, dir, angle, 40.0f)));
 		return;
 	case GGRENADE_CODE:
@@ -492,6 +495,8 @@ void GameView::processInput(SDL_Event event, int i) {
 				inputState = 7;
 			}
 		}
+		
+			
 
 		switch (inputState) {
 	case 0:
@@ -561,6 +566,7 @@ void GameView::processInput(SDL_Event event, int i) {
 
 		case SDLK_e:
 			this->wormViews.at(currentWormId).toDefault(i);
+			inputState = 0;
 			break;
 		case SDLK_r: //podria ser un mapa pero seria igual de feo en el constructor
 			inputState = BAZOOKA_CODE;
@@ -571,6 +577,8 @@ void GameView::processInput(SDL_Event event, int i) {
 			this->wormViews.at(currentWormId).drawGreenGrenade(i);
 			break;
 		case SDLK_y:
+			if (this->currentWorm.getWeapons()[BAT_CODE] == 0)
+				return;
 			inputState = BAT_CODE;
 			wormViews.at(currentWormId).drawAxe(i);
 			break;
@@ -592,23 +600,23 @@ void GameView::processInput(SDL_Event event, int i) {
 			break;
 
 
-		case SDLK_F1:
+		case SDLK_z:
 			this->client.execute(std::make_shared<Cheats>(Cheats(this->currentWormId, ADD_HEALTH)));
 			break;
 
-		case SDLK_F2:
+		case SDLK_x:
 			this->client.execute(std::make_shared<Cheats>(Cheats(this->currentWormId, ALL_WEAPONS)));
 			break;
 
-		case SDLK_F3:
+		case SDLK_c:
 			this->client.execute(std::make_shared<Cheats>(Cheats(this->currentWormId, ALL_INVINCIBLE)));
 			break;
 
-		case SDLK_F4:
+		case SDLK_v:
 			this->client.execute(std::make_shared<Cheats>(Cheats(this->currentWormId, STOP_TURN)));
 			break;
 
-		case SDLK_F5:
+		case SDLK_b:
 			this->client.execute(std::make_shared<Cheats>(Cheats(this->currentWormId, RENEW_TURN)));
 			break;
 

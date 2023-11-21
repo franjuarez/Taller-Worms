@@ -13,11 +13,11 @@ enum /*WEAPON_TYPE*/{
     BAZOOKA = 0,
     GREEN_GRENADE,
     BAT,
-    TP,
+    TELEPORT,
     MORTAR,
     RED_GRENADE,
-    FRAGMENT,
     BANANA,
+    FRAGMENT,
 };
 
 enum /* CHEATS */ {

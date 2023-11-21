@@ -9,7 +9,6 @@
 #include <memory>
 
 
-
 Lobby::Lobby(const std::string& hostname, int numberOfPlayers, std::string mapName, bool* playing) 
 : hostname(hostname), skt(hostname.c_str()), mapName(mapName), commandQueue(90), playing(playing) {
     this->numberOfPlayers = numberOfPlayers;
@@ -71,7 +70,7 @@ void Lobby::run() {
         try {
             Socket peer = skt.accept();
             idPlayer++;
-            std::shared_ptr<GameMap> gameMap =std::make_shared<GameMap>(GameMap(idPlayer, "aloha", beams, worms));
+            std::shared_ptr<GameMap> gameMap =std::make_shared<GameMap>(GameMap(idPlayer, numberOfPlayers, "aloha", beams, worms));
             Player* player = new Player(std::move(peer), commandQueue, gameMap);
             // magic happens
             statusBroadcaster.addPlayer(idPlayer, player->getPlayerQueue());
@@ -84,7 +83,7 @@ void Lobby::run() {
         }
     }
     // momento eleccion Mapa
-    std::shared_ptr<GameMap> gameMap = std::make_shared<GameMap>(GameMap(0, "aloha", beams, worms));
+    std::shared_ptr<GameMap> gameMap = std::make_shared<GameMap>(GameMap(0, numberOfPlayers, "aloha", beams, worms));
     // Inicializar el GameLoop 
     bool loopActive = true;
     GameLoop gameLoop(commandQueue, statusBroadcaster, gameMap, teams, &loopActive);

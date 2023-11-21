@@ -11,7 +11,7 @@ Worm::~Worm() {}
 
 WormDTO Worm::getDTO(){
     Position pos(body->GetPosition().x, body->GetPosition().y);
-    WormDTO dto(id, direction, team, health, pos, {INFINITE_AMUNITION, INFINITE_AMUNITION, INFINITE_AMUNITION, INFINITE_AMUNITION, INFINITE_AMUNITION, INFINITE_AMUNITION, INFINITE_AMUNITION});
+    WormDTO dto(id, direction, team, health, pos, weapons);
     return dto;
 }
 

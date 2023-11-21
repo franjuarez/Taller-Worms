@@ -29,6 +29,7 @@ void Protocol::sendMap(GameMap* gameMap) {
     checkClosed();
     sendUintEight(SEND_MAP); 
     sendUintEight(gameMap->getTeam());
+    sendUintEight(gameMap->getNumberTeams());
     sendString(gameMap->getMapName());
     sendWorms(gameMap->getWorms());
     sendBeams(gameMap->getBeams());
@@ -36,10 +37,11 @@ void Protocol::sendMap(GameMap* gameMap) {
 
 GameMap* Protocol::receiveMap() {
     uint8_t team = receiveUintEight();
+    uint8_t numberTeams = receiveUintEight();
     std::string mapName = receiveString();
     std::vector<WormDTO> worms = receiveWorms();
     std::vector<BeamDTO> beams = receiveBeams();
-    return new GameMap(team, mapName, beams, worms);
+    return new GameMap(team, numberTeams, mapName, beams, worms);
 }
 
 

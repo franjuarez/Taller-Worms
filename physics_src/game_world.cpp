@@ -26,6 +26,7 @@ GameWorld::GameWorld(std::shared_ptr<GameMap> gameMap) {
         int team = worm.getTeam();
         int health = worm.getHealth();
         std::vector<int> weapons = worm.getWeapons();
+        
         createWorm(x, y, id, team, health, weapons);
     }
 }
@@ -264,10 +265,16 @@ void GameWorld::wormHitWithBat(int id, int direction){
     checkWormExists(id);
     b2Body* worm = this->worms[id];
     Worm* wormData = (Worm*) worm->GetUserData().pointer;
+    if(!wormData->hasAmmo(BAT)){
+        return;
+    }
     wormData->hitWithBat(direction);
 }
 
 bool GameWorld::checkValidTpPosition(float x, float y){
+    if(x < 0 || x > WORLD_WIDTH || y < 0 || y > WORLD_HEIGHT){
+        return false;
+    }
     b2AABB aabb;
     aabb.lowerBound = b2Vec2(x - WORM_WIDTH/2, y - WORM_HEIGHT/2);
     aabb.upperBound = b2Vec2(x + WORM_WIDTH/2, y + WORM_HEIGHT/2);
@@ -278,6 +285,10 @@ bool GameWorld::checkValidTpPosition(float x, float y){
 
 bool GameWorld::teleportWorm(int id, float x, float y){
     checkWormExists(id);
+    Worm* wormData = (Worm*) this->worms[id]->GetUserData().pointer;
+    if(!wormData->hasAmmo(TELEPORT)){
+        return false;
+    }
     if(checkValidTpPosition(x, y)){
         b2Body* worm = this->worms[id];
         worm->SetTransform(b2Vec2(x, y), 0);
