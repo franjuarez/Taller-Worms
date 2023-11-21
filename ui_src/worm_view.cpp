@@ -344,13 +344,13 @@ void WormView::tp(int i) {
 }
 
 void WormView::surrend() {
-	if (currentFramesIndex == HOLDING_AXE_FRAMES ||
-		currentFramesIndex == HOLDING_BAZOKA_FRAMES ||
-		currentFramesIndex == HOLDING_RG_FRAMES ||
-		currentFramesIndex == HOLDING_BANANA_FRAMES ||
-		currentFramesIndex == HOLDING_GG_FRAMES ||
-		currentFramesIndex == HOLDING_MORTAR_FRAMES || 
-		currentFramesIndex == HOLDING_TP_FRAMES) {
+	if (defaultFramesIndex == HOLDING_AXE_FRAMES ||
+		defaultFramesIndex == HOLDING_BAZOKA_FRAMES ||
+		defaultFramesIndex == HOLDING_RG_FRAMES ||
+		defaultFramesIndex == HOLDING_BANANA_FRAMES ||
+		defaultFramesIndex == HOLDING_GG_FRAMES ||
+		defaultFramesIndex == HOLDING_MORTAR_FRAMES || 
+		defaultFramesIndex == HOLDING_TP_FRAMES) {
 			return;
 		}
 	this->defaultFramesIndex = SURRENDING_FRAMES;

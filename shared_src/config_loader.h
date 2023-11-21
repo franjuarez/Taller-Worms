@@ -11,6 +11,9 @@ private:
     
     //maps
     std::string maps_file;
+
+    //resources
+    std::string resources_dir;
     
     //game
     int fps;
@@ -116,6 +119,10 @@ public:
 
     //maps
     std::string getMapsFile();
+
+    //resources
+    std::string getResourcesDirectory();
+
     //game
     int getFps();
     int getTurnTime();

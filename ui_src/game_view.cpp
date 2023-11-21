@@ -1,75 +1,4 @@
 #include "game_view.h"
-
-#define WINDOW_NAME "Worms 2"
-
-#define FPS 60.0f
-#define RATE (1000.f / FPS)
-
-
-
-#define MUSIC_PATH "../resources/music/AdhesiveWombat_Night Shade.mp3"
-
-#define WORM_LIFE_FONT_PATH "../resources/fonts/lazy.ttf"
-
-#define BACKGROUND_PATH "../resources/images/background.png"
-#define LOSING_SCREEN_PATH "../resources/images/Dark_Souls_You_Died_Screen_-_Completely_Black_Screen_0-2_screenshot.png"
-#define BEAM_PATH "../resources/images/grdl8.png"
-#define STILL_WORM_PATH "../resources/images/stillworm.bmp"
-#define JUMPING_WORM_PATH "../resources/images/worm_jump.bmp"
-#define WALKING_WORM_PATH "../resources/images/worm_walk.bmp"
-#define SURRENDING_WORM_PATH "../resources/images/worm_surrender.bmp"
-#define TP_WORM_PATH "../resources/images/worm_tp.bmp"
-#define WORM_HITTING_PATH "../resources/images/worm_hitting.bmp"
-#define WORM_DRAWING_AXE_PATH "../resources/images/draw_axe.bmp"
-#define WORM_HOLDING_AXE_PATH "../resources/images/hold_axe.bmp"
-#define WORM_DRAWING_BAZOKA_PATH "../resources/images/draw_bazoka.bmp"
-#define WORM_HOLDING_BAZOKA_PATH "../resources/images/hold_bazoka.bmp"
-#define WORM_DRAWING_RG_PATH "../resources/images/draw_rg.bmp"
-#define WORM_HOLDING_RG_PATH "../resources/images/hold_rg.bmp"
-#define WORM_DRAWING_BANANA_PATH "../resources/images/draw_banana.bmp"
-#define WORM_HOLDING_BANANA_PATH "../resources/images/hold_banana.bmp"
-#define WORM_DRAWING_GG_PATH "../resources/images/draw_gg.bmp"
-#define WORM_HOLDING_GG_PATH "../resources/images/hold_gg.bmp"
-#define WORM_DRAWING_MORTAR_PATH "../resources/images/draw_mortar.bmp"
-#define WORM_HOLDING_MORTAR_PATH "../resources/images/holding_mortar.bmp"
-#define WORM_DRAWING_TP_PATH "../resources/images/drawing_tp.bmp"
-#define WORM_HOLDING_TP_PATH "../resources/images/holding_tp.bmp"
-#define WWINER_ANIMATION_PATH "../resources/images/wwinner.bmp"
-
-
-
-#define GRAVE_PATH "../resources/images/grave1.bmp"
-#define WATER_PATH_00 "../resources/images/water/blue00.bmp"
-#define WATER_PATH_01 "../resources/images/water/blue01.bmp"
-#define WATER_PATH_02 "../resources/images/water/blue02.bmp"
-#define WATER_PATH_03 "../resources/images/water/blue03.bmp"
-#define WATER_PATH_04 "../resources/images/water/blue04.bmp"
-#define WATER_PATH_05 "../resources/images/water/blue05.bmp"
-#define WATER_PATH_06 "../resources/images/water/blue06.bmp"
-#define WATER_PATH_07 "../resources/images/water/blue07.bmp"
-#define WATER_PATH_08 "../resources/images/water/blue08.bmp"
-#define WATER_PATH_09 "../resources/images/water/blue09.bmp"
-#define WATER_PATH_10 "../resources/images/water/blue10.bmp"
-#define WATER_PATH_11 "../resources/images/water/blue11.bmp"
-
-#define CURR_WORM_PATH "../resources/images/currentWormIndicator.bmp"
-#define BAZOOKA_ICON_PATH "../resources/images/icons/rocket.bmp"
-#define GGRENADE_ICON_PATH "../resources/images/icons/gg.bmp"
-#define BAT_ICON_PATH "../resources/images/icons/axe.bmp"
-#define TP_ICON_PATH "../resources/images/icons/tp.bmp"
-#define MORTAR_ICON_PATH "../resources/images/icons/mortar.bmp"
-#define RGRENADE_ICON_PATH "../resources/images/icons/rg.bmp"
-#define BANANA_ICON_PATH "../resources/images/icons/banana.bmp"
-
-
-#define ROCKET_PATH "../resources/images/rocket.bmp"
-#define EXPLOSION_PATH "../resources/images/explosion3.bmp"
-
-#define MORTAR_PROJECTILE_PATH "../resources/images/morter_projectile.bmp"
-#define PERDIGON_PROJECTILE_PATH "../resources/images/perdigon.bmp"
-
-
-
 #include "../game_src/constants_game.h"
 #include "../game_src/commands/move.h"
 #include "../game_src/commands/jump.h"
@@ -78,8 +7,73 @@
 #include "../game_src/commands/hit_upclose.h"
 #include "../game_src/commands/throw_grenade.h"
 #include "../game_src/commands/cheats.h"
-#include "../game_src/constants_game.h"
+#include "../shared_src/constants.h"
 
+#define WINDOW_NAME "Worms 2"
+
+#define FPS 60.0f
+#define RATE (1000.f / FPS)
+
+#define BASE_PATH "../" + CONFIG.getResourcesDirectory() + "/"
+
+#define MUSIC_PATH BASE_PATH + "music/AdhesiveWombat_Night Shade.mp3"
+
+#define WORM_LIFE_FONT_PATH BASE_PATH + "fonts/lazy.ttf"
+
+#define BACKGROUND_PATH BASE_PATH + "images/background.png"
+#define LOSING_SCREEN_PATH BASE_PATH + "images/Dark_Souls_You_Died_Screen_-_Completely_Black_Screen_0-2_screenshot.png"
+#define BEAM_PATH BASE_PATH + "images/grdl8.png"
+#define STILL_WORM_PATH BASE_PATH + "images/stillworm.bmp"
+#define JUMPING_WORM_PATH BASE_PATH + "images/worm_jump.bmp"
+#define WALKING_WORM_PATH BASE_PATH + "images/worm_walk.bmp"
+#define SURRENDING_WORM_PATH BASE_PATH + "images/worm_surrender.bmp"
+#define TP_WORM_PATH BASE_PATH + "images/worm_tp.bmp"
+#define WORM_HITTING_PATH BASE_PATH + "images/worm_hitting.bmp"
+#define WORM_DRAWING_AXE_PATH BASE_PATH + "images/draw_axe.bmp"
+#define WORM_HOLDING_AXE_PATH BASE_PATH + "images/hold_axe.bmp"
+#define WORM_DRAWING_BAZOKA_PATH BASE_PATH + "images/draw_bazoka.bmp"
+#define WORM_HOLDING_BAZOKA_PATH BASE_PATH + "images/hold_bazoka.bmp"
+#define WORM_DRAWING_RG_PATH BASE_PATH + "images/draw_rg.bmp"
+#define WORM_HOLDING_RG_PATH BASE_PATH + "images/hold_rg.bmp"
+#define WORM_DRAWING_BANANA_PATH BASE_PATH + "images/draw_banana.bmp"
+#define WORM_HOLDING_BANANA_PATH BASE_PATH + "images/hold_banana.bmp"
+#define WORM_DRAWING_GG_PATH BASE_PATH + "images/draw_gg.bmp"
+#define WORM_HOLDING_GG_PATH BASE_PATH + "images/hold_gg.bmp"
+#define WORM_DRAWING_MORTAR_PATH BASE_PATH + "images/draw_mortar.bmp"
+#define WORM_HOLDING_MORTAR_PATH BASE_PATH + "images/holding_mortar.bmp"
+#define WORM_DRAWING_TP_PATH BASE_PATH + "images/drawing_tp.bmp"
+#define WORM_HOLDING_TP_PATH BASE_PATH + "images/holding_tp.bmp"
+#define WWINER_ANIMATION_PATH BASE_PATH + "images/wwinner.bmp"
+
+#define GRAVE_PATH BASE_PATH + "images/grave1.bmp"
+#define WATER_PATH_00 BASE_PATH + "images/water/blue00.bmp"
+#define WATER_PATH_01 BASE_PATH + "images/water/blue01.bmp"
+#define WATER_PATH_02 BASE_PATH + "images/water/blue02.bmp"
+#define WATER_PATH_03 BASE_PATH + "images/water/blue03.bmp"
+#define WATER_PATH_04 BASE_PATH + "images/water/blue04.bmp"
+#define WATER_PATH_05 BASE_PATH + "images/water/blue05.bmp"
+#define WATER_PATH_06 BASE_PATH + "images/water/blue06.bmp"
+#define WATER_PATH_07 BASE_PATH + "images/water/blue07.bmp"
+#define WATER_PATH_08 BASE_PATH + "images/water/blue08.bmp"
+#define WATER_PATH_09 BASE_PATH + "images/water/blue09.bmp"
+#define WATER_PATH_10 BASE_PATH + "images/water/blue10.bmp"
+#define WATER_PATH_11 BASE_PATH + "images/water/blue11.bmp"
+
+#define CURR_WORM_PATH BASE_PATH + "images/currentWormIndicator.bmp"
+#define BAZOOKA_ICON_PATH BASE_PATH + "images/icons/rocket.bmp"
+#define GGRENADE_ICON_PATH BASE_PATH + "images/icons/gg.bmp"
+#define BAT_ICON_PATH BASE_PATH + "images/icons/axe.bmp"
+#define TP_ICON_PATH BASE_PATH + "images/icons/tp.bmp"
+#define MORTAR_ICON_PATH BASE_PATH + "images/icons/mortar.bmp"
+#define RGRENADE_ICON_PATH BASE_PATH + "images/icons/rg.bmp"
+#define BANANA_ICON_PATH BASE_PATH + "images/icons/banana.bmp"
+
+
+#define ROCKET_PATH BASE_PATH + "images/rocket.bmp"
+#define EXPLOSION_PATH BASE_PATH + "images/explosion3.bmp"
+
+#define MORTAR_PROJECTILE_PATH BASE_PATH + "images/morter_projectile.bmp"
+#define PERDIGON_PROJECTILE_PATH BASE_PATH + "images/perdigon.bmp"
 
 GameView::GameView(const std::string& hostname, const std::string& servname) :
 		client(hostname, servname),
@@ -220,6 +214,8 @@ void GameView::updateEntities(int i) {
 			wormViews.at(oldid).toDefault(0);
 		}
 	}
+
+
 	bool anyAlive = false;
 	for (auto &worm : recievedWorms) {
 		this->wormViews.at(worm.getId()).update(worm, i);
@@ -228,6 +224,11 @@ void GameView::updateEntities(int i) {
 		}
 		if (worm.isAlive())
 			anyAlive = true;
+
+		if (currentWormId != -1 && currentWormId != oldid && currentWormId == worm.getId()) {
+			camX = (worm.getX()) * m_to_pix_x - WINDOW_WIDTH / 2;
+			camY = (worm.getY()) * m_to_pix_y + WINDOW_HEIGHT - WINDOW_HEIGHT / 2;
+		}
 	}
 
 
@@ -427,6 +428,8 @@ void GameView::moveCase(int i, int dir) {
 
 void GameView::backspaceKeyCase(int i) {
 	this->client.execute(std::make_shared<Jump>(Jump(currentWormId, 3)));
+	this->wormViews.at(this->currentWormId).jump(i);
+
 }
 
 
@@ -630,7 +633,7 @@ void GameView::processInput(SDL_Event event, int i) {
 }
 
 void GameView::start() {
-	// mixer.PlayChannel(-1, sound);
+	mixer.PlayChannel(-1, sound);
 
 	int i = 0;
 	int t1 = SDL_GetTicks();

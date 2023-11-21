@@ -3,6 +3,9 @@
 ConfigLoader::ConfigLoader(const YAML::Node& node) :
     //maps
     maps_file(node["maps_file"].as<std::string>()),
+
+    //resources
+    resources_dir(node["resources_directory"].as<std::string>()),
     //game
     fps(node["game"]["FPS"].as<int>()),
     turn_time(node["game"]["turn_time"].as<int>()),
@@ -111,6 +114,10 @@ ConfigLoader::~ConfigLoader() {}
 
 std::string ConfigLoader::getMapsFile() {
     return maps_file;
+}
+
+std::string ConfigLoader::getResourcesDirectory() {
+    return resources_dir;
 }
 
 int ConfigLoader::getFps() {
