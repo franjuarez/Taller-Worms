@@ -27,6 +27,7 @@ ConfigLoader::ConfigLoader(const YAML::Node& node) :
     //worm
     worm_initial_health(node["worm"]["initial_health"].as<int>()),
     worm_additional_health(node["worm"]["additional_health"].as<int>()),
+    worm_max_health(node["worm"]["max_health"].as<int>()),
     
     //move
     worm_move_velocity(node["move"]["move_velocity"].as<float>()),
@@ -170,6 +171,10 @@ int ConfigLoader::getWormInitialHealth() {
 
 int ConfigLoader::getWormAdditionalHealth() {
     return worm_additional_health;
+}
+
+int ConfigLoader::getWormMaxHealth() {
+    return worm_max_health;
 }
 
 float ConfigLoader::getWormMoveVelocity() {

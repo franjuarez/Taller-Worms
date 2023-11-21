@@ -32,9 +32,6 @@ public:
 
 	// void selectMap(std::string);
 
-	
-	//game funciona como monitor y para empaquetar todo lo que se tiene que graficar
-
 	std::shared_ptr<Serializable> getGameStatus();
 	
 

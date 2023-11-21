@@ -34,8 +34,8 @@ void Worm::die(){
 
 void Worm::addHealth(int additionalHealth){
     this->health += additionalHealth;
-    if (this->health > 100){
-        this->health = 100;
+    if (this->health > CONFIG.getWormMaxHealth()){
+        this->health = CONFIG.getWormMaxHealth();
     }
 }
 
