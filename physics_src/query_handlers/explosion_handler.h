@@ -4,15 +4,15 @@
 #include <vector>
 #include "../entities/entity.h"
 
-class ExplosionQueryCallback : public b2QueryCallback {
+class ExplosionQueryCallback : public b2RayCastCallback {
 public:
-    std::vector<b2Body*> foundBodies;
     b2Vec2 explosionCenter;
     float blastRadius;
+    std::vector<b2Body*> foundBodies;
 
     ExplosionQueryCallback(b2Vec2 explosionCenter, float blastRadius);
 
-    bool ReportFixture(b2Fixture* fixture);
+    float ReportFixture(b2Fixture* fixture, const b2Vec2& point, const b2Vec2& normal, float fraction);
 };
 
 #endif

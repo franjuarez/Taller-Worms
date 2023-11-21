@@ -224,8 +224,8 @@ b2Body* GameWorld::createBanana(b2Body* worm, int direction, int explosionTimer)
     int id = this->lastProjectileId;
     b2Body* body = createProjectile(worm, BANANA, direction, BANANA_WIDTH, BANANA_HEIGHT, CONFIG.getBananaBounciness());
 
-    Banana* redGrenadeEntity = new Banana(body, entitiesToRemove, entitiesToAdd, id, CONFIG.getBananaDamage(), CONFIG.getBananaRadius(), explosionTimer);
-    body->GetUserData().pointer = reinterpret_cast<uintptr_t>(redGrenadeEntity);
+    Banana* bananaEntity = new Banana(body, entitiesToRemove, entitiesToAdd, id, CONFIG.getBananaDamage(), CONFIG.getBananaRadius(), explosionTimer);
+    body->GetUserData().pointer = reinterpret_cast<uintptr_t>(bananaEntity);
 
     return body;
 }
@@ -259,7 +259,7 @@ bool GameWorld::teleportWorm(int id, float x, float y){
     if(checkValidTpPosition(x, y)){
         b2Body* worm = this->worms[id];
         worm->SetTransform(b2Vec2(x, y), 0);
-        worm->SetLinearVelocity(b2Vec2(0, -0.01f));
+        worm->SetLinearVelocity(b2Vec2(0, -0.01f)); //So it falls
         return true;
     }
     return false;

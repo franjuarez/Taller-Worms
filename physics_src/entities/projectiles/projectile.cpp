@@ -2,6 +2,8 @@
 #include <iostream>
 #include <cstdlib>
 
+#define DEGTORAD 0.0174532925199432957f
+
 Projectile::Projectile(b2Body* body, std::unordered_set<b2Body*>& entitiesToRemove,
     std::vector<createEntity>& entitiesToAdd, EntityType entityType, int projectileType, int id,float damage, float radius) : 
     Entity(body, entitiesToRemove, entityType), entitiesToAdd(entitiesToAdd), 
@@ -19,23 +21,31 @@ void Projectile::leaveFragments(){ }
 void Projectile::explode(){
     b2Body* projectile = this->body;
     b2Vec2 projectilePos = projectile->GetPosition();
-    ExplosionQueryCallback explosionCallback(projectilePos, this->radius);
-    b2AABB aabb;
-    aabb.lowerBound = projectilePos - b2Vec2(this->radius, this->radius);
-    aabb.upperBound = projectilePos + b2Vec2(this->radius, this->radius);
     b2World* world = projectile->GetWorld();
-    world->QueryAABB( &explosionCallback, aabb);
-    
-    for(b2Body* body : explosionCallback.foundBodies) {
-        //Assuming it just affects worms
-        Worm* worm = (Worm*) body->GetUserData().pointer;
-        b2Vec2 bodyPos = body->GetPosition();
-        float distance = b2Distance(projectilePos, bodyPos);
-        float damage = this->damage * (1 - distance / this->radius);
-        worm->handleExplosion(damage, projectilePos);
+    int numberOfRays = 20;
+    std::unordered_set<b2Body*> allFoundBodies;
+    for(int i = 0; i < numberOfRays; i++){
+        float angle = (i / (float)numberOfRays) * 360 * DEGTORAD;
+        b2Vec2 rayDir( sinf(angle), cosf(angle) );
+        b2Vec2 rayEnd = projectilePos + this->radius * rayDir;
+        ExplosionQueryCallback callback(projectilePos, this->radius);
+        world->RayCast(&callback, projectilePos, rayEnd);
+        for(b2Body* body : callback.foundBodies) {
+            if(allFoundBodies.find(body) != allFoundBodies.end()){
+                continue;
+            }
+            //Assuming it just affects worms
+            Worm* worm = (Worm*) body->GetUserData().pointer;
+            b2Vec2 bodyPos = body->GetPosition();
+            float distance = b2Distance(projectilePos, bodyPos);
+            float damage = this->damage * (1 - distance / this->radius);
+            worm->handleExplosion(damage, projectilePos);
+            allFoundBodies.insert(body);
+        }
     }
     leaveFragments();
     this->entitiesToRemove.insert(projectile);
+    
 }
 
 Projectile::~Projectile() {}
