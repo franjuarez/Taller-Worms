@@ -8,7 +8,7 @@
 WormView::WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets, Font& wormsFont) : 
 	worm(worm),
 	dynamicSpriteSheets(dynamicSpriteSheets),
-	frames{19},
+	frames{21},
 	wormsFont(wormsFont) {
 	defaultFramesIndex = STILL_FRAMES;
 	currentFramesIndex = STILL_FRAMES;
@@ -187,6 +187,34 @@ WormView::WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets, Fon
 		h = 25;
 		frames[HOLDING_MORTAR_FRAMES].push_back(Rect(x,y,w,h));
 	}
+
+	//frames for drawing tp
+	for (int i = 0; i < 10; i++) {
+		x = 13;
+		y = i*60 + 15;
+		w = 28;
+		h = 28;
+		frames[DRAWING_TP_FRAMES].push_back(Rect(x,y,w,h));
+	}
+
+	//frames for holding tp
+	for (int i = 0; i < 48; i++) {
+		x = 13;
+		y = i * 60 + 12;
+		w = 29;
+		h = 31;
+		frames[HOLDING_TP_FRAMES].push_back(Rect(x,y,w,h));
+	}
+
+	for (int i = 47; i >= 0; i--) {
+		x = 13;
+		y = i * 60 + 12;
+		w = 29;
+		h = 31;
+		frames[HOLDING_TP_FRAMES].push_back(Rect(x,y,w,h));
+	}
+
+
 }
 
 int WormView::shoot(int i) {
@@ -202,7 +230,8 @@ void WormView::toDefault(int i) {
 		currentFramesIndex == HOLDING_RG_FRAMES ||
 		currentFramesIndex == HOLDING_BANANA_FRAMES ||
 		currentFramesIndex == HOLDING_GG_FRAMES ||
-		currentFramesIndex == HOLDING_MORTAR_FRAMES) {
+		currentFramesIndex == HOLDING_MORTAR_FRAMES || 
+		currentFramesIndex == HOLDING_TP_FRAMES) {
 
 		currentFramesIndex = STILL_FRAMES;
 		this->startingPoint = i;
@@ -218,6 +247,15 @@ void WormView::drawGreenGrenade(int i) {
 	this->startingPoint = i;
 	this->currentFramesIndex = DRAWING_GG_FRAMES;
 	this->defaultFramesIndex = HOLDING_GG_FRAMES;
+}
+
+void WormView::drawTp(int i) {
+	if (currentFramesIndex == DRAWING_TP_FRAMES ||
+		currentFramesIndex == HOLDING_TP_FRAMES)
+		return;
+	this->startingPoint = i;
+	this->currentFramesIndex = DRAWING_TP_FRAMES;
+	this->currentFramesIndex = HOLDING_TP_FRAMES;
 }
 
 void WormView::drawBanana(int i) {
