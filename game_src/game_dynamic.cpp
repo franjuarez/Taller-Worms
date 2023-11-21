@@ -1,7 +1,7 @@
 #include "game_dynamic.h"
 
 GameDynamic::GameDynamic(int wormPlayingID, std::vector<WormDTO>worms, std::unordered_map<int, ExplosivesDTO> explosives)
-: Serializable() ,wormPlayingID(wormPlayingID), winnerTeam(PLAYING), worms(worms), explosives(explosives), teamsHealth() {}
+: Serializable() ,wormPlayingID(wormPlayingID), worms(worms), explosives(explosives), teamsHealth() {}
 
 GameDynamic::GameDynamic(int wormPlayingID, int winnerTeam, std::vector<WormDTO>worms, std::unordered_map<int, ExplosivesDTO> explosives, std::vector<int> teamsHealth)
 : Serializable() ,wormPlayingID(wormPlayingID), winnerTeam(winnerTeam), worms(worms), explosives(explosives), teamsHealth(teamsHealth) {}

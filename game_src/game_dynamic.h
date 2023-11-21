@@ -4,6 +4,8 @@
 #include "worm_dto.h"
 #include "explosives_dto.h"
 
+#include "constants_game.h"
+
 #include "../shared_src/protocol.h"
 #include "serializable.h"
 
@@ -17,7 +19,7 @@ class GameDynamic : public Serializable {
 
 private:
     int wormPlayingID;
-    int winnerTeam;
+    int winnerTeam = PLAYING;
     std::vector<WormDTO> worms;
     std::unordered_map<int, ExplosivesDTO> explosives;
     std::vector<int> teamsHealth;
