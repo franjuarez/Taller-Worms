@@ -3,19 +3,41 @@
 #include <SDL2pp/SDL2pp.hh>
 
 ProjectileView::ProjectileView(ExplosivesDTO rocket, std::vector<Texture>& projectileSpriteSheet) :
-rocket(rocket), projectileSpriteSheets(projectileSpriteSheet), frames{4} {
+rocket(rocket), projectileSpriteSheets(projectileSpriteSheet), frames{8} {
 	startingPoint = 0;
 
 
-	if (rocket.getType() == BAZOOKA) {
+	//if (rocket.getType() == BAZOOKA) {
+	//	currentFramesIndex = defaultFramesIndex = ROCKET_FRAMES;
+	//} else if (rocket.getType() == RED_GRENADE) {
+	//	currentFramesIndex = defaultFramesIndex = RED_GRENADE_FRAMES;
+	//} else {
+	//	currentFramesIndex = defaultFramesIndex = RED_GRENADE_FRAMES;
+	//}
+	switch(rocket.getType()) {
+	case BAZOOKA:
 		currentFramesIndex = defaultFramesIndex = ROCKET_FRAMES;
-	} else if (rocket.getType() == RED_GRENADE) {
+		break;
+	case RED_GRENADE:
 		currentFramesIndex = defaultFramesIndex = RED_GRENADE_FRAMES;
-	} else {
-		currentFramesIndex = defaultFramesIndex = RED_GRENADE_FRAMES;
+		break;
+	case BANANA:
+		currentFramesIndex = defaultFramesIndex = BANANA_FRAMES;
+		break;
+	case MORTAR:
+		currentFramesIndex = defaultFramesIndex = MORTAR_FRAMES;
+		break;
+	case GREEN_GRENADE:
+		currentFramesIndex = defaultFramesIndex = GREEN_GRENADE_FRAMES;
+		break;
+	default:
+		currentFramesIndex = defaultFramesIndex = PERDIGON_FRAMES;
+		break;
 	}
-	frames[ROCKET_FRAMES].push_back(Rect(19,13,22,34));
 
+
+
+	frames[ROCKET_FRAMES].push_back(Rect(19,13,22,34));
 
 	int x = 19;
 	int y;
@@ -29,12 +51,21 @@ rocket(rocket), projectileSpriteSheets(projectileSpriteSheet), frames{4} {
 	frames[POST_EXPLOSION_FRAMES].push_back(Rect(0,0,1,1));
 
 	frames[RED_GRENADE_FRAMES].push_back(Rect(7,4,14,24));
+
+	frames[BANANA_FRAMES].push_back(Rect(7,4,14,24));
+
+	frames[MORTAR_FRAMES].push_back(Rect(23,17,14,24));
+
+	frames[GREEN_GRENADE_FRAMES].push_back(Rect(7,4,14,24));	
+
+	frames[PERDIGON_FRAMES].push_back(Rect(23,16,13,25));
+
 }
 
 ProjectileView::~ProjectileView() {}
 
 void ProjectileView::explode(int i) {
-	if (currentFramesIndex != ROCKET_FRAMES && currentFramesIndex != RED_GRENADE_FRAMES)
+	if (currentFramesIndex != ROCKET_FRAMES && currentFramesIndex < RED_GRENADE_FRAMES)
 		return;
 	this->startingPoint = i;
 	this->currentFramesIndex = EXPLOSION_FRAMES;
@@ -57,26 +88,24 @@ void ProjectileView::display(int i, Renderer& renderer, int camX, int camY) {
 
 
 	double angle = 0;
-	if (rocket.getType() == BAZOOKA) {
+	if (rocket.getType() == RED_GRENADE || rocket.getType() == GREEN_GRENADE) {
+		angle = i % 180;
+	}else if (rocket.getType() == BANANA) {
+		angle = i*5 % 180;
+	}else if (currentFramesIndex == EXPLOSION_FRAMES) {
+		angle = 0;
+	}else /*if (rocket.getType() == BAZOOKA)*/ {
 		angle = -(atan(rocket.getVelY() / rocket.getVelX()) * (180.0 / M_PI)); 
 		angle += (rocket.getVelX() < 0) ? -90 : 90;
 	}
-	if (rocket.getType() == RED_GRENADE) {
-		angle = i % 180;
-	}
 
-
-	if (currentFramesIndex == EXPLOSION_FRAMES) {
-		angle = 0;
-	}
-	
 	Texture& texture(this->projectileSpriteSheets[currentFramesIndex]);
 	//si esto es distinto de 0 rompe aca
 	Rect origin(this->frames.at(currentFramesIndex).at(currentFrame));
 	Rect destiny(x, y,rocketSize*m_to_pix_x, -rocketSize*m_to_pix_y);
 
 
-	renderer.Copy(texture, origin, destiny, angle, Point(0,0), false);
+	renderer.Copy(texture, origin, destiny, angle, Point(destiny.GetW()/2,destiny.GetH()/2), false);
 	//renderer.Copy(
 	//	this->projectileSpriteSheets[currentFramesIndex],
 	//	this->frames[currentFramesIndex][currentFrame], 
