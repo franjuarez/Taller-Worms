@@ -212,7 +212,6 @@ b2Body* GameWorld::createRedGrenade(b2Body* worm, int direction, int explosionTi
 }
 
 void GameWorld::wormThrowRedGrenade(int id, float angle, int direction, float power, int explosionTimer){
-    std::cout << "tirando rg" << std::endl; 
     checkWormExists(id);
     b2Body* worm = this->worms[id];
     b2Body* granade = createRedGrenade(worm, direction, explosionTimer);

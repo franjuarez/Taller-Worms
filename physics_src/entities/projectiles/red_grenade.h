@@ -13,6 +13,8 @@ public:
     
     void leaveFragments() override;
 
+    ExplosivesDTO getDTO();
+
     ~RedGrenade() override;
 };
 

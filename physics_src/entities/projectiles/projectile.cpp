@@ -5,11 +5,10 @@
 #define DEGTORAD 0.0174532925199432957f
 
 Projectile::Projectile(b2Body* body, std::unordered_set<b2Body*>& entitiesToRemove,
-    std::vector<createEntity>& entitiesToAdd, EntityType entityType, int projectileType, int id,float damage, float radius) : 
-    Entity(body, entitiesToRemove, entityType), entitiesToAdd(entitiesToAdd), 
-    projectileType(projectileType), id(id), damage(damage), radius(radius) {}
+    std::vector<createEntity>& entitiesToAdd, EntityType entityType, int id,float damage, float radius) : 
+    Entity(body, entitiesToRemove, entityType), entitiesToAdd(entitiesToAdd), id(id), damage(damage), radius(radius) {}
 
-ExplosivesDTO Projectile::getDTO(){
+ExplosivesDTO Projectile::getDTO(int projectileType){
     Position pos(this->body->GetPosition().x, this->body->GetPosition().y);
     b2Vec2 vel = this->body->GetLinearVelocity();
     ExplosivesDTO dto(projectileType, id, pos, vel.x, vel.y);

@@ -12,6 +12,8 @@ class Mortar : public InstantProjectile {
 
         void leaveFragments() override;
 
+        ExplosivesDTO getDTO();
+
         ~Mortar();
 };
 

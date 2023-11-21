@@ -11,6 +11,8 @@ class ProjectileFragment : public InstantProjectile {
 
         b2Body* createFragment();
 
+        ExplosivesDTO getDTO();
+
         ~ProjectileFragment();
 };
 

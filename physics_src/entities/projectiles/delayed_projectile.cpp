@@ -1,8 +1,8 @@
 #include "delayed_projectile.h"
 
 DelayedProjectile::DelayedProjectile(b2Body* body, std::unordered_set<b2Body*>& entitiesToRemove,
-std::vector<createEntity>& entitiesToAdd, int projectileType, int id, float damage, float radius, float explosionTimer) : 
-    Projectile(body, entitiesToRemove, entitiesToAdd, EntityDelayedProjectile, projectileType , id, damage, radius), explosionTimer(explosionTimer) {}
+std::vector<createEntity>& entitiesToAdd, int id, float damage, float radius, float explosionTimer) : 
+    Projectile(body, entitiesToRemove, entitiesToAdd, EntityDelayedProjectile, id, damage, radius), explosionTimer(explosionTimer) {}
 
 void DelayedProjectile::update(float deltaTime) {
         explosionTimer -= deltaTime;

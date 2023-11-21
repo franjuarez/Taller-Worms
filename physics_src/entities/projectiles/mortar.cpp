@@ -2,7 +2,7 @@
 #include <iostream>
 #include <cstdlib>
 Mortar::Mortar(b2Body* body, std::unordered_set<b2Body*>& entitiesToRemove, std::vector<createEntity>& entitiesToAdd, int id, float damage, float radius) : 
-        InstantProjectile(body, entitiesToRemove, entitiesToAdd, MORTAR, id, damage, radius) {}
+        InstantProjectile(body, entitiesToRemove, entitiesToAdd, id, damage, radius) {}
 
 Mortar::~Mortar() {}
 
@@ -15,5 +15,7 @@ void Mortar::leaveFragments(){
     }
 }
 
-// ProjectileDTO Mortar::getDTO(){
+ExplosivesDTO Mortar::getDTO() {
+    return Projectile::getDTO(MORTAR);
+}
 
