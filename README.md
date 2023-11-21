@@ -45,5 +45,12 @@ Una vez hecho esto compilar como fue dicho arriba y usar los ejecutables client 
 * `Rueda Mouse`: Elije el arma que el gusano usara, basandose en el orden del HUD.
 * `Numeros`: Modifica el tiempo de explosion de las granadas.
   * `Mouse`: Con este se puede elegir el angulo del disparo, con el click se dispara.
+* `Cheats:`
+      * `F1`: Le suma vida al gusano actual (con un MaxHealth = 100)
+      * `F2`: Le otorga al gusano todas las armas
+      * `F3`: Vuelve a todos los gusanos invencibles
+      * `F4`: Deja estatico el turno, sin importar el tiempo/ perdida de vida/ uso de herramienta
+      * `F5`: Vuelve a permitir los cambios de turno
 * `Enter`: Salto para adelante
 * `Backspace`: Salto para atras
+
