@@ -12,7 +12,7 @@
 #define WORM_LIFE_FONT_PATH "../resources/fonts/lazy.ttf"
 
 #define BACKGROUND_PATH "../resources/images/background.png"
-#define BEAM_PATH "../resources/images/grdl8.png"	
+#define BEAM_PATH "../resources/images/grdl8.png"
 #define STILL_WORM_PATH "../resources/images/stillworm.bmp"
 #define JUMPING_WORM_PATH "../resources/images/worm_jump.bmp"
 #define WALKING_WORM_PATH "../resources/images/worm_walk.bmp"
@@ -171,6 +171,9 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 	hudTextures.push_back(Texture(renderer, Surface(BANANA_ICON_PATH).SetColorKey(true, 0)));
 
 	this->currentWormId = -1;
+	this->bombTimer = 3;
+	this->inputState = 0;
+
 
 }
 
@@ -203,6 +206,7 @@ void GameView::updateEntities(int i) {
 	this->currentWormId = gs->getWormPlayingID();
 	if (oldid != currentWormId) {
 		inputState = 0;
+		//bombTimer = 3;
 		if (oldid != -1) { //si se termino el turno
 			wormViews.at(oldid).toDefault(0);
 		}
@@ -263,7 +267,6 @@ void GameView::drawProjectiles(int i) {
 			it->second.explode(i);
 		}
 		it->second.display(i, renderer, camX, camY);
-
 	}
 }
 
@@ -321,7 +324,15 @@ void GameView::drawHud(int i) {
 		renderer.Copy(hudTextures[i+1], NullOpt, to);
 		if (weapons[i] == 0)
 			renderer.FillRect(to);
+		if (inputState != 0 && inputState == (i + 1)) {
+			renderer.SetDrawColor(255,255,255,240);
+			renderer.DrawRect(to);
+			renderer.SetDrawColor(15,15,15,175);
+
+		}
 	}
+
+
 
 
 }
@@ -384,7 +395,7 @@ void GameView::clickCase(int i, int mouseX, int mouseY) {
 	case GGRENADE_CODE:
 		this->client.execute(std::make_shared<ThrowGrenade>(ThrowGrenade(GREEN_GRENADE,
 			this->currentWormId,
-			dir, angle, 40.0f, 3)));
+			dir, angle, 40.0f, bombTimer)));
 		return;
 	case BAT_CODE:
 		this->wormViews.at(this->currentWormId).hit(i);
@@ -400,12 +411,12 @@ void GameView::clickCase(int i, int mouseX, int mouseY) {
 	case RGRENADE_CODE:
 		this->client.execute(std::make_shared<ThrowGrenade>(ThrowGrenade(RED_GRENADE,
 			this->currentWormId,
-			dir, angle, 40.0f, 3)));
+			dir, angle, 40.0f, bombTimer)));
 			return;
 	case BANANA_CODE:
 		this->client.execute(std::make_shared<ThrowGrenade>(ThrowGrenade(BANANA,
 			this->currentWormId,
-			dir, angle, 40.0f, 3)));
+			dir, angle, 40.0f, bombTimer)));
 		return;
 
 	default:
@@ -425,6 +436,47 @@ void GameView::processInput(SDL_Event event, int i) {
 
 		clickCase(i, mouseX, mouseY);
 	}
+	if (event.type == SDL_MOUSEWHEEL){
+		if (event.wheel.y > 0) {
+			inputState = (inputState + 1) % 8;
+		} else if( event.wheel.y < 0) {
+			inputState--;
+			if (inputState < 0) {
+				inputState = 7;
+			}
+		}
+
+		switch (inputState) {
+	case 0:
+		this->wormViews.at(currentWormId).toDefault(i);
+	case BAZOOKA_CODE:
+		this->wormViews.at(currentWormId).drawBazoka(i);
+		return;
+	case GGRENADE_CODE:
+		this->wormViews.at(currentWormId).drawGreenGrenade(i);
+		return;
+	case BAT_CODE:
+		wormViews.at(currentWormId).drawAxe(i);
+		return;
+	case TP_CODE:
+		wormViews.at(currentWormId).drawTp(i);
+		return;
+	case MORTAR_CODE:
+		this->wormViews.at(currentWormId).drawMortar(i);
+		return;
+	case RGRENADE_CODE:
+		this->wormViews.at(currentWormId).drawRedGrenade(i);
+		return;
+	case BANANA_CODE:
+		this->wormViews.at(currentWormId).drawBanana(i);
+		return;
+
+	default:
+		return;
+	}
+
+
+	}
 
 	if (event.type == SDL_KEYDOWN) {
 		switch(event.key.keysym.sym) {
@@ -440,31 +492,54 @@ void GameView::processInput(SDL_Event event, int i) {
 		case SDLK_RIGHT:
 			moveCase(i, RIGHT_DIR);
 			break;
-		case SDLK_1: //podria ser un mapa pero seria igual de feo en el constructor
+
+		case SDLK_0:
+			bombTimer = 0;
+			break; //no es un bug, es una feature
+		case SDLK_1:
+			bombTimer = 1;
+			break;
+		case SDLK_2:
+			bombTimer = 2;
+			break;
+		case SDLK_3:
+			bombTimer = 3;
+			break;
+		case SDLK_4:
+			bombTimer = 4;
+			break;
+		case SDLK_5:
+			bombTimer = 5;
+			break;
+
+		case SDLK_e:
+			this->wormViews.at(currentWormId).toDefault(i);
+			break;
+		case SDLK_r: //podria ser un mapa pero seria igual de feo en el constructor
 			inputState = BAZOOKA_CODE;
 			this->wormViews.at(currentWormId).drawBazoka(i);
 			break;
-		case SDLK_2:
+		case SDLK_t:
 			inputState = GGRENADE_CODE;
 			this->wormViews.at(currentWormId).drawGreenGrenade(i);
 			break;
-		case SDLK_3:
+		case SDLK_y:
 			inputState = BAT_CODE;
 			wormViews.at(currentWormId).drawAxe(i);
 			break;
-		case SDLK_4:
+		case SDLK_u:
 			inputState = TP_CODE;
 			wormViews.at(currentWormId).drawTp(i);
 			break;
-		case SDLK_5:
+		case SDLK_i:
 			inputState = MORTAR_CODE;
 			this->wormViews.at(currentWormId).drawMortar(i);
 			break;
-		case SDLK_6:
+		case SDLK_o:
 			inputState = RGRENADE_CODE;
 			this->wormViews.at(currentWormId).drawRedGrenade(i);
 			break;
-		case SDLK_7:
+		case SDLK_p:
 			inputState = BANANA_CODE;
 			this->wormViews.at(currentWormId).drawBanana(i);
 			break;

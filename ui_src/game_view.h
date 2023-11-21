@@ -57,6 +57,7 @@ private:
 	int currentWormId;
 
 	int inputState;
+	int bombTimer;
 
 	void updateEntities(int i);
 	void loadWorms(std::vector<WormDTO>& recievedWorms);
