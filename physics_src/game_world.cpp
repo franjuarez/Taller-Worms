@@ -269,6 +269,27 @@ bool GameWorld::teleportWorm(int id, float x, float y){
     return false;
 }
 
+void GameWorld::addHealthToWorm(int id){
+    checkWormExists(id);
+    b2Body* worm = this->worms[id];
+    Worm* wormData = (Worm*) worm->GetUserData().pointer;
+    wormData->addHealth(CONFIG.getWormAdditionalHealth());
+}
+
+void GameWorld::wormGetAllWeapons(int id){
+    checkWormExists(id);
+    b2Body* worm = this->worms[id];
+    Worm* wormData = (Worm*) worm->GetUserData().pointer;
+    wormData->getAllWeapons();
+}
+
+void GameWorld::toggleInvincible(){
+    for(auto it = this->worms.begin(); it != this->worms.end(); ++it){
+        Worm* wormData = (Worm*) it->second->GetUserData().pointer;
+        wormData->toggleInvincible();
+    }
+}
+
 void GameWorld::removeProjectile(b2Body* projectile){
     Projectile* projectileData = (Projectile*) projectile->GetUserData().pointer;
     int id = projectileData->getId();

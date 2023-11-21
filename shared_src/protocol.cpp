@@ -7,6 +7,7 @@
 #include "../game_src/commands/teleport.h"
 #include "../game_src/commands/hit_upclose.h"
 #include "../game_src/commands/throw_grenade.h"
+#include "../game_src/commands/cheats.h"
 
 #include "../game_src/serializable.h"
 #include "../game_src/game_dynamic.h"
@@ -111,6 +112,13 @@ void Protocol::sendHitUpclose(HitUpclose* hitUpclose) {
     sendUintEight(hitUpclose->getDir());
 }
 
+void Protocol::sendCheats(Cheats* cheat) {
+    checkClosed();
+    sendUintEight(SEND_COMMAND_CHEAT);
+    sendUintEight(cheat->getID());
+    sendUintEight(cheat->getCheatID());
+}
+
 Serializable* Protocol::receiveSerializable() {
     checkClosed();
     uint8_t protocolCode = receiveUintEight();
@@ -138,6 +146,8 @@ std::shared_ptr<Command> Protocol::receiveCommand() {
         return receiveHitUpclose();
     } else if (protocolCode == SEND_COMMAND_GRENADE) {
         return receiveThrowGrenade();
+    } else if (protocolCode == SEND_COMMAND_CHEAT) {
+        return receiveCheats();
     }
 
     throw std::runtime_error("Invalid Command");
@@ -204,6 +214,13 @@ std::shared_ptr<HitUpclose> Protocol::receiveHitUpclose() {
     uint8_t wormId = receiveUintEight();
     uint8_t dir = receiveUintEight();
     return std::make_shared<HitUpclose>(HitUpclose(wormId, dir));
+}
+
+std::shared_ptr<Cheats> Protocol::receiveCheats() {
+    checkClosed();
+    uint8_t wormId = receiveUintEight();
+    uint8_t cheatId = receiveUintEight();
+    return std::make_shared<Cheats>(Cheats(wormId, cheatId));
 }
 
 void Protocol::sendMapNames(std::vector<std::string>& allMaps) {

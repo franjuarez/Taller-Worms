@@ -15,7 +15,7 @@
 
 class GameDynamic; class GameMap; class Serializable;
 class Command; class Move; class Jump; class LaunchRocket;
-class Teleport; class HitUpclose; class ThrowGrenade;
+class Teleport; class HitUpclose; class ThrowGrenade; class Cheats;
 
 struct ClosedSocket : public std::runtime_error {
     ClosedSocket() : std::runtime_error("Socket is closed") {} 
@@ -77,6 +77,7 @@ private:
     std::shared_ptr<ThrowGrenade> receiveThrowGrenade();
     std::shared_ptr<Teleport> receiveTeoleport();
     std::shared_ptr<HitUpclose> receiveHitUpclose();
+    std::shared_ptr<Cheats> receiveCheats();
 
     void checkClosed();
 
@@ -104,6 +105,8 @@ public:
     void sendHitUpclose(HitUpclose* hitUpclose);
 
     std::shared_ptr<Command> receiveCommand();
+    void sendCheats(Cheats* cheats);
+
 
     ~Protocol();
 
