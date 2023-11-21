@@ -19,7 +19,8 @@ void Receiver::run() {
         keepTalking = false;
     } catch (const ClosedQueue& e){
         keepTalking = false;
-    } catch (...){
+    } catch (std::exception& e){
+        std::cout << "Error in receiver: " << e.what() << std::endl;
         keepTalking = false;
     }
 }

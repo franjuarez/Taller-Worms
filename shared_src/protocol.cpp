@@ -7,6 +7,7 @@
 #include "../game_src/commands/teleport.h"
 #include "../game_src/commands/hit_upclose.h"
 #include "../game_src/commands/throw_grenade.h"
+#include "../game_src/commands/cheats.h"
 
 #include "../game_src/serializable.h"
 #include "../game_src/game_dynamic.h"
@@ -49,6 +50,7 @@ void Protocol::sendDynamic(GameDynamic* dynamic) {
     sendChar(dynamic->getWinnerTeam());
     sendWorms(dynamic->getWorms());
     sendWeapons(dynamic->getExplosives());
+    sendVectorInt(dynamic->getTeamsHealth());
 }
 
 GameDynamic* Protocol::receiveDynamic() {
@@ -57,7 +59,8 @@ GameDynamic* Protocol::receiveDynamic() {
     char winnerTeam = receiveChar();
     std::vector<WormDTO> worms = receiveWorms();
     std::unordered_map<int, ExplosivesDTO> weapons = receiveWeapons();
-    return new GameDynamic(wormPlayingID, winnerTeam, worms, weapons);
+    std::vector<int> teamsHealth = receiveVectorInt();
+    return new GameDynamic(wormPlayingID, winnerTeam, worms, weapons, teamsHealth);
 }
 
 void Protocol::sendMove(Move* move) {
@@ -109,6 +112,13 @@ void Protocol::sendHitUpclose(HitUpclose* hitUpclose) {
     sendUintEight(hitUpclose->getDir());
 }
 
+void Protocol::sendCheats(Cheats* cheat) {
+    checkClosed();
+    sendUintEight(SEND_COMMAND_CHEAT);
+    sendUintEight(cheat->getID());
+    sendUintEight(cheat->getCheatID());
+}
+
 Serializable* Protocol::receiveSerializable() {
     checkClosed();
     uint8_t protocolCode = receiveUintEight();
@@ -136,6 +146,8 @@ std::shared_ptr<Command> Protocol::receiveCommand() {
         return receiveHitUpclose();
     } else if (protocolCode == SEND_COMMAND_GRENADE) {
         return receiveThrowGrenade();
+    } else if (protocolCode == SEND_COMMAND_CHEAT) {
+        return receiveCheats();
     }
 
     throw std::runtime_error("Invalid Command");
@@ -202,6 +214,13 @@ std::shared_ptr<HitUpclose> Protocol::receiveHitUpclose() {
     uint8_t wormId = receiveUintEight();
     uint8_t dir = receiveUintEight();
     return std::make_shared<HitUpclose>(HitUpclose(wormId, dir));
+}
+
+std::shared_ptr<Cheats> Protocol::receiveCheats() {
+    checkClosed();
+    uint8_t wormId = receiveUintEight();
+    uint8_t cheatId = receiveUintEight();
+    return std::make_shared<Cheats>(Cheats(wormId, cheatId));
 }
 
 void Protocol::sendMapNames(std::vector<std::string>& allMaps) {
@@ -316,6 +335,23 @@ std::vector<int> Protocol::receiveWeaponsMap() {
         weaponsMap.push_back(amunition);
     }
     return weaponsMap;
+}
+
+void Protocol::sendVectorInt(std::vector<int> vector) {
+    sendUintEight(vector.size());
+    for (int i = 0; i < vector.size(); i++) {
+        sendUintEight(vector[i]);
+    }
+}
+
+std::vector<int> Protocol::receiveVectorInt() {
+    uint8_t vectorSize = receiveUintEight();
+    std::vector<int> vector;
+    for (int i = 0; i < vectorSize; i++) {
+        int number = receiveUintEight();
+        vector.push_back(number);
+    }
+    return vector;
 }
 
 void Protocol::sendFloat(float num) {

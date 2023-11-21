@@ -19,6 +19,7 @@
 #include <chrono>
 #include <atomic>
 
+
 class GameLoop : public Thread {
 
 private: 
@@ -37,6 +38,7 @@ private:
     void changeWormPlaying(std::vector<WormDTO> worms);
 
     std::atomic<bool> playing;
+    bool cheatOn;
 public:
     GameLoop(Queue<std::shared_ptr<Command>>& commandsQueue, StatusBroadcaster& statusBroadcaster, std::shared_ptr<GameMap> gameMap, std::vector<Team> teams, bool* playing);
     ~GameLoop();

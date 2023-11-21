@@ -4,7 +4,7 @@ Worm::Worm(b2Body* body, std::unordered_set<b2Body*>& entitiesToRemove, int id, 
         Entity(body, entitiesToRemove, EntityWorm),
         id(id), team(team), health(health), 
         direction(direction), currentAction(STANDING),
-        weapons(weapons) {}
+        weapons(weapons), invincible(false) {}
 
 
 Worm::~Worm() {}
@@ -16,6 +16,9 @@ WormDTO Worm::getDTO(){
 }
 
 void Worm::takeDamage(float damage){
+    if(this->invincible){
+        return;
+    }
     this->health -= damage;
     if(this->health < 0){
         this->health = 0;
@@ -23,7 +26,21 @@ void Worm::takeDamage(float damage){
 }
 
 void Worm::die(){
+    if(this->invincible){
+        return;
+    }
     this->health = 0;
+}
+
+void Worm::addHealth(int additionalHealth){
+    this->health += additionalHealth;
+    if (this->health > 100){
+        this->health = 100;
+    }
+}
+
+void Worm::toggleInvincible(){
+    this->invincible = !this->invincible;
 }
 
 bool Worm::isDead(){
@@ -34,6 +51,16 @@ int Worm::getId(){
     return this->id;
 }
 
+void Worm::changeDirection(int direction){
+    this->direction = direction;
+}
+
+void Worm::getAllWeapons(){
+    for(int i = 0; i < this->weapons.size(); i++){
+        this->weapons[i] = INFINITE_AMUNITION;
+    }
+}
+
 void Worm::reduceAmmo(int weaponId){
     if(weaponId < 0 || weaponId >= this->weapons.size()){
         throw std::runtime_error("Invalid weapon id");
@@ -42,10 +69,6 @@ void Worm::reduceAmmo(int weaponId){
         return;
     }
     this->weapons[weaponId]--;
-}
-
-void Worm::changeDirection(int direction){
-    this->direction = direction;
 }
 
 void Worm::move(int direction){

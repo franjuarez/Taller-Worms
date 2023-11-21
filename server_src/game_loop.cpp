@@ -10,6 +10,7 @@ GameLoop::GameLoop(Queue<std::shared_ptr<Command>>& commandsQueue, StatusBroadca
 	this->wormPlayingHealth = 100;
 	this->waitingForStatic = false;
 	this->start_time = std::chrono::steady_clock::now();
+	this->cheatOn = false;
 }
 
 void GameLoop::loopLogic(int64_t elapsed_time) {
@@ -18,20 +19,23 @@ void GameLoop::loopLogic(int64_t elapsed_time) {
 
 	std::shared_ptr<Command> command;
 	while (commandsQueue.try_pop(command) && !waitingForStatic) {
-			waitingForStatic = command->executeCommand(gameWorld);
+			waitingForStatic = command->executeCommand(gameWorld, &cheatOn);
 	}
 	gameWorld.update();
 
  
 	std::shared_ptr<GameDynamic>gameDynamic(gameWorld.getGameStatus(wormPlayingID));
-	if (waitingForStatic) {
+	if (waitingForStatic && !cheatOn) {
 		gameDynamic->setWormPlayingID(NO_WORM_PLAYING);
 	}
 	
 	std::vector<WormDTO> worms = gameDynamic->getWorms();
 	int wormPlayingNewHealth;
-
+	std::vector<int> teamsHealth(teams.size(), 0);
 	for (size_t i = 0; i < worms.size(); i++) {
+
+		teamsHealth[worms[i].getTeam()] += worms[i].getHealth();
+		
 		int wormId = worms[i].getId();
 
 		if (wormId == wormPlayingID) {
@@ -44,21 +48,27 @@ void GameLoop::loopLogic(int64_t elapsed_time) {
 		}
 	}
 
-
-	int winningStatus = updateWinningStatus();
-	gameDynamic->setWinnerTeam(winningStatus);
+	gameDynamic->setTeamsHealth(teamsHealth);
+	int winnerStatus = updateWinningStatus();
+	gameDynamic->setWinnerTeam(winnerStatus);
 	statusBroadcaster.broadcast(gameDynamic);
 
 	if (wormPlayingHealth != wormPlayingNewHealth || elapsed_time > CONFIG.getTurnTime() * 1000 ) {
 		waitingForStatic = true;
 	}
 
-	if (waitingForStatic) {
+	// std::cout << "cheatON " << cheatOn  << std::endl;
+
+	if (waitingForStatic && !cheatOn) {
 		if(gameWorld.allEntitiesAtRest()) {
 			waitingForStatic = false;
 			changeWormPlaying(worms);
 		}
-	}
+	} else if (waitingForStatic && cheatOn) {
+		if (gameWorld.allEntitiesAtRest()) {
+			waitingForStatic = false;
+		}
+	} 
 
 }
 
@@ -70,7 +80,8 @@ void GameLoop::run() {
 		try {
 			loopLogic(elapsed_time);
 			usleep(RATE*1000);
-		} catch (...) {
+		} catch (std::exception& e) {
+			std::cout << "Error in game loop: " << e.what() << std::endl;
 			return;
 		}
 	}
@@ -111,6 +122,7 @@ int GameLoop::updateWinningStatus() {
 	} else if (teamsWithWorms == 1) {
 		return teamPlayingID;
 	}
+
 	return ALL_LOST;
 }
 
