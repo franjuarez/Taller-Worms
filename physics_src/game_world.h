@@ -103,11 +103,11 @@ public:
     //Cheats
     void ceroGravity();
 
-    void addHealthToWorm(int id, int health);
+    void addHealthToWorm(int id);
     
     void wormGetAllWeapons(int id);
 
-    void makeWormsInvincible();
+    void toggleInvincible();
 
 };
 

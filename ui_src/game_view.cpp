@@ -437,27 +437,23 @@ void GameView::processInput(SDL_Event event, int i) {
 			break;
 
 		case SDLK_F1:
-			//this->client.execute(new Cheats(this->currentWormId, CERO_GRAVITY, 100));
+			this->client.execute(new Cheats(this->currentWormId, ADD_HEALTH));
 			break;
 
 		case SDLK_F2:
-			this->client.execute(new Cheats(this->currentWormId, ADD_HEALTH, 100));
+			this->client.execute(new Cheats(this->currentWormId, ALL_WEAPONS));
 			break;
 
 		case SDLK_F3:
-			this->client.execute(new Cheats(this->currentWormId, ALL_WEAPONS, 100));
+			this->client.execute(new Cheats(this->currentWormId, ALL_INVINCIBLE));
 			break;
 
 		case SDLK_F4:
-			this->client.execute(new Cheats(this->currentWormId, ALL_INVINCIBLE, 100));
+			this->client.execute(new Cheats(this->currentWormId, STOP_TURN));
 			break;
 
 		case SDLK_F5:
-			this->client.execute(new Cheats(this->currentWormId, STOP_TURN, 100));
-			break;
-
-		case SDLK_F6:
-			this->client.execute(new Cheats(this->currentWormId, RENEW_TURN, 100));
+			this->client.execute(new Cheats(this->currentWormId, RENEW_TURN));
 			break;
 
 

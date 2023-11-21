@@ -3,17 +3,17 @@
 #include "../constants_game.h"
 
 
-Cheats::Cheats(int wormID, int cheatID, int health) : Command(wormID), wormID(wormID), cheatID(cheatID), health(health) {}
+Cheats::Cheats(int wormID, int cheatID) : Command(wormID), wormID(wormID), cheatID(cheatID) {}
 
 bool Cheats::executeCommand(GameWorld& gameWorld, bool* cheatOn) {
     if (cheatID == CERO_GRAVITY) {
         gameWorld.ceroGravity();
     } else if (cheatID == ADD_HEALTH) {
-        gameWorld.addHealthToWorm(wormID, health);
+        gameWorld.addHealthToWorm(wormID); //sacar de ac
     } else if (cheatID == ALL_WEAPONS) {
         gameWorld.wormGetAllWeapons(wormID);
     } else if (cheatID == ALL_INVINCIBLE) {
-        gameWorld.makeWormsInvincible();
+        gameWorld.toggleInvincible();
     } else if (cheatID == STOP_TURN) {
         *cheatOn = true;
     } else if (cheatID == RENEW_TURN) {
@@ -28,10 +28,6 @@ void Cheats::send(Protocol& protocol) {
 
 int Cheats::getID() {
     return this->wormID;
-}
-
-int Cheats::getHealth() {
-    return this->health;
 }
 
 int Cheats::getCheatID() {

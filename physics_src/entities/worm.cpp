@@ -32,12 +32,15 @@ void Worm::die(){
     this->health = 0;
 }
 
-void Worm::addHealth(int health){
-    this->health += CONFIG.getWormAdditionalHealth();
+void Worm::addHealth(int additionalHealth){
+    this->health += additionalHealth;
+    if (this->health > 100){
+        this->health = 100;
+    }
 }
 
-void Worm::makeInvincible(){
-    this->invincible = true;
+void Worm::toggleInvincible(){
+    this->invincible = !this->invincible;
 }
 
 bool Worm::isDead(){

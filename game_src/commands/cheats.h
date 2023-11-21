@@ -8,13 +8,11 @@ class Cheats : public Command {
 private:
     int wormID;
     int cheatID;
-    int health;
 public: 
-    Cheats(int wormID, int cheatID, int health);
+    Cheats(int wormID, int cheatID);
     bool executeCommand(GameWorld& gameWorld, bool* cheatOn) override;
     void send(Protocol& protocol);
     int getID();
-    int getHealth();
     int getCheatID();
     ~Cheats();
 };

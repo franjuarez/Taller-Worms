@@ -68,11 +68,11 @@ class Worm : public Entity {
     void reduceAmmo(int weaponId);
 
     //cheats
-    void addHealth(int health);
+    void addHealth(int additionalHealth);
     
     void getAllWeapons();
 
-    void makeInvincible();
+    void toggleInvincible();
 
     WormDTO getDTO();
 };

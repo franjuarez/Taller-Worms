@@ -114,7 +114,6 @@ void Protocol::sendCheats(Cheats* cheat) {
     sendUintEight(SEND_COMMAND_CHEAT);
     sendUintEight(cheat->getID());
     sendUintEight(cheat->getCheatID());
-    sendUintEight(cheat->getHealth());
 }
 
 Serializable* Protocol::receiveSerializable() {
@@ -216,8 +215,7 @@ Cheats* Protocol::receiveCheats() {
     checkClosed();
     uint8_t wormId = receiveUintEight();
     uint8_t cheatId = receiveUintEight();
-    uint8_t health = receiveUintEight();
-    return new Cheats(wormId, cheatId, health);
+    return new Cheats(wormId, cheatId);
 }
 
 void Protocol::sendMapNames(std::vector<std::string>& allMaps) {

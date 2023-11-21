@@ -268,11 +268,11 @@ void GameWorld::ceroGravity(){
     this->world->SetGravity(b2Vec2(0, 0));
 }
 
-void GameWorld::addHealthToWorm(int id, int health){
+void GameWorld::addHealthToWorm(int id){
     checkWormExists(id);
     b2Body* worm = this->worms[id];
     Worm* wormData = (Worm*) worm->GetUserData().pointer;
-    wormData->addHealth(health);
+    wormData->addHealth(CONFIG.getWormAdditionalHealth());
 }
 
 void GameWorld::wormGetAllWeapons(int id){
@@ -282,10 +282,10 @@ void GameWorld::wormGetAllWeapons(int id){
     wormData->getAllWeapons();
 }
 
-void GameWorld::makeWormsInvincible(){
+void GameWorld::toggleInvincible(){
     for(auto it = this->worms.begin(); it != this->worms.end(); ++it){
         Worm* wormData = (Worm*) it->second->GetUserData().pointer;
-        wormData->makeInvincible();
+        wormData->toggleInvincible();
     }
 }
 
