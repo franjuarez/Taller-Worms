@@ -27,6 +27,11 @@
 #define WORM_HOLDING_RG_PATH "../resources/images/hold_rg.bmp"
 #define WORM_DRAWING_BANANA_PATH "../resources/images/draw_banana.bmp"
 #define WORM_HOLDING_BANANA_PATH "../resources/images/hold_banana.bmp"
+#define WORM_DRAWING_GG_PATH "../resources/images/draw_gg.bmp"
+#define WORM_HOLDING_GG_PATH "../resources/images/hold_gg.bmp"
+#define WORM_DRAWING_MORTAR_PATH "../resources/images/draw_mortar.bmp"
+#define WORM_HOLDING_MORTAR_PATH "../resources/images/holding_mortar.bmp"
+
 
 
 #define GRAVE_PATH "../resources/images/grave1.bmp"
@@ -55,6 +60,10 @@
 
 #define ROCKET_PATH "../resources/images/rocket.bmp"
 #define EXPLOSION_PATH "../resources/images/explosion3.bmp"
+
+#define MORTAR_PROJECTILE_PATH "../resources/images/morter_projectile.bmp"
+#define PERDIGON_PROJECTILE_PATH "../resources/images/perdigon.bmp"
+
 
 
 #include "../game_src/constants_game.h"
@@ -108,6 +117,9 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 	rocketSprites.push_back(Texture(renderer, Surface(EXPLOSION_PATH).SetColorKey(true,0)));
 	rocketSprites.push_back(Texture(renderer, Surface(RGRENADE_ICON_PATH).SetColorKey(true,0)));
 	rocketSprites.push_back(Texture(renderer, Surface(BANANA_ICON_PATH).SetColorKey(true,0)));
+	rocketSprites.push_back(Texture(renderer, Surface(MORTAR_PROJECTILE_PATH).SetColorKey(true,0)));
+	rocketSprites.push_back(Texture(renderer, Surface(GGRENADE_ICON_PATH).SetColorKey(true,0)));
+	rocketSprites.push_back(Texture(renderer, Surface(PERDIGON_PROJECTILE_PATH).SetColorKey(true,0)));
 
 	//para los gusanos. EXTRAER A SU PROPIA CLASE
 	dynamicSpriteSheets.push_back(Texture(renderer,Surface(STILL_WORM_PATH).SetColorKey(true, 0)));
@@ -125,6 +137,10 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_HOLDING_RG_PATH).SetColorKey(true, 0)));
 	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_DRAWING_BANANA_PATH).SetColorKey(true, 0)));
 	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_HOLDING_BANANA_PATH).SetColorKey(true, 0)));
+	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_DRAWING_GG_PATH).SetColorKey(true, 0)));
+	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_HOLDING_GG_PATH).SetColorKey(true, 0)));
+	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_DRAWING_MORTAR_PATH).SetColorKey(true, 0)));
+	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_HOLDING_MORTAR_PATH).SetColorKey(true, 0)));
 
 	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_01).SetColorKey(true, 0).SetBlendMode(SDL_BLENDMODE_BLEND).SetAlphaMod(220)));
 	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_02).SetColorKey(true, 0).SetBlendMode(SDL_BLENDMODE_BLEND).SetAlphaMod(220)));
@@ -361,6 +377,9 @@ void GameView::clickCase(int i, int mouseX, int mouseY) {
 		this->client.execute(new LaunchRocket(BAZOOKA, currentWormId, dir, angle, 40.0f));
 		return;
 	case GGRENADE_CODE:
+		this->client.execute(new ThrowGrenade(GREEN_GRENADE,
+			this->currentWormId,
+			dir, angle, 40.0f, 3));
 		return;
 	case BAT_CODE:
 		this->wormViews.at(this->currentWormId).hit(i);
@@ -371,6 +390,7 @@ void GameView::clickCase(int i, int mouseX, int mouseY) {
 		this->client.execute(new Teleport(currentWormId, pos));		
 		return;
 	case MORTAR_CODE:
+		this->client.execute(new LaunchRocket(MORTAR, currentWormId, dir, angle, 40.0f));
 		return;
 	case RGRENADE_CODE:
 		this->client.execute(new ThrowGrenade(RED_GRENADE,
@@ -381,7 +401,6 @@ void GameView::clickCase(int i, int mouseX, int mouseY) {
 		this->client.execute(new ThrowGrenade(BANANA,
 			this->currentWormId,
 			dir, angle, 40.0f, 3));
-		std::cout << "nanana" << std::endl;
 
 		return;
 
@@ -427,6 +446,7 @@ void GameView::processInput(SDL_Event event, int i) {
 			break;
 		case SDLK_2:
 			inputState = GGRENADE_CODE;
+			this->wormViews.at(currentWormId).drawGreenGrenade(i);
 			break;
 		case SDLK_3:
 			inputState = BAT_CODE;
@@ -437,6 +457,7 @@ void GameView::processInput(SDL_Event event, int i) {
 			break;
 		case SDLK_5:
 			inputState = MORTAR_CODE;
+			this->wormViews.at(currentWormId).drawMortar(i);
 			break;
 		case SDLK_6:
 			inputState = RGRENADE_CODE;

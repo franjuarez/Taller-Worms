@@ -30,7 +30,9 @@ public:
 	int shoot(int i);
 	void toDefault(int i);
 	void drawBanana(int i);
+	void drawGreenGrenade(int i);
 	void drawRedGrenade(int i);
+	void drawMortar(int i);
 	void drawBazoka(int i);
 	void drawAxe(int i);
 	void jump(int i);
