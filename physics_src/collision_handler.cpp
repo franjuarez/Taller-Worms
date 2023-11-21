@@ -1,54 +1,75 @@
 #include "collision_handler.h"
 #include <iostream>
-
 CollisionHandler::CollisionHandler(){
-    this->beginCollisionMap[EntityWorm] = &Entity::beginCollisionWithWorm;
-    this->beginCollisionMap[EntityBeam] = &Entity::beginCollisionWithBeam;
-    this->beginCollisionMap[EntityWater] = &Entity::beginCollisionWithWater;
-    this->beginCollisionMap[EntityDelayedProjectile] = &Entity::beginCollisionWithProjectile;
-    this->beginCollisionMap[EntityInstantProjectile] = &Entity::beginCollisionWithProjectile;
+    this->beginCollisionArr[EntityWorm] = &Entity::beginCollisionWithWorm;
+    this->beginCollisionArr[EntityBeam] = &Entity::beginCollisionWithBeam;
+    this->beginCollisionArr[EntityWater] = &Entity::beginCollisionWithWater;
+    this->beginCollisionArr[EntityInstantProjectile] = &Entity::beginCollisionWithProjectile;
+    this->beginCollisionArr[EntityDelayedProjectile] = &Entity::beginCollisionWithProjectile;
 
-    this->preSolveCollisionMap[EntityWorm] = &Entity::preSolveCollisionWithWorm;
-    this->preSolveCollisionMap[EntityBeam] = &Entity::preSolveCollisionWithBeam;
+    this->preSolveCollisionArr[EntityWorm] = &Entity::preSolveCollisionWithWorm;
+    this->preSolveCollisionArr[EntityBeam] = &Entity::preSolveCollisionWithBeam;
+    this->preSolveCollisionArr[EntityWater] = nullptr;
+    this->preSolveCollisionArr[EntityInstantProjectile] = nullptr;
+    this->preSolveCollisionArr[EntityDelayedProjectile] = nullptr;
 
-    this->postSolveCollisionMap[EntityWorm] = &Entity::postSolveCollisionWithWorm;
-    this->postSolveCollisionMap[EntityBeam] = &Entity::postSolveCollisionWithBeam;
+    this->postSolveCollisionArr[EntityWorm] = &Entity::postSolveCollisionWithWorm;
+    this->postSolveCollisionArr[EntityBeam] = &Entity::postSolveCollisionWithBeam;
+    this->postSolveCollisionArr[EntityWater] = nullptr;
+    this->postSolveCollisionArr[EntityInstantProjectile] = nullptr;
+    this->postSolveCollisionArr[EntityDelayedProjectile] = nullptr;
 
-    this->endCollisionMap[EntityBeam] = &Entity::endCollisionWithBeam;
-    this->endCollisionMap[EntityWorm] = &Entity::endCollisionWithWorm;
+    this->endCollisionArr[EntityWorm] = &Entity::endCollisionWithWorm;
+    this->endCollisionArr[EntityBeam] = &Entity::endCollisionWithBeam;
+    this->endCollisionArr[EntityWater] = nullptr;
+    this->endCollisionArr[EntityInstantProjectile] = nullptr;
+    this->endCollisionArr[EntityDelayedProjectile] = nullptr;
 }
 
 void CollisionHandler::handleBeginCollision(Entity* bodyA, Entity* bodyB, b2Contact* contact) {
     EntityType typeA = bodyA->getEntityType();
     EntityType typeB = bodyB->getEntityType();
 
-    if (this->beginCollisionMap.find(typeA) != this->beginCollisionMap.end()) {
-        (bodyB->*beginCollisionMap[typeA])(bodyA, contact);
-    } else{
-        throw std::runtime_error("Colision BEGIN no manejada");
+    if (typeA >= EntityCount || typeB >= EntityCount) {
+        throw std::runtime_error("Colision no manejada");
+    }
+    if (this->beginCollisionArr[typeA] != nullptr) {
+        (bodyB->*beginCollisionArr[typeA])(bodyA, contact);
     }
 }
 
 void CollisionHandler::handlePreSolveCollision(Entity* bodyA, Entity* bodyB, b2Contact* contact, const b2Manifold* oldManifold) {
     EntityType typeA = bodyA->getEntityType();
     EntityType typeB = bodyB->getEntityType();
-    if (this->preSolveCollisionMap.find(typeA) != this->preSolveCollisionMap.end()) {
-        (bodyB->*preSolveCollisionMap[typeA])(bodyA, contact, oldManifold);
+
+    if (typeA >= EntityCount || typeB >= EntityCount) {
+        throw std::runtime_error("Colision no manejada");
+    }
+    if (this->preSolveCollisionArr[typeA] != nullptr) {
+        (bodyB->*preSolveCollisionArr[typeA])(bodyA, contact, oldManifold);
     }
 }
 
 void CollisionHandler::handlePostSolveCollision(Entity* bodyA, Entity* bodyB, b2Contact* contact, const b2ContactImpulse* impulse) {
     EntityType typeA = bodyA->getEntityType();
     EntityType typeB = bodyB->getEntityType();
-    if (this->postSolveCollisionMap.find(typeA) != this->postSolveCollisionMap.end()) {
-        (bodyB->*postSolveCollisionMap[typeA])(bodyA, contact, impulse);
+
+    if (typeA >= EntityCount || typeB >= EntityCount) {
+        throw std::runtime_error("Colision no manejada");
+    }
+    if(this->postSolveCollisionArr[typeA] != nullptr){
+        (bodyB->*postSolveCollisionArr[typeA])(bodyA, contact, impulse);
     }
 }
 
 void CollisionHandler::handleEndCollision(Entity* bodyA, Entity* bodyB, b2Contact* contact) {
     EntityType typeA = bodyA->getEntityType();
     EntityType typeB = bodyB->getEntityType();
-    if (this->endCollisionMap.find(typeA) != this->endCollisionMap.end()) {
-        (bodyB->*endCollisionMap[typeA])(bodyA, contact);
+
+    if (typeA >= EntityCount || typeB >= EntityCount) {
+        throw std::runtime_error("Colision no manejada");
+    }
+    if(this->endCollisionArr[typeA] != nullptr){
+        (bodyB->*endCollisionArr[typeA])(bodyA, contact);
     }
 }
