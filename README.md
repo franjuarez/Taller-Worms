@@ -42,7 +42,8 @@ Una vez hecho esto compilar como fue dicho arriba y usar los ejecutables client 
 
 * `Flecha Izquierda`: Mueve el gusano a la izquierda
 * `Flecha Derecha`: Mueve el gusano a la derecha
-* `Numeros`: Elije el arma que el gusano usara, basandose en el orden del HUD.
+* `Rueda Mouse`: Elije el arma que el gusano usara, basandose en el orden del HUD.
+* `Numeros`: Modifica el tiempo de explosion de las granadas.
   * `Mouse`: Con este se puede elegir el angulo del disparo, con el click se dispara.
 * `Enter`: Salto para adelante
 * `Backspace`: Salto para atras
