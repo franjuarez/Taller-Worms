@@ -437,7 +437,7 @@ void GameView::processInput(SDL_Event event, int i) {
 			break;
 
 		case SDLK_F1:
-			this->client.execute(new Cheats(this->currentWormId, CERO_GRAVITY, 100));
+			//this->client.execute(new Cheats(this->currentWormId, CERO_GRAVITY, 100));
 			break;
 
 		case SDLK_F2:
