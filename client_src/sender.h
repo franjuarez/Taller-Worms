@@ -13,10 +13,10 @@ class Sender : public Thread {
 
 private:
     Protocol& protocol;
-    Queue<Command*>& commandsQueue;
+    Queue<std::shared_ptr<Command>>& commandsQueue;
     bool& keepTalking;
 public:
-    Sender(Protocol& protocol, Queue<Command*>& q, bool& keepTalking);
+    Sender(Protocol& protocol, Queue<std::shared_ptr<Command>>& q, bool& keepTalking);
     void run() override;
     ~Sender();
 };

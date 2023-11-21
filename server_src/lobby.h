@@ -19,7 +19,7 @@ private:
     int numberOfPlayers;
     std::string mapName;
     std::vector<Player*> players;
-    Queue<Command*> commandQueue;
+    Queue<std::shared_ptr<Command>> commandQueue;
     void reapDead();
     void killAll();
 // should it have the game thread queue?

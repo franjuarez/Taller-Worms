@@ -17,11 +17,11 @@ class Client {
 private:
 	Protocol protocol;
 	int team;
-	Queue<Serializable*> gameStatusQueue;
-	Queue<Command*> commandsQueue;
+	Queue<std::shared_ptr<Serializable>> gameStatusQueue;
+	Queue<std::shared_ptr<Command>> commandsQueue;
 	Sender sender;
 	Receiver receiver;
-	Serializable* lastGameStatus;
+	std::shared_ptr<Serializable> lastGameStatus;
 	bool keepTalking = true;
 	
 public:
@@ -35,9 +35,10 @@ public:
 	
 	//game funciona como monitor y para empaquetar todo lo que se tiene que graficar
 
-	Serializable* getGameStatus();
+	std::shared_ptr<Serializable> getGameStatus();
+	
 
-	void execute(Command* command);
+	void execute(std::shared_ptr<Command> command);
 
 	void start();
 

@@ -51,7 +51,7 @@ void WormDTO::addHealth(int newHealth) {
 
 
 WormDTO& WormDTO::operator=(const WormDTO& other) {
-    if (this != &other) { // Check for self-assignment
+    if (this != &other) { 
         id = other.id;
         dir = other.dir;
         team = other.team;

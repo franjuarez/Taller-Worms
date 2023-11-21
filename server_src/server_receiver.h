@@ -9,11 +9,11 @@ class ServerReceiver : public Thread {
 
 private:
     Protocol& protocol;
-    Queue<Command*>& commandsQueue;
+    Queue<std::shared_ptr<Command>>& commandsQueue;
     bool& talking;
     // has the only queue of the game thread :)
 public:
-    ServerReceiver(Protocol& protocol, Queue<Command*>& commandsQueue, bool& talking);
+    ServerReceiver(Protocol& protocol, Queue<std::shared_ptr<Command>>& commandsQueue, bool& talking);
     ~ServerReceiver();
     void run() override;
 

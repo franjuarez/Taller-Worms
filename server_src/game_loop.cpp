@@ -4,7 +4,7 @@
 
 #define RATE (1000.f / CONFIG.getFps())
 
-GameLoop::GameLoop(Queue<Command*>& commandsQueue, StatusBroadcaster& statusBroadcaster, GameMap* gameMap, std::vector<Team> teams, bool* playing)
+GameLoop::GameLoop(Queue<std::shared_ptr<Command>>& commandsQueue, StatusBroadcaster& statusBroadcaster, std::shared_ptr<GameMap> gameMap, std::vector<Team> teams, bool* playing)
 : commandsQueue(commandsQueue), statusBroadcaster(statusBroadcaster), gameWorld(gameMap), teams(teams), playing(playing) {
 	this->teamPlayingID = 0;
 	this->wormPlayingHealth = 100;
@@ -16,14 +16,14 @@ void GameLoop::loopLogic(int64_t elapsed_time) {
 // se encarga de los turnos y que jugador esta al momento.
 // es el que se encarga de que gusano esta al momento
 
-	Command* command;
+	std::shared_ptr<Command> command;
 	while (commandsQueue.try_pop(command) && !waitingForStatic) {
 			waitingForStatic = command->executeCommand(gameWorld);
 	}
 	gameWorld.update();
 
  
-	GameDynamic* gameDynamic = gameWorld.getGameStatus(wormPlayingID);
+	std::shared_ptr<GameDynamic>gameDynamic(gameWorld.getGameStatus(wormPlayingID));
 	if (waitingForStatic) {
 		gameDynamic->setWormPlayingID(NO_WORM_PLAYING);
 	}
