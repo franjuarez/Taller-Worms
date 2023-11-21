@@ -1,9 +1,10 @@
 #include "hit_upclose.h"
 #include "../constants_game.h"
 
-HitUpclose::HitUpclose(int wormID, int dir) : Command(NO_TEAM_NEEDED, wormID), wormID(wormID), dir(dir) {}
+HitUpclose::HitUpclose(int wormID, int dir) : Command(wormID), wormID(wormID), dir(dir) {}
 
-bool HitUpclose::executeCommand(GameWorld& gameWorld) {
+bool HitUpclose::executeCommand(GameWorld& gameWorld, bool* cheatOn) {
+    *cheatOn = *cheatOn;
     gameWorld.wormHitWithBat(wormID, dir);
     return true;
 }

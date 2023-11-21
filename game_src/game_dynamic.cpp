@@ -1,10 +1,10 @@
 #include "game_dynamic.h"
 
 GameDynamic::GameDynamic(int wormPlayingID, std::vector<WormDTO>worms, std::unordered_map<int, ExplosivesDTO> explosives)
-: Serializable() ,wormPlayingID(wormPlayingID), winnerTeam(PLAYING), worms(worms), explosives(explosives) {}
+: Serializable() ,wormPlayingID(wormPlayingID), worms(worms), explosives(explosives), teamsHealth() {}
 
-GameDynamic::GameDynamic(int wormPlayingID, int winnerTeam, std::vector<WormDTO>worms, std::unordered_map<int, ExplosivesDTO> explosives)
-: Serializable() ,wormPlayingID(wormPlayingID), winnerTeam(winnerTeam), worms(worms), explosives(explosives) {}
+GameDynamic::GameDynamic(int wormPlayingID, int winnerTeam, std::vector<WormDTO>worms, std::unordered_map<int, ExplosivesDTO> explosives, std::vector<int> teamsHealth)
+: Serializable() ,wormPlayingID(wormPlayingID), winnerTeam(winnerTeam), worms(worms), explosives(explosives), teamsHealth(teamsHealth) {}
 
 void GameDynamic::send(Protocol& protocol) {
     protocol.sendDynamic(this);
@@ -36,6 +36,14 @@ int GameDynamic::getWinnerTeam() {
 
 void GameDynamic::setWinnerTeam(int winnerTeam) {
     this->winnerTeam = winnerTeam;
+}
+
+void GameDynamic::setTeamsHealth(std::vector<int> teamsHealth) {
+    this->teamsHealth = teamsHealth;
+}
+
+std::vector<int> GameDynamic::getTeamsHealth() {
+    return this->teamsHealth;
 }
 
 GameDynamic& GameDynamic::operator=(const GameDynamic& other) {

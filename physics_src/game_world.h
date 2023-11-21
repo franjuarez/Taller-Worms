@@ -61,6 +61,8 @@ private:
 
     void updateDelayedProjectiles(float deltaTime);
 
+    void removeWorm(b2Body* worm);
+
     void removeProjectile(b2Body* projectile);
     
     void removeEntities();
@@ -97,6 +99,15 @@ public:
     GameDynamic* getGameStatus(int id);
 
     ~GameWorld();
+
+    //Cheats
+
+    void addHealthToWorm(int id);
+    
+    void wormGetAllWeapons(int id);
+
+    void toggleInvincible();
+
 };
 
 #endif

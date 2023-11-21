@@ -79,8 +79,8 @@ void Lobby::run() {
 
             reapDead();
             players.push_back(player);
-        } catch (...) {
-            // pasan mas cosas 
+        } catch (std::exception& e) {
+            std::cout << "Error in lobby: " << e.what() << std::endl;
         }
     }
     // momento eleccion Mapa
@@ -91,7 +91,9 @@ void Lobby::run() {
     gameLoop.start();
 
 
-    while (*playing) {}
+    while (*playing) {
+        reapDead();
+    }
 
     loopActive = false;
 
@@ -100,7 +102,17 @@ void Lobby::run() {
     gameLoop.join();
 }
 
-void Lobby::reapDead() {}
+void Lobby::reapDead() {
+    players.remove_if([](Player* player) {
+        if (!player->isAlive()) {
+            player->join();
+            delete player;
+            return true;
+        } else {
+            return false;
+        }
+    });
+}
 
 void Lobby::killAll() {
     for (auto& player : players ) {

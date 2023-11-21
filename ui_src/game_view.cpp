@@ -12,7 +12,8 @@
 #define WORM_LIFE_FONT_PATH "../resources/fonts/lazy.ttf"
 
 #define BACKGROUND_PATH "../resources/images/background.png"
-#define BEAM_PATH "../resources/images/grdl8.png"	
+#define LOSING_SCREEN_PATH "../resources/images/Dark_Souls_You_Died_Screen_-_Completely_Black_Screen_0-2_screenshot.png"
+#define BEAM_PATH "../resources/images/grdl8.png"
 #define STILL_WORM_PATH "../resources/images/stillworm.bmp"
 #define JUMPING_WORM_PATH "../resources/images/worm_jump.bmp"
 #define WALKING_WORM_PATH "../resources/images/worm_walk.bmp"
@@ -33,6 +34,7 @@
 #define WORM_HOLDING_MORTAR_PATH "../resources/images/holding_mortar.bmp"
 #define WORM_DRAWING_TP_PATH "../resources/images/drawing_tp.bmp"
 #define WORM_HOLDING_TP_PATH "../resources/images/holding_tp.bmp"
+#define WWINER_ANIMATION_PATH "../resources/images/wwinner.bmp"
 
 
 
@@ -75,6 +77,7 @@
 #include "../game_src/commands/teleport.h"
 #include "../game_src/commands/hit_upclose.h"
 #include "../game_src/commands/throw_grenade.h"
+#include "../game_src/commands/cheats.h"
 #include "../game_src/constants_game.h"
 
 
@@ -92,6 +95,7 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 		sound(MUSIC_PATH), // OGG sound file
 		wormsFont(WORM_LIFE_FONT_PATH, 18),
 		backgroundSprite(renderer, BACKGROUND_PATH),
+		losingScreen(renderer, LOSING_SCREEN_PATH),
 		beamSprite(renderer, BEAM_PATH),
 		currentWorm(-1, 0, 0, 100, Position(0,0), {}), //-1 para que se sepa que en realidad no hay alguien con turno
 		camX(0), camY(0), mouseX(0), mouseY(0), mouseHandler(camX, camY) {
@@ -146,6 +150,9 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_HOLDING_MORTAR_PATH).SetColorKey(true, 0)));
 	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_DRAWING_TP_PATH).SetColorKey(true, 0)));
 	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_HOLDING_TP_PATH).SetColorKey(true, 0)));
+	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WWINER_ANIMATION_PATH).SetColorKey(true, 0)));
+
+
 
 	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_01).SetColorKey(true, 0).SetBlendMode(SDL_BLENDMODE_BLEND).SetAlphaMod(220)));
 	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_02).SetColorKey(true, 0).SetBlendMode(SDL_BLENDMODE_BLEND).SetAlphaMod(220)));
@@ -171,6 +178,10 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 	hudTextures.push_back(Texture(renderer, Surface(BANANA_ICON_PATH).SetColorKey(true, 0)));
 
 	this->currentWormId = -1;
+	this->bombTimer = 3;
+	this->inputState = 0;
+	this->winnerTeam = -1;
+
 
 }
 
@@ -203,6 +214,7 @@ void GameView::updateEntities(int i) {
 	this->currentWormId = gs->getWormPlayingID();
 	if (oldid != currentWormId) {
 		inputState = 0;
+		//bombTimer = 3;
 		if (oldid != -1) { //si se termino el turno
 			wormViews.at(oldid).toDefault(0);
 		}
@@ -214,6 +226,8 @@ void GameView::updateEntities(int i) {
 			this->currentWorm = worm;
 		}
 	}
+
+	this->winnerTeam = gs->getWinnerTeam();
 
 	/*
 	aca deberia por cada cohete recibido, verificar si esta en mis cohetes, si esta
@@ -263,7 +277,6 @@ void GameView::drawProjectiles(int i) {
 			it->second.explode(i);
 		}
 		it->second.display(i, renderer, camX, camY);
-
 	}
 }
 
@@ -321,14 +334,59 @@ void GameView::drawHud(int i) {
 		renderer.Copy(hudTextures[i+1], NullOpt, to);
 		if (weapons[i] == 0)
 			renderer.FillRect(to);
+		if (inputState != 0 && inputState == (i + 1)) {
+			renderer.SetDrawColor(255,255,255,240);
+			renderer.DrawRect(to);
+			renderer.SetDrawColor(15,15,15,175);
+
+		}
 	}
+}
+
+void GameView::drawWinningScreen(int i) {
+	renderer.Clear();
+	renderer.Copy(backgroundSprite, NullOpt, NullOpt);
+	drawBeams(i);
+
+	for (auto it = wormViews.begin(); it != wormViews.end(); it++) {
+		//confirmar que esto esta trabajando inplace y no hace copia
+		it->second.notifyWinner(winnerTeam);
+		it->second.display(i, this->renderer, camX, camY, mouseX, mouseY);
+	}
+
+	renderer.Present();
 
 
 }
 
+void GameView::drawLosingScreen(int i) {
+	renderer.Clear();
+	renderer.Copy(losingScreen, NullOpt, NullOpt);
+	renderer.Present();
+}
+
+
+
 void GameView::draw(int i) {
 
 	updateEntities(i); 
+	if (this->winnerTeam == -1) {
+		drawGame(i);
+		return;
+	}
+
+	if (this->winnerTeam  >= 0) {
+		drawWinningScreen(i);
+		return;
+	}
+
+	drawLosingScreen(i);
+}
+
+
+void GameView::drawGame(int i) {
+
+	
 	mouseHandler.updateCam();
 
 	renderer.Clear();
@@ -384,7 +442,7 @@ void GameView::clickCase(int i, int mouseX, int mouseY) {
 	case GGRENADE_CODE:
 		this->client.execute(std::make_shared<ThrowGrenade>(ThrowGrenade(GREEN_GRENADE,
 			this->currentWormId,
-			dir, angle, 40.0f, 3)));
+			dir, angle, 40.0f, bombTimer)));
 		return;
 	case BAT_CODE:
 		this->wormViews.at(this->currentWormId).hit(i);
@@ -400,12 +458,12 @@ void GameView::clickCase(int i, int mouseX, int mouseY) {
 	case RGRENADE_CODE:
 		this->client.execute(std::make_shared<ThrowGrenade>(ThrowGrenade(RED_GRENADE,
 			this->currentWormId,
-			dir, angle, 40.0f, 3)));
+			dir, angle, 40.0f, bombTimer)));
 			return;
 	case BANANA_CODE:
 		this->client.execute(std::make_shared<ThrowGrenade>(ThrowGrenade(BANANA,
 			this->currentWormId,
-			dir, angle, 40.0f, 3)));
+			dir, angle, 40.0f, bombTimer)));
 		return;
 
 	default:
@@ -425,6 +483,47 @@ void GameView::processInput(SDL_Event event, int i) {
 
 		clickCase(i, mouseX, mouseY);
 	}
+	if (event.type == SDL_MOUSEWHEEL){
+		if (event.wheel.y > 0) {
+			inputState = (inputState + 1) % 8;
+		} else if( event.wheel.y < 0) {
+			inputState--;
+			if (inputState < 0) {
+				inputState = 7;
+			}
+		}
+
+		switch (inputState) {
+	case 0:
+		this->wormViews.at(currentWormId).toDefault(i);
+	case BAZOOKA_CODE:
+		this->wormViews.at(currentWormId).drawBazoka(i);
+		return;
+	case GGRENADE_CODE:
+		this->wormViews.at(currentWormId).drawGreenGrenade(i);
+		return;
+	case BAT_CODE:
+		wormViews.at(currentWormId).drawAxe(i);
+		return;
+	case TP_CODE:
+		wormViews.at(currentWormId).drawTp(i);
+		return;
+	case MORTAR_CODE:
+		this->wormViews.at(currentWormId).drawMortar(i);
+		return;
+	case RGRENADE_CODE:
+		this->wormViews.at(currentWormId).drawRedGrenade(i);
+		return;
+	case BANANA_CODE:
+		this->wormViews.at(currentWormId).drawBanana(i);
+		return;
+
+	default:
+		return;
+	}
+
+
+	}
 
 	if (event.type == SDL_KEYDOWN) {
 		switch(event.key.keysym.sym) {
@@ -440,34 +539,81 @@ void GameView::processInput(SDL_Event event, int i) {
 		case SDLK_RIGHT:
 			moveCase(i, RIGHT_DIR);
 			break;
-		case SDLK_1: //podria ser un mapa pero seria igual de feo en el constructor
+
+		case SDLK_0:
+			bombTimer = 0;
+			break; //no es un bug, es una feature
+		case SDLK_1:
+			bombTimer = 1;
+			break;
+		case SDLK_2:
+			bombTimer = 2;
+			break;
+		case SDLK_3:
+			bombTimer = 3;
+			break;
+		case SDLK_4:
+			bombTimer = 4;
+			break;
+		case SDLK_5:
+			bombTimer = 5;
+			break;
+
+		case SDLK_e:
+			this->wormViews.at(currentWormId).toDefault(i);
+			break;
+		case SDLK_r: //podria ser un mapa pero seria igual de feo en el constructor
 			inputState = BAZOOKA_CODE;
 			this->wormViews.at(currentWormId).drawBazoka(i);
 			break;
-		case SDLK_2:
+		case SDLK_t:
 			inputState = GGRENADE_CODE;
 			this->wormViews.at(currentWormId).drawGreenGrenade(i);
 			break;
-		case SDLK_3:
+		case SDLK_y:
 			inputState = BAT_CODE;
 			wormViews.at(currentWormId).drawAxe(i);
 			break;
-		case SDLK_4:
+		case SDLK_u:
 			inputState = TP_CODE;
 			wormViews.at(currentWormId).drawTp(i);
 			break;
-		case SDLK_5:
+		case SDLK_i:
 			inputState = MORTAR_CODE;
 			this->wormViews.at(currentWormId).drawMortar(i);
 			break;
-		case SDLK_6:
+		case SDLK_o:
 			inputState = RGRENADE_CODE;
 			this->wormViews.at(currentWormId).drawRedGrenade(i);
 			break;
-		case SDLK_7:
+		case SDLK_p:
 			inputState = BANANA_CODE;
 			this->wormViews.at(currentWormId).drawBanana(i);
 			break;
+
+
+		case SDLK_F1:
+			this->client.execute(std::make_shared<Cheats>(Cheats(this->currentWormId, ADD_HEALTH)));
+			break;
+
+		case SDLK_F2:
+			this->client.execute(std::make_shared<Cheats>(Cheats(this->currentWormId, ALL_WEAPONS)));
+			break;
+
+		case SDLK_F3:
+			this->client.execute(std::make_shared<Cheats>(Cheats(this->currentWormId, ALL_INVINCIBLE)));
+			break;
+
+		case SDLK_F4:
+			this->client.execute(std::make_shared<Cheats>(Cheats(this->currentWormId, STOP_TURN)));
+			break;
+
+		case SDLK_F5:
+			this->client.execute(std::make_shared<Cheats>(Cheats(this->currentWormId, RENEW_TURN)));
+			break;
+
+
+		std::cout << inputState << std::endl;
 		}
 	}
 }
@@ -491,38 +637,9 @@ void GameView::start() {
 			if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_q) {
 				return;
 			}
-
 			processInput(event, i);
-        	////if (this->currentWormId != this->team) { //<- es la linea que va, uso otra para facilitar testeo
-
-			//if (this->currentWormId == -1){
-        	//	//ignoro el input si no es del equipo actual
-        	//	continue;
-        	//}
-            //if (event.type == SDL_KEYDOWN) {
-            //    if(event.key.keysym.sym == SDLK_RETURN)
-            //    	returnKeyCase(i);
-            //    
-			//	else if(event.key.keysym.sym == SDLK_BACKSPACE) 
-            //    	backspaceKeyCase(i);
-            //    
-            //    else if (event.key.keysym.sym == SDLK_LEFT)
-            //        moveCase(i, LEFT_DIR);
-            //    else if (event.key.keysym.sym == SDLK_RIGHT) 
-            //        moveCase(i, RIGHT_DIR);
-            //    else if (event.key.keysym.sym == SDLK_SPACE)
-			//		this->client.execute(new LaunchRocket(BAZOOKA, currentWormId, this->currentWorm.getDir(), this->rocketAngle, 40.0f));
-			//	else if (event.key.keysym.sym == SDLK_UP)
-			//		this->rocketAngle += 5;
-			//	else if (event.key.keysym.sym == SDLK_DOWN)
-			//		this->rocketAngle -= 5;
-			//	else if (event.key.keysym.sym == SDLK_b)
-			//		bCase(i);		
-            //} else if(event.type == SDL_MOUSEBUTTONDOWN) {
-			//	clickCase(i, mouseX, mouseY);
-			//}
-
 		}
+
 		draw(i);
 
 		int t2 = SDL_GetTicks();

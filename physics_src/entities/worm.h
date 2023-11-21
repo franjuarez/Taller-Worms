@@ -19,7 +19,9 @@ class Worm : public Entity {
     int team;
     float health;
     int direction;
+    action currentAction;
     std::vector<int> weapons;
+    bool invincible;
 
     void moveOnWalkableBeam(b2Body* worm, b2Vec2 normal);
 
@@ -27,7 +29,6 @@ class Worm : public Entity {
 
 
     public:
-    action currentAction;
     Worm(b2Body* body, std::unordered_set<b2Body*>& entitiesToRemove, int id, int team, int direction, float health, std::vector<int> weapons);
 
     virtual void beginCollisionWithWater(Entity* otherBody, b2Contact* contact) override;
@@ -54,7 +55,7 @@ class Worm : public Entity {
     int getId();
 
     void changeDirection(int direction);
-    
+
     void move(int direction);
 
     void jumpForward();
@@ -69,6 +70,12 @@ class Worm : public Entity {
 
     void reduceAmmo(int weaponId);
 
+    //cheats
+    void addHealth(int additionalHealth);
+    
+    void getAllWeapons();
+
+    void toggleInvincible();
 
     WormDTO getDTO();
 };

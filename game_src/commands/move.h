@@ -12,7 +12,7 @@ private:
     int dir;
 public:
     Move(int wormID, int dir);
-    bool executeCommand(GameWorld& gameWorld) override;
+    bool executeCommand(GameWorld& gameWorld, bool* cheatOn) override;
     void send(Protocol& protocol);
     int getID();
     int getDir();
