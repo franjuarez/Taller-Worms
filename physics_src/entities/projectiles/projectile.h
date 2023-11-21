@@ -30,6 +30,8 @@ public:
 
     virtual ExplosivesDTO getDTO() = 0;
 
+    int getId();
+
     ~Projectile();
 };
 

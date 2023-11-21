@@ -15,6 +15,10 @@ ExplosivesDTO Projectile::getDTO(int projectileType){
     return dto;
 }
 
+int Projectile::getId(){
+    return this->id;
+}
+
 void Projectile::leaveFragments(){ }
 
 void Projectile::explode(){

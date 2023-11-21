@@ -264,32 +264,14 @@ bool GameWorld::teleportWorm(int id, float x, float y){
     return false;
 }
 
-void GameWorld::removeWorm(b2Body* worm){
-    bool erased = false;
-    for(auto it = this->worms.begin(); it != this->worms.end(); ++it){
-        if(it->second == worm){
-            this->worms.erase(it);
-            erased = true;
-            break;
-        }
-    }
-    if(!erased){
-        throw std::invalid_argument("Worm not found");
-    }
-}
-
 void GameWorld::removeProjectile(b2Body* projectile){
-    bool erased = false;
-    for(auto it = this->projectiles.begin(); it != this->projectiles.end(); ++it){
-        if(it->second == projectile){
-            this->projectiles.erase(it);
-            erased = true;
-            break;
-        }
+    Projectile* projectileData = (Projectile*) projectile->GetUserData().pointer;
+    int id = projectileData->getId();
+    auto it = this->projectiles.find(id);
+    if(it == this->projectiles.end()){
+        throw std::runtime_error("Projectile does not exist");
     }
-    if(!erased){
-        throw std::invalid_argument("Projectile not found");
-    }
+    this->projectiles.erase(id);
 }
 
 void GameWorld::removeEntities(){
