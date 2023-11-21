@@ -12,12 +12,15 @@ void ServerSender::run() {
             std::shared_ptr<Serializable> gameStatus = playerQueue.pop();
             gameStatus->send(protocol);
         }   
-    } catch (ClosedQueue& e) {
-        std::cout << "ServerSender: Cerrada la queue\n";
-    } catch (ClosedSocket& e) {
-        std::cout << "ServerSender: cerrado el socket\n";
-    } catch (std::exception& e) {
-        std::cout << "error inesperado! " << e.what() << std::endl;
+    } catch (const ClosedSocket& e){
+        std::cout << "Sender: Se ha cerrado la conexion\n";
+        talking = false;
+    } catch (const ClosedQueue& e){
+        std::cout << "Sender: Se ha cerrado la queue\n";
+        talking = false;
+    } catch (std::exception& e){
+        std::cout << "Error in receiver: " << e.what() << std::endl;
+        talking = false;
     }
 }
 
