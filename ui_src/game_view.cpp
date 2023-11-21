@@ -62,6 +62,7 @@
 #include "../game_src/commands/teleport.h"
 #include "../game_src/commands/hit_upclose.h"
 #include "../game_src/commands/throw_grenade.h"
+#include "../game_src/commands/cheats.h"
 #include "../game_src/constants_game.h"
 
 
@@ -446,7 +447,6 @@ void GameView::processInput(SDL_Event event, int i) {
 		case SDLK_F3:
 			this->client.execute(new Cheats(this->currentWormId, ALL_WEAPONS, 100));
 			break;
-
 
 		case SDLK_F4:
 			this->client.execute(new Cheats(this->currentWormId, ALL_INVINCIBLE, 100));

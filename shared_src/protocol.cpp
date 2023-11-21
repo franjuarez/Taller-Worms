@@ -143,6 +143,8 @@ Command* Protocol::receiveCommand() {
         return receiveHitUpclose();
     } else if (protocolCode == SEND_COMMAND_GRENADE) {
         return receiveThrowGrenade();
+    } else if (protocolCode == SEND_COMMAND_CHEAT) {
+        return receiveCheats();
     }
 
     throw std::runtime_error("Invalid Command");
