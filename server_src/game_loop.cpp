@@ -30,8 +30,11 @@ void GameLoop::loopLogic(int64_t elapsed_time) {
 	
 	std::vector<WormDTO> worms = gameDynamic->getWorms();
 	int wormPlayingNewHealth;
-
+	std::vector<int> teamsHealth(teams.size(), 0);
 	for (size_t i = 0; i < worms.size(); i++) {
+
+		teamsHealth[worms[i].getTeam()] += worms[i].getHealth();
+		
 		int wormId = worms[i].getId();
 
 		if (wormId == wormPlayingID) {
@@ -44,9 +47,9 @@ void GameLoop::loopLogic(int64_t elapsed_time) {
 		}
 	}
 
-
-	int winningStatus = updateWinningStatus();
-	gameDynamic->setWinnerTeam(winningStatus);
+	gameDynamic->setTeamsHealth(teamsHealth);
+	int winnerStatus = updateWinningStatus();
+	gameDynamic->setWinnerTeam(winnerStatus);
 	statusBroadcaster.broadcast(gameDynamic);
 
 	if (wormPlayingHealth != wormPlayingNewHealth || elapsed_time > CONFIG.getTurnTime() * 1000 ) {
@@ -70,7 +73,8 @@ void GameLoop::run() {
 		try {
 			loopLogic(elapsed_time);
 			usleep(RATE*1000);
-		} catch (...) {
+		} catch (std::exception& e) {
+			std::cout << "Error in game loop: " << e.what() << std::endl;
 			return;
 		}
 	}
@@ -111,6 +115,7 @@ int GameLoop::updateWinningStatus() {
 	} else if (teamsWithWorms == 1) {
 		return teamPlayingID;
 	}
+
 	return ALL_LOST;
 }
 

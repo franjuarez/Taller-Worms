@@ -79,8 +79,8 @@ void Lobby::run() {
 
             reapDead();
             players.push_back(player);
-        } catch (...) {
-            // pasan mas cosas 
+        } catch (std::exception& e) {
+            std::cout << "Error in lobby: " << e.what() << std::endl;
         }
     }
     // momento eleccion Mapa

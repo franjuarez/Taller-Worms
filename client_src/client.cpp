@@ -23,8 +23,8 @@ void Client::start() {
     try {
         sender.start();
         receiver.start();
-    } catch (...) {
-        std::cout << "Error desconocido en start\n";
+    } catch (std::exception& e) {
+        std::cout << "Error in client: " << e.what() << std::endl;
     }
 }
 

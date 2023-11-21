@@ -49,6 +49,7 @@ void Protocol::sendDynamic(GameDynamic* dynamic) {
     sendChar(dynamic->getWinnerTeam());
     sendWorms(dynamic->getWorms());
     sendWeapons(dynamic->getExplosives());
+    sendVectorInt(dynamic->getTeamsHealth());
 }
 
 GameDynamic* Protocol::receiveDynamic() {
@@ -57,7 +58,8 @@ GameDynamic* Protocol::receiveDynamic() {
     char winnerTeam = receiveChar();
     std::vector<WormDTO> worms = receiveWorms();
     std::unordered_map<int, ExplosivesDTO> weapons = receiveWeapons();
-    return new GameDynamic(wormPlayingID, winnerTeam, worms, weapons);
+    std::vector<int> teamsHealth = receiveVectorInt();
+    return new GameDynamic(wormPlayingID, winnerTeam, worms, weapons, teamsHealth);
 }
 
 void Protocol::sendMove(Move* move) {
@@ -316,6 +318,23 @@ std::vector<int> Protocol::receiveWeaponsMap() {
         weaponsMap.push_back(amunition);
     }
     return weaponsMap;
+}
+
+void Protocol::sendVectorInt(std::vector<int> vector) {
+    sendUintEight(vector.size());
+    for (int i = 0; i < vector.size(); i++) {
+        sendUintEight(vector[i]);
+    }
+}
+
+std::vector<int> Protocol::receiveVectorInt() {
+    uint8_t vectorSize = receiveUintEight();
+    std::vector<int> vector;
+    for (int i = 0; i < vectorSize; i++) {
+        int number = receiveUintEight();
+        vector.push_back(number);
+    }
+    return vector;
 }
 
 void Protocol::sendFloat(float num) {
