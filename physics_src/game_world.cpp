@@ -237,11 +237,11 @@ void GameWorld::wormThrowBanana(int id, float angle, int direction, float power,
     banana->SetLinearVelocity(bananaVel);
 }
 
-void GameWorld::wormHitWithBat(int id){
+void GameWorld::wormHitWithBat(int id, int direction){
     checkWormExists(id);
     b2Body* worm = this->worms[id];
     Worm* wormData = (Worm*) worm->GetUserData().pointer;
-    wormData->hitWithBat();
+    wormData->hitWithBat(direction);
 }
 
 bool GameWorld::checkValidTpPosition(float x, float y){

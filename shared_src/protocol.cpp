@@ -106,6 +106,7 @@ void Protocol::sendHitUpclose(HitUpclose* hitUpclose) {
     checkClosed();
     sendUintEight(SEND_COMMAND_HIT_UPCLOSE);
     sendUintEight(hitUpclose->getID());
+    sendUintEight(hitUpclose->getDir());
 }
 
 Serializable* Protocol::receiveSerializable() {
@@ -199,7 +200,8 @@ std::shared_ptr<Teleport> Protocol::receiveTeoleport() {
 std::shared_ptr<HitUpclose> Protocol::receiveHitUpclose() {
     checkClosed();
     uint8_t wormId = receiveUintEight();
-    return std::make_shared<HitUpclose>(HitUpclose(wormId));
+    uint8_t dir = receiveUintEight();
+    return std::make_shared<HitUpclose>(HitUpclose(wormId, dir));
 }
 
 void Protocol::sendMapNames(std::vector<std::string>& allMaps) {

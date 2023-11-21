@@ -99,7 +99,8 @@ void Worm::handleExplosion(float damage, b2Vec2 explosionCenter){
     this->body->ApplyLinearImpulseToCenter(impulse, true);
 }
 
-void Worm::hitWithBat(){
+void Worm::hitWithBat(int direction){
+    this->direction = direction;
     b2Vec2 pos = this->body->GetPosition();
     MeleeQueryCallback callback;
     b2AABB aabb;
