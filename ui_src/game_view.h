@@ -32,6 +32,7 @@ private:
 	Chunk sound;
 	Texture backgroundSprite;
 	Texture beamSprite;
+	Texture losingScreen;
 	std::vector<Texture> rocketSprites;
 	
 	std::vector<Texture> dynamicSpriteSheets;
@@ -58,11 +59,15 @@ private:
 
 	int inputState;
 	int bombTimer;
+	int winnerTeam;
 
 	void updateEntities(int i);
 	void loadWorms(std::vector<WormDTO>& recievedWorms);
 	void loadBeams(std::vector<BeamDTO>& beams);
 	void draw(int i);
+	void drawWinningScreen(int i);
+	void drawLosingScreen(int i);
+	void drawGame(int i);
 	void drawBeams(int i);
 	void drawWorms(int i);
 	void drawProjectiles(int i);

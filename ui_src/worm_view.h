@@ -40,6 +40,7 @@ public:
 	void move(int i);
 	void hit(int i);
 	void tp(int i);
+	void notifyWinner(int i);
 
 	void surrend();
 	void die();

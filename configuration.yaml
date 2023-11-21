@@ -7,7 +7,7 @@ game:
 camera:
   viewfield_x: 25
   viewfield_y: 25
-  camera_speed: 5
+  camera_speed: 0
 
 world:
   width: 100

@@ -8,7 +8,7 @@
 WormView::WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets, Font& wormsFont) : 
 	worm(worm),
 	dynamicSpriteSheets(dynamicSpriteSheets),
-	frames{21},
+	frames{22},
 	wormsFont(wormsFont) {
 	defaultFramesIndex = STILL_FRAMES;
 	currentFramesIndex = STILL_FRAMES;
@@ -214,6 +214,15 @@ WormView::WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets, Fon
 		frames[HOLDING_TP_FRAMES].push_back(Rect(x,y,w,h));
 	}
 
+	//frames for when the worm's team won
+	for (int i = 0; i < 14; i++) {
+		x = 7;
+		y = i * 60;
+		w = 45;
+		h = 45;
+		frames[WWINNER_FRAMES].push_back(Rect(x,y,w,h));
+	}
+
 
 }
 
@@ -416,7 +425,7 @@ void WormView::display(int i, Renderer& renderer, int camX, int camY, int mouseX
 	int team = this->worm.getTeam();
 	SDL_Color color{0,255*(team / 1) ,0};
 
-	if (!this->worm.isAlive())
+	if (!this->worm.isAlive() || this->currentFramesIndex == WWINNER_FRAMES)
 		return;
 	Texture hp(renderer,
 		wormsFont.RenderText_Solid(std::__cxx11::to_string(this->worm.getHealth()),
@@ -439,5 +448,13 @@ void WormView::update(WormDTO other, int i) {
 	if (this->worm.getHealth() <= 10)
 		surrend();
 }
+
+void WormView::notifyWinner(int winnerTeam) {
+	if (this->worm.getTeam() == winnerTeam && (defaultFramesIndex != WWINNER_FRAMES)) {
+		currentFramesIndex = WWINNER_FRAMES;
+		defaultFramesIndex = WWINNER_FRAMES;
+	}
+}
+
 
 WormView::~WormView() {}
