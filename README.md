@@ -42,15 +42,26 @@ Una vez hecho esto compilar como fue dicho arriba y usar los ejecutables client 
 
 * `Flecha Izquierda`: Mueve el gusano a la izquierda
 * `Flecha Derecha`: Mueve el gusano a la derecha
-* `Rueda Mouse`: Elije el arma que el gusano usara, basandose en el orden del HUD.
-* `Numeros`: Modifica el tiempo de explosion de las granadas.
-  * `Mouse`: Con este se puede elegir el angulo del disparo, con el click se dispara.
-* `Cheats:`
-      * `F1`: Le suma vida al gusano actual (con un MaxHealth = 100)
-      * `F2`: Le otorga al gusano todas las armas
-      * `F3`: Vuelve a todos los gusanos invencibles
-      * `F4`: Deja estatico el turno, sin importar el tiempo/ perdida de vida/ uso de herramienta
-      * `F5`: Vuelve a permitir los cambios de turno
 * `Enter`: Salto para adelante
 * `Backspace`: Salto para atras
+* `Mouse`: al moverlo se puede mover libremente la camara por el mundo
+* `Armas:`
+  * `Rueda Mouse`: Elije el arma que el gusano usara, basandose en el orden del HUD.
+  * `Teclas:`
+    * `e`: deselecciona las armas (punio limpio)
+    * `r`: selecciona la Bazooka
+    * `t`: selecciona la Granada verde
+    * `y`: selecciona el Hacha
+    * `u`: selecciona el Teleport
+    * `i`: selecciona el Mortero
+    * `o`: selecciona la Granada roja
+    * `p`: selecciona la Banana
+  * `Numeros [0,5]`: Modifica el tiempo de explosion de las granadas.
+  * `Mouse`: Con este se puede elegir el angulo del disparo, con el click se dispara.
+* `Cheats:`
+      * `z`: Le suma vida al gusano actual (con un MaxHealth modificable desde el archivo de configuracion)
+      * `x`: Le otorga al gusano todas las armas
+      * `c`: Vuelve a todos los gusanos invencibles
+      * `v`: Deja estatico el turno, sin importar el tiempo/ perdida de vida/ uso de herramienta
+      * `b`: Vuelve a permitir los cambios de turno
 

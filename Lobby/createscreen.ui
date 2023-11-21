@@ -70,17 +70,17 @@
    </item>
    <item>
     <property name="text">
-     <string>map1</string>
+     <string>small</string>
     </property>
    </item>
    <item>
     <property name="text">
-     <string>map2</string>
+     <string>test</string>
     </property>
    </item>
    <item>
     <property name="text">
-     <string>map3</string>
+     <string>medium</string>
     </property>
    </item>
   </widget>

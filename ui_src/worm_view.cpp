@@ -344,6 +344,15 @@ void WormView::tp(int i) {
 }
 
 void WormView::surrend() {
+	if (currentFramesIndex == HOLDING_AXE_FRAMES ||
+		currentFramesIndex == HOLDING_BAZOKA_FRAMES ||
+		currentFramesIndex == HOLDING_RG_FRAMES ||
+		currentFramesIndex == HOLDING_BANANA_FRAMES ||
+		currentFramesIndex == HOLDING_GG_FRAMES ||
+		currentFramesIndex == HOLDING_MORTAR_FRAMES || 
+		currentFramesIndex == HOLDING_TP_FRAMES) {
+			return;
+		}
 	this->defaultFramesIndex = SURRENDING_FRAMES;
 }
 
@@ -423,7 +432,12 @@ void WormView::display(int i, Renderer& renderer, int camX, int camY, int mouseX
 
 	//grafico la vida
 	int team = this->worm.getTeam();
-	SDL_Color color{0,255*(team / 1) ,0};
+	uint8_t r, g, b;
+	g = (team == 1) || (team == 4) ? 255 : 0;
+	r = (team == 2) || (team == 4) ? 255 : 0;
+	b = team == 3 ? 255 : 0;
+
+	SDL_Color color{r,g,b};
 
 	if (!this->worm.isAlive() || this->currentFramesIndex == WWINNER_FRAMES)
 		return;

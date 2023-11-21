@@ -51,10 +51,9 @@ std::vector<Team> Lobby::createTeams(std::vector<WormDTO>& worms) {
     
 void Lobby::run() {
 
-    // YA TENGO EL NRO DE PLAYERS -> YA ASIGNO A LOS GUSANOS A SUS TEAMS
     MapsLoader mapsLoader(CONFIG.getMapsFile());
     std::vector<std::string> mapNames = mapsLoader.getMapsNames();
-    Map map = mapsLoader.loadMap("test");
+    Map map = mapsLoader.loadMap(mapName);
     std::vector<WormDTO> worms = createWorms(map.worms);
     std::vector<BeamDTO> beams = map.beams;
 
@@ -69,15 +68,14 @@ void Lobby::run() {
     while(idPlayer < numberOfPlayers) {
         try {
             Socket peer = skt.accept();
-            idPlayer++;
             std::shared_ptr<GameMap> gameMap =std::make_shared<GameMap>(GameMap(idPlayer, numberOfPlayers, "aloha", beams, worms));
             Player* player = new Player(std::move(peer), commandQueue, gameMap);
-            // magic happens
             statusBroadcaster.addPlayer(idPlayer, player->getPlayerQueue());
             player->start();
 
             reapDead();
             players.push_back(player);
+            idPlayer++;
         } catch (std::exception& e) {
             std::cout << "Error in lobby: " << e.what() << std::endl;
         }

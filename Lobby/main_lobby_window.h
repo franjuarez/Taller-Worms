@@ -25,4 +25,4 @@ private slots:
 private:
     Ui::MainLobbyWindow *ui;
 };
-#endif // MAINLOBBYWINDOW_H
+#endif

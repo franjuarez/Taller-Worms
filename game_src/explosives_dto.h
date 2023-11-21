@@ -6,7 +6,6 @@
 
 class ExplosivesDTO {
 private:
-// add un ID aca y al Protocolo
     int proyectileType;
     int id;
     Position position;

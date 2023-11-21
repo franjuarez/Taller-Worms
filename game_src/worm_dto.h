@@ -12,7 +12,6 @@ private:
     int team;
     int health;
     Position position;
-    // type of weapon and amount
     std::vector<int> weapons;
 
 public:

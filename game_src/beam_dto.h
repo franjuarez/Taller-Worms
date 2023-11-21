@@ -6,7 +6,7 @@
 class BeamDTO {
 private:
     int beamLength;
-    Position position; // having both extremes to get the angle :)
+    Position position;
     float angle;
 public:
     BeamDTO(int lenght, Position pos, float angle);

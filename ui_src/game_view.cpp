@@ -220,15 +220,20 @@ void GameView::updateEntities(int i) {
 			wormViews.at(oldid).toDefault(0);
 		}
 	}
-
+	bool anyAlive = false;
 	for (auto &worm : recievedWorms) {
 		this->wormViews.at(worm.getId()).update(worm, i);
 		if (worm.getId() == this->currentWormId) {
 			this->currentWorm = worm;
 		}
+		if (worm.isAlive())
+			anyAlive = true;
 	}
 
+
 	this->winnerTeam = gs->getWinnerTeam();
+	if (not anyAlive)
+		winnerTeam = -3;
 
 	/*
 	aca deberia por cada cohete recibido, verificar si esta en mis cohetes, si esta
@@ -355,6 +360,7 @@ void GameView::drawWinningScreen(int i) {
 		it->second.display(i, this->renderer, camX, camY, mouseX, mouseY);
 	}
 
+	drawWater(i);
 	renderer.Present();
 
 
@@ -370,7 +376,7 @@ void GameView::drawLosingScreen(int i) {
 
 void GameView::draw(int i) {
 	updateEntities(i); 
-	if (this->winnerTeam == -1 || nteams == 1) {
+	if (this->winnerTeam == -1 || (nteams == 1 && winnerTeam != -3)) {
 		drawGame(i);
 		return;
 	}
@@ -473,8 +479,8 @@ void GameView::clickCase(int i, int mouseX, int mouseY) {
 
 
 void GameView::processInput(SDL_Event event, int i) {
-	//if (this->currentWorm.getTeam() != this->team) { revisar la condicion
-	if (this->currentWormId == -1) {
+	if (this->currentWormId == -1 || this->currentWorm.getTeam() != this->team) {
+	// if (this->currentWormId == -1) {
 		return;
 	}
 	if (event.type == SDL_MOUSEBUTTONDOWN) {

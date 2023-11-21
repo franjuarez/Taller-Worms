@@ -2,7 +2,6 @@
 #define COLLISION_HANDLER_H
 
 #include <unordered_map>
-//include for runtime error
 #include <stdexcept>
 #include "entities/entity.h"
 

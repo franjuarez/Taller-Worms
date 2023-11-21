@@ -26,7 +26,6 @@ private:
     std::unordered_map<std::string, std::string> maps;
 
 public:
-    // Constructor
     explicit MapsLoader(const std::string mapsFile);
 
     std::vector<std::string> getMapsNames();

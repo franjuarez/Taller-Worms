@@ -28,10 +28,6 @@ public:
 	Client(const std::string& hostname, const std::string& servname);
 	~Client();
 
-	std::vector<std::string> getAvailableMaps();
-
-	// void selectMap(std::string);
-
 	std::shared_ptr<Serializable> getGameStatus();
 	
 

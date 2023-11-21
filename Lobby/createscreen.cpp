@@ -29,8 +29,5 @@ void CreateScreen::on_pushButton_clicked()
     playing = false;
     lobby.join();
     QApplication::quit();
-    //std::cout << port.toStdString() << std::endl;
-    //std::cout << map.toStdString() << std::endl;
-    //std::cout << players << std::endl;
 }
 

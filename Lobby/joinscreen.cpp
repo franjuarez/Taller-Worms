@@ -20,15 +20,12 @@ JoinScreen::~JoinScreen()
 
 void JoinScreen::on_lineEdit_textEdited(const QString &arg1)
 {
-    //std::cout << arg1.toStdString() << std::endl;
     this->port = arg1;
 }
 
 
 void JoinScreen::on_pushButton_clicked()
 {
-    //std::cout << this->port.toStdString() << std::endl;
-    //std::cout << this->address.toStdString() << std::endl;
     try {
     GameView gv(address.toStdString(), port.toStdString());
     this->hide();

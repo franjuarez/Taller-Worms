@@ -23,7 +23,6 @@ public:
         *cheatOn = *cheatOn;
         return true;
     }
-    // podria hacer un override de exec q vaya al tipo que tiene que exec ... o no ? 
     virtual void send(Protocol& protocol) = 0;
     virtual int getID() = 0;
 };

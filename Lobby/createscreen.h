@@ -23,4 +23,4 @@ private:
     bool playing;
 };
 
-#endif // CREATESCREEN_H
+#endif
