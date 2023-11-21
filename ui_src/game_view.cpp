@@ -107,6 +107,7 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 	//le paso algo que pueda ser transparente si se agarra la porcion correcta para que se pueda hacer que desaparezca
 	rocketSprites.push_back(Texture(renderer, Surface(EXPLOSION_PATH).SetColorKey(true,0)));
 	rocketSprites.push_back(Texture(renderer, Surface(RGRENADE_ICON_PATH).SetColorKey(true,0)));
+	rocketSprites.push_back(Texture(renderer, Surface(BANANA_ICON_PATH).SetColorKey(true,0)));
 
 	//para los gusanos. EXTRAER A SU PROPIA CLASE
 	dynamicSpriteSheets.push_back(Texture(renderer,Surface(STILL_WORM_PATH).SetColorKey(true, 0)));

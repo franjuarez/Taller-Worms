@@ -3,19 +3,35 @@
 #include <SDL2pp/SDL2pp.hh>
 
 ProjectileView::ProjectileView(ExplosivesDTO rocket, std::vector<Texture>& projectileSpriteSheet) :
-rocket(rocket), projectileSpriteSheets(projectileSpriteSheet), frames{4} {
+rocket(rocket), projectileSpriteSheets(projectileSpriteSheet), frames{5} {
 	startingPoint = 0;
 
 
-	if (rocket.getType() == BAZOOKA) {
+	//if (rocket.getType() == BAZOOKA) {
+	//	currentFramesIndex = defaultFramesIndex = ROCKET_FRAMES;
+	//} else if (rocket.getType() == RED_GRENADE) {
+	//	currentFramesIndex = defaultFramesIndex = RED_GRENADE_FRAMES;
+	//} else {
+	//	currentFramesIndex = defaultFramesIndex = RED_GRENADE_FRAMES;
+	//}
+	switch(rocket.getType()) {
+	case BAZOOKA:
 		currentFramesIndex = defaultFramesIndex = ROCKET_FRAMES;
-	} else if (rocket.getType() == RED_GRENADE) {
+		break;
+	case RED_GRENADE:
 		currentFramesIndex = defaultFramesIndex = RED_GRENADE_FRAMES;
-	} else {
-		currentFramesIndex = defaultFramesIndex = RED_GRENADE_FRAMES;
+		break;
+	case BANANA:
+		currentFramesIndex = defaultFramesIndex = BANANA_FRAMES;
+		break;
+	default:
+		currentFramesIndex = defaultFramesIndex = ROCKET_FRAMES;
+		break;
 	}
-	frames[ROCKET_FRAMES].push_back(Rect(19,13,22,34));
 
+
+
+	frames[ROCKET_FRAMES].push_back(Rect(19,13,22,34));
 
 	int x = 19;
 	int y;
@@ -29,6 +45,8 @@ rocket(rocket), projectileSpriteSheets(projectileSpriteSheet), frames{4} {
 	frames[POST_EXPLOSION_FRAMES].push_back(Rect(0,0,1,1));
 
 	frames[RED_GRENADE_FRAMES].push_back(Rect(7,4,14,24));
+
+	frames[BANANA_FRAMES].push_back(Rect(7,4,14,24));
 }
 
 ProjectileView::~ProjectileView() {}
@@ -65,6 +83,10 @@ void ProjectileView::display(int i, Renderer& renderer, int camX, int camY) {
 		angle = i % 180;
 	}
 
+	if (rocket.getType() == BANANA) {
+		angle = i*5 % 180;
+	}
+
 
 	if (currentFramesIndex == EXPLOSION_FRAMES) {
 		angle = 0;
@@ -76,7 +98,7 @@ void ProjectileView::display(int i, Renderer& renderer, int camX, int camY) {
 	Rect destiny(x, y,rocketSize*m_to_pix_x, -rocketSize*m_to_pix_y);
 
 
-	renderer.Copy(texture, origin, destiny, angle, Point(0,0), false);
+	renderer.Copy(texture, origin, destiny, angle, Point(destiny.GetW()/2,destiny.GetH()/2), false);
 	//renderer.Copy(
 	//	this->projectileSpriteSheets[currentFramesIndex],
 	//	this->frames[currentFramesIndex][currentFrame], 
