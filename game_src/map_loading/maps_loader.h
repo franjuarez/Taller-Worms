@@ -8,7 +8,17 @@
 #include <yaml-cpp/yaml.h>
 #include "../game_map.h"
 #include "../../shared_src/constants.h"
-// #include "errorMapaInvalido.h"
+#include "invalid_map_error.h"
+
+struct WormPosition {
+    float x;
+    float y;
+};
+
+struct Map{
+    std::vector<WormPosition> worms;
+    std::vector<BeamDTO> beams;
+};
 
 class MapsLoader {
 private:
@@ -21,7 +31,7 @@ public:
 
     std::vector<std::string> getMapsNames();
 
-    GameMap loadMap(std::string mapName);
+    Map loadMap(std::string mapName);
 };
 
 #endif

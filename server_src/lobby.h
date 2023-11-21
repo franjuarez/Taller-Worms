@@ -22,9 +22,10 @@ private:
     Queue<std::shared_ptr<Command>> commandQueue;
     void reapDead();
     void killAll();
-// should it have the game thread queue?
 
     std::vector<Team> createTeams(std::vector<WormDTO>& worms);
+
+    std::vector<WormDTO> createWorms(std::vector<WormPosition> wormsPositions);
 
     bool* playing;
 public:

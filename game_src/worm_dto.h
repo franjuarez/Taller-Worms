@@ -1,10 +1,8 @@
 #ifndef WORM_DTO_H
 #define WORM_DTO_H
 
-
 #include "position.h"
 #include <vector>
-// should it be locked? 
 
 class WormDTO {
 

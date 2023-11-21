@@ -8,9 +8,21 @@
 #include "../game_src/game_map.h"
 #include <memory>
 
+
+
 Lobby::Lobby(const std::string& hostname, int numberOfPlayers, std::string mapName, bool* playing) 
 : hostname(hostname), skt(hostname.c_str()), mapName(mapName), commandQueue(90), playing(playing) {
     this->numberOfPlayers = numberOfPlayers;
+}
+
+std::vector<WormDTO> Lobby::createWorms(std::vector<WormPosition> wormsPositions) {
+    std::vector<WormDTO> worms;
+    for(size_t i = 0; i < wormsPositions.size(); i++){
+        WormDTO worm(i, STARTING_DIRECTON, STARTING_TEAM, CONFIG.getWormInitialHealth(),
+         Position(wormsPositions[i].x, wormsPositions[i].y), STARTING_WEAPONS);
+        worms.push_back(worm);
+    }
+    return worms;
 }
 
 std::vector<Team> Lobby::createTeams(std::vector<WormDTO>& worms) {
@@ -43,9 +55,9 @@ void Lobby::run() {
     // YA TENGO EL NRO DE PLAYERS -> YA ASIGNO A LOS GUSANOS A SUS TEAMS
     MapsLoader mapsLoader(CONFIG.getMapsFile());
     std::vector<std::string> mapNames = mapsLoader.getMapsNames();
-    GameMap gameMap = mapsLoader.loadMap("test");
-    std::vector<WormDTO> worms = gameMap.getWorms();
-    std::vector<BeamDTO> beams = gameMap.getBeams();
+    Map map = mapsLoader.loadMap("test");
+    std::vector<WormDTO> worms = createWorms(map.worms);
+    std::vector<BeamDTO> beams = map.beams;
 
     std::vector<Team> teams = createTeams(worms);
 
@@ -59,8 +71,8 @@ void Lobby::run() {
         try {
             Socket peer = skt.accept();
             idPlayer++;
-            std::shared_ptr<GameMap> map =std::make_shared<GameMap>(GameMap(idPlayer, "aloha", beams, worms));
-            Player* player = new Player(std::move(peer), commandQueue, map);
+            std::shared_ptr<GameMap> gameMap =std::make_shared<GameMap>(GameMap(idPlayer, "aloha", beams, worms));
+            Player* player = new Player(std::move(peer), commandQueue, gameMap);
             // magic happens
             statusBroadcaster.addPlayer(idPlayer, player->getPlayerQueue());
             player->start();
@@ -72,10 +84,10 @@ void Lobby::run() {
         }
     }
     // momento eleccion Mapa
-    std::shared_ptr<GameMap> map = std::make_shared<GameMap>(GameMap(0, "aloha", beams, worms));
+    std::shared_ptr<GameMap> gameMap = std::make_shared<GameMap>(GameMap(0, "aloha", beams, worms));
     // Inicializar el GameLoop 
     bool loopActive = true;
-    GameLoop gameLoop(commandQueue, statusBroadcaster, map, teams, &loopActive);
+    GameLoop gameLoop(commandQueue, statusBroadcaster, gameMap, teams, &loopActive);
     gameLoop.start();
 
 
