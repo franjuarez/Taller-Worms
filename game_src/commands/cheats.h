@@ -11,7 +11,7 @@ private:
     int health;
 public: 
     Cheats(int wormID, int cheatID, int health);
-    bool executeCommand(GameWorld& gameWorld) override;
+    bool executeCommand(GameWorld& gameWorld, bool* cheatOn) override;
     void send(Protocol& protocol);
     int getID();
     int getHealth();

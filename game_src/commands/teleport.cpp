@@ -5,9 +5,9 @@
 Teleport::Teleport(int wormID, Position pos) : Command(wormID), wormID(wormID),
 pos(pos) {}
 
-bool Teleport::executeCommand(GameWorld& gameWorld) {
+bool Teleport::executeCommand(GameWorld& gameWorld, bool* cheatOn) {
+    *cheatOn = *cheatOn;
     return gameWorld.teleportWorm(wormID, pos.getX(), pos.getY());
-    // return true;
 }
 
 void Teleport::send(Protocol& protocol) {

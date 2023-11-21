@@ -3,8 +3,9 @@
 
 Jump::Jump(int id, int dir) : Command(id), wormID(id), dir(dir) {}
 
-bool Jump::executeCommand(GameWorld& gameWorld) {
+bool Jump::executeCommand(GameWorld& gameWorld, bool* cheatOn) {
     // std::cout << "exec jump\n";
+    *cheatOn = *cheatOn;
     if (dir == FORWARD_DIR) {
         gameWorld.jumpForwardWorm(wormID);
     } else if (dir == BACKWARD_DIR) {

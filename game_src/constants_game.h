@@ -25,6 +25,8 @@ enum /* CHEATS */ {
     ADD_HEALTH,
     ALL_WEAPONS,
     ALL_INVINCIBLE,
+    STOP_TURN,
+    RENEW_TURN,
 };
 
 #define PLAYING -1

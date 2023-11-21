@@ -4,7 +4,8 @@
 
 Move::Move(int id, int dir) : Command(id), wormID(id), dir(dir) {}
 
-bool Move::executeCommand(GameWorld& gameWorld) {
+bool Move::executeCommand(GameWorld& gameWorld, bool* cheatOn) {
+    *cheatOn = *cheatOn;
     gameWorld.moveWorm(this->wormID, this->dir);
     return false;
 }

@@ -10,6 +10,7 @@ GameLoop::GameLoop(Queue<Command*>& commandsQueue, StatusBroadcaster& statusBroa
 	this->wormPlayingHealth = 100;
 	this->waitingForStatic = false;
 	this->start_time = std::chrono::steady_clock::now();
+	this->cheatOn = false;
 }
 
 void GameLoop::loopLogic(int64_t elapsed_time) {
@@ -18,13 +19,13 @@ void GameLoop::loopLogic(int64_t elapsed_time) {
 
 	Command* command;
 	while (commandsQueue.try_pop(command) && !waitingForStatic) {
-			waitingForStatic = command->executeCommand(gameWorld);
+			waitingForStatic = command->executeCommand(gameWorld, &cheatOn);
 	}
 	gameWorld.update();
 
  
 	GameDynamic* gameDynamic = gameWorld.getGameStatus(wormPlayingID);
-	if (waitingForStatic) {
+	if (waitingForStatic && !cheatOn) {
 		gameDynamic->setWormPlayingID(NO_WORM_PLAYING);
 	}
 	
@@ -53,12 +54,18 @@ void GameLoop::loopLogic(int64_t elapsed_time) {
 		waitingForStatic = true;
 	}
 
-	if (waitingForStatic) {
+	// std::cout << "cheatON " << cheatOn  << std::endl;
+
+	if (waitingForStatic && !cheatOn) {
 		if(gameWorld.allEntitiesAtRest()) {
 			waitingForStatic = false;
 			changeWormPlaying(worms);
 		}
-	}
+	} else if (waitingForStatic && cheatOn) {
+		if (gameWorld.allEntitiesAtRest()) {
+			waitingForStatic = false;
+		}
+	} 
 
 }
 
@@ -70,7 +77,8 @@ void GameLoop::run() {
 		try {
 			loopLogic(elapsed_time);
 			usleep(RATE*1000);
-		} catch (...) {
+		} catch (std::exception& e) {
+			std::cout << "Error en el game loop: " << e.what() << std::endl;
 			return;
 		}
 	}

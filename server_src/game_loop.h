@@ -37,6 +37,7 @@ private:
     void changeWormPlaying(std::vector<WormDTO> worms);
 
     std::atomic<bool> playing;
+    bool cheatOn;
 public:
     GameLoop(Queue<Command*>& commandsQueue, StatusBroadcaster& statusBroadcaster, GameMap* gameMap, std::vector<Team> teams, bool* playing);
     ~GameLoop();

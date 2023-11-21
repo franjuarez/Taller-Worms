@@ -8,7 +8,8 @@ ThrowGrenade::ThrowGrenade(int type, int wormID, int dir, float angle, float pow
 type(type), wormID(wormID),dir(dir), angle(angle), power(power), timer(timer) {}
 
 
-bool ThrowGrenade::executeCommand(GameWorld& gameWorld) {
+bool ThrowGrenade::executeCommand(GameWorld& gameWorld, bool* cheatOn) {
+    *cheatOn = *cheatOn;
     if (type == RED_GRENADE) {
         gameWorld.wormThrowRedGrenade(wormID, angle, dir, power, timer);
     } else if (type == GREEN_GRENADE) {

@@ -18,8 +18,9 @@ private:
 public:
     Command(int wormID) : wormID(wormID) {}
     virtual ~Command() {}
-    virtual bool executeCommand(GameWorld&) {
+    virtual bool executeCommand(GameWorld&, bool* cheatOn) {
         std::cout << "exec mother class\n";
+        *cheatOn = *cheatOn;
         return true;
     }
     // podria hacer un override de exec q vaya al tipo que tiene que exec ... o no ? 

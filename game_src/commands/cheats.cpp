@@ -5,7 +5,7 @@
 
 Cheats::Cheats(int wormID, int cheatID, int health) : Command(wormID), wormID(wormID), cheatID(cheatID), health(health) {}
 
-bool Cheats::executeCommand(GameWorld& gameWorld) {
+bool Cheats::executeCommand(GameWorld& gameWorld, bool* cheatOn) {
     if (cheatID == CERO_GRAVITY) {
         gameWorld.ceroGravity();
     } else if (cheatID == ADD_HEALTH) {
@@ -14,7 +14,11 @@ bool Cheats::executeCommand(GameWorld& gameWorld) {
         gameWorld.wormGetAllWeapons(wormID);
     } else if (cheatID == ALL_INVINCIBLE) {
         gameWorld.makeWormsInvincible();
-    } 
+    } else if (cheatID == STOP_TURN) {
+        *cheatOn = true;
+    } else if (cheatID == RENEW_TURN) {
+        *cheatOn = false;
+    }
     return false;
 }
 
