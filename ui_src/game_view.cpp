@@ -31,6 +31,8 @@
 #define WORM_HOLDING_GG_PATH "../resources/images/hold_gg.bmp"
 #define WORM_DRAWING_MORTAR_PATH "../resources/images/draw_mortar.bmp"
 #define WORM_HOLDING_MORTAR_PATH "../resources/images/holding_mortar.bmp"
+#define WORM_DRAWING_TP_PATH "../resources/images/drawing_tp.bmp"
+#define WORM_HOLDING_TP_PATH "../resources/images/holding_tp.bmp"
 
 
 
@@ -142,6 +144,8 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_HOLDING_GG_PATH).SetColorKey(true, 0)));
 	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_DRAWING_MORTAR_PATH).SetColorKey(true, 0)));
 	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_HOLDING_MORTAR_PATH).SetColorKey(true, 0)));
+	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_DRAWING_TP_PATH).SetColorKey(true, 0)));
+	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_HOLDING_TP_PATH).SetColorKey(true, 0)));
 
 	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_01).SetColorKey(true, 0).SetBlendMode(SDL_BLENDMODE_BLEND).SetAlphaMod(220)));
 	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_02).SetColorKey(true, 0).SetBlendMode(SDL_BLENDMODE_BLEND).SetAlphaMod(220)));
@@ -450,6 +454,7 @@ void GameView::processInput(SDL_Event event, int i) {
 			break;
 		case SDLK_4:
 			inputState = TP_CODE;
+			wormViews.at(currentWormId).drawTp(i);
 			break;
 		case SDLK_5:
 			inputState = MORTAR_CODE;
