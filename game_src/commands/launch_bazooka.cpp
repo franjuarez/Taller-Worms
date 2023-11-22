@@ -1,6 +1,8 @@
 #include "launch_bazooka.h"
 #include "../constants_game.h"
 #include "command.h"
+#include "../../physics_src/game_world.h"
+#include "../../shared_src/protocol.h"
 
 
 LaunchRocket::LaunchRocket(int type, int wormID, int dir, float angle, float power) : Command(wormID), type(type),

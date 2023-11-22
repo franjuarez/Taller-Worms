@@ -8,10 +8,12 @@
 #include "../game_src/commands/hit_upclose.h"
 #include "../game_src/commands/throw_grenade.h"
 #include "../game_src/commands/cheats.h"
+#include "../game_src/commands/match.h"
 
 #include "../game_src/serializable.h"
 #include "../game_src/game_dynamic.h"
 #include "../game_src/game_map.h"
+#include "../game_src/game_info.h"
 
 
 #include <utility>
@@ -63,6 +65,20 @@ GameDynamic* Protocol::receiveDynamic() {
     std::unordered_map<int, ExplosivesDTO> weapons = receiveWeapons();
     std::vector<int> teamsHealth = receiveVectorInt();
     return new GameDynamic(wormPlayingID, winnerTeam, worms, weapons, teamsHealth);
+}
+
+void Protocol::sendInfo(GameInfo* info) {
+    checkClosed();
+    sendUintEight(SEND_INFO);
+    sendVectorStr(info->getMapNames());
+    sendVectorStr(info->getMatchNames());
+}
+
+GameInfo* Protocol::receiveInfo() {
+    checkClosed();
+    std::vector<std::string> mapNames = receiveVectorStr();
+    std::vector<std::string> matchNames = receiveVectorStr();
+    return new GameInfo(mapNames, matchNames);
 }
 
 void Protocol::sendMove(Move* move) {
@@ -121,6 +137,14 @@ void Protocol::sendCheats(Cheats* cheat) {
     sendUintEight(cheat->getCheatID());
 }
 
+void Protocol::sendMatchCommand(MatchCommand* matchCommand) {
+    checkClosed();
+    sendUintEight(SEND_COMMAND_MATCH);
+    sendUintEight(matchCommand->getID());
+    sendUintEight(matchCommand->getType());
+    sendString(matchCommand->executeCommand());
+}
+
 Serializable* Protocol::receiveSerializable() {
     checkClosed();
     uint8_t protocolCode = receiveUintEight();
@@ -129,6 +153,8 @@ Serializable* Protocol::receiveSerializable() {
     } else if (protocolCode == SEND_DYNAMIC) {
         GameDynamic* dynamic = receiveDynamic();
         return dynamic;
+    } else if (protocolCode == SEND_INFO) {
+        return receiveInfo();
     }
     throw std::runtime_error("Invalid Serializable");
 }
@@ -150,6 +176,8 @@ std::shared_ptr<Command> Protocol::receiveCommand() {
         return receiveThrowGrenade();
     } else if (protocolCode == SEND_COMMAND_CHEAT) {
         return receiveCheats();
+    } else if (protocolCode == SEND_COMMAND_MATCH) {
+        return receiveMatchCommand();
     }
 
     throw std::runtime_error("Invalid Command");
@@ -225,7 +253,15 @@ std::shared_ptr<Cheats> Protocol::receiveCheats() {
     return std::make_shared<Cheats>(Cheats(wormId, cheatId));
 }
 
-void Protocol::sendMapNames(std::vector<std::string>& allMaps) {
+std::shared_ptr<MatchCommand> Protocol::receiveMatchCommand() {
+    checkClosed();
+    uint8_t wormId = receiveUintEight();
+    uint8_t selectType = receiveUintEight();
+    std::string command = receiveString();
+    return std::make_shared<MatchCommand>(MatchCommand(wormId, selectType, command));
+}
+
+void Protocol::sendVectorStr(std::vector<std::string> allMaps) {
     checkClosed();
     sendUintSixteen(allMaps.size());
     for (int i = 0; i < allMaps.size(); i++) {
@@ -233,7 +269,7 @@ void Protocol::sendMapNames(std::vector<std::string>& allMaps) {
     }
 }
 
-std::vector<std::string> Protocol::receiveMapNames() {
+std::vector<std::string> Protocol::receiveVectorStr() {
     checkClosed();
     uint16_t nrOfMaps = receiveUintSixteen();
     std::vector<std::string> allMaps;

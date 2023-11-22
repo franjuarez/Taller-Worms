@@ -2,7 +2,8 @@
 
 #include "../constants_game.h"
 #include "command.h"
-
+#include "../../physics_src/game_world.h"
+#include "../../shared_src/protocol.h"
 
 ThrowGrenade::ThrowGrenade(int type, int wormID, int dir, float angle, float power, int timer) : Command(wormID),
 type(type), wormID(wormID),dir(dir), angle(angle), power(power), timer(timer) {}

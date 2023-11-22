@@ -1,6 +1,7 @@
 #include "teleport.h"
 #include "../constants_game.h"
-
+#include "../../physics_src/game_world.h"
+#include "../../shared_src/protocol.h"
 
 Teleport::Teleport(int wormID, Position pos) : Command(wormID), wormID(wormID),
 pos(pos) {}

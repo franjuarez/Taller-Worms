@@ -28,6 +28,11 @@ enum /* CHEATS */ {
     RENEW_TURN,
 };
 
+enum /*START GAME*/ {
+    SELECT_MAP = 0,
+    SELECT_MATCH,
+
+};
 #define PLAYING -1
 #define ALL_LOST -2
 

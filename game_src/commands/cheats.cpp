@@ -1,6 +1,8 @@
 
 #include "cheats.h"
 #include "../constants_game.h"
+#include "../../physics_src/game_world.h"
+#include "../../shared_src/protocol.h"
 
 
 Cheats::Cheats(int wormID, int cheatID) : Command(wormID), wormID(wormID), cheatID(cheatID) {}

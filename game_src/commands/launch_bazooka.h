@@ -2,7 +2,6 @@
 #define ATTACK_H
 
 #include "command.h"
-#include "../../shared_src/protocol.h"
 
 class Protocol;
 

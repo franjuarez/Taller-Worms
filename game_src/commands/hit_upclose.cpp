@@ -1,5 +1,8 @@
 #include "hit_upclose.h"
 #include "../constants_game.h"
+#include "../../physics_src/game_world.h"
+#include "../../shared_src/protocol.h"
+
 
 HitUpclose::HitUpclose(int wormID, int dir) : Command(wormID), wormID(wormID), dir(dir) {}
 
