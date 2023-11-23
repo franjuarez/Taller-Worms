@@ -96,6 +96,7 @@ void Worm::move(int direction){
 }
 
 void Worm::jump(float maxHeight, float distance){
+    std::cout << "JMP current action: " << this->currentAction << std::endl;
     if(this->currentAction == JUMPING || this->currentAction == EJECTED){
         return;
     }
@@ -199,7 +200,6 @@ void Worm::beginCollisionWithBeam(Entity* otherBody, b2Contact* contact) {
 
     if(beam->isWalkable()){
         b2Vec2 normal = contact->GetManifold()->localNormal;
-        std::cout << "Normal: " << normal.x << ", " << normal.y << std::endl;
         if(abs(normal.x) == 1 || normal.y < 0 || (this->currentAction == EJECTED && abs(normal.y) == 1 && beam->getAngle() != 0)){
             this->body->SetLinearDamping(0.0f);
             return;
