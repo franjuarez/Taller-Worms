@@ -68,6 +68,7 @@
 #define MORTAR_ICON_PATH BASE_PATH + "images/icons/mortar.bmp"
 #define RGRENADE_ICON_PATH BASE_PATH + "images/icons/rg.bmp"
 #define BANANA_ICON_PATH BASE_PATH + "images/icons/banana.bmp"
+#define CLOCK_PATH BASE_PATH + "images/clockSpriteSheet.png"
 
 
 #define ROCKET_PATH BASE_PATH + "images/rocket.bmp"
@@ -97,7 +98,7 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 
 	this->not_closed = true;
 	this->rocketAngle = 45.0f;
-	sound.SetVolume(MUSIC_VOLUME);
+	sound.SetVolume(10);
 
 	client.start();
 	std::shared_ptr<GameMap> gameMap = std::dynamic_pointer_cast<GameMap>(client.getGameStatus());
@@ -172,6 +173,8 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 	hudTextures.push_back(Texture(renderer, Surface(MORTAR_ICON_PATH).SetColorKey(true, 0)));
 	hudTextures.push_back(Texture(renderer, Surface(RGRENADE_ICON_PATH).SetColorKey(true, 0)));
 	hudTextures.push_back(Texture(renderer, Surface(BANANA_ICON_PATH).SetColorKey(true, 0)));
+	hudTextures.push_back(Texture(renderer, Surface(CLOCK_PATH).SetColorKey(true, 0)));
+
 
 	this->currentWormId = -1;
 	this->bombTimer = 3;
@@ -366,6 +369,16 @@ void GameView::drawHud(int i) {
 		}
 	}
 
+	renderer.Copy(hudTextures[CLOCK_ICON], Rect(1,1,126,148), Rect(0,WINDOW_HEIGHT-100,100,100));
+
+
+	SDL_Color timeColor{255, 255, 255};
+
+	Texture timerText(renderer,
+		hudFont.RenderText_Solid(std::__cxx11::to_string(bombTimer) + "   sec", timeColor));
+
+
+	renderer.Copy(timerText, NullOpt, Rect(100,WINDOW_HEIGHT-50,50,50));
 
 }
 
