@@ -24,6 +24,7 @@ private:
 public:
     GameMap(int team, int numberTeams, std::string mapName, std::vector<BeamDTO> beamsMap, std::vector<WormDTO> worms);
     int getTeam();
+    void setTeam(int newTeam);
     int getNumberTeams();
     std::string getMapName();
     std::vector<BeamDTO> getBeams();

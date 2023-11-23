@@ -1,5 +1,6 @@
 #include "lobby.h"
 #include "game_loop.h"
+#include "match_starter.h"
 #include "status_broadcaster.h"
 #include <string>
 #include "../game_src/constants_game.h"
@@ -51,52 +52,87 @@ std::vector<Team> Lobby::createTeams(std::vector<WormDTO>& worms) {
     
 void Lobby::run() {
 
-    MapsLoader mapsLoader(CONFIG.getMapsFile());
-    std::vector<std::string> mapNames = mapsLoader.getMapsNames();
-    Map map = mapsLoader.loadMap(mapName);
-    std::vector<WormDTO> worms = createWorms(map.worms);
-    std::vector<BeamDTO> beams = map.beams;
+    while (true) {
+        Socket peer = skt.accept();
+                    
+        std::shared_ptr<InfoStruct>infoStruct = std::make_shared<InfoStruct>(std::move(peer));
+        // uso el inof para comunicarme con el cliente pre generar un player 
+        // Orden de msgs:
+            // send -> GameInfo con los mapas disponibles y las partidas available
+            // receive -> NewMatch o JoinMatch
+                // en NewMatch : recibir el map name y el match name
+                // en JoinMatch : recibir el match name
 
-    std::vector<Team> teams = createTeams(worms);
+        // Comando -> New Match 
+            
+            // -> MatchName 
 
-    // se deberian parsear los archivos con los mapas
-    std::vector<std::string> maps = {"merge speedrun"};
-    int idPlayer = 0;
+            // Comando SelectMap -> 
 
-    StatusBroadcaster statusBroadcaster;
+            MapsLoader mapsLoader(CONFIG.getMapsFile());
+            std::vector<std::string> mapNames = mapsLoader.getMapsNames();
+            Map map = mapsLoader.loadMap(mapName);
+            std::vector<WormDTO> worms = createWorms(map.worms);
+            std::vector<BeamDTO> beams = map.beams;
 
-    while(idPlayer < numberOfPlayers) {
-        try {
-            Socket peer = skt.accept();
-            std::shared_ptr<GameMap> gameMap =std::make_shared<GameMap>(GameMap(idPlayer, numberOfPlayers, "aloha", beams, worms));
-            Player* player = new Player(std::move(peer), commandQueue, gameMap);
-            statusBroadcaster.addPlayer(idPlayer, player->getPlayerQueue());
-            player->start();
+            std::vector<Team> teams = createTeams(worms);
 
-            reapDead();
-            players.push_back(player);
-            idPlayer++;
-        } catch (std::exception& e) {
-            std::cout << "Error in lobby: " << e.what() << std::endl;
-        }
+            // se deberian parsear los archivos con los mapas
+            std::vector<std::string> maps = {"merge speedrun"};
+
+
+            Queue<std::shared_ptr<InfoStruct>>* infoQueue = new Queue<std::shared_ptr<InfoStruct>>();
+            infoQueue->push(infoStruct);
+            
+            std::shared_ptr<GameMap> gameMap = std::make_shared<GameMap>(GameMap(0, numberOfPlayers, mapName, beams, worms));
+            MatchStarter* matchStarter =  new MatchStarter(teams, infoQueue, "un nombre", gameMap, playing);
+            MatchesStruct* matchStruct = new MatchesStruct(matchStarter, infoQueue);
+
+            matches["un nombre"] = matchStruct;
+
+        // Comando -> Join Match -> MatchName
+            Queue<std::shared_ptr<InfoStruct>>* infoQueueMatch = matches["un nombre"]->infoQueue;
+            std::shared_ptr<InfoStruct>infoJoiner = std::make_shared<InfoStruct>(std::move(peer));
+            infoQueueMatch->push(infoJoiner);
+
     }
-    // momento eleccion Mapa
-    std::shared_ptr<GameMap> gameMap = std::make_shared<GameMap>(GameMap(0, numberOfPlayers, "aloha", beams, worms));
-    // Inicializar el GameLoop 
-    bool loopActive = true;
-    GameLoop gameLoop(commandQueue, statusBroadcaster, gameMap, teams, &loopActive);
-    gameLoop.start();
+
+    // int idPlayer = 0;
+
+    // StatusBroadcaster statusBroadcaster;
+
+    // while(idPlayer < numberOfPlayers) {
+    //     try {
+    //         Socket peer = skt.accept();
+    //         std::shared_ptr<GameMap> gameMap =std::make_shared<GameMap>(GameMap(idPlayer, numberOfPlayers, "aloha", beams, worms));
+    //         Player* player = new Player(std::move(peer), commandQueue, gameMap);
+    //         statusBroadcaster.addPlayer(idPlayer, player->getPlayerQueue());
+    //         player->start();
+
+    //         reapDead();
+    //         players.push_back(player);
+    //         idPlayer++;
+    //     } catch (std::exception& e) {
+    //         std::cout << "Error in lobby: " << e.what() << std::endl;
+    //     }
+    // }
+    // // momento eleccion Mapa
+    // std::shared_ptr<GameMap> gameMap = std::make_shared<GameMap>(GameMap(0, numberOfPlayers, "aloha", beams, worms));
+    // // Inicializar el GameLoop 
+    // bool loopActive = true;
+    // GameLoop gameLoop(commandQueue, statusBroadcaster, gameMap, teams, &loopActive);
+    // gameLoop.start();
 
 
-    while (*playing) {
-        reapDead();
-    }
+    // while (*playing) {
+    //     reapDead();
+    // }
 
-    loopActive = false;
+    // loopActive = false;
 
     killAll();
 
-    gameLoop.join();
+    // gameLoop.join();
 }
 
 void Lobby::reapDead() {

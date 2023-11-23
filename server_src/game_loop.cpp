@@ -80,10 +80,12 @@ void GameLoop::run() {
 		try {
 			loopLogic(elapsed_time);
 			usleep(RATE*1000);
-		} catch (std::exception& e) {
+		} catch (const ClosedQueue& e){
+        	std::cout << "Reciever: Se ha cerrado la QUEUE\n";
+    	} catch (std::exception& e) {
 			std::cout << "Error in game loop: " << e.what() << std::endl;
 			return;
-		}
+		} 
 	}
 }
 

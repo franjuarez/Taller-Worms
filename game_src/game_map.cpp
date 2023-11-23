@@ -14,6 +14,10 @@ int GameMap::getTeam() {
     return this->team;
 }
 
+void GameMap::setTeam(int newTeam) {
+    this->team = newTeam;
+}
+
 int GameMap::getNumberTeams() {
     return this->numberTeams;
 }

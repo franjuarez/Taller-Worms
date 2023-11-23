@@ -5,12 +5,23 @@
 #include <string>
 #include <iostream>
 
+
 #include "player.h"
+#include "match_starter.h"
+
 #include "../shared_src/thread.h"
 #include "../game_src/map_loading/maps_loader.h"
 #include "team.h"
 
 #include <atomic>
+
+struct MatchesStruct {
+    MatchStarter* matchStarter;
+    Queue<std::shared_ptr<InfoStruct>>* infoQueue;
+
+    MatchesStruct(MatchStarter* matchStarter, Queue<std::shared_ptr<InfoStruct>>* infoQueue) : matchStarter(matchStarter), infoQueue(infoQueue) {}
+    ~MatchesStruct() {}
+};
 
 class Lobby : public Thread {
 private:
@@ -21,6 +32,8 @@ private:
     std::list<Player*> players;
     Queue<std::shared_ptr<Command>> commandQueue;
     
+    std::unordered_map<std::string, MatchesStruct*> matches;
+
     void reapDead();
     void killAll();
 
