@@ -89,8 +89,7 @@ void GameWorld::createBeam(float startingX, float startingY, float angle, bool l
     gb.friction = WORM_FRICTION;
     beamBody->CreateFixture(&gb);
 
-    bool isWalkable = (abs(angle) > CONFIG.getBeamMaxWalkableAngle()) ? false : true;
-    Beam* beamEntity = new Beam(beamBody, entitiesToRemove, isWalkable);
+    Beam* beamEntity = new Beam(beamBody, entitiesToRemove, angle);
     beamBody->GetUserData().pointer = reinterpret_cast<uintptr_t>(beamEntity);
 }
 

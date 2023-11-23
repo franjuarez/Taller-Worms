@@ -200,7 +200,7 @@ void Worm::beginCollisionWithBeam(Entity* otherBody, b2Contact* contact) {
     if(beam->isWalkable()){
         b2Vec2 normal = contact->GetManifold()->localNormal;
         std::cout << "Normal: " << normal.x << ", " << normal.y << std::endl;
-        if(abs(normal.x) == 1 || normal.y < 0){
+        if(abs(normal.x) == 1 || normal.y < 0 || (this->currentAction == EJECTED && abs(normal.y) == 1 && beam->getAngle() != 0)){
             this->body->SetLinearDamping(0.0f);
             return;
         }
@@ -262,6 +262,7 @@ void Worm::postSolveCollisionWithBeam(Entity* otherBody, b2Contact* contact, con
 
 void Worm::endCollisionWithBeam(Entity* otherBody, b2Contact* contact) {
     this->body->SetLinearDamping(STANDARD_DAMPING);
+    this->body->SetGravityScale(1.0f);
     this->currentAction = this->currentAction == JUMPING ? JUMPING : EJECTED;
     UNUSED(otherBody);
     UNUSED(contact);
