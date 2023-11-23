@@ -45,9 +45,9 @@ Una vez hecho esto compilar como fue dicho arriba y usar los ejecutables client 
 * `Enter`: Salto para adelante
 * `Backspace`: Salto para atras
 * `Mouse`: al moverlo se puede mover libremente la camara por el mundo
-* `Armas:`
+* `Armas`:
   * `Rueda Mouse`: Elije el arma que el gusano usara, basandose en el orden del HUD.
-  * `Teclas:`
+  * `Teclas`:
     * `e`: deselecciona las armas (punio limpio)
     * `r`: selecciona la Bazooka
     * `t`: selecciona la Granada verde
@@ -58,10 +58,10 @@ Una vez hecho esto compilar como fue dicho arriba y usar los ejecutables client 
     * `p`: selecciona la Banana
   * `Numeros [0,5]`: Modifica el tiempo de explosion de las granadas.
   * `Mouse`: Con este se puede elegir el angulo del disparo, con el click se dispara.
-* `Cheats:`
-      * `z`: Le suma vida al gusano actual (con un MaxHealth modificable desde el archivo de configuracion)
-      * `x`: Le otorga al gusano todas las armas
-      * `c`: Vuelve a todos los gusanos invencibles
-      * `v`: Deja estatico el turno, sin importar el tiempo/ perdida de vida/ uso de herramienta
-      * `b`: Vuelve a permitir los cambios de turno
+* `Cheats`:
+  *  `z`: Le suma vida al gusano actual (con un MaxHealth modificable desde el archivo de configuracion)
+  *  `x`: Le otorga al gusano todas las armas
+  *  `c`: Vuelve a todos los gusanos invencibles
+  *  `v`: Deja estatico el turno, sin importar el tiempo/ perdida de vida/ uso de herramienta
+  *  `b`: Vuelve a permitir los cambios de turno
 
