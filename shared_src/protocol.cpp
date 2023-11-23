@@ -142,7 +142,8 @@ void Protocol::sendMatchCommand(MatchCommand* matchCommand) {
     sendUintEight(SEND_COMMAND_MATCH);
     sendUintEight(matchCommand->getID());
     sendUintEight(matchCommand->getType());
-    sendString(matchCommand->executeCommand());
+    sendString(matchCommand->getMatchName());
+    sendString(matchCommand->getMapName());
 }
 
 Serializable* Protocol::receiveSerializable() {
@@ -257,8 +258,9 @@ std::shared_ptr<MatchCommand> Protocol::receiveMatchCommand() {
     checkClosed();
     uint8_t wormId = receiveUintEight();
     uint8_t selectType = receiveUintEight();
-    std::string command = receiveString();
-    return std::make_shared<MatchCommand>(MatchCommand(wormId, selectType, command));
+    std::string matchName = receiveString();
+    std::string maphName = receiveString();
+    return std::make_shared<MatchCommand>(MatchCommand(wormId, selectType, matchName, maphName));
 }
 
 void Protocol::sendVectorStr(std::vector<std::string> allMaps) {

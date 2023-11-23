@@ -15,6 +15,10 @@
 
 #include <atomic>
 
+class Player;
+class InfoStruct;
+class MatchStarter;
+
 struct MatchesStruct {
     MatchStarter* matchStarter;
     Queue<std::shared_ptr<InfoStruct>>* infoQueue;
@@ -45,7 +49,10 @@ private:
 public:
 
     Lobby(const std::string& hostname, int numberOfPLayers, std::string mapName, bool* playing);
-
+    void createNewMatch(std::string mapName, std::string matchName);
+    // crea el new Match y lo guarda en el map dematches
+    void selectMatch(std::string matchName);
+    // mete al nuevo jugador en el nuevo match
     ~Lobby();
     void run() override;
 };

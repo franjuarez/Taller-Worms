@@ -17,6 +17,8 @@
 #include <vector>
 #include <list>
 
+class Player;
+
 struct InfoStruct {
     Socket skt;
 

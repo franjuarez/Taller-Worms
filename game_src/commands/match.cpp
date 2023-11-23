@@ -2,16 +2,18 @@
 #include "../constants_game.h"
 #include "command.h"
 #include "../../shared_src/protocol.h"
+#include "../../server_src/lobby.h"
 
 
-MatchCommand::MatchCommand(int wormID, int type, std::string command) : Command(wormID), wormID(wormID), type(type), command(command) {}
+MatchCommand::MatchCommand(int wormID, int type, std::string match, std::string map) 
+: Command(wormID), wormID(wormID), type(type), match(match), map(map) {}
 
 void MatchCommand::send(Protocol& protocol) {
     protocol.sendMatchCommand(this);
 }
 
-std::string MatchCommand::executeCommand() {
-    return command;
+void MatchCommand::executeCommand(Lobby* lobby) {
+    // lobby->algo
 }
 
 int MatchCommand::getID() {
@@ -20,6 +22,14 @@ int MatchCommand::getID() {
 
 int MatchCommand::getType() {
     return type;
+}
+
+std::string MatchCommand::getMapName() {
+    return this->map;
+}
+
+std::string MatchCommand::getMatchName() {
+    return this->match;
 }
 
 MatchCommand::~MatchCommand() {}

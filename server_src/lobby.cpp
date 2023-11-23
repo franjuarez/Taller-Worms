@@ -7,6 +7,8 @@
 #include "../game_src/worm_dto.h"
 #include "../game_src/beam_dto.h"
 #include "../game_src/game_map.h"
+#include "player.h"
+
 #include <memory>
 
 
@@ -96,33 +98,6 @@ void Lobby::run() {
             infoQueueMatch->push(infoJoiner);
 
     }
-
-    // int idPlayer = 0;
-
-    // StatusBroadcaster statusBroadcaster;
-
-    // while(idPlayer < numberOfPlayers) {
-    //     try {
-    //         Socket peer = skt.accept();
-    //         std::shared_ptr<GameMap> gameMap =std::make_shared<GameMap>(GameMap(idPlayer, numberOfPlayers, "aloha", beams, worms));
-    //         Player* player = new Player(std::move(peer), commandQueue, gameMap);
-    //         statusBroadcaster.addPlayer(idPlayer, player->getPlayerQueue());
-    //         player->start();
-
-    //         reapDead();
-    //         players.push_back(player);
-    //         idPlayer++;
-    //     } catch (std::exception& e) {
-    //         std::cout << "Error in lobby: " << e.what() << std::endl;
-    //     }
-    // }
-    // // momento eleccion Mapa
-    // std::shared_ptr<GameMap> gameMap = std::make_shared<GameMap>(GameMap(0, numberOfPlayers, "aloha", beams, worms));
-    // // Inicializar el GameLoop 
-    // bool loopActive = true;
-    // GameLoop gameLoop(commandQueue, statusBroadcaster, gameMap, teams, &loopActive);
-    // gameLoop.start();
-
 
     // while (*playing) {
     //     reapDead();

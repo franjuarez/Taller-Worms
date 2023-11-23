@@ -1,6 +1,7 @@
 #include "match_starter.h"
 #include "game_loop.h"
 #include <string>
+#include "player.h"
 
 
 MatchStarter::MatchStarter(std::vector<Team> teams, Queue<std::shared_ptr<InfoStruct>>* playerInfoQueue, std::string matchName, std::shared_ptr<GameMap> gameMap, bool* playing) : 
