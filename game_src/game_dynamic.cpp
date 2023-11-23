@@ -1,5 +1,9 @@
 #include "game_dynamic.h"
 
+//martu no me mates por esta linea
+GameDynamic::GameDynamic() {}
+
+
 GameDynamic::GameDynamic(int wormPlayingID, std::vector<WormDTO>worms, std::unordered_map<int, ExplosivesDTO> explosives)
 : Serializable() ,wormPlayingID(wormPlayingID), worms(worms), explosives(explosives), teamsHealth() {}
 
@@ -46,6 +50,10 @@ std::vector<int> GameDynamic::getTeamsHealth() {
     return this->teamsHealth;
 }
 
+int GameDynamic::getTeamHealth(int team) {
+    return this->teamsHealth.at(team);
+}
+
 GameDynamic& GameDynamic::operator=(const GameDynamic& other) {
     if (this == &other) {
         return *this;
@@ -54,6 +62,7 @@ GameDynamic& GameDynamic::operator=(const GameDynamic& other) {
     this->winnerTeam = other.winnerTeam;
     this->worms = other.worms;
     this->explosives = other.explosives;
+    this->teamsHealth = other.teamsHealth;
     return *this;
 }
 

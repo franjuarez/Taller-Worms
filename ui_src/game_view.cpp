@@ -19,6 +19,7 @@
 #define MUSIC_PATH BASE_PATH + "music/AdhesiveWombat_Night Shade.mp3"
 
 #define WORM_LIFE_FONT_PATH BASE_PATH + "fonts/lazy.ttf"
+#define HUB_FONT_PATH BASE_PATH + "fonts/arcadeclassic/ARCADECLASSIC.TTF"
 
 #define BACKGROUND_PATH BASE_PATH + "images/background.png"
 #define LOSING_SCREEN_PATH BASE_PATH + "images/Dark_Souls_You_Died_Screen_-_Completely_Black_Screen_0-2_screenshot.png"
@@ -87,7 +88,7 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 		renderer(window, -1 /*any driver*/, SDL_RENDERER_ACCELERATED),
 		mixer(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 4096),
 		sound(MUSIC_PATH), // OGG sound file
-		wormsFont(WORM_LIFE_FONT_PATH, 18),
+		wormsFont(WORM_LIFE_FONT_PATH, 18), hudFont(HUB_FONT_PATH, 42),
 		backgroundSprite(renderer, BACKGROUND_PATH),
 		losingScreen(renderer, LOSING_SCREEN_PATH),
 		beamSprite(renderer, BEAM_PATH),
@@ -99,17 +100,17 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 	sound.SetVolume(MUSIC_VOLUME);
 
 	client.start();
-	std::shared_ptr<GameMap> gs = std::dynamic_pointer_cast<GameMap>(client.getGameStatus());
+	std::shared_ptr<GameMap> gameMap = std::dynamic_pointer_cast<GameMap>(client.getGameStatus());
 
-	this->team = gs->getTeam();
-	this->nteams = gs->getNumberTeams();
+	this->team = gameMap->getTeam();
+	this->nteams = gameMap->getNumberTeams();
 
 	//rocketSPrites.push_back(/*textura de la explosion*/);
 	
-	std::vector<WormDTO> recievedWorms = gs->getWorms();
+	std::vector<WormDTO> recievedWorms = gameMap->getWorms();
 	loadWorms(recievedWorms);
 	
-	std::vector<BeamDTO> beams = gs->getBeams();
+	std::vector<BeamDTO> beams = gameMap->getBeams();
 	loadBeams(beams);
 
 
@@ -201,12 +202,14 @@ void GameView::stop() {
 }
 
 void GameView::updateEntities(int i) {
-	std::shared_ptr<GameDynamic> gs = std::dynamic_pointer_cast<GameDynamic>(client.getGameStatus());
+	this->currentGameStatus = *std::dynamic_pointer_cast<GameDynamic>(client.getGameStatus());
+
+	//std::shared_ptr<GameDynamic> gs = std::dynamic_pointer_cast<GameDynamic>(client.getGameStatus());
 	int oldid = this->currentWormId;
 
-	std::vector<WormDTO> recievedWorms = gs->getWorms();
+	std::vector<WormDTO> recievedWorms = currentGameStatus.getWorms();
 
-	this->currentWormId = gs->getWormPlayingID();
+	this->currentWormId = currentGameStatus.getWormPlayingID();
 	if (oldid != currentWormId) {
 		inputState = 0;
 		//bombTimer = 3;
@@ -232,7 +235,7 @@ void GameView::updateEntities(int i) {
 	}
 
 
-	this->winnerTeam = gs->getWinnerTeam();
+	this->winnerTeam = currentGameStatus.getWinnerTeam();
 	if (not anyAlive)
 		winnerTeam = -3;
 
@@ -243,7 +246,7 @@ void GameView::updateEntities(int i) {
 	a medida que actualizo
 	*/
 	
-	this->recievedProjectiles = gs->getExplosives();
+	this->recievedProjectiles = currentGameStatus.getExplosives();
 	for (auto it = recievedProjectiles.begin(); it != recievedProjectiles.end(); it++) {
 		if (projectileViews.find(it->first) != projectileViews.end())
 			continue;
@@ -304,6 +307,20 @@ void GameView::drawWater(int i) {
 }
 
 void GameView::drawHud(int i) {
+
+	SDL_Color color{255, 5, 5};
+
+	int totalHp = currentGameStatus.getTeamHealth(this->team);
+
+	Texture totalHpText(renderer,
+		hudFont.RenderText_Solid("HP " + std::__cxx11::to_string(totalHp),
+		color));
+
+	Rect TotalHpPosition(
+		WINDOW_WIDTH - 100, WINDOW_HEIGHT - 85, 100, 100);
+
+	renderer.Copy(totalHpText, NullOpt, TotalHpPosition);
+	
 	if (this->currentWormId == -1) {
 		//si no hay nadie jugando no dibujo esto.
 		return;
@@ -348,6 +365,8 @@ void GameView::drawHud(int i) {
 
 		}
 	}
+
+
 }
 
 void GameView::drawWinningScreen(int i) {
