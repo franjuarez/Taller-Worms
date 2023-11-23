@@ -28,7 +28,7 @@ worm:
   max_health: 100
 
 move:
-  move_velocity: 0.4
+  move_velocity: 0.8
 
 jump:
   jump_forward_movement_x: 1

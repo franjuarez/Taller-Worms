@@ -42,9 +42,8 @@ b2Body* ProjectileFragment::createFragment(){
     fd.density = 1.0f;
     fragment->CreateFixture(&fd);
     float noiseImpulseX = randomFloat(-1.0f, 1.0f);
-    float noiseImpulseY = randomFloat(-1.0f, 1.0f);
-    float impulseX = normal.x == 0 ? noiseImpulseX/15 : normal.x/15 * noiseImpulseX;
-    float impulseY = normal.y == 0 ? noiseImpulseY/15 : normal.y/15 * noiseImpulseY;
+    float impulseX = normal.x == 0 ? noiseImpulseX/15 : (abs(normal.x) > 0.7f ? normal.x/2 : normal.x)/15 * noiseImpulseX;
+    float impulseY = normal.y == 0 ? 0.05f/15 : normal.y/15 + 0.05f;
     b2Vec2 impulse = b2Vec2(impulseX, impulseY);
     fragment->ApplyLinearImpulseToCenter(impulse, true);
     ProjectileFragment* fragmentEntity = this;
