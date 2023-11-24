@@ -1,12 +1,12 @@
 #include "constants.h"
-
+#include <iostream>
 namespace uiConstants {
 
 //const int DEFAULT_FRAMES = STILL_FRAMES;
 
 
 
-const int MUSIC_VOLUME = CONFIG.getMusicVolume(); //entre 0 y 128
+const int MUSIC_VOLUME = CONFIG.getMusicVolume();
 
 const int WINDOW_WIDTH = 812;
 const int WINDOW_HEIGHT = 812;

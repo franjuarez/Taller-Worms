@@ -9,6 +9,7 @@
 enum action {
     STANDING,
     MOVING,
+    FALLING,
     JUMPING,
     EJECTED,
 };
