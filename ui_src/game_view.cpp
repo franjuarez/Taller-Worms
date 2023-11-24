@@ -443,11 +443,18 @@ void GameView::draw(int i) {
 	drawLosingScreen(i);
 }
 
+void GameView::focusCam() {
+	if ((currentGameStatus.getExplosives().size() >= 1) && (currentGameStatus.getExplosives().begin()->second.getType() != FRAGMENT)) {
+		std::cout << "hay un proyectil al cual seguir" << std::endl;
+	}
+}
+
 
 void GameView::drawGame(int i) {
 
 	
 	mouseHandler.updateCam();
+	focusCam();
 
 	renderer.Clear();
 	renderer.Copy(backgroundSprite, NullOpt, NullOpt);
