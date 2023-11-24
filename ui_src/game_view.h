@@ -84,6 +84,8 @@ private:
 
 	void processInput(SDL_Event event, int i);
 
+	void focusCam();
+
 public:
 	GameView(const std::string& hostname, const std::string& servname);
 	~GameView();

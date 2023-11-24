@@ -18,6 +18,8 @@ public:
 	//pero no quiero pelear ahora con temas de dependencias
 	void handleMovement(int mouseX, int mouseY);
 
+	//void focusCam(int x, int y);
+
 	void updateCam();
 };
 
