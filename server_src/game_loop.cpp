@@ -1,4 +1,5 @@
 #include "game_loop.h"
+#include "../game_src/constants_game.h"
 
 #define CONFIG ConfigLoader::getInstance()
 
@@ -52,6 +53,8 @@ void GameLoop::loopLogic(int64_t elapsed_time) {
 	gameDynamic->setTeamsHealth(teamsHealth);
 	int winnerStatus = updateWinningStatus();
 	gameDynamic->setWinnerTeam(winnerStatus);
+	gameDynamic->setStatus(STARTED);
+
 	statusBroadcaster.broadcast(gameDynamic);
 
 	if (wormPlayingHealth != wormPlayingNewHealth || elapsed_time > CONFIG.getTurnTime() * 1000 ) {

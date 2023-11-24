@@ -28,6 +28,9 @@ enum /* CHEATS */ {
     RENEW_TURN,
 };
 
+#define WAITING 0
+#define STARTED 1
+
 #define PLAYING -1
 #define ALL_LOST -2
 

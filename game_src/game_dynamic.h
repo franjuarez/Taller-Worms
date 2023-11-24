@@ -20,6 +20,7 @@ class GameDynamic : public Serializable {
 private:
     int wormPlayingID;
     int winnerTeam = PLAYING;
+    int status;
     std::vector<WormDTO> worms;
     std::unordered_map<int, ExplosivesDTO> explosives;
     std::vector<uint32_t> teamsHealth;
@@ -28,7 +29,7 @@ public:
     //martu no me mates por esta linea 
     GameDynamic();
     GameDynamic(int wormPlayingID, std::vector<WormDTO>worms, std::unordered_map<int, ExplosivesDTO> explosives);
-    GameDynamic(int wormPlayingID, int winnerTeam, std::vector<WormDTO>worms, std::unordered_map<int, ExplosivesDTO> explosives, std::vector<uint32_t> teamsHealth);
+    GameDynamic(int wormPlayingID, int status, int winnerTeam, std::vector<WormDTO>worms, std::unordered_map<int, ExplosivesDTO> explosives, std::vector<uint32_t> teamsHealth);
 
     void send(Protocol& protocol);
     void addWorms(std::vector<WormDTO>worms);
@@ -46,6 +47,8 @@ public:
     std::vector<uint32_t> getTeamsHealth();
 
     uint32_t getTeamHealth(int team);
+    int getStatus();
+    void setStatus(int status);
     
     GameDynamic& operator=(const GameDynamic& other);
     GameDynamic(const GameDynamic& other);

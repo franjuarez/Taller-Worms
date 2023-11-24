@@ -5,10 +5,10 @@ GameDynamic::GameDynamic() {}
 
 
 GameDynamic::GameDynamic(int wormPlayingID, std::vector<WormDTO>worms, std::unordered_map<int, ExplosivesDTO> explosives)
-: Serializable() ,wormPlayingID(wormPlayingID), worms(worms), explosives(explosives), teamsHealth() {}
+: Serializable() ,wormPlayingID(wormPlayingID), status(WAITING), worms(worms), explosives(explosives), teamsHealth() {}
 
-GameDynamic::GameDynamic(int wormPlayingID, int winnerTeam, std::vector<WormDTO>worms, std::unordered_map<int, ExplosivesDTO> explosives, std::vector<uint32_t> teamsHealth)
-: Serializable() ,wormPlayingID(wormPlayingID), winnerTeam(winnerTeam), worms(worms), explosives(explosives), teamsHealth(teamsHealth) {}
+GameDynamic::GameDynamic(int wormPlayingID, int status, int winnerTeam, std::vector<WormDTO>worms, std::unordered_map<int, ExplosivesDTO> explosives, std::vector<uint32_t> teamsHealth)
+: Serializable() ,wormPlayingID(wormPlayingID), winnerTeam(winnerTeam), status(status), worms(worms), explosives(explosives), teamsHealth(teamsHealth) {}
 
 void GameDynamic::send(Protocol& protocol) {
     protocol.sendDynamic(this);
@@ -54,6 +54,14 @@ uint32_t GameDynamic::getTeamHealth(int team) {
     return this->teamsHealth.at(team);
 }
 
+int GameDynamic::getStatus() {
+    return this->status;
+}
+
+void GameDynamic::setStatus(int newStatus) {
+    this->status = newStatus;
+}
+
 GameDynamic& GameDynamic::operator=(const GameDynamic& other) {
     if (this == &other) {
         return *this;
@@ -63,6 +71,7 @@ GameDynamic& GameDynamic::operator=(const GameDynamic& other) {
     this->worms = other.worms;
     this->explosives = other.explosives;
     this->teamsHealth = other.teamsHealth;
+    this->status = other.status;
     return *this;
 }
 
