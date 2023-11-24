@@ -363,7 +363,9 @@ std::vector<uint32_t> Protocol::receiveVectorInt() {
 }
 
 void Protocol::sendFloat(float num) {
-    skt.sendall(&num, sizeof(num), &was_closed);
+    uint32_t num32 = *reinterpret_cast<uint32_t*>(&num);
+    sendUintThirtyTwo(num32);
+    // skt.sendall(&num, sizeof(num), &was_closed);
     checkClosed();
     // arreglar la falopeada de hacer htons y castear
 }
@@ -392,8 +394,10 @@ void Protocol::sendString(const std::string& str) {
 }
 
 float Protocol::receiveFloat() {
-    float num;  
-    skt.recvall(&num, sizeof(num), &was_closed);
+    uint32_t num32 = receiveUintThirtyTwo();
+    float num = *reinterpret_cast<float*>(&num32); 
+    // skt.recvall(&num, sizeof(num), &was_closed);
+
     checkClosed();
     return num;
 }
