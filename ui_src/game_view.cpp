@@ -447,14 +447,14 @@ void GameView::drawLosingScreen(int i) {
 
 void GameView::drawWaitingScreen(int i) {
 	renderer.Clear();
-	renderer.Copy(backgroundSprite, NullOpt, NullOpt);
+	renderer.Copy(waitingScreen, NullOpt, NullOpt);
 
 
 	Texture dontPanicText(renderer,
-	hudFont.RenderText_Solid("dont panic, waiting for players" ,{255,255,255}));
+	hudFont.RenderText_Solid("dont panic  Waiting for players" ,{255,255,255}));
 
 	Rect textPosition(
-		Point(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2) - dontPanicText.GetSize() , dontPanicText.GetSize());
+		Point(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2) - (dontPanicText.GetSize()/2) , dontPanicText.GetSize());
 
 	renderer.Copy(dontPanicText, NullOpt, textPosition);
 	renderer.Present();
@@ -740,7 +740,6 @@ void GameView::processInput(SDL_Event event, int i) {
 			break;
 
 
-		std::cout << inputState << std::endl;
 		}
 	}
 }
