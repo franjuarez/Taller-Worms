@@ -35,6 +35,7 @@ class Worm : public Entity {
     virtual void beginCollisionWithBeam(Entity* otherBody, b2Contact* contact) override;
     virtual void beginCollisionWithWorm(Entity* otherBody, b2Contact* contact) override;
     virtual void beginCollisionWithProjectile(Entity* otherBody, b2Contact* contact) override;
+    virtual void beginCollisionWithProvitionsSupplyBox(Entity* otherBody, b2Contact* contact) override;
 
     virtual void preSolveCollisionWithBeam(Entity* otherBody, b2Contact* contact, const b2Manifold* oldManifold) override;
 
@@ -69,6 +70,8 @@ class Worm : public Entity {
     bool hasAmmo(int weaponId);
 
     void reduceAmmo(int weaponId);
+
+    void addAmmo(int weaponId, int amount);
 
     //cheats
     void addHealth(int additionalHealth);

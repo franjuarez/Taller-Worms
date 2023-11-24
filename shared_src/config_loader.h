@@ -62,24 +62,24 @@ private:
     //bazooka
     float bazooka_radius;
     float bazooka_damage;
-    int bazooka_starting_ammo;
+    int bazooka_supply_ammo;
 
     //green grenade
     float green_grenade_radius;
     float green_grenade_damage;
-    int green_grenade_starting_ammo;
+    int green_grenade_supply_ammo;
 
     //mortar
     float mortar_radius;
     float mortar_damage;
     int mortar_fragments;
-    int mortar_starting_ammo;
+    int mortar_supply_ammo;
 
     //red grenade
     float red_grenade_radius;
     float red_grenade_damage;
     int red_grenade_fragments;
-    int red_grenade_starting_ammo;
+    int red_grenade_supply_ammo;
 
     //fragment
     float fragment_radius;
@@ -88,27 +88,27 @@ private:
     //banana
     float banana_radius;
     float banana_damage;
-    int banana_starting_ammo;
+    int banana_supply_ammo;
     float banana_bounciness;
 
     //bat
     float bat_damage;
     float bat_impulse_factor;
-    int bat_starting_ammo;
+    int bat_supply_ammo;
 
     //holy grenade
     float holy_grenade_radius;
     float holy_grenade_damage;
-    int holy_grenade_starting_ammo;
+    int holy_grenade_supply_ammo;
 
     //dynamite
     float dynamite_radius;
     float dynamite_damage;
-    int dynamite_starting_ammo;
+    int dynamite_supply_ammo;
 
     //air attack
     float air_attack_missiles;
-    float air_attack_starting_ammo;
+    float air_attack_supply_ammo;
 
     //air attack missiles
     float air_attack_missile_radius;
@@ -170,24 +170,24 @@ public:
     //bazooka
     float getBazookaRadius();
     float getBazookaDamage();
-    int getBazookaStartingAmmo();
+    int getBazookaSupplyAmmo();
 
     //green grenade
     float getGreenGrenadeRadius();
     float getGreenGrenadeDamage();
-    int getGreenGrenadeStartingAmmo();
+    int getGreenGrenadeSupplyAmmo();
 
     //mortar
     float getMortarRadius();
     float getMortarDamage();
     int getMortarFragments();
-    int getMortarStartingAmmo();
+    int getMortarSupplyAmmo();
 
     //red grenade
     float getRedGrenadeRadius();
     float getRedGrenadeDamage();
     int getRedGrenadeFragments();
-    int getRedGrenadeStartingAmmo();
+    int getRedGrenadeSupplyAmmo();
 
     //fragment
     float getFragmentRadius();
@@ -196,27 +196,27 @@ public:
     //banana
     float getBananaRadius();
     float getBananaDamage();
-    int getBananaStartingAmmo();
+    int getBananaSupplyAmmo();
     float getBananaBounciness();
     
     //bat
     float getBatDamage();
     float getBatImpulseFactor();
-    int getBatStartingAmmo();
+    int getBatSupplyAmmo();
 
     //holy grenade
     float getHolyGrenadeRadius();
     float getHolyGrenadeDamage();
-    int getHolyGrenadeStartingAmmo();
+    int getHolyGrenadeSupplyAmmo();
 
     //dynamite
     float getDynamiteRadius();
     float getDynamiteDamage();
-    int getDynamiteStartingAmmo();
+    int getDynamiteSupplyAmmo();
 
     //air attack
     float getAirAttackMissiles();
-    float getAirAttackStartingAmmo();
+    float getAirAttackSupplyAmmo();
 
     //air attack missiles
     float getAirAttackMissileRadius();

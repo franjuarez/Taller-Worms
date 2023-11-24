@@ -29,6 +29,11 @@ void Entity::beginCollisionWithProjectile(Entity* otherBody, b2Contact* contact)
     UNUSED(contact);
 }
 
+void Entity::beginCollisionWithProvitionsSupplyBox(Entity* otherBody, b2Contact* contact) {
+    UNUSED(otherBody);
+    UNUSED(contact);
+}
+
 void Entity::preSolveCollisionWithBeam(Entity* otherBody, b2Contact* contact, const b2Manifold* oldManifold) {
     UNUSED(otherBody);
     UNUSED(contact);

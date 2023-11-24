@@ -48,24 +48,24 @@ projectile:
 bazooka:
   radius: 2
   damage: 50
-  starting_ammo: -1
+  supply_ammo: -1
 
 green_grenade:
   radius: 2
   damage: 30
-  starting_ammo: -1
+  supply_ammo: -1
 
 mortar:
   radius: 2
   damage: 50
   fragments: 6
-  starting_ammo: 10
+  supply_ammo: 10
 
 red_grenade:
   radius: 2
   damage: 30
   fragments: 6
-  starting_ammo: 10
+  supply_ammo: 10
 
 fragments:
   radius: 2
@@ -75,25 +75,25 @@ banana:
   radius: 4
   damage: 70
   bounciness: 0.9
-  starting_ammo: 5
+  supply_ammo: 5
 
 bat:
   damage: 10
   impulse_factor: 0.1
-  starting_ammo: -1
+  supply_ammo: -1
 
 holy_grenade:
   radius: 8
   damage: 110
-  starting_ammo: 2
+  supply_ammo: 2
 
 dynamite:
   radius: 4
   damage: 50
-  starting_ammo: 5
+  supply_ammo: 5
 
 air_attack:
   missiles: 6
-  starting_ammo: 2
+  supply_ammo: 2
   missile_radius: 2
   missile_damage: 40

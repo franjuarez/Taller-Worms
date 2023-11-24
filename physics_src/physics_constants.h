@@ -25,6 +25,10 @@
 
 #define VELOCITY_SMOOTH_BREAK CONFIG.getWormMoveVelocity() * 0.6f
 
+//supply box constants
+#define SUPPLY_BOX_WIDTH 1.5f
+#define SUPPLY_BOX_HEIGHT 1.5f
+
 //Bazooka constants
 #define BAZOOKA_WIDTH 0.25f
 #define BAZOOKA_HEIGHT 0.25f

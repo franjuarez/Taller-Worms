@@ -11,7 +11,11 @@ Worm::~Worm() {}
 
 WormDTO Worm::getDTO(){
     Position pos(body->GetPosition().x, body->GetPosition().y);
+    // float velX = body->GetLinearVelocity().x;
+    // float velY = body->GetLinearVelocity().y;
+    // int isOnGround = this->currentAction == STANDING ? 1 : 0;
     WormDTO dto(id, direction, team, health, pos, weapons);
+    // WormDTO dto(id, direction, team, health, isOnGround, pos, velX, velY, weapons);
     return dto;
 }
 
@@ -70,6 +74,19 @@ void Worm::reduceAmmo(int weaponId){
         return;
     }
     this->weapons[weaponId] = this->weapons[weaponId] == 0 ? 0 : this->weapons[weaponId] - 1;
+}
+
+void Worm::addAmmo(int weaponId, int amount){
+    if(weaponId < 0 || weaponId >= this->weapons.size()){
+        throw std::runtime_error("Invalid weapon id");
+    }
+    if(this->weapons[weaponId] == INFINITE_AMUNITION){
+        return;
+    }
+    this->weapons[weaponId] += amount;
+    // if(this->weapons[weaponId] > CONFIG.getMaxAmmo()){
+    //     this->weapons[weaponId] = CONFIG.getMaxAmmo();
+    // }
 }
 
 void Worm::getAllWeapons(){
@@ -172,6 +189,10 @@ void Worm::applyFallDamage(b2Vec2 vel){
 }
 
 void Worm::beginCollisionWithWater(Entity* otherBody, b2Contact* contact) {
+    otherBody->beginCollisionWithWorm(this, contact);
+}
+
+void Worm::beginCollisionWithProvitionsSupplyBox(Entity* otherBody, b2Contact* contact) {
     otherBody->beginCollisionWithWorm(this, contact);
 }
 

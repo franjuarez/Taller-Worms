@@ -295,6 +295,8 @@ std::vector<WormDTO> Protocol::receiveWorms() {
         Position pos = receivePosition();
         std::vector<int> weapons = receiveWeaponsMap();
         WormDTO worm(id, dir, team, health, pos, weapons);
+            // WormDTO dto(id, direction, team, health, isOnGround, pos, velX, velY, weapons);
+        // WormDTO worm(id, dir, team, health, pos, weapons);
         worms.push_back(worm);
     }
     return worms;

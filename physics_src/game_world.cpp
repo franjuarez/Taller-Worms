@@ -297,6 +297,48 @@ bool GameWorld::teleportWorm(int id, float x, float y){
     return false;
 }
 
+Position GameWorld::calculateValidSupplyBoxPosition(){
+    int maxAttempts = 100;
+    int attempts = 0;
+    float x = rand() % (int) (WORLD_WIDTH - SUPPLY_BOX_WIDTH) + SUPPLY_BOX_WIDTH/2;
+    float y = WORLD_HEIGHT - SUPPLY_BOX_HEIGHT;
+    while(attempts < maxAttempts){
+        //raycast to see if there is something below
+        b2Vec2 rayEnd = b2Vec2(x, 0);
+        SupplyQueryCallback callback;
+        this->world->RayCast(&callback, b2Vec2(x, y), rayEnd);
+        if(callback.foundBeam){
+            return Position(x, y);
+        }
+        attempts++;
+    }
+    // return Position(x, y);
+    throw std::runtime_error("Could not find valid position for supply box"); //cambiar
+}
+
+void GameWorld::createSupplyBox(int type){
+    Position pos = calculateValidSupplyBoxPosition();
+    b2BodyDef bd;
+    bd.type = b2_dynamicBody;
+    bd.position.Set(pos.getX(), pos.getY());
+    b2Body* body = this->world->CreateBody(&bd);
+    b2FixtureDef fd;
+    b2PolygonShape shape;
+    shape.SetAsBox(SUPPLY_BOX_WIDTH/2, SUPPLY_BOX_HEIGHT/2);
+    fd.shape = &shape;
+    fd.density = 1.0f;
+    body->CreateFixture(&fd);
+    body->SetGravityScale(0.5f);//So it falls slower
+
+    if(type == TRAP_SUPPLY){
+        TrapSupplyBox* supplyBoxEntity = new TrapSupplyBox(body, entitiesToRemove, type);
+        body->GetUserData().pointer = reinterpret_cast<uintptr_t>(supplyBoxEntity);
+    } else{
+        ProvitionsSupplyBox* supplyBoxEntity = new ProvitionsSupplyBox(body, entitiesToRemove, type);
+        body->GetUserData().pointer = reinterpret_cast<uintptr_t>(supplyBoxEntity);
+    }
+}
+
 void GameWorld::addHealthToWorm(int id){
     checkWormExists(id);
     b2Body* worm = this->worms[id];
