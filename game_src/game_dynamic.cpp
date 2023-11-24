@@ -1,9 +1,13 @@
 #include "game_dynamic.h"
 
+//martu no me mates por esta linea
+GameDynamic::GameDynamic() {}
+
+
 GameDynamic::GameDynamic(int wormPlayingID, std::vector<WormDTO>worms, std::unordered_map<int, ExplosivesDTO> explosives)
 : Serializable() ,wormPlayingID(wormPlayingID), worms(worms), explosives(explosives), teamsHealth() {}
 
-GameDynamic::GameDynamic(int wormPlayingID, int winnerTeam, std::vector<WormDTO>worms, std::unordered_map<int, ExplosivesDTO> explosives, std::vector<int> teamsHealth)
+GameDynamic::GameDynamic(int wormPlayingID, int winnerTeam, std::vector<WormDTO>worms, std::unordered_map<int, ExplosivesDTO> explosives, std::vector<uint32_t> teamsHealth)
 : Serializable() ,wormPlayingID(wormPlayingID), winnerTeam(winnerTeam), worms(worms), explosives(explosives), teamsHealth(teamsHealth) {}
 
 void GameDynamic::send(Protocol& protocol) {
@@ -38,12 +42,16 @@ void GameDynamic::setWinnerTeam(int winnerTeam) {
     this->winnerTeam = winnerTeam;
 }
 
-void GameDynamic::setTeamsHealth(std::vector<int> teamsHealth) {
+void GameDynamic::setTeamsHealth(std::vector<uint32_t> teamsHealth) {
     this->teamsHealth = teamsHealth;
 }
 
-std::vector<int> GameDynamic::getTeamsHealth() {
+std::vector<uint32_t> GameDynamic::getTeamsHealth() {
     return this->teamsHealth;
+}
+
+uint32_t GameDynamic::getTeamHealth(int team) {
+    return this->teamsHealth.at(team);
 }
 
 GameDynamic& GameDynamic::operator=(const GameDynamic& other) {
@@ -54,6 +62,7 @@ GameDynamic& GameDynamic::operator=(const GameDynamic& other) {
     this->winnerTeam = other.winnerTeam;
     this->worms = other.worms;
     this->explosives = other.explosives;
+    this->teamsHealth = other.teamsHealth;
     return *this;
 }
 

@@ -31,7 +31,7 @@ void GameLoop::loopLogic(int64_t elapsed_time) {
 	
 	std::vector<WormDTO> worms = gameDynamic->getWorms();
 	int wormPlayingNewHealth;
-	std::vector<int> teamsHealth(teams.size(), 0);
+	std::vector<uint32_t> teamsHealth(teams.size(), 0);
 	for (size_t i = 0; i < worms.size(); i++) {
 
 		teamsHealth[worms[i].getTeam()] += worms[i].getHealth();
@@ -48,6 +48,7 @@ void GameLoop::loopLogic(int64_t elapsed_time) {
 		}
 	}
 
+	
 	gameDynamic->setTeamsHealth(teamsHealth);
 	int winnerStatus = updateWinningStatus();
 	gameDynamic->setWinnerTeam(winnerStatus);

@@ -19,6 +19,7 @@
 #define MUSIC_PATH BASE_PATH + "music/AdhesiveWombat_Night Shade.mp3"
 
 #define WORM_LIFE_FONT_PATH BASE_PATH + "fonts/lazy.ttf"
+#define HUB_FONT_PATH BASE_PATH + "fonts/arcadeclassic/ARCADECLASSIC.TTF"
 
 #define BACKGROUND_PATH BASE_PATH + "images/background.png"
 #define LOSING_SCREEN_PATH BASE_PATH + "images/Dark_Souls_You_Died_Screen_-_Completely_Black_Screen_0-2_screenshot.png"
@@ -67,6 +68,7 @@
 #define MORTAR_ICON_PATH BASE_PATH + "images/icons/mortar.bmp"
 #define RGRENADE_ICON_PATH BASE_PATH + "images/icons/rg.bmp"
 #define BANANA_ICON_PATH BASE_PATH + "images/icons/banana.bmp"
+#define CLOCK_PATH BASE_PATH + "images/clockSpriteSheet.png"
 
 
 #define ROCKET_PATH BASE_PATH + "images/rocket.bmp"
@@ -87,7 +89,7 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 		renderer(window, -1 /*any driver*/, SDL_RENDERER_ACCELERATED),
 		mixer(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 4096),
 		sound(MUSIC_PATH), // OGG sound file
-		wormsFont(WORM_LIFE_FONT_PATH, 18),
+		wormsFont(WORM_LIFE_FONT_PATH, 18), hudFont(HUB_FONT_PATH, 42), toolBarFont(WORM_LIFE_FONT_PATH, 11),
 		backgroundSprite(renderer, BACKGROUND_PATH),
 		losingScreen(renderer, LOSING_SCREEN_PATH),
 		beamSprite(renderer, BEAM_PATH),
@@ -96,20 +98,20 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 
 	this->not_closed = true;
 	this->rocketAngle = 45.0f;
-	sound.SetVolume(MUSIC_VOLUME);
+	sound.SetVolume(10);
 
 	client.start();
-	std::shared_ptr<GameMap> gs = std::dynamic_pointer_cast<GameMap>(client.getGameStatus());
+	std::shared_ptr<GameMap> gameMap = std::dynamic_pointer_cast<GameMap>(client.getGameStatus());
 
-	this->team = gs->getTeam();
-	this->nteams = gs->getNumberTeams();
+	this->team = gameMap->getTeam();
+	this->nteams = gameMap->getNumberTeams();
 
 	//rocketSPrites.push_back(/*textura de la explosion*/);
 	
-	std::vector<WormDTO> recievedWorms = gs->getWorms();
+	std::vector<WormDTO> recievedWorms = gameMap->getWorms();
 	loadWorms(recievedWorms);
 	
-	std::vector<BeamDTO> beams = gs->getBeams();
+	std::vector<BeamDTO> beams = gameMap->getBeams();
 	loadBeams(beams);
 
 
@@ -171,6 +173,8 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 	hudTextures.push_back(Texture(renderer, Surface(MORTAR_ICON_PATH).SetColorKey(true, 0)));
 	hudTextures.push_back(Texture(renderer, Surface(RGRENADE_ICON_PATH).SetColorKey(true, 0)));
 	hudTextures.push_back(Texture(renderer, Surface(BANANA_ICON_PATH).SetColorKey(true, 0)));
+	hudTextures.push_back(Texture(renderer, Surface(CLOCK_PATH).SetColorKey(true, 0)));
+
 
 	this->currentWormId = -1;
 	this->bombTimer = 3;
@@ -201,12 +205,14 @@ void GameView::stop() {
 }
 
 void GameView::updateEntities(int i) {
-	std::shared_ptr<GameDynamic> gs = std::dynamic_pointer_cast<GameDynamic>(client.getGameStatus());
+	this->currentGameStatus = *std::dynamic_pointer_cast<GameDynamic>(client.getGameStatus());
+
+	//std::shared_ptr<GameDynamic> gs = std::dynamic_pointer_cast<GameDynamic>(client.getGameStatus());
 	int oldid = this->currentWormId;
 
-	std::vector<WormDTO> recievedWorms = gs->getWorms();
+	std::vector<WormDTO> recievedWorms = currentGameStatus.getWorms();
 
-	this->currentWormId = gs->getWormPlayingID();
+	this->currentWormId = currentGameStatus.getWormPlayingID();
 	if (oldid != currentWormId) {
 		inputState = 0;
 		//bombTimer = 3;
@@ -232,7 +238,7 @@ void GameView::updateEntities(int i) {
 	}
 
 
-	this->winnerTeam = gs->getWinnerTeam();
+	this->winnerTeam = currentGameStatus.getWinnerTeam();
 	if (not anyAlive)
 		winnerTeam = -3;
 
@@ -243,7 +249,7 @@ void GameView::updateEntities(int i) {
 	a medida que actualizo
 	*/
 	
-	this->recievedProjectiles = gs->getExplosives();
+	this->recievedProjectiles = currentGameStatus.getExplosives();
 	for (auto it = recievedProjectiles.begin(); it != recievedProjectiles.end(); it++) {
 		if (projectileViews.find(it->first) != projectileViews.end())
 			continue;
@@ -304,8 +310,23 @@ void GameView::drawWater(int i) {
 }
 
 void GameView::drawHud(int i) {
+
+	SDL_Color color{255, 5, 5};
+
+	//vida total de los equipos
+	int totalHp = currentGameStatus.getTeamHealth(this->team);
+
+	Texture totalHpText(renderer,
+		hudFont.RenderText_Solid("HP " + std::__cxx11::to_string(totalHp),
+		color));
+
+	Rect TotalHpPosition(
+		WINDOW_WIDTH - 100, WINDOW_HEIGHT - 85, 100, 100);
+
+	renderer.Copy(totalHpText, NullOpt, TotalHpPosition);
+	
+	//lo que este abajo de esto no se grafica entre turnos. bueno para cosas especificos de cada worm
 	if (this->currentWormId == -1) {
-		//si no hay nadie jugando no dibujo esto.
 		return;
 	}
 
@@ -319,11 +340,14 @@ void GameView::drawHud(int i) {
 			)
 		);
 
+	//toolbar
 	std::vector<int> weapons = this->currentWorm.getWeapons();
 	int verticalMargin = 2;
 	int toolBarH = 70;
 	int toolBarCellWidth = 70;
 	int toolBarCellMargin = 4;
+
+	float keyHintRelativeSize = 0.2;
 
 	renderer.SetDrawColor(3,3,3, 255);
 	renderer.FillRect(0, 0, 
@@ -331,6 +355,15 @@ void GameView::drawHud(int i) {
 		toolBarH + 2 * verticalMargin);
 
 	renderer.SetDrawColor(15,15,15,175);
+	std::vector<Texture> keybindingsTexts;
+
+	keybindingsTexts.push_back(Texture(renderer, toolBarFont.RenderText_Solid("R", {255, 255, 255})));
+	keybindingsTexts.push_back(Texture(renderer, toolBarFont.RenderText_Solid("T", {255, 255, 255})));
+	keybindingsTexts.push_back(Texture(renderer, toolBarFont.RenderText_Solid("Y", {255, 255, 255})));
+	keybindingsTexts.push_back(Texture(renderer, toolBarFont.RenderText_Solid("U", {255, 255, 255})));
+	keybindingsTexts.push_back(Texture(renderer, toolBarFont.RenderText_Solid("I", {255, 255, 255})));
+	keybindingsTexts.push_back(Texture(renderer, toolBarFont.RenderText_Solid("O", {255, 255, 255})));
+	keybindingsTexts.push_back(Texture(renderer, toolBarFont.RenderText_Solid("P", {255, 255, 255})));
 
 	for (int i = 0; i < weapons.size(); i++) {
 		Rect to(
@@ -345,9 +378,29 @@ void GameView::drawHud(int i) {
 			renderer.SetDrawColor(255,255,255,240);
 			renderer.DrawRect(to);
 			renderer.SetDrawColor(15,15,15,175);
-
 		}
+		Rect keyhintPosition(
+			i*(toolBarCellWidth + toolBarCellMargin) + toolBarCellMargin + (toolBarCellWidth * (1-keyHintRelativeSize)),
+			verticalMargin + (toolBarH * (1-keyHintRelativeSize)),
+			toolBarCellWidth * keyHintRelativeSize,
+			toolBarH * keyHintRelativeSize);
+
+		renderer.Copy(keybindingsTexts[i], NullOpt, keyhintPosition);
+
+
 	}
+
+	renderer.Copy(hudTextures[CLOCK_ICON], Rect(1,1,126,148), Rect(0,WINDOW_HEIGHT-100,100,100));
+
+
+	SDL_Color timeColor{255, 255, 255};
+
+	Texture timerText(renderer,
+		hudFont.RenderText_Solid(std::__cxx11::to_string(bombTimer) + "   sec", timeColor));
+
+
+	renderer.Copy(timerText, NullOpt, Rect(100,WINDOW_HEIGHT-50,50,50));
+
 }
 
 void GameView::drawWinningScreen(int i) {

@@ -19,6 +19,7 @@ class GameView {
 private:
 	//Client stuff
 	Client client;
+	GameDynamic currentGameStatus;
 
 	//basic SDL stuff
 	SDL sdl;
@@ -29,6 +30,8 @@ private:
 	
 	//recursos
 	Font wormsFont;
+	Font hudFont;
+	Font toolBarFont;
 	Chunk sound;
 	Texture backgroundSprite;
 	Texture beamSprite;

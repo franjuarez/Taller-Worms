@@ -61,7 +61,7 @@ GameDynamic* Protocol::receiveDynamic() {
     char winnerTeam = receiveChar();
     std::vector<WormDTO> worms = receiveWorms();
     std::unordered_map<int, ExplosivesDTO> weapons = receiveWeapons();
-    std::vector<int> teamsHealth = receiveVectorInt();
+    std::vector<uint32_t> teamsHealth = receiveVectorInt();
     return new GameDynamic(wormPlayingID, winnerTeam, worms, weapons, teamsHealth);
 }
 
@@ -339,18 +339,18 @@ std::vector<int> Protocol::receiveWeaponsMap() {
     return weaponsMap;
 }
 
-void Protocol::sendVectorInt(std::vector<int> vector) {
+void Protocol::sendVectorInt(std::vector<uint32_t> vector) {
     sendUintEight(vector.size());
     for (int i = 0; i < vector.size(); i++) {
-        sendUintEight(vector[i]);
+        sendUintThirtyTwo(vector[i]);
     }
 }
 
-std::vector<int> Protocol::receiveVectorInt() {
+std::vector<uint32_t> Protocol::receiveVectorInt() {
     uint8_t vectorSize = receiveUintEight();
-    std::vector<int> vector;
+    std::vector<uint32_t> vector;
     for (int i = 0; i < vectorSize; i++) {
-        int number = receiveUintEight();
+        uint32_t number = receiveUintThirtyTwo();
         vector.push_back(number);
     }
     return vector;
