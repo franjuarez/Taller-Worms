@@ -23,15 +23,15 @@ void MouseHandler::updateCam() {
 	//independientemente de si hay un evento tengo que mover la camara si el 
 	//mouse esta en las zonas de movimiento
 	
-	if (this->mousePosX > WINDOW_WIDTH * 0.9) {
+	if (this->mousePosX > WINDOW_WIDTH * 0.9 && this->mousePosX < WINDOW_WIDTH - 10) {
 		this->camX += CONFIG.getCameraSpeed();
-	} else if (this->mousePosX < WINDOW_WIDTH * 0.1) {
+	} else if (this->mousePosX < WINDOW_WIDTH * 0.1 && this->mousePosX > 0) {
 		this->camX -= CONFIG.getCameraSpeed();
 	}
 
-	if (this->mousePosY > WINDOW_HEIGHT * 0.9) {
+	if (this->mousePosY > WINDOW_HEIGHT * 0.9 && this->mousePosY < WINDOW_HEIGHT - 10) {
 		this->camY += CONFIG.getCameraSpeed();
-	} else if (this->mousePosY < WINDOW_HEIGHT * 0.1) {
+	} else if (this->mousePosY < WINDOW_HEIGHT * 0.1 && this->mousePosY > 0) {
 		this->camY -= CONFIG.getCameraSpeed();
 	}
 
