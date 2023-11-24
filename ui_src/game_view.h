@@ -31,6 +31,7 @@ private:
 	//recursos
 	Font wormsFont;
 	Font hudFont;
+	Font toolBarFont;
 	Chunk sound;
 	Texture backgroundSprite;
 	Texture beamSprite;

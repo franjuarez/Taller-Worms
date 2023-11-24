@@ -89,7 +89,7 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 		renderer(window, -1 /*any driver*/, SDL_RENDERER_ACCELERATED),
 		mixer(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 4096),
 		sound(MUSIC_PATH), // OGG sound file
-		wormsFont(WORM_LIFE_FONT_PATH, 18), hudFont(HUB_FONT_PATH, 42),
+		wormsFont(WORM_LIFE_FONT_PATH, 18), hudFont(HUB_FONT_PATH, 42), toolBarFont(WORM_LIFE_FONT_PATH, 11),
 		backgroundSprite(renderer, BACKGROUND_PATH),
 		losingScreen(renderer, LOSING_SCREEN_PATH),
 		beamSprite(renderer, BEAM_PATH),
@@ -313,6 +313,7 @@ void GameView::drawHud(int i) {
 
 	SDL_Color color{255, 5, 5};
 
+	//vida total de los equipos
 	int totalHp = currentGameStatus.getTeamHealth(this->team);
 
 	Texture totalHpText(renderer,
@@ -324,8 +325,8 @@ void GameView::drawHud(int i) {
 
 	renderer.Copy(totalHpText, NullOpt, TotalHpPosition);
 	
+	//lo que este abajo de esto no se grafica entre turnos. bueno para cosas especificos de cada worm
 	if (this->currentWormId == -1) {
-		//si no hay nadie jugando no dibujo esto.
 		return;
 	}
 
@@ -339,11 +340,14 @@ void GameView::drawHud(int i) {
 			)
 		);
 
+	//toolbar
 	std::vector<int> weapons = this->currentWorm.getWeapons();
 	int verticalMargin = 2;
 	int toolBarH = 70;
 	int toolBarCellWidth = 70;
 	int toolBarCellMargin = 4;
+
+	float keyHintRelativeSize = 0.2;
 
 	renderer.SetDrawColor(3,3,3, 255);
 	renderer.FillRect(0, 0, 
@@ -351,6 +355,15 @@ void GameView::drawHud(int i) {
 		toolBarH + 2 * verticalMargin);
 
 	renderer.SetDrawColor(15,15,15,175);
+	std::vector<Texture> keybindingsTexts;
+
+	keybindingsTexts.push_back(Texture(renderer, toolBarFont.RenderText_Solid("R", {255, 255, 255})));
+	keybindingsTexts.push_back(Texture(renderer, toolBarFont.RenderText_Solid("T", {255, 255, 255})));
+	keybindingsTexts.push_back(Texture(renderer, toolBarFont.RenderText_Solid("Y", {255, 255, 255})));
+	keybindingsTexts.push_back(Texture(renderer, toolBarFont.RenderText_Solid("U", {255, 255, 255})));
+	keybindingsTexts.push_back(Texture(renderer, toolBarFont.RenderText_Solid("I", {255, 255, 255})));
+	keybindingsTexts.push_back(Texture(renderer, toolBarFont.RenderText_Solid("O", {255, 255, 255})));
+	keybindingsTexts.push_back(Texture(renderer, toolBarFont.RenderText_Solid("P", {255, 255, 255})));
 
 	for (int i = 0; i < weapons.size(); i++) {
 		Rect to(
@@ -365,8 +378,16 @@ void GameView::drawHud(int i) {
 			renderer.SetDrawColor(255,255,255,240);
 			renderer.DrawRect(to);
 			renderer.SetDrawColor(15,15,15,175);
-
 		}
+		Rect keyhintPosition(
+			i*(toolBarCellWidth + toolBarCellMargin) + toolBarCellMargin + (toolBarCellWidth * (1-keyHintRelativeSize)),
+			verticalMargin + (toolBarH * (1-keyHintRelativeSize)),
+			toolBarCellWidth * keyHintRelativeSize,
+			toolBarH * keyHintRelativeSize);
+
+		renderer.Copy(keybindingsTexts[i], NullOpt, keyhintPosition);
+
+
 	}
 
 	renderer.Copy(hudTextures[CLOCK_ICON], Rect(1,1,126,148), Rect(0,WINDOW_HEIGHT-100,100,100));
