@@ -13,6 +13,7 @@
 
 #define FPS 60.0f
 #define RATE (1000.f / FPS)
+#define AIM_SIZE 1
 
 #define BASE_PATH "../" + CONFIG.getResourcesDirectory() + "/"
 
@@ -70,6 +71,7 @@
 #define RGRENADE_ICON_PATH BASE_PATH + "images/icons/rg.bmp"
 #define BANANA_ICON_PATH BASE_PATH + "images/icons/banana.bmp"
 #define CLOCK_PATH BASE_PATH + "images/clockSpriteSheet.png"
+#define AIM_PATH BASE_PATH + "images/aim_cursor.bmp"
 
 
 #define ROCKET_PATH BASE_PATH + "images/rocket.bmp"
@@ -175,6 +177,9 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 	hudTextures.push_back(Texture(renderer, Surface(RGRENADE_ICON_PATH).SetColorKey(true, 0)));
 	hudTextures.push_back(Texture(renderer, Surface(BANANA_ICON_PATH).SetColorKey(true, 0)));
 	hudTextures.push_back(Texture(renderer, Surface(CLOCK_PATH).SetColorKey(true, 0)));
+	hudTextures.push_back(Texture(renderer, Surface(AIM_PATH).SetColorKey(true, 0)));
+
+
 
 
 	this->currentWormId = -1;
@@ -216,8 +221,10 @@ void GameView::updateEntities(int i) {
 	this->currentWormId = currentGameStatus.getWormPlayingID();
 	if (oldid != currentWormId) {
 		inputState = 0;
+		SDL_ShowCursor(SDL_ENABLE);
 		//bombTimer = 3;
 		if (oldid != -1) { //si se termino el turno
+			std::cout << "entro aca" << std::endl;
 			wormViews.at(oldid).toDefault(0);
 		}
 	}
@@ -405,6 +412,16 @@ void GameView::drawHud(int i) {
 
 	renderer.Copy(timerText, NullOpt, Rect(100,WINDOW_HEIGHT-50,50,50));
 
+	int aimSize = AIM_SIZE * m_to_pix_x;
+	if (inputState != 0) {
+		SDL_ShowCursor(SDL_DISABLE);
+		renderer.Copy(
+			hudTextures[AIM_ICON],
+			Rect(0,0,39,39),
+			Rect(mouseX - (aimSize / 2) , mouseY - (aimSize / 2), aimSize,aimSize)
+			);
+	}
+
 }
 
 void GameView::drawWinningScreen(int i) {
@@ -576,6 +593,8 @@ void GameView::clickCase(int i, int mouseX, int mouseY) {
 	default:
 		return;
 	}
+
+
 }
 
 

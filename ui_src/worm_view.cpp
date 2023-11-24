@@ -228,7 +228,7 @@ WormView::WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets, Fon
 
 int WormView::shoot(int i) {
 	int aux = angle;
-	toDefault(i);
+	//toDefault(i);
 	return aux;
 }
 
