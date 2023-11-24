@@ -423,20 +423,21 @@ void GameView::drawHud(int i) {
 			Rect(0,0,39,39),
 			Rect(mouseX - (aimSize / 2) , mouseY - (aimSize / 2), aimSize,aimSize)
 			);
-	}
 
-	//power indicator
+		//power indicator
 
-	renderer.SetDrawColor(255,5,5,255);
+		renderer.SetDrawColor(255,5,5,255);
 
-	int squares_size = 20;
-	int separation = 5;
-	for (int i = 0; i * (MAX_THROWING_POWER / 10) < throwPower; i ++) {
-		renderer.SetDrawColor(i * 255 / 10, (10-i) * 255 / 10, 5, 250);
-		renderer.FillRect(Rect(
-			WINDOW_WIDTH - (i * (squares_size + separation)) + separation,
-			0, squares_size, squares_size
-		));
+		int squares_size = 20;
+		int separation = 5;
+		for (int i = 0; i * (MAX_THROWING_POWER / 10) < throwPower; i ++) {
+			renderer.SetDrawColor(i * 255 / 10, (10-i) * 255 / 10, 5, 250);
+			renderer.FillRect(Rect(
+				WINDOW_WIDTH - (i * (squares_size + separation)) + separation,
+				0, squares_size, squares_size
+			));
+}
+	
 	}
 
 }
