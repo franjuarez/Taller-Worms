@@ -1,19 +1,23 @@
 #include "lobby.h"
 #include "game_loop.h"
 #include "match_starter.h"
+#include "match_struct.h"
+#include "matches_monitor.h"
+#include "connecting_user.h"
 #include "status_broadcaster.h"
 #include <string>
 #include "../game_src/constants_game.h"
 #include "../game_src/worm_dto.h"
 #include "../game_src/beam_dto.h"
 #include "../game_src/game_map.h"
+
 #include "player.h"
 
 #include <memory>
 
 
 Lobby::Lobby(const std::string& hostname, int numberOfPlayers, std::string mapName, bool* playing) 
-: hostname(hostname), skt(hostname.c_str()), mapName(mapName), commandQueue(90), playing(playing) {
+: hostname(hostname), skt(hostname.c_str()), mapName(mapName), playing(playing) {
     this->numberOfPlayers = numberOfPlayers;
 }
 
@@ -53,54 +57,21 @@ std::vector<Team> Lobby::createTeams(std::vector<WormDTO>& worms) {
 }
     
 void Lobby::run() {
+    MatchesMonitor matchesMonitor;
 
     while (true) {
         Socket peer = skt.accept();
                     
         std::shared_ptr<InfoStruct>infoStruct = std::make_shared<InfoStruct>(std::move(peer));
-        // uso el inof para comunicarme con el cliente pre generar un player 
-        // Orden de msgs:
-            // send -> GameInfo con los mapas disponibles y las partidas available
-            // receive -> NewMatch o JoinMatch
-                // en NewMatch : recibir el map name y el match name
-                // en JoinMatch : recibir el match name
 
-        // Comando -> New Match 
-            
-            // -> MatchName 
+        ConnectingUser* connectingUser = new ConnectingUser(infoStruct, matchesMonitor);
+        connectingUsers.push_back(connectingUser);
 
-            // Comando SelectMap -> 
-
-            MapsLoader mapsLoader(CONFIG.getMapsFile());
-            std::vector<std::string> mapNames = mapsLoader.getMapsNames();
-            Map map = mapsLoader.loadMap(mapName);
-            std::vector<WormDTO> worms = createWorms(map.worms);
-            std::vector<BeamDTO> beams = map.beams;
-
-            std::vector<Team> teams = createTeams(worms);
-
-            // se deberian parsear los archivos con los mapas
-            std::vector<std::string> maps = {"merge speedrun"};
-
-
-            Queue<std::shared_ptr<InfoStruct>>* infoQueue = new Queue<std::shared_ptr<InfoStruct>>();
-            infoQueue->push(infoStruct);
-            
-            std::shared_ptr<GameMap> gameMap = std::make_shared<GameMap>(GameMap(0, numberOfPlayers, mapName, beams, worms));
-            MatchStarter* matchStarter =  new MatchStarter(teams, infoQueue, "un nombre", gameMap, playing);
-            MatchesStruct* matchStruct = new MatchesStruct(matchStarter, infoQueue);
-
-            matches["un nombre"] = matchStruct;
-
-        // Comando -> Join Match -> MatchName
-            Queue<std::shared_ptr<InfoStruct>>* infoQueueMatch = matches["un nombre"]->infoQueue;
-            std::shared_ptr<InfoStruct>infoJoiner = std::make_shared<InfoStruct>(std::move(peer));
-            infoQueueMatch->push(infoJoiner);
-
+        reapDead();
     }
 
     // while (*playing) {
-    //     reapDead();
+    
     // }
 
     // loopActive = false;
@@ -111,10 +82,10 @@ void Lobby::run() {
 }
 
 void Lobby::reapDead() {
-    players.remove_if([](Player* player) {
-        if (!player->isAlive()) {
-            player->join();
-            delete player;
+    connectingUsers.remove_if([](ConnectingUser* connectingUser) {
+        if (!connectingUser->isActive()) {
+            connectingUser->join();
+            delete connectingUser;
             return true;
         } else {
             return false;
@@ -122,15 +93,15 @@ void Lobby::reapDead() {
     });
 }
 
-void Lobby::killAll() {
-    for (auto& player : players ) {
-        if (player->isAlive()) {
-            player->kill();
-        }
-        player->join();
-        delete player;
-    }
-    players.clear();
-}
+// void Lobby::killAll() {
+//     for (auto& player : players ) {
+//         if (player->isAlive()) {
+//             player->kill();
+//         }
+//         player->join();
+//         delete player;
+//     }
+//     players.clear();
+// }
 
 Lobby::~Lobby() {killAll();}

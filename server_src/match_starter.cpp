@@ -12,7 +12,7 @@ teams(teams), playerInfoQueue(playerInfoQueue), matchName(matchName), gameMap(ga
 
 void MatchStarter::run() {
     int idPlayer = 0;
-    Queue<std::shared_ptr<Command>> commandQueue;
+    Queue<std::shared_ptr<Command>> commandQueue(90);
     StatusBroadcaster statusBroadcaster;
     while (idPlayer != numberOfPlayers) {
 

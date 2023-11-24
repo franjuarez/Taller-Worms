@@ -17,7 +17,13 @@ private:
 public: 
     MatchesMonitor();
 
-    void addMatchStruct(MatchesStruct* matchStruct);
+    void addMatchStruct(std::string matchName, MatchesStruct* matchStruct);
+
+    std::map<std::string, std::string> showMatchesAvailable(); 
+
+    void changeMatchStatusToPlaying(std::string matchName);
+
+    ~MatchesMonitor();
 
 };
 

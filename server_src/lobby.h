@@ -8,6 +8,7 @@
 
 #include "player.h"
 #include "match_starter.h"
+#include "constants_server.h"
 
 #include "../shared_src/thread.h"
 #include "../game_src/map_loading/maps_loader.h"
@@ -16,16 +17,9 @@
 #include <atomic>
 
 class Player;
-class InfoStruct;
+struct InfoStruct;
 class MatchStarter;
-
-struct MatchesStruct {
-    MatchStarter* matchStarter;
-    Queue<std::shared_ptr<InfoStruct>>* infoQueue;
-
-    MatchesStruct(MatchStarter* matchStarter, Queue<std::shared_ptr<InfoStruct>>* infoQueue) : matchStarter(matchStarter), infoQueue(infoQueue) {}
-    ~MatchesStruct() {}
-};
+struct MatchesStruct;
 
 class Lobby : public Thread {
 private:
@@ -33,10 +27,8 @@ private:
     Socket skt;
     int numberOfPlayers;
     std::string mapName;
-    std::list<Player*> players;
-    Queue<std::shared_ptr<Command>> commandQueue;
-    
-    std::unordered_map<std::string, MatchesStruct*> matches;
+
+    std::list<ConnectingUser*> connectingUsers;
 
     void reapDead();
     void killAll();
