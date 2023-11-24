@@ -17,7 +17,7 @@ Lobby::Lobby(const std::string& hostname, int numberOfPlayers, std::string mapNa
 std::vector<WormDTO> Lobby::createWorms(std::vector<WormPosition> wormsPositions) {
     std::vector<WormDTO> worms;
     for(size_t i = 0; i < wormsPositions.size(); i++){
-        WormDTO worm(i, STARTING_DIRECTON, STARTING_TEAM, CONFIG.getWormInitialHealth(),
+        WormDTO worm(i, STARTING_DIRECTON, STARTING_TEAM, CONFIG.getWormInitialHealth(), 0.0, 0.0, 1,
          Position(wormsPositions[i].x, wormsPositions[i].y), STARTING_WEAPONS);
         worms.push_back(worm);
     }

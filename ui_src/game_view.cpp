@@ -93,7 +93,7 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 		backgroundSprite(renderer, BACKGROUND_PATH),
 		losingScreen(renderer, LOSING_SCREEN_PATH),
 		beamSprite(renderer, BEAM_PATH),
-		currentWorm(-1, 0, 0, 100, Position(0,0), {}), //-1 para que se sepa que en realidad no hay alguien con turno
+		currentWorm(-1, 0, 0, 100, 0.0, 0.0, 1, Position(0,0), {}), //-1 para que se sepa que en realidad no hay alguien con turno
 		camX(0), camY(0), mouseX(0), mouseY(0), mouseHandler(camX, camY) {
 
 	this->not_closed = true;
