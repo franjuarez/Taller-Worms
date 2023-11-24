@@ -203,14 +203,19 @@ void Worm::beginCollisionWithBeam(Entity* otherBody, b2Contact* contact) {
 
     if(beam->isWalkable()){
         b2Vec2 normal = contact->GetManifold()->localNormal;
-        if(abs(normal.x) == 1 || (normal.y < 0 && normal.y > -1) || (this->currentAction == EJECTED && abs(normal.y) == 1 && beam->getAngle() != 0)){
+        if(normal.y == -1){
+            std::cout << "-1!!!!!! Normal: " << normal.x << ", " << normal.y << std::endl;
+        }
+        if(abs(normal.x) == 1 || (normal.y < 0 && normal.y > -1) || (this->currentAction == EJECTED && normal.y == -1)){
             std::cout << "choco! currentAction: " << currentAction << std::endl;
             std::cout << "con normal: " << normal.x << ", " << normal.y << std::endl;
+            std::cout << "angle " << beam->getAngle() << std::endl;
             this->body->SetLinearDamping(0.0f);
             return;
         }
         this->body->SetLinearVelocity(b2Vec2(0,0));
         this->body->SetLinearDamping(INFINITE_DAMPING);
+        std::cout << "PEGADO: normal: " << normal.x << ", " << normal.y << std::endl;
         this->currentAction = STANDING;
     }
 }
@@ -231,6 +236,7 @@ void Worm::preSolveCollisionWithBeam(Entity* otherBody, b2Contact* contact, cons
     Beam* beam = (Beam*) otherBody;
     if(beam->isWalkable()){
         if(this->currentAction == STANDING){
+            std::cout << "standing" << std::endl;
             this->body->SetLinearDamping(INFINITE_DAMPING);
         }
         if(this->currentAction == MOVING){
@@ -258,8 +264,9 @@ void Worm::postSolveCollisionWithBeam(Entity* otherBody, b2Contact* contact, con
         }
         this->body->SetLinearDamping(INFINITE_DAMPING);
         this->body->SetGravityScale(1.0f);
-        if(this->body->GetLinearVelocity().Length() < VELOCITY_SMOOTH_BREAK){ //For smooth movement
+        if(this->currentAction == MOVING && this->body->GetLinearVelocity().Length() < VELOCITY_SMOOTH_BREAK){ //For smooth movement
             this->body->SetLinearVelocity(b2Vec2(0,0));
+            std::cout << "smooth break" << std::endl;
             this->currentAction = STANDING;
         }
     }
