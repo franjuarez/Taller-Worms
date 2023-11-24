@@ -462,9 +462,7 @@ void GameView::drawWaitingScreen(int i) {
 
 void GameView::draw(int i) {
 	updateEntities(i); 
-	std::cout << currentGameStatus.getStatus() << std::endl;
 	if (this->currentGameStatus.getStatus() == WAITING) {
-		std::cout << "entro aca" << std::endl;
 		drawWaitingScreen(i);
 		return;
 	}
