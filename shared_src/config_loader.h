@@ -18,6 +18,7 @@ private:
     //game
     int fps;
     int turn_time;
+    int extra_time;
     
     //frontend
     int viewfield_x;
@@ -126,6 +127,7 @@ public:
     //game
     int getFps();
     int getTurnTime();
+    int getExtraTime();
 
     //frontend
     int getViewfieldX();

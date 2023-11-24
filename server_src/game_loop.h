@@ -31,7 +31,9 @@ private:
     int wormPlayingID;
     int wormPlayingHealth;
     bool waitingForStatic;
+    bool waitingExtraTime;
     std::chrono::steady_clock::time_point start_time; 
+    std::chrono::steady_clock::time_point start_extra_time;
 
     void loopLogic(int64_t passed_time);
     int updateWinningStatus();

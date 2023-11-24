@@ -5,7 +5,8 @@
 
 Cheats::Cheats(int wormID, int cheatID) : Command(wormID), wormID(wormID), cheatID(cheatID) {}
 
-bool Cheats::executeCommand(GameWorld& gameWorld, bool* cheatOn) {
+bool Cheats::executeCommand(GameWorld& gameWorld, bool* cheatOn, bool& needsMove) {
+    needsMove = needsMove;
     if (cheatID == ADD_HEALTH) {
         gameWorld.addHealthToWorm(wormID); 
     } else if (cheatID == ALL_WEAPONS) {

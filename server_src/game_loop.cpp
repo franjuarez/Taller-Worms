@@ -7,8 +7,9 @@
 GameLoop::GameLoop(Queue<std::shared_ptr<Command>>& commandsQueue, StatusBroadcaster& statusBroadcaster, std::shared_ptr<GameMap> gameMap, std::vector<Team> teams, bool* playing)
 : commandsQueue(commandsQueue), statusBroadcaster(statusBroadcaster), gameWorld(gameMap), teams(teams), playing(playing) {
 	this->teamPlayingID = 0;
-	this->wormPlayingHealth = 100;
-	this->waitingForStatic = false;
+	this->wormPlayingHealth = CONFIG.getWormInitialHealth();
+	this->waitingForStatic = false;	
+	this->waitingExtraTime = false;
 	this->start_time = std::chrono::steady_clock::now();
 	this->cheatOn = false;
 }
@@ -19,11 +20,16 @@ void GameLoop::loopLogic(int64_t elapsed_time) {
 
 	std::shared_ptr<Command> command;
 	while (commandsQueue.try_pop(command) && !waitingForStatic) {
-			waitingForStatic = command->executeCommand(gameWorld, &cheatOn);
-	}
-	gameWorld.update();
 
- 
+			// agregarle un parametro extra a executeCommand para que no se 
+			// ejecuten cosas q no sean de movimiento 
+			waitingExtraTime = command->executeCommand(gameWorld, &cheatOn, waitingExtraTime);
+			if (waitingExtraTime) {
+				this->start_extra_time = std::chrono::steady_clock::now();
+			}
+	}
+
+	gameWorld.update();
 	std::shared_ptr<GameDynamic>gameDynamic(gameWorld.getGameStatus(wormPlayingID));
 	if (waitingForStatic && !cheatOn) {
 		gameDynamic->setWormPlayingID(NO_WORM_PLAYING);
@@ -53,7 +59,20 @@ void GameLoop::loopLogic(int64_t elapsed_time) {
 	gameDynamic->setWinnerTeam(winnerStatus);
 	statusBroadcaster.broadcast(gameDynamic);
 
-	if (wormPlayingHealth != wormPlayingNewHealth || elapsed_time > CONFIG.getTurnTime() * 1000 ) {
+	// std::cout << CONFIG.getTurnTime() << std::endl;
+
+	if (waitingExtraTime) {
+		auto current_time_t = std::chrono::steady_clock::now();
+		auto extraTime = std::chrono::duration_cast<std::chrono::milliseconds>(current_time_t - this->start_extra_time).count();
+
+		if (extraTime > CONFIG.getExtraTime() * 1000 ) {
+			std::cout << extraTime << std::endl;
+			waitingForStatic = true;
+			waitingExtraTime = false;
+		}
+	}
+
+	if ((wormPlayingHealth != wormPlayingNewHealth || elapsed_time > CONFIG.getTurnTime() * 1000 )) {
 		waitingForStatic = true;
 	}
 
@@ -62,11 +81,13 @@ void GameLoop::loopLogic(int64_t elapsed_time) {
 	if (waitingForStatic && !cheatOn) {
 		if(gameWorld.allEntitiesAtRest()) {
 			waitingForStatic = false;
+			waitingExtraTime = false;
 			changeWormPlaying(worms);
 		}
 	} else if (waitingForStatic && cheatOn) {
 		if (gameWorld.allEntitiesAtRest()) {
 			waitingForStatic = false;
+			waitingExtraTime = false;
 		}
 	} 
 
@@ -95,7 +116,6 @@ void GameLoop::changeWormPlaying(std::vector<WormDTO> worms) {
 			teamPlayingID = i;
 			break;
 		}
-
 	}
 
 	wormPlayingID = teams[teamPlayingID].getNextWormID();
@@ -106,7 +126,6 @@ void GameLoop::changeWormPlaying(std::vector<WormDTO> worms) {
 		}
 	}
 	this->start_time = std::chrono::steady_clock::now();
-	// std::cout << "Changing Turn! Team: " << teamPlayingID << " Worm: " << wormPlayingID << std::endl;
 }
 
 int GameLoop::updateWinningStatus() {
