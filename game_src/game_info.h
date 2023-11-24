@@ -21,12 +21,13 @@ public:
 
     void send(Protocol& protocol);
 
+    // cambiar a un map donde diga en q mapa esta cada partida 
+    // los mapNames van a irse harcodeados 
+
     std::vector<std::string> getMatchNames();
     std::vector<std::string> getMapNames();
 
     ~GameInfo();
-
-
 };
 
 #endif
