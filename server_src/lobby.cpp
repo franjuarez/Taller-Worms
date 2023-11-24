@@ -76,7 +76,7 @@ void Lobby::run() {
 
     // loopActive = false;
 
-    killAll();
+    // killAll();
 
     // gameLoop.join();
 }
@@ -104,4 +104,6 @@ void Lobby::reapDead() {
 //     players.clear();
 // }
 
-Lobby::~Lobby() {killAll();}
+Lobby::~Lobby() {
+    // killAll();
+}

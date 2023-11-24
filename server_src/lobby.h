@@ -20,6 +20,7 @@ class Player;
 struct InfoStruct;
 class MatchStarter;
 struct MatchesStruct;
+class ConnectingUser;
 
 class Lobby : public Thread {
 private:
@@ -31,7 +32,7 @@ private:
     std::list<ConnectingUser*> connectingUsers;
 
     void reapDead();
-    void killAll();
+    // void killAll();
 
     std::vector<Team> createTeams(std::vector<WormDTO>& worms);
 

@@ -1,7 +1,7 @@
 #include "connecting_user.h"
 
 ConnectingUser::ConnectingUser(std::shared_ptr<InfoStruct> infoStruct, MatchesMonitor& matchesMonitor) : 
-infoStruct(infoStruct), matchesMonitor(matchesMonitor), status(ACTIVE) {}
+status(ACTIVE), infoStruct(infoStruct), matchesMonitor(matchesMonitor) {}
 
 
 void ConnectingUser::run() {
@@ -86,3 +86,5 @@ std::vector<WormDTO> ConnectingUser::createWorms(std::vector<WormPosition> worms
 bool ConnectingUser::isActive() {
     return status == ACTIVE;
 }
+
+ConnectingUser::~ConnectingUser() {}
