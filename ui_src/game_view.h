@@ -34,6 +34,7 @@ private:
 	Font toolBarFont;
 	Chunk sound;
 	Texture backgroundSprite;
+	Texture waitingScreen;
 	Texture beamSprite;
 	Texture losingScreen;
 	std::vector<Texture> rocketSprites;
@@ -69,6 +70,7 @@ private:
 	void loadWorms(std::vector<WormDTO>& recievedWorms);
 	void loadBeams(std::vector<BeamDTO>& beams);
 	void draw(int i);
+	void drawWaitingScreen(int i);
 	void drawWinningScreen(int i);
 	void drawLosingScreen(int i);
 	void drawGame(int i);

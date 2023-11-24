@@ -22,6 +22,7 @@
 #define HUB_FONT_PATH BASE_PATH + "fonts/arcadeclassic/ARCADECLASSIC.TTF"
 
 #define BACKGROUND_PATH BASE_PATH + "images/background.png"
+#define WAITING_SCREEN_PATH BASE_PATH + "images/dont_panic.bmp"
 #define LOSING_SCREEN_PATH BASE_PATH + "images/Dark_Souls_You_Died_Screen_-_Completely_Black_Screen_0-2_screenshot.png"
 #define BEAM_PATH BASE_PATH + "images/grdl8.png"
 #define STILL_WORM_PATH BASE_PATH + "images/stillworm.bmp"
@@ -90,7 +91,7 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 		mixer(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 4096),
 		sound(MUSIC_PATH), // OGG sound file
 		wormsFont(WORM_LIFE_FONT_PATH, 18), hudFont(HUB_FONT_PATH, 42), toolBarFont(WORM_LIFE_FONT_PATH, 11),
-		backgroundSprite(renderer, BACKGROUND_PATH),
+		backgroundSprite(renderer, BACKGROUND_PATH), waitingScreen(renderer, Surface(WAITING_SCREEN_PATH).SetColorKey(true,0)),
 		losingScreen(renderer, LOSING_SCREEN_PATH),
 		beamSprite(renderer, BEAM_PATH),
 		currentWorm(-1, 0, 0, 100, 0.0, 0.0, 1, Position(0,0), {}), //-1 para que se sepa que en realidad no hay alguien con turno
@@ -429,10 +430,30 @@ void GameView::drawLosingScreen(int i) {
 	renderer.Present();
 }
 
+void GameView::drawWaitingScreen(int i) {
+	renderer.Clear();
+	renderer.Copy(backgroundSprite, NullOpt, NullOpt);
 
+
+	Texture dontPanicText(renderer,
+	hudFont.RenderText_Solid("dont panic, waiting for players" ,{255,255,255}));
+
+	Rect textPosition(
+		Point(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2) - dontPanicText.GetSize() , dontPanicText.GetSize());
+
+	renderer.Copy(dontPanicText, NullOpt, textPosition);
+	renderer.Present();
+}
 
 void GameView::draw(int i) {
 	updateEntities(i); 
+	std::cout << currentGameStatus.getStatus() << std::endl;
+	if (this->currentGameStatus.getStatus() == WAITING) {
+		std::cout << "entro aca" << std::endl;
+		drawWaitingScreen(i);
+		return;
+	}
+
 	if (this->winnerTeam == -1 || (nteams == 1 && winnerTeam != -3)) {
 		drawGame(i);
 		return;

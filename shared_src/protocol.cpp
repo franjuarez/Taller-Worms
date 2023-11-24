@@ -64,7 +64,7 @@ GameDynamic* Protocol::receiveDynamic() {
     std::unordered_map<int, ExplosivesDTO> weapons = receiveWeapons();
     std::vector<uint32_t> teamsHealth = receiveVectorInt();
     uint8_t status = receiveUintEight();
-    return new GameDynamic(wormPlayingID, winnerTeam, status, worms, weapons, teamsHealth);
+    return new GameDynamic(wormPlayingID, status, winnerTeam, worms, weapons, teamsHealth);
 }
 
 void Protocol::sendMove(Move* move) {
