@@ -230,11 +230,6 @@ void GameView::updateEntities(int i) {
 		}
 		if (worm.isAlive())
 			anyAlive = true;
-
-		if (currentWormId != -1 && currentWormId != oldid && currentWormId == worm.getId()) {
-			camX = (worm.getX()) * m_to_pix_x - WINDOW_WIDTH / 2;
-			camY = (worm.getY()) * m_to_pix_y + WINDOW_HEIGHT - WINDOW_HEIGHT / 2;
-		}
 	}
 
 
@@ -443,10 +438,29 @@ void GameView::draw(int i) {
 	drawLosingScreen(i);
 }
 
+
+
 void GameView::focusCam() {
+	float x,y;
+	x = y = -1.0;
 	if ((currentGameStatus.getExplosives().size() >= 1) && (currentGameStatus.getExplosives().begin()->second.getType() != FRAGMENT)) {
-		std::cout << "hay un proyectil al cual seguir" << std::endl;
+		x = currentGameStatus.getExplosives().begin()->second.getX();
+		y = currentGameStatus.getExplosives().begin()->second.getY();
 	}
+	if (x < 0 && y < 0) {/*aca deberia buscar al primero con vel != 0*/}
+
+	if (x < 0 && y < 0 && currentWormId != -1) {
+		x = this->currentWorm.getX();
+		y = this->currentWorm.getY();
+	}
+
+	if (x >= 0 && y >= 0) {
+		camX = x * m_to_pix_x - WINDOW_WIDTH / 2;
+		camY = y * m_to_pix_y + WINDOW_HEIGHT - WINDOW_HEIGHT / 2;
+
+	}
+
+
 }
 
 
