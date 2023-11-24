@@ -14,6 +14,7 @@
 #define FPS 60.0f
 #define RATE (1000.f / FPS)
 #define AIM_SIZE 0.5
+#define MAX_THROWING_POWER 120
 
 #define BASE_PATH "../" + CONFIG.getResourcesDirectory() + "/"
 
@@ -186,6 +187,8 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 	this->bombTimer = 3;
 	this->inputState = 0;
 	this->winnerTeam = -1;
+	this->throwPower = 10;
+	this->buttonPressing = false;
 
 
 }
@@ -221,6 +224,8 @@ void GameView::updateEntities(int i) {
 	this->currentWormId = currentGameStatus.getWormPlayingID();
 	if (oldid != currentWormId) {
 		inputState = 0;
+		buttonPressing = false;
+		throwPower = 10;
 		SDL_ShowCursor(SDL_ENABLE);
 		if (oldid != -1) { //si se termino el turno
 			wormViews.at(oldid).toDefault(0);
@@ -420,6 +425,20 @@ void GameView::drawHud(int i) {
 			);
 	}
 
+	//power indicator
+
+	renderer.SetDrawColor(255,5,5,255);
+
+	int squares_size = 20;
+	int separation = 5;
+	for (int i = 0; i * (MAX_THROWING_POWER / 10) < throwPower; i ++) {
+		renderer.SetDrawColor(i * 255 / 10, (10-i) * 255 / 10, 5, 250);
+		renderer.FillRect(Rect(
+			WINDOW_WIDTH - (i * (squares_size + separation)) + separation,
+			0, squares_size, squares_size
+		));
+	}
+
 }
 
 void GameView::drawWinningScreen(int i) {
@@ -503,7 +522,10 @@ void GameView::focusCam() {
 
 void GameView::drawGame(int i) {
 
-	
+	if (buttonPressing) {
+		this->throwPower++;
+		throwPower %= MAX_THROWING_POWER;
+	}
 	mouseHandler.updateCam();
 	//focusCam();
 
@@ -557,12 +579,12 @@ void GameView::clickCase(int i, int mouseX, int mouseY) {
 	switch (inputState) {
 	case BAZOOKA_CODE:
 		
-		this->client.execute(std::make_shared<LaunchRocket>(LaunchRocket(BAZOOKA, currentWormId, dir, angle, 40.0f)));
+		this->client.execute(std::make_shared<LaunchRocket>(LaunchRocket(BAZOOKA, currentWormId, dir, angle, throwPower)));
 		return;
 	case GGRENADE_CODE:
 		this->client.execute(std::make_shared<ThrowGrenade>(ThrowGrenade(GREEN_GRENADE,
 			this->currentWormId,
-			dir, angle, 40.0f, bombTimer)));
+			dir, angle, throwPower, bombTimer)));
 		return;
 	case BAT_CODE:
 		this->wormViews.at(this->currentWormId).hit(i);
@@ -573,17 +595,17 @@ void GameView::clickCase(int i, int mouseX, int mouseY) {
 		this->client.execute(std::make_shared<Teleport>(Teleport(currentWormId, pos)));		
 		return;
 	case MORTAR_CODE:
-		this->client.execute(std::make_shared<LaunchRocket>(LaunchRocket(MORTAR, currentWormId, dir, angle, 40.0f)));
+		this->client.execute(std::make_shared<LaunchRocket>(LaunchRocket(MORTAR, currentWormId, dir, angle, throwPower)));
 		return;
 	case RGRENADE_CODE:
 		this->client.execute(std::make_shared<ThrowGrenade>(ThrowGrenade(RED_GRENADE,
 			this->currentWormId,
-			dir, angle, 40.0f, bombTimer)));
+			dir, angle, throwPower, bombTimer)));
 			return;
 	case BANANA_CODE:
 		this->client.execute(std::make_shared<ThrowGrenade>(ThrowGrenade(BANANA,
 			this->currentWormId,
-			dir, angle, 40.0f, bombTimer)));
+			dir, angle, throwPower, bombTimer)));
 		return;
 
 	default:
@@ -602,8 +624,14 @@ void GameView::processInput(SDL_Event event, int i) {
 	if (event.type == SDL_MOUSEBUTTONDOWN) {
 		if (inputState == 0)
 			return;
+		buttonPressing = true;
 
+	}
+
+	if (event.type == SDL_MOUSEBUTTONUP) {
+		buttonPressing = false;
 		clickCase(i, mouseX, mouseY);
+		throwPower = 10;
 	}
 	if (event.type == SDL_MOUSEWHEEL){
 		if (event.wheel.y > 0) {

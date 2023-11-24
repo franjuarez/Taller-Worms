@@ -65,6 +65,8 @@ private:
 	int bombTimer;
 	int winnerTeam;
 	int nteams;
+	int throwPower;
+	bool buttonPressing;
 
 	void updateEntities(int i);
 	void loadWorms(std::vector<WormDTO>& recievedWorms);
