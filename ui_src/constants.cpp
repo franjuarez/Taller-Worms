@@ -6,7 +6,7 @@ namespace uiConstants {
 
 
 
-const int MUSIC_VOLUME = 15; //entre 0 y 128
+const int MUSIC_VOLUME = CONFIG.getMusicVolume(); //entre 0 y 128
 
 const int WINDOW_WIDTH = 812;
 const int WINDOW_HEIGHT = 812;
