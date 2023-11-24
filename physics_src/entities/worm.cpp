@@ -82,9 +82,9 @@ void Worm::getAllWeapons(){
 }
 
 void Worm::move(int direction){
-    if(this->currentAction == JUMPING || this->currentAction == EJECTED){
-        return;
-    }
+    //if(/*this->currentAction == JUMPING ||*/ this->currentAction == EJECTED){
+    //    return;
+    //}
     
     this->currentAction = MOVING;
     this->direction = direction;

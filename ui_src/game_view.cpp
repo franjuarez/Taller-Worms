@@ -13,7 +13,7 @@
 
 #define FPS 60.0f
 #define RATE (1000.f / FPS)
-#define AIM_SIZE 1
+#define AIM_SIZE 0.5
 
 #define BASE_PATH "../" + CONFIG.getResourcesDirectory() + "/"
 
@@ -222,9 +222,7 @@ void GameView::updateEntities(int i) {
 	if (oldid != currentWormId) {
 		inputState = 0;
 		SDL_ShowCursor(SDL_ENABLE);
-		//bombTimer = 3;
 		if (oldid != -1) { //si se termino el turno
-			std::cout << "entro aca" << std::endl;
 			wormViews.at(oldid).toDefault(0);
 		}
 	}
@@ -426,7 +424,7 @@ void GameView::drawHud(int i) {
 
 void GameView::drawWinningScreen(int i) {
 	renderer.Clear();
-	renderer.Copy(backgroundSprite, NullOpt, NullOpt);
+	renderer.Copy(waitingScreen, NullOpt, NullOpt);
 	drawBeams(i);
 
 	for (auto it = wormViews.begin(); it != wormViews.end(); it++) {
