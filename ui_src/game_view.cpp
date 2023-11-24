@@ -222,6 +222,8 @@ void GameView::updateEntities(int i) {
 	}
 
 
+
+
 	bool anyAlive = false;
 	for (auto &worm : recievedWorms) {
 		this->wormViews.at(worm.getId()).update(worm, i);
@@ -232,6 +234,12 @@ void GameView::updateEntities(int i) {
 			anyAlive = true;
 	}
 
+	if (oldid != currentWormId && currentWormId != -1) {
+		camX = currentWorm.getX() * m_to_pix_x - WINDOW_WIDTH / 2;
+		camY = currentWorm.getY() * m_to_pix_y + WINDOW_HEIGHT - WINDOW_HEIGHT / 2;
+	} else {
+		focusCam();
+	}
 
 	this->winnerTeam = currentGameStatus.getWinnerTeam();
 	if (not anyAlive)
@@ -449,11 +457,6 @@ void GameView::focusCam() {
 	}
 	if (x < 0 && y < 0) {/*aca deberia buscar al primero con vel != 0*/}
 
-	if (x < 0 && y < 0 && currentWormId != -1) {
-		x = this->currentWorm.getX();
-		y = this->currentWorm.getY();
-	}
-
 	if (x >= 0 && y >= 0) {
 		camX = x * m_to_pix_x - WINDOW_WIDTH / 2;
 		camY = y * m_to_pix_y + WINDOW_HEIGHT - WINDOW_HEIGHT / 2;
@@ -468,7 +471,7 @@ void GameView::drawGame(int i) {
 
 	
 	mouseHandler.updateCam();
-	focusCam();
+	//focusCam();
 
 	renderer.Clear();
 	renderer.Copy(backgroundSprite, NullOpt, NullOpt);
