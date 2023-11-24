@@ -98,7 +98,7 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 
 	this->not_closed = true;
 	this->rocketAngle = 45.0f;
-	sound.SetVolume(10);
+	sound.SetVolume(MUSIC_VOLUME);
 
 	client.start();
 	std::shared_ptr<GameMap> gameMap = std::dynamic_pointer_cast<GameMap>(client.getGameStatus());

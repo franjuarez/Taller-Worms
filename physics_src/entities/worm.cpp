@@ -11,6 +11,9 @@ Worm::~Worm() {}
 
 WormDTO Worm::getDTO(){
     Position pos(body->GetPosition().x, body->GetPosition().y);
+    // float velX = body->GetLinearVelocity().x;
+    // float velY = body->GetLinearVelocity().y;
+    // bool onGround = currentAction == STANDING || currentAction == MOVING;
     WormDTO dto(id, direction, team, health, pos, weapons);
     return dto;
 }
@@ -263,7 +266,6 @@ void Worm::postSolveCollisionWithBeam(Entity* otherBody, b2Contact* contact, con
 void Worm::endCollisionWithBeam(Entity* otherBody, b2Contact* contact) {
     this->body->SetLinearDamping(STANDARD_DAMPING);
     this->body->SetGravityScale(1.0f);
-    this->currentAction = this->currentAction == JUMPING ? JUMPING : EJECTED;
     UNUSED(otherBody);
     UNUSED(contact);
 }
