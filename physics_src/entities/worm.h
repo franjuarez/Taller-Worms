@@ -7,11 +7,11 @@
 #include "../../game_src/worm_dto.h"
 
 enum action {
-    STANDING,
-    MOVING,
-    FALLING,
-    JUMPING,
-    EJECTED,
+    STANDING, //0
+    MOVING, //1
+    FALLING, //2
+    JUMPING, //3
+    EJECTED, //4
 };
 
 class Worm : public Entity {
