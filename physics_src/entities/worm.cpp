@@ -82,9 +82,9 @@ void Worm::getAllWeapons(){
 }
 
 void Worm::move(int direction){
-    //if(/*this->currentAction == JUMPING ||*/ this->currentAction == EJECTED){
-    //    return;
-    //}
+    if(this->currentAction == JUMPING || this->currentAction == EJECTED){
+       return;
+    }
     
     this->currentAction = MOVING;
     this->direction = direction;
@@ -203,7 +203,9 @@ void Worm::beginCollisionWithBeam(Entity* otherBody, b2Contact* contact) {
 
     if(beam->isWalkable()){
         b2Vec2 normal = contact->GetManifold()->localNormal;
-        if(abs(normal.x) == 1 || normal.y < 0 || (this->currentAction == EJECTED && abs(normal.y) == 1 && beam->getAngle() != 0)){
+        if(abs(normal.x) == 1 || (normal.y < 0 && normal.y > -1) || (this->currentAction == EJECTED && abs(normal.y) == 1 && beam->getAngle() != 0)){
+            std::cout << "choco! currentAction: " << currentAction << std::endl;
+            std::cout << "con normal: " << normal.x << ", " << normal.y << std::endl;
             this->body->SetLinearDamping(0.0f);
             return;
         }
