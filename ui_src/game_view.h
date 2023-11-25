@@ -10,6 +10,7 @@
 #include "mouse_handler.h"
 #include "../game_src/game_dynamic.h"
 #include "../client_src/client.h"
+#include "../shared_src/protocol.h"
 #include "beam_view.h"
 
 using namespace uiConstants;
@@ -82,7 +83,7 @@ private:
 	void processInput(SDL_Event event, int i);
 
 public:
-	GameView(const std::string& hostname, const std::string& servname);
+	GameView(Protocol& prot);
 	~GameView();
 
 	void start();

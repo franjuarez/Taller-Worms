@@ -191,7 +191,7 @@ std::shared_ptr<Command> Protocol::receiveCommand() {
         return receiveThrowGrenade();
     } else if (protocolCode == SEND_COMMAND_CHEAT) {
         return receiveCheats();
-    } else if (protocolCode == SEND_INFO) {
+    } else if (protocolCode == SEND_COMMAND_MATCH) {
         return receiveMatchCommand();
     }
 

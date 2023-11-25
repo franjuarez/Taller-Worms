@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-Client::Client(const std::string& hostname, const std::string& servname) : protocol(hostname, servname)
+Client::Client(Protocol& prot) : protocol(std::move(prot.getSocket()))
 , gameStatusQueue(900)
 , commandsQueue(900)
 , sender(protocol, std::ref(commandsQueue), keepTalking)

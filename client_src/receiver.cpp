@@ -13,10 +13,6 @@ Receiver::Receiver(Protocol& protocol, Queue<std::shared_ptr<Serializable>>& q, 
 
 void Receiver::run() {
     try {
-        // std::shared_ptr<Serializable>gameDynamic(protocol.receiveSerializable());
-        // std::shared_ptr<GameInfo> gs = std::dynamic_pointer_cast<GameInfo>(gameDynamic);
-        // std::cout << gs->getMatchesAvailable().size() << std::endl;
-
         while (keepTalking) {
             std::shared_ptr<Serializable>gameDynamic(protocol.receiveSerializable());
             gameStatuses.push(gameDynamic);

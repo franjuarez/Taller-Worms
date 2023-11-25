@@ -1,4 +1,5 @@
 #include "../ui_src/game_view.h"
+#include "client_lobby.h"
 
 #include <iostream>
 
@@ -12,7 +13,12 @@ int main(int argc, char** argv) {
 	}
 
 	try {
-		GameView gv(argv[1], argv[2]);
+		
+		ClientLobby cl(argv[1], argv[2]);
+
+		cl.run();
+
+		GameView gv(cl.prot);
 		gv.start();
 		gv.join();
 	} catch (const std::exception& e) {

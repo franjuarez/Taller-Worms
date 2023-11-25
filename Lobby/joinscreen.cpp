@@ -26,16 +26,16 @@ void JoinScreen::on_lineEdit_textEdited(const QString &arg1)
 
 void JoinScreen::on_pushButton_clicked()
 {
-    try {
-    GameView gv(address.toStdString(), port.toStdString());
-    this->hide();
+    // try {
+    // GameView gv(address.toStdString(), port.toStdString());
+    // this->hide();
 
-    gv.start();
-    gv.join();
-    QApplication::quit();
-    } catch (const std::exception& e) {
-        std::cerr << e.what() << std::endl;
-    }
+    // gv.start();
+    // gv.join();
+    // QApplication::quit();
+    // } catch (const std::exception& e) {
+    //     std::cerr << e.what() << std::endl;
+    // }
 
 }
 

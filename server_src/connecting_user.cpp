@@ -1,5 +1,7 @@
 #include "connecting_user.h"
 #include "../game_src/game_info.h"
+#include "../game_src/commands/match_command.h"
+
 
 ConnectingUser::ConnectingUser(std::shared_ptr<InfoStruct> infoStruct, MatchesMonitor& matchesMonitor, bool* playing, int loops) : 
 status(ACTIVE), infoStruct(infoStruct), matchesMonitor(matchesMonitor), playing(playing), loops(loops) {}
@@ -7,24 +9,25 @@ status(ACTIVE), infoStruct(infoStruct), matchesMonitor(matchesMonitor), playing(
 
 void ConnectingUser::run() {
 
-    // GameInfo info(matchesMonitor.showMatchesAvailable());
-    // infoStruct->prot.sendInfo(&info);
-    //     // receive -> NewMatch o JoinMatch
-    //         // en NewMatch : recibir el map name y el match name
-    //         // en JoinMatch : recibir el match name
+    GameInfo info(matchesMonitor.showMatchesAvailable());
+    infoStruct->prot.sendInfo(&info);
+        // receive -> NewMatch o JoinMatch
+            // en NewMatch : recibir el map name y el match name
+            // en JoinMatch : recibir el match name
 
-    // while (status == ACTIVE) {
-    //     std::shared_ptr<Command> command = infoStruct->prot.receiveCommand();
-    //     command->executeCommand(*this);
-    // }
-
-    if (loops == 0) {
-        createNewMatch(1, "hola", "small");
-    } else if (loops == 1) {
-        createNewMatch(2, "chauchis", "medium");
-    } else if (loops == 2) {
-        joinMatch("chauchis");
+    while (status == ACTIVE) {
+        std::shared_ptr<Command> command = infoStruct->prot.receiveCommand();
+        std::shared_ptr<MatchCommand> mc = std::dynamic_pointer_cast<MatchCommand>(command);
+        if (mc->getType() == NEW_MATCH) {
+            createNewMatch(mc->getNrPlayers(), mc->getMatchName(), mc->getMapName());
+        } else if (mc->getType() == JOIN) {
+            joinMatch(mc->getMatchName());
+        } else if (mc->getType() == REFRESH) {
+            refresh();
+        }
     }
+
+
 
     
 

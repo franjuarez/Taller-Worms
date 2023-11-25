@@ -25,7 +25,7 @@ private:
 	bool keepTalking = true;
 	
 public:
-	Client(const std::string& hostname, const std::string& servname);
+	Client(Protocol& prot);
 	~Client();
 
 	std::shared_ptr<Serializable> getGameStatus();
