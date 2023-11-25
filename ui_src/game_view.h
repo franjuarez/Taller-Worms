@@ -19,6 +19,7 @@ class GameView {
 private:
 	//Client stuff
 	Client client;
+	GameDynamic currentGameStatus;
 
 	//basic SDL stuff
 	SDL sdl;
@@ -29,8 +30,11 @@ private:
 	
 	//recursos
 	Font wormsFont;
+	Font hudFont;
+	Font toolBarFont;
 	Chunk sound;
 	Texture backgroundSprite;
+	Texture waitingScreen;
 	Texture beamSprite;
 	Texture losingScreen;
 	std::vector<Texture> rocketSprites;
@@ -61,11 +65,14 @@ private:
 	int bombTimer;
 	int winnerTeam;
 	int nteams;
+	int throwPower;
+	bool buttonPressing;
 
 	void updateEntities(int i);
 	void loadWorms(std::vector<WormDTO>& recievedWorms);
 	void loadBeams(std::vector<BeamDTO>& beams);
 	void draw(int i);
+	void drawWaitingScreen(int i);
 	void drawWinningScreen(int i);
 	void drawLosingScreen(int i);
 	void drawGame(int i);
@@ -80,6 +87,8 @@ private:
 	void clickCase(int i, int x, int y);
 
 	void processInput(SDL_Event event, int i);
+
+	void focusCam();
 
 public:
 	GameView(const std::string& hostname, const std::string& servname);

@@ -13,14 +13,18 @@
 
 #define FPS 60.0f
 #define RATE (1000.f / FPS)
+#define AIM_SIZE 0.5
+#define MAX_THROWING_POWER 120
 
 #define BASE_PATH "../" + CONFIG.getResourcesDirectory() + "/"
 
 #define MUSIC_PATH BASE_PATH + "music/AdhesiveWombat_Night Shade.mp3"
 
 #define WORM_LIFE_FONT_PATH BASE_PATH + "fonts/lazy.ttf"
+#define HUB_FONT_PATH BASE_PATH + "fonts/arcadeclassic/ARCADECLASSIC.TTF"
 
 #define BACKGROUND_PATH BASE_PATH + "images/background.png"
+#define WAITING_SCREEN_PATH BASE_PATH + "images/dont_panic.bmp"
 #define LOSING_SCREEN_PATH BASE_PATH + "images/Dark_Souls_You_Died_Screen_-_Completely_Black_Screen_0-2_screenshot.png"
 #define BEAM_PATH BASE_PATH + "images/grdl8.png"
 #define STILL_WORM_PATH BASE_PATH + "images/stillworm.bmp"
@@ -67,6 +71,8 @@
 #define MORTAR_ICON_PATH BASE_PATH + "images/icons/mortar.bmp"
 #define RGRENADE_ICON_PATH BASE_PATH + "images/icons/rg.bmp"
 #define BANANA_ICON_PATH BASE_PATH + "images/icons/banana.bmp"
+#define CLOCK_PATH BASE_PATH + "images/clockSpriteSheet.png"
+#define AIM_PATH BASE_PATH + "images/aim_cursor.bmp"
 
 
 #define ROCKET_PATH BASE_PATH + "images/rocket.bmp"
@@ -87,11 +93,11 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 		renderer(window, -1 /*any driver*/, SDL_RENDERER_ACCELERATED),
 		mixer(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 4096),
 		sound(MUSIC_PATH), // OGG sound file
-		wormsFont(WORM_LIFE_FONT_PATH, 18),
-		backgroundSprite(renderer, BACKGROUND_PATH),
+		wormsFont(WORM_LIFE_FONT_PATH, 18), hudFont(HUB_FONT_PATH, 42), toolBarFont(WORM_LIFE_FONT_PATH, 11),
+		backgroundSprite(renderer, BACKGROUND_PATH), waitingScreen(renderer, Surface(WAITING_SCREEN_PATH).SetColorKey(true,0)),
 		losingScreen(renderer, LOSING_SCREEN_PATH),
 		beamSprite(renderer, BEAM_PATH),
-		currentWorm(-1, 0, 0, 100, Position(0,0), {}), //-1 para que se sepa que en realidad no hay alguien con turno
+		currentWorm(-1, 0, 0, 100, 0.0, 0.0, 1, Position(0,0), {}), //-1 para que se sepa que en realidad no hay alguien con turno
 		camX(0), camY(0), mouseX(0), mouseY(0), mouseHandler(camX, camY) {
 
 	this->not_closed = true;
@@ -99,17 +105,17 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 	sound.SetVolume(MUSIC_VOLUME);
 
 	client.start();
-	std::shared_ptr<GameMap> gs = std::dynamic_pointer_cast<GameMap>(client.getGameStatus());
+	std::shared_ptr<GameMap> gameMap = std::dynamic_pointer_cast<GameMap>(client.getGameStatus());
 
-	this->team = gs->getTeam();
-	this->nteams = gs->getNumberTeams();
+	this->team = gameMap->getTeam();
+	this->nteams = gameMap->getNumberTeams();
 
 	//rocketSPrites.push_back(/*textura de la explosion*/);
 	
-	std::vector<WormDTO> recievedWorms = gs->getWorms();
+	std::vector<WormDTO> recievedWorms = gameMap->getWorms();
 	loadWorms(recievedWorms);
 	
-	std::vector<BeamDTO> beams = gs->getBeams();
+	std::vector<BeamDTO> beams = gameMap->getBeams();
 	loadBeams(beams);
 
 
@@ -171,11 +177,18 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 	hudTextures.push_back(Texture(renderer, Surface(MORTAR_ICON_PATH).SetColorKey(true, 0)));
 	hudTextures.push_back(Texture(renderer, Surface(RGRENADE_ICON_PATH).SetColorKey(true, 0)));
 	hudTextures.push_back(Texture(renderer, Surface(BANANA_ICON_PATH).SetColorKey(true, 0)));
+	hudTextures.push_back(Texture(renderer, Surface(CLOCK_PATH).SetColorKey(true, 0)));
+	hudTextures.push_back(Texture(renderer, Surface(AIM_PATH).SetColorKey(true, 0)));
+
+
+
 
 	this->currentWormId = -1;
 	this->bombTimer = 3;
 	this->inputState = 0;
 	this->winnerTeam = -1;
+	this->throwPower = 10;
+	this->buttonPressing = false;
 
 
 }
@@ -201,19 +214,25 @@ void GameView::stop() {
 }
 
 void GameView::updateEntities(int i) {
-	std::shared_ptr<GameDynamic> gs = std::dynamic_pointer_cast<GameDynamic>(client.getGameStatus());
+	this->currentGameStatus = *std::dynamic_pointer_cast<GameDynamic>(client.getGameStatus());
+
+	//std::shared_ptr<GameDynamic> gs = std::dynamic_pointer_cast<GameDynamic>(client.getGameStatus());
 	int oldid = this->currentWormId;
 
-	std::vector<WormDTO> recievedWorms = gs->getWorms();
+	std::vector<WormDTO> recievedWorms = currentGameStatus.getWorms();
 
-	this->currentWormId = gs->getWormPlayingID();
+	this->currentWormId = currentGameStatus.getWormPlayingID();
 	if (oldid != currentWormId) {
 		inputState = 0;
-		//bombTimer = 3;
+		buttonPressing = false;
+		throwPower = 10;
+		SDL_ShowCursor(SDL_ENABLE);
 		if (oldid != -1) { //si se termino el turno
 			wormViews.at(oldid).toDefault(0);
 		}
 	}
+
+
 
 
 	bool anyAlive = false;
@@ -224,15 +243,16 @@ void GameView::updateEntities(int i) {
 		}
 		if (worm.isAlive())
 			anyAlive = true;
-
-		if (currentWormId != -1 && currentWormId != oldid && currentWormId == worm.getId()) {
-			camX = (worm.getX()) * m_to_pix_x - WINDOW_WIDTH / 2;
-			camY = (worm.getY()) * m_to_pix_y + WINDOW_HEIGHT - WINDOW_HEIGHT / 2;
-		}
 	}
 
+	if (oldid != currentWormId && currentWormId != -1) {
+		camX = currentWorm.getX() * m_to_pix_x - WINDOW_WIDTH / 2;
+		camY = currentWorm.getY() * m_to_pix_y + WINDOW_HEIGHT - WINDOW_HEIGHT / 2;
+	} else {
+		focusCam();
+	}
 
-	this->winnerTeam = gs->getWinnerTeam();
+	this->winnerTeam = currentGameStatus.getWinnerTeam();
 	if (not anyAlive)
 		winnerTeam = -3;
 
@@ -243,7 +263,7 @@ void GameView::updateEntities(int i) {
 	a medida que actualizo
 	*/
 	
-	this->recievedProjectiles = gs->getExplosives();
+	this->recievedProjectiles = currentGameStatus.getExplosives();
 	for (auto it = recievedProjectiles.begin(); it != recievedProjectiles.end(); it++) {
 		if (projectileViews.find(it->first) != projectileViews.end())
 			continue;
@@ -304,8 +324,23 @@ void GameView::drawWater(int i) {
 }
 
 void GameView::drawHud(int i) {
+
+	SDL_Color color{255, 5, 5};
+
+	//vida total de los equipos
+	int totalHp = currentGameStatus.getTeamHealth(this->team);
+
+	Texture totalHpText(renderer,
+		hudFont.RenderText_Solid("HP " + std::__cxx11::to_string(totalHp),
+		color));
+
+	Rect TotalHpPosition(
+		WINDOW_WIDTH - 100, WINDOW_HEIGHT - 85, 100, 100);
+
+	renderer.Copy(totalHpText, NullOpt, TotalHpPosition);
+	
+	//lo que este abajo de esto no se grafica entre turnos. bueno para cosas especificos de cada worm
 	if (this->currentWormId == -1) {
-		//si no hay nadie jugando no dibujo esto.
 		return;
 	}
 
@@ -319,11 +354,14 @@ void GameView::drawHud(int i) {
 			)
 		);
 
+	//toolbar
 	std::vector<int> weapons = this->currentWorm.getWeapons();
 	int verticalMargin = 2;
 	int toolBarH = 70;
 	int toolBarCellWidth = 70;
 	int toolBarCellMargin = 4;
+
+	float keyHintRelativeSize = 0.2;
 
 	renderer.SetDrawColor(3,3,3, 255);
 	renderer.FillRect(0, 0, 
@@ -331,6 +369,15 @@ void GameView::drawHud(int i) {
 		toolBarH + 2 * verticalMargin);
 
 	renderer.SetDrawColor(15,15,15,175);
+	std::vector<Texture> keybindingsTexts;
+
+	keybindingsTexts.push_back(Texture(renderer, toolBarFont.RenderText_Solid("R", {255, 255, 255})));
+	keybindingsTexts.push_back(Texture(renderer, toolBarFont.RenderText_Solid("T", {255, 255, 255})));
+	keybindingsTexts.push_back(Texture(renderer, toolBarFont.RenderText_Solid("Y", {255, 255, 255})));
+	keybindingsTexts.push_back(Texture(renderer, toolBarFont.RenderText_Solid("U", {255, 255, 255})));
+	keybindingsTexts.push_back(Texture(renderer, toolBarFont.RenderText_Solid("I", {255, 255, 255})));
+	keybindingsTexts.push_back(Texture(renderer, toolBarFont.RenderText_Solid("O", {255, 255, 255})));
+	keybindingsTexts.push_back(Texture(renderer, toolBarFont.RenderText_Solid("P", {255, 255, 255})));
 
 	for (int i = 0; i < weapons.size(); i++) {
 		Rect to(
@@ -345,14 +392,59 @@ void GameView::drawHud(int i) {
 			renderer.SetDrawColor(255,255,255,240);
 			renderer.DrawRect(to);
 			renderer.SetDrawColor(15,15,15,175);
-
 		}
+		Rect keyhintPosition(
+			i*(toolBarCellWidth + toolBarCellMargin) + toolBarCellMargin + (toolBarCellWidth * (1-keyHintRelativeSize)),
+			verticalMargin + (toolBarH * (1-keyHintRelativeSize)),
+			toolBarCellWidth * keyHintRelativeSize,
+			toolBarH * keyHintRelativeSize);
+
+		renderer.Copy(keybindingsTexts[i], NullOpt, keyhintPosition);
+
+
 	}
+
+	renderer.Copy(hudTextures[CLOCK_ICON], Rect(1,1,126,148), Rect(0,WINDOW_HEIGHT-100,100,100));
+
+
+	SDL_Color timeColor{255, 255, 255};
+
+	Texture timerText(renderer,
+		hudFont.RenderText_Solid(std::__cxx11::to_string(bombTimer) + "   sec", timeColor));
+
+
+	renderer.Copy(timerText, NullOpt, Rect(100,WINDOW_HEIGHT-50,50,50));
+
+	int aimSize = AIM_SIZE * m_to_pix_x;
+	if (inputState != 0) {
+		SDL_ShowCursor(SDL_DISABLE);
+		renderer.Copy(
+			hudTextures[AIM_ICON],
+			Rect(0,0,39,39),
+			Rect(mouseX - (aimSize / 2) , mouseY - (aimSize / 2), aimSize,aimSize)
+			);
+
+		//power indicator
+
+		renderer.SetDrawColor(255,5,5,255);
+
+		int squares_size = 20;
+		int separation = 5;
+		for (int i = 0; i * (MAX_THROWING_POWER / 10) < throwPower; i ++) {
+			renderer.SetDrawColor(i * 255 / 10, (10-i) * 255 / 10, 5, 250);
+			renderer.FillRect(Rect(
+				WINDOW_WIDTH - (i * (squares_size + separation)) + separation,
+				0, squares_size, squares_size
+			));
+}
+	
+	}
+
 }
 
 void GameView::drawWinningScreen(int i) {
 	renderer.Clear();
-	renderer.Copy(backgroundSprite, NullOpt, NullOpt);
+	renderer.Copy(waitingScreen, NullOpt, NullOpt);
 	drawBeams(i);
 
 	for (auto it = wormViews.begin(); it != wormViews.end(); it++) {
@@ -373,10 +465,28 @@ void GameView::drawLosingScreen(int i) {
 	renderer.Present();
 }
 
+void GameView::drawWaitingScreen(int i) {
+	renderer.Clear();
+	renderer.Copy(waitingScreen, NullOpt, NullOpt);
 
+
+	Texture dontPanicText(renderer,
+	hudFont.RenderText_Solid("dont panic  Waiting for players" ,{255,255,255}));
+
+	Rect textPosition(
+		Point(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2) - (dontPanicText.GetSize()/2) , dontPanicText.GetSize());
+
+	renderer.Copy(dontPanicText, NullOpt, textPosition);
+	renderer.Present();
+}
 
 void GameView::draw(int i) {
 	updateEntities(i); 
+	if (this->currentGameStatus.getStatus() == WAITING) {
+		drawWaitingScreen(i);
+		return;
+	}
+
 	if (this->winnerTeam == -1 || (nteams == 1 && winnerTeam != -3)) {
 		drawGame(i);
 		return;
@@ -391,10 +501,34 @@ void GameView::draw(int i) {
 }
 
 
+
+void GameView::focusCam() {
+	float x,y;
+	x = y = -1.0;
+	if ((currentGameStatus.getExplosives().size() >= 1) && (currentGameStatus.getExplosives().begin()->second.getType() != FRAGMENT)) {
+		x = currentGameStatus.getExplosives().begin()->second.getX();
+		y = currentGameStatus.getExplosives().begin()->second.getY();
+	}
+	if (x < 0 && y < 0) {/*aca deberia buscar al primero con vel != 0*/}
+
+	if (x >= 0 && y >= 0) {
+		camX = x * m_to_pix_x - WINDOW_WIDTH / 2;
+		camY = y * m_to_pix_y + WINDOW_HEIGHT - WINDOW_HEIGHT / 2;
+
+	}
+
+
+}
+
+
 void GameView::drawGame(int i) {
 
-	
+	if (buttonPressing) {
+		this->throwPower++;
+		throwPower %= MAX_THROWING_POWER;
+	}
 	mouseHandler.updateCam();
+	//focusCam();
 
 	renderer.Clear();
 	renderer.Copy(backgroundSprite, NullOpt, NullOpt);
@@ -446,12 +580,12 @@ void GameView::clickCase(int i, int mouseX, int mouseY) {
 	switch (inputState) {
 	case BAZOOKA_CODE:
 		
-		this->client.execute(std::make_shared<LaunchRocket>(LaunchRocket(BAZOOKA, currentWormId, dir, angle, 40.0f)));
+		this->client.execute(std::make_shared<LaunchRocket>(LaunchRocket(BAZOOKA, currentWormId, dir, angle, throwPower)));
 		return;
 	case GGRENADE_CODE:
 		this->client.execute(std::make_shared<ThrowGrenade>(ThrowGrenade(GREEN_GRENADE,
 			this->currentWormId,
-			dir, angle, 40.0f, bombTimer)));
+			dir, angle, throwPower, bombTimer)));
 		return;
 	case BAT_CODE:
 		this->wormViews.at(this->currentWormId).hit(i);
@@ -462,22 +596,24 @@ void GameView::clickCase(int i, int mouseX, int mouseY) {
 		this->client.execute(std::make_shared<Teleport>(Teleport(currentWormId, pos)));		
 		return;
 	case MORTAR_CODE:
-		this->client.execute(std::make_shared<LaunchRocket>(LaunchRocket(MORTAR, currentWormId, dir, angle, 40.0f)));
+		this->client.execute(std::make_shared<LaunchRocket>(LaunchRocket(MORTAR, currentWormId, dir, angle, throwPower)));
 		return;
 	case RGRENADE_CODE:
 		this->client.execute(std::make_shared<ThrowGrenade>(ThrowGrenade(RED_GRENADE,
 			this->currentWormId,
-			dir, angle, 40.0f, bombTimer)));
+			dir, angle, throwPower, bombTimer)));
 			return;
 	case BANANA_CODE:
 		this->client.execute(std::make_shared<ThrowGrenade>(ThrowGrenade(BANANA,
 			this->currentWormId,
-			dir, angle, 40.0f, bombTimer)));
+			dir, angle, throwPower, bombTimer)));
 		return;
 
 	default:
 		return;
 	}
+
+
 }
 
 
@@ -489,8 +625,14 @@ void GameView::processInput(SDL_Event event, int i) {
 	if (event.type == SDL_MOUSEBUTTONDOWN) {
 		if (inputState == 0)
 			return;
+		buttonPressing = true;
 
+	}
+
+	if (event.type == SDL_MOUSEBUTTONUP) {
+		buttonPressing = false;
 		clickCase(i, mouseX, mouseY);
+		throwPower = 10;
 	}
 	if (event.type == SDL_MOUSEWHEEL){
 		if (event.wheel.y > 0) {
@@ -627,7 +769,6 @@ void GameView::processInput(SDL_Event event, int i) {
 			break;
 
 
-		std::cout << inputState << std::endl;
 		}
 	}
 }

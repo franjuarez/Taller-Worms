@@ -8,6 +8,7 @@ ConfigLoader::ConfigLoader(const YAML::Node& node) :
     resources_dir(node["resources_directory"].as<std::string>()),
     //game
     fps(node["game"]["FPS"].as<int>()),
+    music_volume(node["game"]["music_volume"].as<int>()),
     turn_time(node["game"]["turn_time"].as<int>()),
     
     //frontend
@@ -122,6 +123,10 @@ std::string ConfigLoader::getResourcesDirectory() {
 
 int ConfigLoader::getFps() {
     return fps;
+}
+
+int ConfigLoader::getMusicVolume() {
+    return music_volume;
 }
 
 int ConfigLoader::getTurnTime() {

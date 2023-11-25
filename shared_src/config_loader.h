@@ -17,6 +17,7 @@ private:
     
     //game
     int fps;
+    int music_volume;
     int turn_time;
     
     //frontend
@@ -125,6 +126,7 @@ public:
 
     //game
     int getFps();
+    int getMusicVolume();
     int getTurnTime();
 
     //frontend
