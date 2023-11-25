@@ -62,7 +62,15 @@ void GameWorld::createWorm(float startingX, float startingY, int id, int team, i
     fd.filter.groupIndex = WORM_GROUP_INDEX; //This way it doesn't collide with other worms
     body->CreateFixture(&fd);
 
-    Worm* wormEntity = new Worm(body, entitiesToRemove, id, team, RIGHT, health, weapons); //Starts facing right
+    b2PolygonShape footSensorShape;
+    footSensorShape.SetAsBox(WORM_WIDTH/2 + 0.05f, WORM_HEIGHT/4, b2Vec2(0, -WORM_HEIGHT/2), 0);
+    b2FixtureDef footSensorFixture;
+    footSensorFixture.shape = &footSensorShape;
+    footSensorFixture.isSensor = true;
+    b2Fixture* footSensor = body->CreateFixture(&footSensorFixture);
+
+
+    Worm* wormEntity = new Worm(body, footSensor, entitiesToRemove, id, team, RIGHT, health, weapons); //Starts facing right
     body->GetUserData().pointer = reinterpret_cast<uintptr_t>(wormEntity);
 
     this->worms[id] = body;
