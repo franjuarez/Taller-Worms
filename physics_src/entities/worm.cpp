@@ -177,6 +177,19 @@ void Worm::beginCollisionWithWater(Entity* otherBody, b2Contact* contact) {
     otherBody->beginCollisionWithWorm(this, contact);
 }
 
+
+void Worm::beginCollisionWithProjectile(Entity* otherBody, b2Contact* contact) {
+    applyFallDamage(this->body->GetLinearVelocity());
+    otherBody->beginCollisionWithWorm(this, contact);
+}
+
+
+void Worm::beginCollisionWithWorm(Entity* otherBody, b2Contact* contact) {
+    applyFallDamage(this->body->GetLinearVelocity());
+    UNUSED(otherBody);
+    UNUSED(contact);
+}
+
 void Worm::moveOnWalkableBeam(b2Body* worm, b2Vec2 normal){
     b2Vec2 vel = worm->GetLinearVelocity();
     b2Vec2 perpendicular = b2Vec2(-normal.y, normal.x);
@@ -202,7 +215,6 @@ void Worm::beginCollisionWithBeam(Entity* otherBody, b2Contact* contact) {
         return;
     }
 
-
     Beam* beam = (Beam*) otherBody;
 
     if(beam->isWalkable()){
@@ -217,17 +229,6 @@ void Worm::beginCollisionWithBeam(Entity* otherBody, b2Contact* contact) {
     }
 }
 
-void Worm::beginCollisionWithProjectile(Entity* otherBody, b2Contact* contact) {
-    applyFallDamage(this->body->GetLinearVelocity());
-    otherBody->beginCollisionWithWorm(this, contact);
-}
-
-
-void Worm::beginCollisionWithWorm(Entity* otherBody, b2Contact* contact) {
-    applyFallDamage(this->body->GetLinearVelocity());
-    UNUSED(otherBody);
-    UNUSED(contact);
-}
 
 void Worm::preSolveCollisionWithBeam(Entity* otherBody, b2Contact* contact, const b2Manifold* oldManifold) {
     if(contact->GetFixtureA() == this->footSensor || contact->GetFixtureB() == this->footSensor){
