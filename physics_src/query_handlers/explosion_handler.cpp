@@ -8,7 +8,19 @@ float ExplosionQueryCallback::ReportFixture(b2Fixture* fixture, const b2Vec2& po
         b2Body* body = fixture->GetBody();
         //Edge case: Does this explosion affect something else? Or just Worms?
         Entity* type = (Entity*) body->GetUserData().pointer; 
-        if (type->getEntityType() != EntityWorm){
+        if (type->getEntityType() == EntityBeam){
+            float beamDistance = b2Distance(this->explosionCenter, point);
+            std::vector<b2Body*> bodiesToRemove;
+            for (b2Body* currentBody : foundBodies) {
+                float bodyDistance = b2Distance(this->explosionCenter, currentBody->GetPosition());
+                if (beamDistance < bodyDistance) {
+                    bodiesToRemove.push_back(currentBody);
+                }
+            }
+
+            for (b2Body* bodyToRemove : bodiesToRemove) {
+                foundBodies.erase(std::remove(foundBodies.begin(), foundBodies.end(), bodyToRemove), foundBodies.end());
+            }
             return 0;
         }
         b2Vec2 bodyPos = body->GetPosition();
@@ -18,3 +30,4 @@ float ExplosionQueryCallback::ReportFixture(b2Fixture* fixture, const b2Vec2& po
         }
         return 1;
     }
+    //Como los fixtures que me da NO son en orden capaz primero me da al gusano  y despues la viga!
