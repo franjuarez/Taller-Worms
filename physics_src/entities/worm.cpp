@@ -13,7 +13,7 @@ WormDTO Worm::getDTO(){
     Position pos(body->GetPosition().x, body->GetPosition().y);
     float velX = body->GetLinearVelocity().x;
     float velY = body->GetLinearVelocity().y;
-    bool onGround = currentAction == STANDING || currentAction == MOVING;
+    bool onGround = this->onGround;
     WormDTO dto(id, direction, team, health, velX, velY, onGround, pos, weapons);
     return dto;
 }
