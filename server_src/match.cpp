@@ -1,16 +1,16 @@
-#include "match_starter.h"
+#include "match.h"
 #include "game_loop.h"
 #include <string>
 #include "player.h"
 
 
-MatchStarter::MatchStarter(std::vector<Team> teams, Queue<std::shared_ptr<InfoStruct>>* playerInfoQueue, std::string matchName, std::shared_ptr<GameMap> gameMap, bool* playing) : 
+Match::Match(std::vector<Team> teams, Queue<std::shared_ptr<InfoStruct>>* playerInfoQueue, std::string matchName, std::shared_ptr<GameMap> gameMap, bool* playing) : 
 teams(teams), playerInfoQueue(playerInfoQueue), matchName(matchName), gameMap(gameMap), playing(playing) {
     numberOfPlayers = gameMap->getNumberTeams();
 }
 
 
-void MatchStarter::run() {
+void Match::run() {
     int idPlayer = 0;
     Queue<std::shared_ptr<Command>> commandQueue(90);
     StatusBroadcaster statusBroadcaster;
@@ -21,11 +21,11 @@ void MatchStarter::run() {
 
         // le seteo el team al GameMap y lo uso para crear el nuevo Player
         std::shared_ptr<GameMap> playerMap = std::make_shared<GameMap>(idPlayer, numberOfPlayers, gameMap->getMapName(), gameMap->getBeams(), gameMap->getWorms());
-        Player* player = new Player(std::move(infoStruct->skt), commandQueue, playerMap);
-        
+        Player* player = new Player(infoStruct->prot, commandQueue, playerMap);
+        std::cout << "Creo al player!\n";
         statusBroadcaster.addPlayer(idPlayer, player->getPlayerQueue());
         players.push_back(player);
-        
+        player->start();
         idPlayer++;
     }
     bool loopActive = true;
@@ -43,7 +43,7 @@ void MatchStarter::run() {
 
 }
 
-void MatchStarter::killAll() {
+void Match::killAll() {
     for (auto& player : players ) {
         if (player->isAlive()) {
             player->kill();
@@ -56,4 +56,4 @@ void MatchStarter::killAll() {
 
 
 
-MatchStarter::~MatchStarter() {}
+Match::~Match() {}

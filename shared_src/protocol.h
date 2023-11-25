@@ -88,6 +88,9 @@ public:
 
     explicit Protocol(Socket&& skt);
     Protocol(const std::string& hostname, const std::string& servname);
+    Protocol(const Protocol& protocol);
+
+    Socket getSocket();
 
     void sendMap(GameMap* map);
 

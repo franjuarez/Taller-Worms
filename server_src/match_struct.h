@@ -5,7 +5,7 @@
 #include <string>
 #include <iostream>
 
-#include "match_starter.h"
+#include "match.h"
 #include "constants_server.h"
 
 #include "../shared_src/thread.h"
@@ -15,15 +15,17 @@
 
 #include <atomic>
 
+struct InfoStruct;
+class Match;
 
 struct MatchesStruct {
     std::string mapName;
     int status;
-    MatchStarter* matchStarter;
+    std::unique_ptr<Match> matchStarter;
     Queue<std::shared_ptr<InfoStruct>>* infoQueue;
 
-    MatchesStruct(std::string mapName, MatchStarter* matchStarter, Queue<std::shared_ptr<InfoStruct>>* infoQueue) 
-    : mapName(mapName),status(MATCH_WAITING), matchStarter(matchStarter), infoQueue(infoQueue) {}
+    MatchesStruct(std::string mapName, std::unique_ptr<Match> matchStarter, Queue<std::shared_ptr<InfoStruct>>* infoQueue) 
+    : mapName(mapName),status(MATCH_WAITING), matchStarter(std::move(matchStarter)), infoQueue(infoQueue) {}
     ~MatchesStruct() {}
 };
 

@@ -6,10 +6,11 @@
 
 #include "../../shared_src/protocol.h"
 #include "../../physics_src/game_world.h"
-#include "../../server_src/lobby.h"
+#include "../../server_src/connecting_user.h"
+
 
 class Protocol;
-class Lobby;
+class ConnectingUser;
 
 #define UNUSED(x) (void)(x)
 class Command {
@@ -25,7 +26,7 @@ public:
         *cheatOn = *cheatOn;
         return true;
     }
-    virtual void executeCommand(Lobby*) {
+    virtual void executeCommand(ConnectingUser&) {
         std::cout << "exec mother class\n";
         return;
     }

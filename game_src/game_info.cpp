@@ -1,20 +1,15 @@
 #include "game_info.h"
 #include "../shared_src/protocol.h"
 
-GameInfo::GameInfo(std::vector<std::string> mapNames, std::vector<std::string> matchNames) :
-mapNames(mapNames), matchNames(matchNames) {}
+GameInfo::GameInfo(std::map<std::string, std::string> matchesAvailable) :
+matchesAvailable(matchesAvailable) {}
 
 void GameInfo::send(Protocol& protocol) {
     protocol.sendInfo(this);
 }
 
-std::vector<std::string> GameInfo::getMapNames() {
-    return mapNames;
+std::map<std::string, std::string> GameInfo::getMatchesAvailable() {
+    return matchesAvailable;
 }
-
-std::vector<std::string> GameInfo::getMatchNames() {
-    return matchNames;
-}
-
 
 GameInfo::~GameInfo() {}

@@ -1,8 +1,8 @@
 #include "player.h"
 #include <memory>
 
-Player::Player(Socket&& peer, Queue<std::shared_ptr<Command>>& commandQueue, std::shared_ptr<GameMap> gameMap) : 
-protocol(std::move(peer)), 
+Player::Player(Protocol& peer, Queue<std::shared_ptr<Command>>& commandQueue, std::shared_ptr<GameMap> gameMap) : 
+protocol(std::move(peer.getSocket())), 
 sender(protocol, playerQueue, talking), 
 receiver(protocol, commandQueue, talking), 
 commandsQueue(commandQueue), 

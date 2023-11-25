@@ -5,9 +5,6 @@
 #include <string>
 #include <iostream>
 
-
-#include "player.h"
-#include "match_starter.h"
 #include "constants_server.h"
 
 #include "../shared_src/thread.h"
@@ -18,7 +15,7 @@
 
 class Player;
 struct InfoStruct;
-class MatchStarter;
+class Match;
 struct MatchesStruct;
 class ConnectingUser;
 
@@ -32,7 +29,7 @@ private:
     std::list<ConnectingUser*> connectingUsers;
 
     void reapDead();
-    // void killAll();
+    void killAll();
 
     std::vector<Team> createTeams(std::vector<WormDTO>& worms);
 

@@ -1,4 +1,6 @@
 #include "game_loop.h"
+#include "status_broadcaster.h"
+#include "../game_src/commands/command.h"
 
 #define CONFIG ConfigLoader::getInstance()
 

@@ -1,22 +1,40 @@
 #include "connecting_user.h"
+#include "../game_src/game_info.h"
 
-ConnectingUser::ConnectingUser(std::shared_ptr<InfoStruct> infoStruct, MatchesMonitor& matchesMonitor) : 
-status(ACTIVE), infoStruct(infoStruct), matchesMonitor(matchesMonitor) {}
+ConnectingUser::ConnectingUser(std::shared_ptr<InfoStruct> infoStruct, MatchesMonitor& matchesMonitor, bool* playing, int loops) : 
+status(ACTIVE), infoStruct(infoStruct), matchesMonitor(matchesMonitor), playing(playing), loops(loops) {}
 
 
 void ConnectingUser::run() {
-    // uso el inof para comunicarme con el cliente pre generar un player 
-    // Orden de msgs:
-        // send -> GameInfo con los mapas disponibles y las partidas available
-        // receive -> NewMatch o JoinMatch
-            // en NewMatch : recibir el map name y el match name
-            // en JoinMatch : recibir el match name
 
-    std::string mapName = "medium";
-    int numberOfPlayers = 1;
-    bool playing = true;
+    // GameInfo info(matchesMonitor.showMatchesAvailable());
+    // infoStruct->prot.sendInfo(&info);
+    //     // receive -> NewMatch o JoinMatch
+    //         // en NewMatch : recibir el map name y el match name
+    //         // en JoinMatch : recibir el match name
+
+    // while (status == ACTIVE) {
+    //     std::shared_ptr<Command> command = infoStruct->prot.receiveCommand();
+    //     command->executeCommand(*this);
+    // }
+
+    if (loops == 0) {
+        createNewMatch(1, "hola", "small");
+    } else if (loops == 1) {
+        createNewMatch(2, "chauchis", "medium");
+    } else if (loops == 2) {
+        joinMatch("chauchis");
+    }
+
+    
 
     // // // // // // // // // // //
+
+}
+
+
+void ConnectingUser::createNewMatch(int numberPlayers, std::string matchName, std::string mapName) {
+
 
     MapsLoader mapsLoader(CONFIG.getMapsFile());
     std::vector<std::string> mapNames = mapsLoader.getMapsNames();
@@ -24,29 +42,31 @@ void ConnectingUser::run() {
     std::vector<WormDTO> worms = createWorms(map.worms);
     std::vector<BeamDTO> beams = map.beams;
 
-    std::vector<Team> teams = createTeams(worms, numberOfPlayers);
-
-    // se deberian parsear los archivos con los mapas
-    std::vector<std::string> maps = {"merge speedrun"};
-
+    std::vector<Team> teams = createTeams(worms, numberPlayers);
 
     Queue<std::shared_ptr<InfoStruct>>* infoQueue = new Queue<std::shared_ptr<InfoStruct>>();
     infoQueue->push(infoStruct);
     
-    std::shared_ptr<GameMap> gameMap = std::make_shared<GameMap>(GameMap(0, numberOfPlayers, mapName, beams, worms));
-    MatchStarter* matchStarter =  new MatchStarter(teams, infoQueue, "un nombre", gameMap, &playing);
-    MatchesStruct* matchStruct = new MatchesStruct(mapName, matchStarter, infoQueue);
+    std::shared_ptr<GameMap> gameMap = std::make_shared<GameMap>(GameMap(0, numberPlayers, mapName, beams, worms));
+    std::unique_ptr<Match> matchStarter =  std::make_unique<Match>(teams, infoQueue, "un nombre", gameMap, playing);
+    MatchesStruct* matchStruct = new MatchesStruct(mapName, std::move(matchStarter), infoQueue);
 
-
-    // matches["un nombre"] = matchStruct;
-
-    // Comando -> Join Match -> MatchName
-            // Queue<std::shared_ptr<InfoStruct>>* infoQueueMatch = matches["un nombre"]->infoQueue;
-            // std::shared_ptr<InfoStruct>infoJoiner = std::make_shared<InfoStruct>(std::move(peer));
-            // infoQueueMatch->push(infoJoiner);
-
-
+    matchesMonitor.addMatchStruct(matchName, matchStruct);
+    this->status = INACTIVE;
 }
+
+
+void ConnectingUser::joinMatch(std::string matchName) {
+    matchesMonitor.sendInfoStruct(matchName, infoStruct);
+    this->status = INACTIVE;
+}
+
+
+void ConnectingUser::refresh() {
+    GameInfo info(matchesMonitor.showMatchesAvailable());
+    infoStruct->prot.sendInfo(&info);
+}
+
 
 std::vector<Team> ConnectingUser::createTeams(std::vector<WormDTO>& worms, int numberOfPlayers) {
     std::vector<Team> teams;
@@ -85,6 +105,10 @@ std::vector<WormDTO> ConnectingUser::createWorms(std::vector<WormPosition> worms
     
 bool ConnectingUser::isActive() {
     return status == ACTIVE;
+}
+
+void ConnectingUser::kill() {
+    this->status = INACTIVE;
 }
 
 ConnectingUser::~ConnectingUser() {}

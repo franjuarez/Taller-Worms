@@ -1,24 +1,26 @@
-#ifndef COMMANDS_MATCH_H
-#define COMMANDS_MATCH_H
+#ifndef MATCH_COMMAND_H
+#define MATCH_COMMAND_H
 
 #include "command.h"
 
+
 class Protocol;
-class Lobby;
+class ConnectingUser;
 
 class MatchCommand : public Command {
 private:
-    int wormID;
     int type;
+    int nrPlayers;
     std::string match;
     std::string map;
 public:
-    MatchCommand(int wormID, int type, std::string match, std::string map);
+    MatchCommand(int type, int nrPlayers, std::string match, std::string map);
     ~MatchCommand();
-    void executeCommand(Lobby* lobby);
+    void executeCommand(ConnectingUser& connector);
     void send(Protocol& protocol) override;
     int getID() override;
     int getType();
+    int getNrPlayers();
     std::string getMatchName();
     std::string getMapName();
 };

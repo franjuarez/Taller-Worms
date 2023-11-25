@@ -5,11 +5,16 @@
 
 MatchesMonitor::MatchesMonitor() {}
 
-MatchesMonitor::~MatchesMonitor() {}
+MatchesMonitor::~MatchesMonitor() {
+    for (auto& match : matches) {
+        match.second->matchStarter->join();
+    }
+}
 
 void MatchesMonitor::addMatchStruct(std::string matchName, MatchesStruct* matchStruct) {
     std::lock_guard<std::mutex> lock(m);
     matches[matchName] = matchStruct;
+    matchStruct->matchStarter->start();
 }
 
 std::map<std::string, std::string> MatchesMonitor::showMatchesAvailable() {
@@ -26,4 +31,10 @@ std::map<std::string, std::string> MatchesMonitor::showMatchesAvailable() {
 void MatchesMonitor::changeMatchStatusToPlaying(std::string matchName) {
     std::map<std::string, std::string> availableMatches;
     matches[matchName]->status = MATCH_IN_GAME_LOOP;
+}
+
+void MatchesMonitor::sendInfoStruct(std::string matchName, std::shared_ptr<InfoStruct> infoStruct) {
+    std::lock_guard<std::mutex> lock(m);
+    Queue<std::shared_ptr<InfoStruct>>* infoQueueMatch = matches[matchName]->infoQueue;
+    infoQueueMatch->push(infoStruct);
 }

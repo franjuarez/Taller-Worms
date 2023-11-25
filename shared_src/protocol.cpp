@@ -8,7 +8,7 @@
 #include "../game_src/commands/hit_upclose.h"
 #include "../game_src/commands/throw_grenade.h"
 #include "../game_src/commands/cheats.h"
-#include "../game_src/commands/match.h"
+#include "../game_src/commands/match_command.h"
 
 #include "../game_src/serializable.h"
 #include "../game_src/game_dynamic.h"
@@ -26,6 +26,11 @@ Protocol::Protocol(Socket&& skt) : skt(std::move(skt)) {}
 Protocol::Protocol(const std::string& hostname, const std::string& servname) :
 skt(hostname.c_str(), servname.c_str()) {}
 
+// Protocol::Protocol(const Protocol& protocol) : skt(protocol.getSocket()) {}
+
+Socket Protocol::getSocket() {
+    return std::move(skt);
+}
 
 void Protocol::sendMap(GameMap* gameMap) {
     checkClosed();
@@ -70,15 +75,24 @@ GameDynamic* Protocol::receiveDynamic() {
 void Protocol::sendInfo(GameInfo* info) {
     checkClosed();
     sendUintEight(SEND_INFO);
-    sendVectorStr(info->getMapNames());
-    sendVectorStr(info->getMatchNames());
+    std::map<std::string, std::string> matchesAvailable = info->getMatchesAvailable();
+    sendUintEight(matchesAvailable.size());
+    for (auto& match: matchesAvailable) {
+        sendString(match.first);
+        sendString(match.second);
+    }
 }
 
 GameInfo* Protocol::receiveInfo() {
     checkClosed();
-    std::vector<std::string> mapNames = receiveVectorStr();
-    std::vector<std::string> matchNames = receiveVectorStr();
-    return new GameInfo(mapNames, matchNames);
+    std::map<std::string, std::string> matchesAvailable;
+    int sizeMap = receiveUintEight();
+    for (int i=0; i < sizeMap; i++) {
+        std::string matchName = receiveString();
+        std::string mapName = receiveString();
+        matchesAvailable[matchName] = mapName;
+    }
+    return new GameInfo(matchesAvailable);
 }
 
 void Protocol::sendMove(Move* move) {
@@ -140,8 +154,8 @@ void Protocol::sendCheats(Cheats* cheat) {
 void Protocol::sendMatchCommand(MatchCommand* matchCommand) {
     checkClosed();
     sendUintEight(SEND_COMMAND_MATCH);
-    sendUintEight(matchCommand->getID());
     sendUintEight(matchCommand->getType());
+    sendUintEight(matchCommand->getNrPlayers());
     sendString(matchCommand->getMatchName());
     sendString(matchCommand->getMapName());
 }
@@ -256,11 +270,11 @@ std::shared_ptr<Cheats> Protocol::receiveCheats() {
 
 std::shared_ptr<MatchCommand> Protocol::receiveMatchCommand() {
     checkClosed();
-    uint8_t wormId = receiveUintEight();
     uint8_t selectType = receiveUintEight();
+    uint8_t nrPlayers = receiveUintEight();
     std::string matchName = receiveString();
     std::string maphName = receiveString();
-    return std::make_shared<MatchCommand>(MatchCommand(wormId, selectType, matchName, maphName));
+    return std::make_shared<MatchCommand>(MatchCommand(selectType, nrPlayers, matchName, maphName));
 }
 
 void Protocol::sendVectorStr(std::vector<std::string> allMaps) {

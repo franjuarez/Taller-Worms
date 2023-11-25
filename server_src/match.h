@@ -1,13 +1,12 @@
 #ifndef MATCH_STARTER_H_
 #define MATCH_STARTER_H_
 
-#include "../game_src/commands/command.h"
-
 #include "status_broadcaster.h"
 #include "../game_src/game_map.h"
 #include "../shared_src/thread.h"
 #include "../shared_src/queue.h"
 #include "../shared_src/socket.h"
+#include "../shared_src/protocol.h"
 #include "player.h"
 #include "team.h"
 
@@ -20,17 +19,16 @@
 class Player;
 
 struct InfoStruct {
-    Socket skt;
+    Protocol prot;
 
     // lo puedo usar para recibir los primeros mensajes .... 
     // y para enviar los nombres de los Matches y de los Maps
-    InfoStruct(Socket&& socket) : skt(std::move(socket)) {}
+    InfoStruct(Socket&& socket) : prot(std::move(socket)) {}
     ~InfoStruct() {}
 
 };
 
-
-class MatchStarter : public Thread {
+class Match : public Thread {
 
 private:
     std::vector<Team> teams;
@@ -44,8 +42,8 @@ private:
     void killAll();
 
 public:
-    MatchStarter(std::vector<Team> teams, Queue<std::shared_ptr<InfoStruct>>* playerInfoQueue, std::string matchName, std::shared_ptr<GameMap> gameMap, bool* playing);
+    Match(std::vector<Team> teams, Queue<std::shared_ptr<InfoStruct>>* playerInfoQueue, std::string matchName, std::shared_ptr<GameMap> gameMap, bool* playing);
     void run() override;
-    ~MatchStarter();
+    ~Match();
 };
 #endif

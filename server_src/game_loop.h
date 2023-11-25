@@ -19,6 +19,7 @@
 #include <chrono>
 #include <atomic>
 
+class StatusBroadcaster;
 
 class GameLoop : public Thread {
 

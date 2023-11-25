@@ -24,7 +24,7 @@ private:
     Queue<std::shared_ptr<Serializable>> playerQueue; // la q viene del game loop tiene los nuevos estados
 
 public:
-    Player(Socket&& peer, Queue<std::shared_ptr<Command>>& commandQueue, std::shared_ptr<GameMap> gameMap);
+    Player(Protocol& peer, Queue<std::shared_ptr<Command>>& commandQueue, std::shared_ptr<GameMap> gameMap);
     ~Player();
     Queue<std::shared_ptr<Serializable>>* getPlayerQueue();
     void start();

@@ -1,6 +1,5 @@
 #include "lobby.h"
 #include "game_loop.h"
-#include "match_starter.h"
 #include "match_struct.h"
 #include "matches_monitor.h"
 #include "connecting_user.h"
@@ -58,27 +57,26 @@ std::vector<Team> Lobby::createTeams(std::vector<WormDTO>& worms) {
     
 void Lobby::run() {
     MatchesMonitor matchesMonitor;
-
+    int loops = 0;
     while (true) {
         Socket peer = skt.accept();
                     
         std::shared_ptr<InfoStruct>infoStruct = std::make_shared<InfoStruct>(std::move(peer));
 
-        ConnectingUser* connectingUser = new ConnectingUser(infoStruct, matchesMonitor);
+        ConnectingUser* connectingUser = new ConnectingUser(infoStruct, matchesMonitor, playing, loops);
+        connectingUser->start();
         connectingUsers.push_back(connectingUser);
-
+        
         reapDead();
+        loops++;
     }
 
-    // while (*playing) {
+    while (*playing) {
     
-    // }
+    }
 
-    // loopActive = false;
+    killAll();
 
-    // killAll();
-
-    // gameLoop.join();
 }
 
 void Lobby::reapDead() {
@@ -93,16 +91,16 @@ void Lobby::reapDead() {
     });
 }
 
-// void Lobby::killAll() {
-//     for (auto& player : players ) {
-//         if (player->isAlive()) {
-//             player->kill();
-//         }
-//         player->join();
-//         delete player;
-//     }
-//     players.clear();
-// }
+void Lobby::killAll() {
+    for (auto& connectingUser : connectingUsers ) {
+        if (connectingUser->isActive()) {
+            connectingUser->kill();
+        }
+        connectingUser->join();
+        delete connectingUser;
+    }
+    connectingUsers.clear();
+}
 
 Lobby::~Lobby() {
     // killAll();
