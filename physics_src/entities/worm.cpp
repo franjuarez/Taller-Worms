@@ -11,18 +11,10 @@ Worm::~Worm() {}
 
 WormDTO Worm::getDTO(){
     Position pos(body->GetPosition().x, body->GetPosition().y);
-<<<<<<< HEAD
-    // float velX = body->GetLinearVelocity().x;
-    // float velY = body->GetLinearVelocity().y;
-    // int isOnGround = this->currentAction == STANDING ? 1 : 0;
-    WormDTO dto(id, direction, team, health, pos, weapons);
-    // WormDTO dto(id, direction, team, health, isOnGround, pos, velX, velY, weapons);
-=======
     float velX = body->GetLinearVelocity().x;
     float velY = body->GetLinearVelocity().y;
     bool onGround = this->onGround;
     WormDTO dto(id, direction, team, health, velX, velY, onGround, pos, weapons);
->>>>>>> main
     return dto;
 }
 

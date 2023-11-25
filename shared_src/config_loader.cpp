@@ -55,23 +55,27 @@ ConfigLoader::ConfigLoader(const YAML::Node& node) :
     bazooka_radius(node["bazooka"]["radius"].as<float>()),
     bazooka_damage(node["bazooka"]["damage"].as<float>()),
     bazooka_supply_ammo(node["bazooka"]["supply_ammo"].as<int>()),
+    bazooka_max_ammo(node["bazooka"]["max_ammo"].as<int>()),
     
     //green grenade
     green_grenade_radius(node["green_grenade"]["radius"].as<float>()),
     green_grenade_damage(node["green_grenade"]["damage"].as<float>()),
     green_grenade_supply_ammo(node["green_grenade"]["supply_ammo"].as<int>()),
+    green_grenade_max_ammo(node["green_grenade"]["max_ammo"].as<int>()),
     
     //mortar
     mortar_radius(node["mortar"]["radius"].as<float>()),
     mortar_damage(node["mortar"]["damage"].as<float>()),
     mortar_fragments(node["mortar"]["fragments"].as<int>()), // Added missing mortar_fragments
     mortar_supply_ammo(node["mortar"]["supply_ammo"].as<int>()),
-    
+    mortar_max_ammo(node["mortar"]["max_ammo"].as<int>()),
+
     //red grenade
     red_grenade_radius(node["red_grenade"]["radius"].as<float>()),
     red_grenade_damage(node["red_grenade"]["damage"].as<float>()),
     red_grenade_fragments(node["red_grenade"]["fragments"].as<int>()),
     red_grenade_supply_ammo(node["red_grenade"]["supply_ammo"].as<int>()),
+    red_grenade_max_ammo(node["red_grenade"]["max_ammo"].as<int>()),
     
     //fragment
     fragment_radius(node["fragments"]["radius"].as<float>()),
@@ -82,29 +86,48 @@ ConfigLoader::ConfigLoader(const YAML::Node& node) :
     banana_damage(node["banana"]["damage"].as<float>()),
     banana_supply_ammo(node["banana"]["supply_ammo"].as<int>()),
     banana_bounciness(node["banana"]["bounciness"].as<float>()),
+    banana_max_ammo(node["banana"]["max_ammo"].as<int>()),
     
     //bat
     bat_damage(node["bat"]["damage"].as<float>()),
     bat_impulse_factor(node["bat"]["impulse_factor"].as<float>()),
     bat_supply_ammo(node["bat"]["supply_ammo"].as<int>()),
+    bat_max_ammo(node["bat"]["max_ammo"].as<int>()),
     
     //holy grenade
     holy_grenade_radius(node["holy_grenade"]["radius"].as<float>()),
     holy_grenade_damage(node["holy_grenade"]["damage"].as<float>()),
     holy_grenade_supply_ammo(node["holy_grenade"]["supply_ammo"].as<int>()),
+    holy_grenade_max_ammo(node["holy_grenade"]["max_ammo"].as<int>()),
     
     //dynamite
     dynamite_radius(node["dynamite"]["radius"].as<float>()),
     dynamite_damage(node["dynamite"]["damage"].as<float>()),
     dynamite_supply_ammo(node["dynamite"]["supply_ammo"].as<int>()),
+    dynamite_max_ammo(node["dynamite"]["max_ammo"].as<int>()),
     
     //air attack
-    air_attack_missiles(node["air_attack"]["missiles"].as<float>()), // Assuming it's a float
+    air_attack_missiles(node["air_attack"]["missiles"].as<int>()),
     air_attack_supply_ammo(node["air_attack"]["supply_ammo"].as<int>()),
+    air_attack_max_ammo(node["air_attack"]["max_ammo"].as<int>()),
     
     //air attack missiles
     air_attack_missile_radius(node["air_attack"]["missile_radius"].as<float>()),
-    air_attack_missile_damage(node["air_attack"]["missile_damage"].as<float>()) {}
+    air_attack_missile_damage(node["air_attack"]["missile_damage"].as<float>()), 
+    
+    //teleport
+    teleport_supply_ammo(node["teleport"]["supply_ammo"].as<int>()),
+    teleport_max_ammo(node["teleport"]["max_ammo"].as<int>()),
+
+    //supply box
+    supply_box_probability(node["supply_box"]["probability"].as<float>()),
+    supply_box_health_probability(node["supply_box"]["probability_health"].as<float>()),
+    supply_box_ammo_probability(node["supply_box"]["probability_ammo"].as<float>()),
+    supply_box_trap_probability(node["supply_box"]["probability_trap"].as<float>()),
+    supply_box_health(node["supply_box"]["health"].as<int>()),
+    supply_box_trap_radius(node["supply_box"]["trap_radius"].as<float>()),
+    supply_box_trap_damage(node["supply_box"]["trap_damage"].as<float>())
+    {}
 
 ConfigLoader& ConfigLoader::getInstance() {
     static ConfigLoader instance(YAML::LoadFile("../configuration.yaml"));
@@ -241,6 +264,10 @@ int ConfigLoader::getBazookaSupplyAmmo() {
     return bazooka_supply_ammo;
 }
 
+int ConfigLoader::getBazookaMaxAmmo() {
+    return bazooka_max_ammo;
+}
+
 float ConfigLoader::getGreenGrenadeRadius() {
     return green_grenade_radius;
 }
@@ -251,6 +278,10 @@ float ConfigLoader::getGreenGrenadeDamage() {
 
 int ConfigLoader::getGreenGrenadeSupplyAmmo() {
     return green_grenade_supply_ammo;
+}
+
+int ConfigLoader::getGreenGrenadeMaxAmmo() {
+    return green_grenade_max_ammo;
 }
 
 float ConfigLoader::getMortarRadius() {
@@ -269,6 +300,10 @@ int ConfigLoader::getMortarSupplyAmmo() {
     return mortar_supply_ammo;
 }
 
+int ConfigLoader::getMortarMaxAmmo() {
+    return mortar_max_ammo;
+}
+
 float ConfigLoader::getRedGrenadeRadius() {
     return red_grenade_radius;
 }
@@ -283,6 +318,10 @@ int ConfigLoader::getRedGrenadeFragments() {
 
 int ConfigLoader::getRedGrenadeSupplyAmmo() {
     return red_grenade_supply_ammo;
+}
+
+int ConfigLoader::getRedGrenadeMaxAmmo() {
+    return red_grenade_max_ammo;
 }
 
 float ConfigLoader::getFragmentRadius() {
@@ -309,6 +348,10 @@ float ConfigLoader::getBananaBounciness() {
     return banana_bounciness;
 }
 
+int ConfigLoader::getBananaMaxAmmo() {
+    return banana_max_ammo;
+}
+
 float ConfigLoader::getBatDamage() {
     return bat_damage;
 }
@@ -319,6 +362,10 @@ float ConfigLoader::getBatImpulseFactor() {
 
 int ConfigLoader::getBatSupplyAmmo() {
     return bat_supply_ammo;
+}
+
+int ConfigLoader::getBatMaxAmmo() {
+    return bat_max_ammo;
 }
 
 float ConfigLoader::getHolyGrenadeRadius() {
@@ -333,6 +380,10 @@ int ConfigLoader::getHolyGrenadeSupplyAmmo() {
     return holy_grenade_supply_ammo;
 }
 
+int ConfigLoader::getHolyGrenadeMaxAmmo() {
+    return holy_grenade_max_ammo;
+}
+
 float ConfigLoader::getDynamiteRadius() {
     return dynamite_radius;
 }
@@ -345,12 +396,20 @@ int ConfigLoader::getDynamiteSupplyAmmo() {
     return dynamite_supply_ammo;
 }
 
-float ConfigLoader::getAirAttackMissiles() {
+int ConfigLoader::getDynamiteMaxAmmo() {
+    return dynamite_max_ammo;
+}
+
+int ConfigLoader::getAirAttackMissiles() {
     return air_attack_missiles;
 }
 
-float ConfigLoader::getAirAttackSupplyAmmo() {
+int ConfigLoader::getAirAttackSupplyAmmo() {
     return air_attack_supply_ammo;
+}
+
+int ConfigLoader::getAirAttackMaxAmmo() {
+    return air_attack_max_ammo;
 }
 
 float ConfigLoader::getAirAttackMissileRadius() {
@@ -359,5 +418,41 @@ float ConfigLoader::getAirAttackMissileRadius() {
 
 float ConfigLoader::getAirAttackMissileDamage() {
     return air_attack_missile_damage;
+}
+
+int ConfigLoader::getTeleportSupplyAmmo() {
+    return teleport_supply_ammo;
+}
+
+int ConfigLoader::getTeleportMaxAmmo() {
+    return teleport_max_ammo;
+}
+
+float ConfigLoader::getSupplyBoxProbability() {
+    return supply_box_probability;
+}
+
+float ConfigLoader::getSupplyBoxHealthProbability() {
+    return supply_box_health_probability;
+}
+
+float ConfigLoader::getSupplyBoxAmmoProbability() {
+    return supply_box_ammo_probability;
+}
+
+float ConfigLoader::getSupplyBoxTrapProbability() {
+    return supply_box_trap_probability;
+}
+
+float ConfigLoader::getSupplyBoxHealth() {
+    return supply_box_health;
+}
+
+float ConfigLoader::getSupplyBoxTrapRadius() {
+    return supply_box_trap_radius;
+}
+
+float ConfigLoader::getSupplyBoxTrapDamage() {
+    return supply_box_trap_damage;
 }
 

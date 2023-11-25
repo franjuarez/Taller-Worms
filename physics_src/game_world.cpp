@@ -168,10 +168,14 @@ b2Body* GameWorld::createBazooka(b2Body* worm, int direction){
 bool GameWorld::wormLaunchBazooka(int id, float angle, int direction, float power){
     checkWormExists(id);
     b2Body* worm = this->worms[id];
+    Worm* wormData = (Worm*) worm->GetUserData().pointer;
+    if(!wormData->hasAmmo(BAZOOKA)){
+        return false; 
+    }
     b2Body* bazooka = createBazooka(worm, direction);
     b2Vec2 vel = calculatVelocityOfProjectile(CONFIG.getProjectileMaxSpeed(), angle, direction, power);
     bazooka->SetLinearVelocity(vel);
-    ((Worm*) worm->GetUserData().pointer)->changeDirection(direction);
+    wormData->changeDirection(direction);
     return true;
 }
 
@@ -213,6 +217,9 @@ bool GameWorld::wormThrowGreenGrenade(int id, float angle, int direction, float 
     checkWormExists(id);
     b2Body* worm = this->worms[id];
     Worm* wormData = (Worm*) worm->GetUserData().pointer;
+    if(!wormData->hasAmmo(GREEN_GRENADE)){
+        return false; 
+    }
     b2Body* granade = createGreenGrenade(worm, direction, explosionTimer);
     b2Vec2 grenadeVel = calculatVelocityOfProjectile(CONFIG.getProjectileMaxSpeed(), angle, direction, power);
     granade->SetLinearVelocity(grenadeVel);
@@ -308,9 +315,9 @@ bool GameWorld::teleportWorm(int id, float x, float y){
 Position GameWorld::calculateValidSupplyBoxPosition(){
     int maxAttempts = 100;
     int attempts = 0;
-    float x = rand() % (int) (WORLD_WIDTH - SUPPLY_BOX_WIDTH) + SUPPLY_BOX_WIDTH/2;
     float y = WORLD_HEIGHT - SUPPLY_BOX_HEIGHT;
     while(attempts < maxAttempts){
+        float x = rand() % (int) (WORLD_WIDTH - SUPPLY_BOX_WIDTH) + SUPPLY_BOX_WIDTH/2;
         //raycast to see if there is something below
         b2Vec2 rayEnd = b2Vec2(x, 0);
         SupplyQueryCallback callback;
@@ -326,6 +333,7 @@ Position GameWorld::calculateValidSupplyBoxPosition(){
 
 void GameWorld::createSupplyBox(int type){
     Position pos = calculateValidSupplyBoxPosition();
+    std::cout << "Supply box position: " << pos.getX() << ", " << pos.getY() << std::endl;
     b2BodyDef bd;
     bd.type = b2_dynamicBody;
     bd.position.Set(pos.getX(), pos.getY());

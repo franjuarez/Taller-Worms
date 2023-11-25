@@ -64,23 +64,27 @@ private:
     float bazooka_radius;
     float bazooka_damage;
     int bazooka_supply_ammo;
+    int bazooka_max_ammo;
 
     //green grenade
     float green_grenade_radius;
     float green_grenade_damage;
     int green_grenade_supply_ammo;
+    int green_grenade_max_ammo;
 
     //mortar
     float mortar_radius;
     float mortar_damage;
     int mortar_fragments;
     int mortar_supply_ammo;
+    int mortar_max_ammo;
 
     //red grenade
     float red_grenade_radius;
     float red_grenade_damage;
     int red_grenade_fragments;
     int red_grenade_supply_ammo;
+    int red_grenade_max_ammo;
 
     //fragment
     float fragment_radius;
@@ -91,29 +95,47 @@ private:
     float banana_damage;
     int banana_supply_ammo;
     float banana_bounciness;
+    int banana_max_ammo;
 
     //bat
     float bat_damage;
     float bat_impulse_factor;
     int bat_supply_ammo;
+    int bat_max_ammo;
 
     //holy grenade
     float holy_grenade_radius;
     float holy_grenade_damage;
     int holy_grenade_supply_ammo;
+    int holy_grenade_max_ammo;
 
     //dynamite
     float dynamite_radius;
     float dynamite_damage;
     int dynamite_supply_ammo;
+    int dynamite_max_ammo;
 
     //air attack
-    float air_attack_missiles;
-    float air_attack_supply_ammo;
+    int air_attack_missiles;
+    int air_attack_supply_ammo;
+    int air_attack_max_ammo;
 
     //air attack missiles
     float air_attack_missile_radius;
     float air_attack_missile_damage;
+
+    //teleport
+    int teleport_supply_ammo;
+    int teleport_max_ammo;
+
+    //supply box
+    float supply_box_probability;
+    float supply_box_health_probability;
+    float supply_box_ammo_probability;
+    float supply_box_trap_probability;
+    float supply_box_health;
+    float supply_box_trap_radius;
+    float supply_box_trap_damage;
 public:
 
     static ConfigLoader& getInstance();
@@ -173,23 +195,27 @@ public:
     float getBazookaRadius();
     float getBazookaDamage();
     int getBazookaSupplyAmmo();
+    int getBazookaMaxAmmo();
 
     //green grenade
     float getGreenGrenadeRadius();
     float getGreenGrenadeDamage();
     int getGreenGrenadeSupplyAmmo();
+    int getGreenGrenadeMaxAmmo();
 
     //mortar
     float getMortarRadius();
     float getMortarDamage();
     int getMortarFragments();
     int getMortarSupplyAmmo();
+    int getMortarMaxAmmo();
 
     //red grenade
     float getRedGrenadeRadius();
     float getRedGrenadeDamage();
     int getRedGrenadeFragments();
     int getRedGrenadeSupplyAmmo();
+    int getRedGrenadeMaxAmmo();
 
     //fragment
     float getFragmentRadius();
@@ -200,29 +226,47 @@ public:
     float getBananaDamage();
     int getBananaSupplyAmmo();
     float getBananaBounciness();
-    
+    int getBananaMaxAmmo();
+
     //bat
     float getBatDamage();
     float getBatImpulseFactor();
     int getBatSupplyAmmo();
+    int getBatMaxAmmo();
 
     //holy grenade
     float getHolyGrenadeRadius();
     float getHolyGrenadeDamage();
     int getHolyGrenadeSupplyAmmo();
+    int getHolyGrenadeMaxAmmo();
 
     //dynamite
     float getDynamiteRadius();
     float getDynamiteDamage();
     int getDynamiteSupplyAmmo();
+    int getDynamiteMaxAmmo();
 
     //air attack
-    float getAirAttackMissiles();
-    float getAirAttackSupplyAmmo();
+    int getAirAttackMissiles();
+    int getAirAttackSupplyAmmo();
+    int getAirAttackMaxAmmo();
 
     //air attack missiles
     float getAirAttackMissileRadius();
     float getAirAttackMissileDamage();
+
+    //teleport
+    int getTeleportSupplyAmmo();
+    int getTeleportMaxAmmo();
+
+    //supply box
+    float getSupplyBoxProbability();
+    float getSupplyBoxHealthProbability();
+    float getSupplyBoxAmmoProbability();
+    float getSupplyBoxTrapProbability();
+    float getSupplyBoxHealth();
+    float getSupplyBoxTrapRadius();
+    float getSupplyBoxTrapDamage();
 
 };
 

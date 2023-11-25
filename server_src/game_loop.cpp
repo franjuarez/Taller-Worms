@@ -91,7 +91,12 @@ void GameLoop::run() {
 	}
 }
 
+
+
 void GameLoop::changeWormPlaying(std::vector<WormDTO> worms) {
+	// std::cout << "cambiando turno! Tiro cajinha" << std::endl;
+	// this->gameWorld.createSupplyBox(HEALTH_SUPPLY);
+	// std::cout << "termino la cajinha" << std::endl;
 	teamPlayingID = (teamPlayingID + 1) % teams.size();
 
 	for(size_t i = teamPlayingID; true ; i = (i + 1) % teams.size()){
