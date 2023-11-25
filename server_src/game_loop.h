@@ -18,6 +18,7 @@
 #include <unistd.h>
 #include <chrono>
 #include <atomic>
+#include <random>
 
 
 class GameLoop : public Thread {
@@ -36,6 +37,9 @@ private:
     void loopLogic(int64_t passed_time);
     int updateWinningStatus();
     void changeWormPlaying(std::vector<WormDTO> worms);
+    bool shouldDropBox();
+    int decideTypeOfSupplyBox();
+    int decideAmmoType();
 
     std::atomic<bool> playing;
     bool cheatOn;

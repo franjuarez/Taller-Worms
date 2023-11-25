@@ -63,13 +63,13 @@ private:
     //bazooka
     float bazooka_radius;
     float bazooka_damage;
-    int bazooka_supply_ammo;
+    int bazooka_starting_ammo;
     int bazooka_max_ammo;
 
     //green grenade
     float green_grenade_radius;
     float green_grenade_damage;
-    int green_grenade_supply_ammo;
+    int green_grenade_starting_ammo;
     int green_grenade_max_ammo;
 
     //mortar
@@ -136,6 +136,17 @@ private:
     float supply_box_health;
     float supply_box_trap_radius;
     float supply_box_trap_damage;
+
+    //ammo probabilities
+    float mortar_ammo_probability;
+    float red_grenade_ammo_probability;
+    float teleport_ammo_probability;
+    float bat_ammo_probability;
+    float banana_ammo_probability;
+    float dynamite_ammo_probability;
+    float air_attack_ammo_probability;
+    float holy_grenade_ammo_probability;
+
 public:
 
     static ConfigLoader& getInstance();
@@ -194,13 +205,13 @@ public:
     //bazooka
     float getBazookaRadius();
     float getBazookaDamage();
-    int getBazookaSupplyAmmo();
+    int getBazookaStartingAmmo();
     int getBazookaMaxAmmo();
 
     //green grenade
     float getGreenGrenadeRadius();
     float getGreenGrenadeDamage();
-    int getGreenGrenadeSupplyAmmo();
+    int getGreenGrenadeStartingAmmo();
     int getGreenGrenadeMaxAmmo();
 
     //mortar
@@ -267,6 +278,16 @@ public:
     float getSupplyBoxHealth();
     float getSupplyBoxTrapRadius();
     float getSupplyBoxTrapDamage();
+
+    //ammo probabilities
+    float getMortarAmmoProbability();
+    float getRedGrenadeAmmoProbability();
+    float getTeleportAmmoProbability();
+    float getBatAmmoProbability();
+    float getBananaAmmoProbability();
+    float getDynamiteAmmoProbability();
+    float getAirAttackAmmoProbability();
+    float getHolyGrenadeAmmoProbability();
 
 };
 

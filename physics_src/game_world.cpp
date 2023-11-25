@@ -323,6 +323,7 @@ Position GameWorld::calculateValidSupplyBoxPosition(){
         SupplyQueryCallback callback;
         this->world->RayCast(&callback, b2Vec2(x, y), rayEnd);
         if(callback.foundBeam){
+            std::cout << "Found beam in attempt: " << attempts << std::endl;
             return Position(x, y);
         }
         attempts++;
@@ -331,28 +332,28 @@ Position GameWorld::calculateValidSupplyBoxPosition(){
     throw std::runtime_error("Could not find valid position for supply box"); //cambiar
 }
 
-void GameWorld::createSupplyBox(int type){
+void GameWorld::dropSupplyBox(int type){
     Position pos = calculateValidSupplyBoxPosition();
     std::cout << "Supply box position: " << pos.getX() << ", " << pos.getY() << std::endl;
-    b2BodyDef bd;
-    bd.type = b2_dynamicBody;
-    bd.position.Set(pos.getX(), pos.getY());
-    b2Body* body = this->world->CreateBody(&bd);
-    b2FixtureDef fd;
-    b2PolygonShape shape;
-    shape.SetAsBox(SUPPLY_BOX_WIDTH/2, SUPPLY_BOX_HEIGHT/2);
-    fd.shape = &shape;
-    fd.density = 1.0f;
-    body->CreateFixture(&fd);
-    body->SetGravityScale(0.5f);//So it falls slower
+    // b2BodyDef bd;
+    // bd.type = b2_dynamicBody;
+    // bd.position.Set(pos.getX(), pos.getY());
+    // b2Body* body = this->world->CreateBody(&bd);
+    // b2FixtureDef fd;
+    // b2PolygonShape shape;
+    // shape.SetAsBox(SUPPLY_BOX_WIDTH/2, SUPPLY_BOX_HEIGHT/2);
+    // fd.shape = &shape;
+    // fd.density = 1.0f;
+    // body->CreateFixture(&fd);
+    // body->SetGravityScale(0.5f);//So it falls slower
 
-    if(type == TRAP_SUPPLY){
-        TrapSupplyBox* supplyBoxEntity = new TrapSupplyBox(body, entitiesToRemove, type);
-        body->GetUserData().pointer = reinterpret_cast<uintptr_t>(supplyBoxEntity);
-    } else{
-        ProvitionsSupplyBox* supplyBoxEntity = new ProvitionsSupplyBox(body, entitiesToRemove, type);
-        body->GetUserData().pointer = reinterpret_cast<uintptr_t>(supplyBoxEntity);
-    }
+    // if(type == TRAP_SUPPLY){
+    //     TrapSupplyBox* supplyBoxEntity = new TrapSupplyBox(body, entitiesToRemove, type);
+    //     body->GetUserData().pointer = reinterpret_cast<uintptr_t>(supplyBoxEntity);
+    // } else{
+    //     ProvitionsSupplyBox* supplyBoxEntity = new ProvitionsSupplyBox(body, entitiesToRemove, type);
+    //     body->GetUserData().pointer = reinterpret_cast<uintptr_t>(supplyBoxEntity);
+    // }
 }
 
 void GameWorld::addHealthToWorm(int id){

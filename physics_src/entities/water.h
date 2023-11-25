@@ -14,7 +14,7 @@ class Water : public Entity {
     virtual void beginCollisionWithBeam(Entity* otherBody, b2Contact* contact) override;
     virtual void beginCollisionWithWorm(Entity* otherBody, b2Contact* contact) override;
     virtual void beginCollisionWithProjectile(Entity* otherBody, b2Contact* contact) override;
-    virtual void beginCollisionWithProvitionsSupplyBox(Entity* otherBody, b2Contact* contact) override;
+    virtual void beginCollisionWithSupplyBox(Entity* otherBody, b2Contact* contact) override;
 
     ~Water();
 

@@ -97,7 +97,7 @@ public:
 
     bool teleportWorm(int id, float x, float y);
 
-    void createSupplyBox(int type);
+    void dropSupplyBox(int type);
 
     bool allEntitiesAtRest();
 

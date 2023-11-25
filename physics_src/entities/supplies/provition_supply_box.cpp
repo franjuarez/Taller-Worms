@@ -16,8 +16,7 @@ void ProvitionsSupplyBox::beginCollisionWithWorm(Entity* otherBody, b2Contact* c
     }else if(supplyType == BAT_SUPPLY){
         worm->addAmmo(BAT, CONFIG.getBatSupplyAmmo());
     }else if(supplyType == TELEPORT_SUPPLY){
-        // worm->addAmmo(TELEPORT, CONFIG.getTeleportSupplyAmmo());
-        worm->addAmmo(TELEPORT, -1);
+        worm->addAmmo(TELEPORT, CONFIG.getTeleportSupplyAmmo());
     }
 }
 

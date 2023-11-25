@@ -51,13 +51,13 @@ projectile:
 bazooka:
   radius: 2
   damage: 50
-  supply_ammo: -1
+  starting_ammo: -1
   max_ammo: -1
 
 green_grenade:
   radius: 2
   damage: 30
-  supply_ammo: -1
+  starting_ammo: -1
   max_ammo: -1
 
 mortar:
@@ -115,10 +115,22 @@ teleport:
   max_ammo: -1
 
 supply_box:
-  probability: 0.1
+  probability: 1.0
+  # The sum of the 3por  probabilities must be 1
   probability_health: 0.4
-  probability_ammo: 0.4
-  probability_trap: 0.2
+  probability_ammo: 0.5
+  probability_trap: 0.1
   health: 25
   trap_damage: 20
   trap_radius: 2
+
+# The sum of all probabilities must be 1
+ammo_box_probabilities:
+  probability_mortar: 0.2
+  probability_red_grenade: 0.2
+  probability_teleport: 0.15
+  probability_bat: 0.15
+  probability_banana: 0.1
+  probability_dynamite: 0.1
+  probability_air_attack: 0.05
+  probability_holy_grenade: 0.05

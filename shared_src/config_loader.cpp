@@ -54,13 +54,13 @@ ConfigLoader::ConfigLoader(const YAML::Node& node) :
     //bazooka
     bazooka_radius(node["bazooka"]["radius"].as<float>()),
     bazooka_damage(node["bazooka"]["damage"].as<float>()),
-    bazooka_supply_ammo(node["bazooka"]["supply_ammo"].as<int>()),
+    bazooka_starting_ammo(node["bazooka"]["starting_ammo"].as<int>()),
     bazooka_max_ammo(node["bazooka"]["max_ammo"].as<int>()),
     
     //green grenade
     green_grenade_radius(node["green_grenade"]["radius"].as<float>()),
     green_grenade_damage(node["green_grenade"]["damage"].as<float>()),
-    green_grenade_supply_ammo(node["green_grenade"]["supply_ammo"].as<int>()),
+    green_grenade_starting_ammo(node["green_grenade"]["starting_ammo"].as<int>()),
     green_grenade_max_ammo(node["green_grenade"]["max_ammo"].as<int>()),
     
     //mortar
@@ -126,7 +126,17 @@ ConfigLoader::ConfigLoader(const YAML::Node& node) :
     supply_box_trap_probability(node["supply_box"]["probability_trap"].as<float>()),
     supply_box_health(node["supply_box"]["health"].as<int>()),
     supply_box_trap_radius(node["supply_box"]["trap_radius"].as<float>()),
-    supply_box_trap_damage(node["supply_box"]["trap_damage"].as<float>())
+    supply_box_trap_damage(node["supply_box"]["trap_damage"].as<float>()),
+
+    //ammo probabilities
+    mortar_ammo_probability(node["ammo_box_probabilities"]["probability_mortar"].as<float>()),
+    red_grenade_ammo_probability(node["ammo_box_probabilities"]["probability_red_grenade"].as<float>()),
+    banana_ammo_probability(node["ammo_box_probabilities"]["probability_banana"].as<float>()),
+    teleport_ammo_probability(node["ammo_box_probabilities"]["probability_teleport"].as<float>()),
+    bat_ammo_probability(node["ammo_box_probabilities"]["probability_bat"].as<float>()),
+    dynamite_ammo_probability(node["ammo_box_probabilities"]["probability_dynamite"].as<float>()),
+    air_attack_ammo_probability(node["ammo_box_probabilities"]["probability_air_attack"].as<float>()),
+    holy_grenade_ammo_probability(node["ammo_box_probabilities"]["probability_holy_grenade"].as<float>())
     {}
 
 ConfigLoader& ConfigLoader::getInstance() {
@@ -260,8 +270,8 @@ float ConfigLoader::getBazookaDamage() {
     return bazooka_damage;
 }
 
-int ConfigLoader::getBazookaSupplyAmmo() {
-    return bazooka_supply_ammo;
+int ConfigLoader::getBazookaStartingAmmo() {
+    return bazooka_starting_ammo;
 }
 
 int ConfigLoader::getBazookaMaxAmmo() {
@@ -276,8 +286,8 @@ float ConfigLoader::getGreenGrenadeDamage() {
     return green_grenade_damage;
 }
 
-int ConfigLoader::getGreenGrenadeSupplyAmmo() {
-    return green_grenade_supply_ammo;
+int ConfigLoader::getGreenGrenadeStartingAmmo() {
+    return green_grenade_starting_ammo;
 }
 
 int ConfigLoader::getGreenGrenadeMaxAmmo() {
@@ -455,4 +465,37 @@ float ConfigLoader::getSupplyBoxTrapRadius() {
 float ConfigLoader::getSupplyBoxTrapDamage() {
     return supply_box_trap_damage;
 }
+
+float ConfigLoader::getMortarAmmoProbability() {
+    return mortar_ammo_probability;
+}
+
+float ConfigLoader::getRedGrenadeAmmoProbability() {
+    return red_grenade_ammo_probability;
+}
+
+float ConfigLoader::getBananaAmmoProbability() {
+    return banana_ammo_probability;
+}
+
+float ConfigLoader::getTeleportAmmoProbability() {
+    return teleport_ammo_probability;
+}
+
+float ConfigLoader::getBatAmmoProbability() {
+    return bat_ammo_probability;
+}
+
+float ConfigLoader::getDynamiteAmmoProbability() {
+    return dynamite_ammo_probability;
+}
+
+float ConfigLoader::getAirAttackAmmoProbability() {
+    return air_attack_ammo_probability;
+}
+
+float ConfigLoader::getHolyGrenadeAmmoProbability() {
+    return holy_grenade_ammo_probability;
+}
+
 

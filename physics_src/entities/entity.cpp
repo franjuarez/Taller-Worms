@@ -29,7 +29,7 @@ void Entity::beginCollisionWithProjectile(Entity* otherBody, b2Contact* contact)
     UNUSED(contact);
 }
 
-void Entity::beginCollisionWithProvitionsSupplyBox(Entity* otherBody, b2Contact* contact) {
+void Entity::beginCollisionWithSupplyBox(Entity* otherBody, b2Contact* contact) {
     UNUSED(otherBody);
     UNUSED(contact);
 }

@@ -6,7 +6,7 @@ CollisionHandler::CollisionHandler(){
     this->beginCollisionArr[EntityWater] = &Entity::beginCollisionWithWater;
     this->beginCollisionArr[EntityInstantProjectile] = &Entity::beginCollisionWithProjectile;
     this->beginCollisionArr[EntityDelayedProjectile] = &Entity::beginCollisionWithProjectile;
-    this->beginCollisionArr[EntitySupplyBox] = &Entity::beginCollisionWithProvitionsSupplyBox;
+    this->beginCollisionArr[EntitySupplyBox] = &Entity::beginCollisionWithSupplyBox;
 
     this->preSolveCollisionArr[EntityWorm] = &Entity::preSolveCollisionWithWorm;
     this->preSolveCollisionArr[EntityBeam] = &Entity::preSolveCollisionWithBeam;

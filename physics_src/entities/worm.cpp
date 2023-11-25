@@ -4,7 +4,15 @@ Worm::Worm(b2Body* body, b2Fixture* footSensor, std::unordered_set<b2Body*>& ent
         Entity(body, entitiesToRemove, EntityWorm),
         id(id), team(team), health(health), 
         direction(direction), footSensor(footSensor), currentAction(STANDING),
-        weapons(weapons), invincible(false) {}
+        weapons(weapons), invincible(false) {
+            max_ammo_per_weapon[BAZOOKA] = CONFIG.getBazookaMaxAmmo();
+            max_ammo_per_weapon[GREEN_GRENADE] = CONFIG.getGreenGrenadeMaxAmmo();
+            max_ammo_per_weapon[BAT] = CONFIG.getBatMaxAmmo();
+            max_ammo_per_weapon[TELEPORT] = CONFIG.getTeleportMaxAmmo();
+            max_ammo_per_weapon[MORTAR] = CONFIG.getMortarMaxAmmo();
+            max_ammo_per_weapon[RED_GRENADE] = CONFIG.getRedGrenadeMaxAmmo();
+            max_ammo_per_weapon[BANANA] = CONFIG.getBananaMaxAmmo();
+        }
 
 
 Worm::~Worm() {}
@@ -83,9 +91,9 @@ void Worm::addAmmo(int weaponId, int amount){
         return;
     }
     this->weapons[weaponId] += amount;
-    // if(this->weapons[weaponId] > CONFIG.getMaxAmmo()){
-    //     this->weapons[weaponId] = CONFIG.getMaxAmmo();
-    // }
+    if(this->weapons[weaponId] > max_ammo_per_weapon[weaponId]){
+        this->weapons[weaponId] = max_ammo_per_weapon[weaponId];
+    }
 }
 
 void Worm::getAllWeapons(){
@@ -190,7 +198,7 @@ void Worm::beginCollisionWithWater(Entity* otherBody, b2Contact* contact) {
     otherBody->beginCollisionWithWorm(this, contact);
 }
 
-void Worm::beginCollisionWithProvitionsSupplyBox(Entity* otherBody, b2Contact* contact) {
+void Worm::beginCollisionWithSupplyBox(Entity* otherBody, b2Contact* contact) {
     otherBody->beginCollisionWithWorm(this, contact);
 }
 

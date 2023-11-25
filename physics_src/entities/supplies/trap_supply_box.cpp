@@ -8,8 +8,8 @@ TrapSupplyBox::TrapSupplyBox(b2Body* body, std::unordered_set<b2Body*>& entities
 void TrapSupplyBox::beginCollisionWithWorm(Entity* otherBody, b2Contact* contact) {
     b2Vec2 pos = this->body->GetPosition();
     b2World* world = this->body->GetWorld();
-    float radius = 5;
-    float damage = 30;
+    float radius = CONFIG.getSupplyBoxTrapRadius();
+    float damage = CONFIG.getSupplyBoxTrapDamage();
     int numberOfRays = 20;
     std::unordered_set<b2Body*> allFoundBodies;
     for(int i = 0; i < numberOfRays; i++){

@@ -34,7 +34,7 @@ public:
     virtual void beginCollisionWithBeam(Entity* otherBody, b2Contact* contact);
     virtual void beginCollisionWithWorm(Entity* otherBody, b2Contact* contact);
     virtual void beginCollisionWithProjectile(Entity* otherBody, b2Contact* contact);
-    virtual void beginCollisionWithProvitionsSupplyBox(Entity* otherBody, b2Contact* contact);
+    virtual void beginCollisionWithSupplyBox(Entity* otherBody, b2Contact* contact);
 
     virtual void preSolveCollisionWithBeam(Entity* otherBody, b2Contact* contact, const b2Manifold* oldManifold);
     virtual void preSolveCollisionWithWorm(Entity* otherBody, b2Contact* contact, const b2Manifold* oldManifold);

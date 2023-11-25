@@ -19,6 +19,7 @@ enum /*WEAPON_TYPE*/{
     BANANA,
     FRAGMENT,
 };
+#define AMOUNT_OF_WEAPONS 7
 
 enum /*SUPPLY_BOX_TYPE*/{
     HEALTH_SUPPLY = 0,
@@ -47,7 +48,6 @@ enum /* CHEATS */ {
 #define PLAYING -1
 #define ALL_LOST -2
 
-#define AMOUNT_OF_WEAPONS 7
 #define INFINITE_AMUNITION -1
 
 #endif

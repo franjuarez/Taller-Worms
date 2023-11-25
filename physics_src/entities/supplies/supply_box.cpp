@@ -8,7 +8,7 @@ int SupplyBox::getSupplyType() {
 }
 
 void SupplyBox::beginCollisionWithWater(Entity* otherBody, b2Contact* contact) {
-    otherBody->beginCollisionWithProvitionsSupplyBox(this, contact);
+    otherBody->beginCollisionWithSupplyBox(this, contact);
 }
 
 SupplyBox::~SupplyBox() {}
