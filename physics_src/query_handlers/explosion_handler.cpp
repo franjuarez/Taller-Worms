@@ -23,10 +23,12 @@ float ExplosionQueryCallback::ReportFixture(b2Fixture* fixture, const b2Vec2& po
             }
             return 0;
         }
-        b2Vec2 bodyPos = body->GetPosition();
-        float distance = b2Distance(this->explosionCenter, bodyPos);
-        if(distance < this->blastRadius) {
-            foundBodies.push_back(body);
+        if(type->getEntityType() == EntityWorm){
+            b2Vec2 bodyPos = body->GetPosition();
+            float distance = b2Distance(this->explosionCenter, bodyPos);
+            if(distance < this->blastRadius) {
+                foundBodies.push_back(body);
+            }
         }
         return 1;
     }

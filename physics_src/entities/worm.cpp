@@ -179,15 +179,7 @@ void Worm::beginCollisionWithWater(Entity* otherBody, b2Contact* contact) {
 
 
 void Worm::beginCollisionWithProjectile(Entity* otherBody, b2Contact* contact) {
-    applyFallDamage(this->body->GetLinearVelocity());
     otherBody->beginCollisionWithWorm(this, contact);
-}
-
-
-void Worm::beginCollisionWithWorm(Entity* otherBody, b2Contact* contact) {
-    applyFallDamage(this->body->GetLinearVelocity());
-    UNUSED(otherBody);
-    UNUSED(contact);
 }
 
 void Worm::moveOnWalkableBeam(b2Body* worm, b2Vec2 normal){

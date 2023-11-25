@@ -36,7 +36,6 @@ class Worm : public Entity {
 
     virtual void beginCollisionWithWater(Entity* otherBody, b2Contact* contact) override;
     virtual void beginCollisionWithBeam(Entity* otherBody, b2Contact* contact) override;
-    virtual void beginCollisionWithWorm(Entity* otherBody, b2Contact* contact) override;
     virtual void beginCollisionWithProjectile(Entity* otherBody, b2Contact* contact) override;
 
     virtual void preSolveCollisionWithBeam(Entity* otherBody, b2Contact* contact, const b2Manifold* oldManifold) override;
