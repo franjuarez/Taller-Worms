@@ -30,4 +30,3 @@ float ExplosionQueryCallback::ReportFixture(b2Fixture* fixture, const b2Vec2& po
         }
         return 1;
     }
-    //Como los fixtures que me da NO son en orden capaz primero me da al gusano  y despues la viga!
