@@ -19,12 +19,9 @@ private:
     bool* playing;
     std::vector<Team> createTeams(std::vector<WormDTO>& worms, int numberOfPlayers);
     std::vector<WormDTO> createWorms(std::vector<WormPosition> wormsPositions);
-    
-    int loops;
-
 
 public:
-    ConnectingUser(std::shared_ptr<InfoStruct> infoStruct, MatchesMonitor& matchesMonitor, bool* playing, int loops);
+    ConnectingUser(std::shared_ptr<InfoStruct> infoStruct, MatchesMonitor& matchesMonitor, bool* playing);
     void run() override;
 
     void createNewMatch(int numberOfPlayers, std::string matchName, std::string mapName);

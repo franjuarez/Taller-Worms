@@ -3,14 +3,15 @@
 #include "../game_src/commands/match_command.h"
 
 
-ConnectingUser::ConnectingUser(std::shared_ptr<InfoStruct> infoStruct, MatchesMonitor& matchesMonitor, bool* playing, int loops) : 
-status(ACTIVE), infoStruct(infoStruct), matchesMonitor(matchesMonitor), playing(playing), loops(loops) {}
+ConnectingUser::ConnectingUser(std::shared_ptr<InfoStruct> infoStruct, MatchesMonitor& matchesMonitor, bool* playing) : 
+status(ACTIVE), infoStruct(infoStruct), matchesMonitor(matchesMonitor), playing(playing) {}
 
 
 void ConnectingUser::run() {
 
     GameInfo info(matchesMonitor.showMatchesAvailable());
     infoStruct->prot.sendInfo(&info);
+
         // receive -> NewMatch o JoinMatch
             // en NewMatch : recibir el map name y el match name
             // en JoinMatch : recibir el match name
@@ -26,13 +27,6 @@ void ConnectingUser::run() {
             refresh();
         }
     }
-
-
-
-    
-
-    // // // // // // // // // // //
-
 }
 
 

@@ -14,7 +14,6 @@ bool LaunchRocket::executeCommand(GameWorld& gameWorld, bool* cheatOn) {
     } else if (type == MORTAR) {
         return gameWorld.wormLaunchMortar(wormID, angle, dir, power);
     }
-    
     return false;
 }
 

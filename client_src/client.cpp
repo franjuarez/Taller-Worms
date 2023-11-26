@@ -11,12 +11,16 @@ Client::Client(Protocol& prot) : protocol(std::move(prot.getSocket()))
 }
 
 std::shared_ptr<Serializable> Client::getGameStatus() {
-    if (!lastGameStatus) {
-        lastGameStatus = gameStatusQueue.pop();
+    try {
+        if (!lastGameStatus) {
+            lastGameStatus = gameStatusQueue.pop();
+            return this->lastGameStatus;
+        }
+        while (gameStatusQueue.try_pop(this->lastGameStatus)) {}
         return this->lastGameStatus;
+    } catch (const ClosedQueue& e) {
+        throw ClientClosed();
     }
-    while (gameStatusQueue.try_pop(this->lastGameStatus)) {}
-    return this->lastGameStatus;
 }
 
 void Client::start() {

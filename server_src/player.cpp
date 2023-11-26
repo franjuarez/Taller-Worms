@@ -28,7 +28,6 @@ void Player::join(){
 
 void Player::kill() {
     talking = false;
-    commandsQueue.close();
     playerQueue.close();
     protocol.boom();
 }

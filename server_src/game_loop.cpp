@@ -16,8 +16,6 @@ GameLoop::GameLoop(Queue<std::shared_ptr<Command>>& commandsQueue, StatusBroadca
 }
 
 void GameLoop::loopLogic(int64_t elapsed_time) {
-// se encarga de los turnos y que jugador esta al momento.
-// es el que se encarga de que gusano esta al momento
 
 	std::shared_ptr<Command> command;
 	while (commandsQueue.try_pop(command) && !waitingForStatic) {
@@ -76,7 +74,8 @@ void GameLoop::loopLogic(int64_t elapsed_time) {
 
 void GameLoop::run() {
 	this->wormPlayingID = teams[teamPlayingID].getNextWormID();
-	while(playing) {
+	while(*playing) {
+		// std::cout << "Playing: " << *playing << std::endl;
 		auto current_time = std::chrono::steady_clock::now();
 		auto elapsed_time = std::chrono::duration_cast<std::chrono::milliseconds>(current_time - this->start_time).count();
 		try {
@@ -84,6 +83,7 @@ void GameLoop::run() {
 			usleep(RATE*1000);
 		} catch (const ClosedQueue& e){
         	std::cout << "Reciever: Se ha cerrado la QUEUE\n";
+			return;
     	} catch (std::exception& e) {
 			std::cout << "Error in game loop: " << e.what() << std::endl;
 			return;

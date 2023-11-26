@@ -20,9 +20,6 @@ class Player;
 
 struct InfoStruct {
     Protocol prot;
-
-    // lo puedo usar para recibir los primeros mensajes .... 
-    // y para enviar los nombres de los Matches y de los Maps
     InfoStruct(Socket&& socket) : prot(std::move(socket)) {}
     ~InfoStruct() {}
 

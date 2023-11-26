@@ -25,6 +25,8 @@ public:
 
     void sendInfoStruct(std::string matchName, std::shared_ptr<InfoStruct> infoStruct);
 
+    void closeMatches();
+
     ~MatchesMonitor();
 
 };

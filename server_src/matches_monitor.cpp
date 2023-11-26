@@ -38,3 +38,14 @@ void MatchesMonitor::sendInfoStruct(std::string matchName, std::shared_ptr<InfoS
     Queue<std::shared_ptr<InfoStruct>>* infoQueueMatch = matches[matchName]->infoQueue;
     infoQueueMatch->push(infoStruct);
 }
+
+void MatchesMonitor::closeMatches() {
+    std::lock_guard<std::mutex> lock(m);
+    std::cout << "Cerrando matches" << std::endl;
+    for (auto& match : matches) {
+        match.second->infoQueue->close();
+        match.second->matchStarter->join();
+    }
+    matches.clear();
+    std::cout << "Matches cerrados" << std::endl;
+}

@@ -15,11 +15,8 @@ void Match::run() {
     Queue<std::shared_ptr<Command>> commandQueue(90);
     StatusBroadcaster statusBroadcaster;
     while (idPlayer != numberOfPlayers) {
-
-        // bloqueo el while con un pop de la queue de InfoStruct
         std::shared_ptr<InfoStruct> infoStruct = playerInfoQueue->pop();
 
-        // le seteo el team al GameMap y lo uso para crear el nuevo Player
         std::shared_ptr<GameMap> playerMap = std::make_shared<GameMap>(idPlayer, numberOfPlayers, gameMap->getMapName(), gameMap->getBeams(), gameMap->getWorms());
         Player* player = new Player(infoStruct->prot, commandQueue, playerMap);
         std::cout << "Creo al player!\n";
@@ -28,22 +25,17 @@ void Match::run() {
         player->start();
         idPlayer++;
     }
-    bool loopActive = true;
 
-    GameLoop gameLoop(commandQueue, statusBroadcaster, gameMap, teams, &loopActive);
-    gameLoop.start();
+    GameLoop gameLoop(commandQueue, statusBroadcaster, gameMap, teams, playing);
 
-    while (*playing) {}
+    gameLoop.run();
 
-    loopActive = false;
-
+    commandQueue.close();
     killAll();
-
-    gameLoop.join();
-
 }
 
 void Match::killAll() {
+    std::cout << "Killing all players\n";
     for (auto& player : players ) {
         if (player->isAlive()) {
             player->kill();
@@ -52,8 +44,7 @@ void Match::killAll() {
         delete player;
     }
     players.clear();
+    std::cout << "All players killed\n";
 }
-
-
 
 Match::~Match() {}
