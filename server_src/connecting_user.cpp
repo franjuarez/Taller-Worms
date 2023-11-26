@@ -41,12 +41,12 @@ void ConnectingUser::createNewMatch(int numberPlayers, std::string matchName, st
 
     std::vector<Team> teams = createTeams(worms, numberPlayers);
 
-    Queue<std::shared_ptr<InfoStruct>>* infoQueue = new Queue<std::shared_ptr<InfoStruct>>();
+    std::shared_ptr<Queue<std::shared_ptr<InfoStruct>>> infoQueue = std::make_shared<Queue<std::shared_ptr<InfoStruct>>>();
     infoQueue->push(infoStruct);
     
     std::shared_ptr<GameMap> gameMap = std::make_shared<GameMap>(GameMap(0, numberPlayers, mapName, beams, worms));
     std::unique_ptr<Match> matchStarter =  std::make_unique<Match>(teams, infoQueue, "un nombre", gameMap, playing);
-    MatchesStruct* matchStruct = new MatchesStruct(mapName, std::move(matchStarter), infoQueue);
+    std::shared_ptr<MatchesStruct> matchStruct = std::make_shared<MatchesStruct>(mapName, std::move(matchStarter), infoQueue);
 
     matchesMonitor.addMatchStruct(matchName, matchStruct);
     this->status = INACTIVE;

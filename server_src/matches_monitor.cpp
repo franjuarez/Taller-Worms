@@ -11,7 +11,7 @@ MatchesMonitor::~MatchesMonitor() {
     }
 }
 
-void MatchesMonitor::addMatchStruct(std::string matchName, MatchesStruct* matchStruct) {
+void MatchesMonitor::addMatchStruct(std::string matchName, std::shared_ptr<MatchesStruct> matchStruct ) {
     std::lock_guard<std::mutex> lock(m);
     matches[matchName] = matchStruct;
     matchStruct->matchStarter->start();
@@ -35,7 +35,7 @@ void MatchesMonitor::changeMatchStatusToPlaying(std::string matchName) {
 
 void MatchesMonitor::sendInfoStruct(std::string matchName, std::shared_ptr<InfoStruct> infoStruct) {
     std::lock_guard<std::mutex> lock(m);
-    Queue<std::shared_ptr<InfoStruct>>* infoQueueMatch = matches[matchName]->infoQueue;
+    std::shared_ptr<Queue<std::shared_ptr<InfoStruct>>> infoQueueMatch = matches[matchName]->infoQueue;
     infoQueueMatch->push(infoStruct);
 }
 

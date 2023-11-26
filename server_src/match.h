@@ -29,7 +29,7 @@ class Match : public Thread {
 
 private:
     std::vector<Team> teams;
-    Queue<std::shared_ptr<InfoStruct>>* playerInfoQueue;
+    std::shared_ptr<Queue<std::shared_ptr<InfoStruct>>> playerInfoQueue;
     std::string matchName;
     int numberOfPlayers;
     std::list<Player*> players;
@@ -39,7 +39,7 @@ private:
     void killAll();
 
 public:
-    Match(std::vector<Team> teams, Queue<std::shared_ptr<InfoStruct>>* playerInfoQueue, std::string matchName, std::shared_ptr<GameMap> gameMap, bool* playing);
+    Match(std::vector<Team> teams, std::shared_ptr<Queue<std::shared_ptr<InfoStruct>>> playerInfoQueue, std::string matchName, std::shared_ptr<GameMap> gameMap, bool* playing);
     void run() override;
     ~Match();
 };

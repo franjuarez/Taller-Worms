@@ -12,12 +12,12 @@ class MatchesMonitor {
 
 private:
     std::mutex m;
-    std::map<std::string, MatchesStruct*> matches;
+    std::map<std::string, std::shared_ptr<MatchesStruct>> matches;
 
 public: 
     MatchesMonitor();
 
-    void addMatchStruct(std::string matchName, MatchesStruct* matchStruct);
+    void addMatchStruct(std::string matchName, std::shared_ptr<MatchesStruct> matchStruct );
 
     std::map<std::string, std::string> showMatchesAvailable(); 
 

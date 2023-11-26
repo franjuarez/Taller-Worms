@@ -22,9 +22,9 @@ struct MatchesStruct {
     std::string mapName;
     int status;
     std::unique_ptr<Match> matchStarter;
-    Queue<std::shared_ptr<InfoStruct>>* infoQueue;
+    std::shared_ptr<Queue<std::shared_ptr<InfoStruct>>> infoQueue;
 
-    MatchesStruct(std::string mapName, std::unique_ptr<Match> matchStarter, Queue<std::shared_ptr<InfoStruct>>* infoQueue) 
+    MatchesStruct(std::string mapName, std::unique_ptr<Match> matchStarter, std::shared_ptr<Queue<std::shared_ptr<InfoStruct>>> infoQueue) 
     : mapName(mapName),status(MATCH_WAITING), matchStarter(std::move(matchStarter)), infoQueue(infoQueue) {}
     ~MatchesStruct() {}
 };
