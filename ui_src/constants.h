@@ -42,7 +42,9 @@ enum hudSprites {
 	TP_ICON,
 	MORTAR_ICON,
 	RGRENADE_ICON,
-	BANANA_ICON
+	BANANA_ICON,
+	CLOCK_ICON,
+	AIM_ICON
 };
 
 enum commands {

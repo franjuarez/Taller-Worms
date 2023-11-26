@@ -60,6 +60,7 @@ void Protocol::sendDynamic(GameDynamic* dynamic) {
     sendWorms(dynamic->getWorms());
     sendWeapons(dynamic->getExplosives());
     sendVectorInt(dynamic->getTeamsHealth());
+    sendUintEight(dynamic->getStatus());
 }
 
 GameDynamic* Protocol::receiveDynamic() {
@@ -68,8 +69,9 @@ GameDynamic* Protocol::receiveDynamic() {
     char winnerTeam = receiveChar();
     std::vector<WormDTO> worms = receiveWorms();
     std::unordered_map<int, ExplosivesDTO> weapons = receiveWeapons();
-    std::vector<int> teamsHealth = receiveVectorInt();
-    return new GameDynamic(wormPlayingID, winnerTeam, worms, weapons, teamsHealth);
+    std::vector<uint32_t> teamsHealth = receiveVectorInt();
+    uint8_t status = receiveUintEight();
+    return new GameDynamic(wormPlayingID, status, winnerTeam, worms, weapons, teamsHealth);
 }
 
 void Protocol::sendInfo(GameInfo* info) {
@@ -330,6 +332,9 @@ void Protocol::sendWorms(std::vector<WormDTO> worms) {
         sendUintEight(worms[i].getDir());
         sendUintEight(worms[i].getTeam());
         sendUintEight(worms[i].getHealth());
+        sendFloat(worms[i].getVelX());
+        sendFloat(worms[i].getVelY());
+        sendUintEight(worms[i].isOnGround());
         sendPosition(Position(worms[i].getX(), worms[i].getY()));
         sendWeaponsMap(worms[i].getWeapons());
     }
@@ -344,9 +349,12 @@ std::vector<WormDTO> Protocol::receiveWorms() {
         uint8_t dir = receiveUintEight();
         uint8_t team = receiveUintEight();
         uint8_t health = receiveUintEight();
+        float velX = receiveFloat();
+        float velY = receiveFloat();
+        uint8_t onGround = receiveUintEight();
         Position pos = receivePosition();
         std::vector<int> weapons = receiveWeaponsMap();
-        WormDTO worm(id, dir, team, health, pos, weapons);
+        WormDTO worm(id, dir, team, health, velX, velY, onGround, pos, weapons);
         worms.push_back(worm);
     }
     return worms;
@@ -391,27 +399,27 @@ std::vector<int> Protocol::receiveWeaponsMap() {
     return weaponsMap;
 }
 
-void Protocol::sendVectorInt(std::vector<int> vector) {
+void Protocol::sendVectorInt(std::vector<uint32_t> vector) {
     sendUintEight(vector.size());
     for (int i = 0; i < vector.size(); i++) {
-        sendUintEight(vector[i]);
+        sendUintThirtyTwo(vector[i]);
     }
 }
 
-std::vector<int> Protocol::receiveVectorInt() {
+std::vector<uint32_t> Protocol::receiveVectorInt() {
     uint8_t vectorSize = receiveUintEight();
-    std::vector<int> vector;
+    std::vector<uint32_t> vector;
     for (int i = 0; i < vectorSize; i++) {
-        int number = receiveUintEight();
+        uint32_t number = receiveUintThirtyTwo();
         vector.push_back(number);
     }
     return vector;
 }
 
 void Protocol::sendFloat(float num) {
-    skt.sendall(&num, sizeof(num), &was_closed);
+    uint32_t num32 = *reinterpret_cast<uint32_t*>(&num);
+    sendUintThirtyTwo(num32);
     checkClosed();
-    // arreglar la falopeada de hacer htons y castear
 }
 
 void Protocol::sendUintEight(uint8_t num) {
@@ -438,8 +446,8 @@ void Protocol::sendString(const std::string& str) {
 }
 
 float Protocol::receiveFloat() {
-    float num;  
-    skt.recvall(&num, sizeof(num), &was_closed);
+    uint32_t num32 = receiveUintThirtyTwo();
+    float num = *reinterpret_cast<float*>(&num32); 
     checkClosed();
     return num;
 }

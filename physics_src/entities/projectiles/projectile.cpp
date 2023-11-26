@@ -48,7 +48,6 @@ void Projectile::explode(){
     }
     leaveFragments();
     this->entitiesToRemove.insert(projectile);
-    
 }
 
 Projectile::~Projectile() {}

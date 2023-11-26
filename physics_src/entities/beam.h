@@ -6,12 +6,14 @@
 
 class Beam : public Entity {
     private:
+    float angle;
     bool walkable;
 
     public:
-    Beam(b2Body* body, std::unordered_set<b2Body*>& entitiesToRemove, bool isWalkable);
+    Beam(b2Body* body, std::unordered_set<b2Body*>& entitiesToRemove, float angle);
 
     bool isWalkable();
+    float getAngle();
     
     virtual void beginCollisionWithWater(Entity* otherBody, b2Contact* contact);
     virtual void beginCollisionWithWorm(Entity* otherBody, b2Contact* contact);

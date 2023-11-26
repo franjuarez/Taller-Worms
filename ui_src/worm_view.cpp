@@ -38,7 +38,7 @@ WormView::WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets, Fon
 
 	//frames for walking animation
 	for (int i = 0; i < 15; i++) {
-		x = 11;
+		x = 11 - (i/2);
 		w = 28;
 		y = i*(60) + 14;
 		h = 29;
@@ -228,7 +228,7 @@ WormView::WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets, Fon
 
 int WormView::shoot(int i) {
 	int aux = angle;
-	toDefault(i);
+	//toDefault(i);
 	return aux;
 }
 

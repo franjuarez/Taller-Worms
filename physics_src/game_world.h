@@ -61,8 +61,6 @@ private:
 
     void updateDelayedProjectiles(float deltaTime);
 
-    void removeWorm(b2Body* worm);
-
     void removeProjectile(b2Body* projectile);
     
     void removeEntities();

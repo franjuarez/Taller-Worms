@@ -3,6 +3,7 @@ resources_directory: resources
 
 game:
   FPS: 60
+  music_volume: 0 # 0-128
   turn_time: 10
 
 camera:
@@ -28,7 +29,7 @@ worm:
   max_health: 100
 
 move:
-  move_velocity: 0.4
+  move_velocity: 0.8
 
 jump:
   jump_forward_movement_x: 1

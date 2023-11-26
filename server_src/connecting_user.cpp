@@ -93,8 +93,8 @@ std::vector<Team> ConnectingUser::createTeams(std::vector<WormDTO>& worms, int n
 std::vector<WormDTO> ConnectingUser::createWorms(std::vector<WormPosition> wormsPositions){
     std::vector<WormDTO> worms;
     for(size_t i = 0; i < wormsPositions.size(); i++){
-        WormDTO worm(i, STARTING_DIRECTON, STARTING_TEAM, CONFIG.getWormInitialHealth(),
-         Position(wormsPositions[i].x, wormsPositions[i].y), STARTING_WEAPONS);
+        WormDTO worm(i, STARTING_DIRECTON, STARTING_TEAM, CONFIG.getWormInitialHealth(), 0,
+        0.0f, 0.0f, Position(wormsPositions[i].x, wormsPositions[i].y), STARTING_WEAPONS);
         worms.push_back(worm);
     }
     return worms;

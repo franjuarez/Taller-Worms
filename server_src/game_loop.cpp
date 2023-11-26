@@ -1,6 +1,7 @@
 #include "game_loop.h"
 #include "status_broadcaster.h"
 #include "../game_src/commands/command.h"
+#include "../game_src/constants_game.h"
 
 #define CONFIG ConfigLoader::getInstance()
 
@@ -31,7 +32,7 @@ void GameLoop::loopLogic(int64_t elapsed_time) {
 	
 	std::vector<WormDTO> worms = gameDynamic->getWorms();
 	int wormPlayingNewHealth;
-	std::vector<int> teamsHealth(teams.size(), 0);
+	std::vector<uint32_t> teamsHealth(teams.size(), 0);
 	for (size_t i = 0; i < worms.size(); i++) {
 
 		teamsHealth[worms[i].getTeam()] += worms[i].getHealth();
@@ -48,9 +49,12 @@ void GameLoop::loopLogic(int64_t elapsed_time) {
 		}
 	}
 
+	
 	gameDynamic->setTeamsHealth(teamsHealth);
 	int winnerStatus = updateWinningStatus();
 	gameDynamic->setWinnerTeam(winnerStatus);
+	gameDynamic->setStatus(STARTED);
+
 	statusBroadcaster.broadcast(gameDynamic);
 
 	if (wormPlayingHealth != wormPlayingNewHealth || elapsed_time > CONFIG.getTurnTime() * 1000 ) {

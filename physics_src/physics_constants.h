@@ -19,11 +19,11 @@
 #define BEAM_HEIGHT 0.8f
 
 #define WORM_HEIGHT 0.9f
-#define WORM_WIDTH 0.5f
+#define WORM_WIDTH 0.7f
 #define WORM_DENSITY 1.0f
 #define WORM_FRICTION 0.3f
 
-#define VELOCITY_SMOOTH_BREAK CONFIG.getWormMoveVelocity() * 0.5f
+#define VELOCITY_SMOOTH_BREAK CONFIG.getWormMoveVelocity() * 0.7f
 
 //Bazooka constants
 #define BAZOOKA_WIDTH 0.25f

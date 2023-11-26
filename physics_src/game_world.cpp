@@ -62,7 +62,15 @@ void GameWorld::createWorm(float startingX, float startingY, int id, int team, i
     fd.filter.groupIndex = WORM_GROUP_INDEX; //This way it doesn't collide with other worms
     body->CreateFixture(&fd);
 
-    Worm* wormEntity = new Worm(body, entitiesToRemove, id, team, RIGHT, health, weapons); //Starts facing right
+    b2PolygonShape footSensorShape;
+    footSensorShape.SetAsBox(WORM_WIDTH/2 - 0.05f , WORM_HEIGHT/4, b2Vec2(0, -WORM_HEIGHT/2), 0);
+    b2FixtureDef footSensorFixture;
+    footSensorFixture.shape = &footSensorShape;
+    footSensorFixture.isSensor = true;
+    b2Fixture* footSensor = body->CreateFixture(&footSensorFixture);
+
+
+    Worm* wormEntity = new Worm(body, footSensor, entitiesToRemove, id, team, RIGHT, health, weapons); //Starts facing right
     body->GetUserData().pointer = reinterpret_cast<uintptr_t>(wormEntity);
 
     this->worms[id] = body;
@@ -89,8 +97,7 @@ void GameWorld::createBeam(float startingX, float startingY, float angle, bool l
     gb.friction = WORM_FRICTION;
     beamBody->CreateFixture(&gb);
 
-    bool isWalkable = (abs(angle) > CONFIG.getBeamMaxWalkableAngle()) ? false : true;
-    Beam* beamEntity = new Beam(beamBody, entitiesToRemove, isWalkable);
+    Beam* beamEntity = new Beam(beamBody, entitiesToRemove, angle);
     beamBody->GetUserData().pointer = reinterpret_cast<uintptr_t>(beamEntity);
 }
 
@@ -128,7 +135,7 @@ void GameWorld::checkWormExists(int id){
 b2Body* GameWorld::createProjectile(b2Body* worm, int weaponId, int direction, float width, float height, float restitution = 0.0f){
     b2BodyDef bd;
     bd.type = b2_dynamicBody;
-    float deltaX = (direction == LEFT) ? - WORM_WIDTH/2 - width/2 - 0.1f : WORM_WIDTH/2 + width/2 + 0.1f;
+    float deltaX = (direction == LEFT) ? - WORM_WIDTH/2 - width/2 - 0.05f : WORM_WIDTH/2 + width/2 + 0.05f;
     float posX = worm->GetPosition().x + deltaX;
     float posY = worm->GetPosition().y;
     bd.position.Set(posX, posY);

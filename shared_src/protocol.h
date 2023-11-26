@@ -66,8 +66,8 @@ private:
     void sendWeaponsMap(std::vector<int> weapons);
     std::vector<int> receiveWeaponsMap();
 
-    void sendVectorInt(std::vector<int> vector);
-    std::vector<int> receiveVectorInt();
+    void sendVectorInt(std::vector<uint32_t> vector);
+    std::vector<uint32_t> receiveVectorInt();
 
     GameMap* receiveMap();
     GameDynamic* receiveDynamic();
