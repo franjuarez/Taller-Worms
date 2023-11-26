@@ -16,8 +16,6 @@ public:
     void showMatches();
 
     ~ClientLobby();
-
-
 };
 
 #endif

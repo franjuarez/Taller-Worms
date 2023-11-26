@@ -18,9 +18,8 @@ void Match::run() {
         std::shared_ptr<InfoStruct> infoStruct = playerInfoQueue->pop();
 
         std::shared_ptr<GameMap> playerMap = std::make_shared<GameMap>(idPlayer, numberOfPlayers, gameMap->getMapName(), gameMap->getBeams(), gameMap->getWorms());
-        Player* player = new Player(infoStruct->prot, commandQueue, playerMap);
+        Player* player = new Player(infoStruct, idPlayer, commandQueue, statusBroadcaster, playerMap);
         std::cout << "Creo al player!\n";
-        statusBroadcaster.addPlayer(idPlayer, player->getPlayerQueue());
         players.push_back(player);
         player->start();
         idPlayer++;
@@ -31,6 +30,7 @@ void Match::run() {
     gameLoop.run();
 
     commandQueue.close();
+
     killAll();
 }
 

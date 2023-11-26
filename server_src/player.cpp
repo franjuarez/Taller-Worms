@@ -1,20 +1,22 @@
 #include "player.h"
 #include <memory>
 
-Player::Player(Protocol& peer, Queue<std::shared_ptr<Command>>& commandQueue, std::shared_ptr<GameMap> gameMap) : 
-protocol(std::move(peer.getSocket())), 
-sender(protocol, playerQueue, talking), 
-receiver(protocol, commandQueue, talking), 
-commandsQueue(commandQueue), 
-playerQueue(90) {
+Player::Player(std::shared_ptr<InfoStruct> infoStruct, int playerID, Queue<std::shared_ptr<Command>>& commandQueue, StatusBroadcaster& statusBroadcaster , std::shared_ptr<GameMap> gameMap) : 
+playerID(playerID),
+infoStruct(infoStruct), 
+commandsQueue(commandQueue),
+playerQueue(90),
+statusBroadcaster(statusBroadcaster),
+sender(infoStruct->prot, statusBroadcaster, talking, playerID), 
+receiver(infoStruct->prot, commandQueue, talking)
+{
     playerQueue.push(gameMap);
     std::shared_ptr<GameDynamic> gameDynamic = std::make_shared<GameDynamic>(GameDynamic(-1, gameMap->getWorms(), {}));
     playerQueue.push(gameDynamic);
+
+    statusBroadcaster.addPlayer(playerID, &playerQueue);
 }
 
-Queue<std::shared_ptr<Serializable>>* Player::getPlayerQueue() {
-    return &playerQueue;
-}
 
 void Player::start() {
     sender.start();
@@ -29,7 +31,7 @@ void Player::join(){
 void Player::kill() {
     talking = false;
     playerQueue.close();
-    protocol.boom();
+    infoStruct->prot.boom();
 }
 
 bool Player::isAlive() {
