@@ -3,10 +3,12 @@
 #include <string>
 #include "player.h"
 #include "../shared_src/info_struct.h"
+#include "constants_server.h"
 
 
-Match::Match(std::vector<Team> teams, std::shared_ptr<Queue<std::shared_ptr<InfoStruct>>> playerInfoQueue, std::string matchName, std::shared_ptr<GameMap> gameMap, bool* playing) : 
-teams(teams), playerInfoQueue(playerInfoQueue), matchName(matchName), gameMap(gameMap), playing(playing) {
+Match::Match(std::vector<Team> teams, std::shared_ptr<Queue<std::shared_ptr<InfoStruct>>> playerInfoQueue, std::string matchName, std::shared_ptr<GameMap> gameMap,
+ bool* playing, int* status) : 
+teams(teams), playerInfoQueue(playerInfoQueue), matchName(matchName), gameMap(gameMap), playing(playing), status(status) {
     numberOfPlayers = gameMap->getNumberTeams();
 }
 
@@ -28,12 +30,15 @@ void Match::run() {
 
     GameLoop gameLoop(commandQueue, statusBroadcaster, gameMap, teams, playing);
 
+    *status = MATCH_IN_GAME_LOOP;
+
     gameLoop.run();
 
     commandQueue.close();
 
     killAll();
 }
+
 
 void Match::killAll() {
     std::cout << "Killing all players\n";

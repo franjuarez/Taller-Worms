@@ -70,12 +70,11 @@ void ClientLobby::showMatches() {
     std::shared_ptr<Serializable>gameDynamic(infoStruct->prot.receiveSerializable());
     std::shared_ptr<GameInfo> gs = std::dynamic_pointer_cast<GameInfo>(gameDynamic);
     std::cout<< "Showing Available Matches\n";
-    std::map<std::string, std::string> matchesAvailable;
+    std::map<std::string, std::string> matchesAvailable = gs->getMatchesAvailable();
     for (auto& match : matchesAvailable) {
         std::cout << "Match: " << match.first << std::endl;
         std::cout << "  Map: " << match.second << std::endl;
     }
-    // std::cout << gs->getMatchesAvailable().size() << std::endl;
 }
 
 

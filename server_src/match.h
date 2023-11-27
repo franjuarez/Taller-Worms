@@ -29,11 +29,12 @@ private:
     std::list<Player*> players;
     std::shared_ptr<GameMap> gameMap;
     bool* playing;
+    int* status;
 
     void killAll();
-
+    
 public:
-    Match(std::vector<Team> teams, std::shared_ptr<Queue<std::shared_ptr<InfoStruct>>> playerInfoQueue, std::string matchName, std::shared_ptr<GameMap> gameMap, bool* playing);
+    Match(std::vector<Team> teams, std::shared_ptr<Queue<std::shared_ptr<InfoStruct>>> playerInfoQueue, std::string matchName, std::shared_ptr<GameMap> gameMap, bool* playing, int* status);
     void run() override;
     ~Match();
 };

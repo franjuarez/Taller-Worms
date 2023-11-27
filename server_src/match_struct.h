@@ -19,13 +19,14 @@ struct InfoStruct;
 class Match;
 
 struct MatchesStruct {
+    int status = MATCH_WAITING;
     std::string mapName;
-    int status;
     std::unique_ptr<Match> matchStarter;
     std::shared_ptr<Queue<std::shared_ptr<InfoStruct>>> infoQueue;
 
-    MatchesStruct(std::string mapName, std::unique_ptr<Match> matchStarter, std::shared_ptr<Queue<std::shared_ptr<InfoStruct>>> infoQueue) 
-    : mapName(mapName),status(MATCH_WAITING), matchStarter(std::move(matchStarter)), infoQueue(infoQueue) {}
+    MatchesStruct(std::vector<Team> teams, std::string matchName, 
+    std::shared_ptr<GameMap> gameMap, bool* playing, std::shared_ptr<Queue<std::shared_ptr<InfoStruct>>> infoQueue) 
+    : mapName(gameMap->getMapName()), matchStarter(std::make_unique<Match>(teams, infoQueue, matchName, gameMap, playing, &status)), infoQueue(infoQueue) {}
     ~MatchesStruct() {}
 };
 
