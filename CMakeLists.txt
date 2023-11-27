@@ -116,4 +116,3 @@ target_link_libraries(client PUBLIC SharedUi)
 target_link_libraries(client PRIVATE yaml-cpp)
 target_compile_options(client PRIVATE $<$<NOT:$<C_COMPILER_ID:MSVC>>:-Wall -Wextra -pedantic -ggdb -DDEBUG -pedantic-errors>)
 
-

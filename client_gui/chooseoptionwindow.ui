@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ChooseOptionWindow</class>
+ <widget class="QDialog" name="ChooseOptionWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1027</width>
+    <height>484</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">border-image: url(:/resources/images/avioneta.png)  
+0 0 0  strech strech;
+
+</string>
+  </property>
+  <widget class="QPushButton" name="createButton">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>320</y>
+     <width>158</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Ubuntu Condensed</family>
+     <pointsize>20</pointsize>
+     <italic>true</italic>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: transparent;
+color: rgb(0, 0, 0);
+border-color: rgb(0, 0, 0);
+    border-width: 1px;
+background-image: transparent;
+border-image: transparent;
+  border: none;</string>
+   </property>
+   <property name="text">
+    <string>Create game</string>
+   </property>
+   <property name="autoDefault">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="createButton_2">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>394</y>
+     <width>158</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Ubuntu Condensed</family>
+     <pointsize>20</pointsize>
+     <italic>true</italic>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: transparent;
+color: rgb(0, 0, 0);
+border-color: rgb(0, 0, 0);
+    border-width: 1px;
+background-image: transparent;
+border-image: transparent;
+  border: none;</string>
+   </property>
+   <property name="text">
+    <string>About</string>
+   </property>
+   <property name="autoDefault">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="joinButton">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>431</y>
+     <width>158</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Ubuntu Condensed</family>
+     <pointsize>20</pointsize>
+     <italic>true</italic>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: transparent;
+background-image: transparent;
+border-image: transparent;
+  border: none;</string>
+   </property>
+   <property name="text">
+    <string>Join game</string>
+   </property>
+   <property name="autoDefault">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="joinButton_2">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>357</y>
+     <width>158</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Ubuntu Condensed</family>
+     <pointsize>20</pointsize>
+     <italic>true</italic>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: transparent;
+background-image: transparent;
+border-image: transparent;
+  border: none;</string>
+   </property>
+   <property name="text">
+    <string>Quit</string>
+   </property>
+   <property name="autoDefault">
+    <bool>true</bool>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
