@@ -7,8 +7,11 @@ LaunchRocket::LaunchRocket(int type, int wormID, int dir, float angle, float pow
 wormID(wormID),dir(dir), angle(angle), power(power) {}
 
 
-bool LaunchRocket::executeCommand(GameWorld& gameWorld, bool* cheatOn) {
+bool LaunchRocket::executeCommand(GameWorld& gameWorld, bool* cheatOn, bool& needsMove) {
     *cheatOn = *cheatOn;
+    if (needsMove) {
+        return true;
+    }
     if (type == BAZOOKA) {
         return gameWorld.wormLaunchBazooka(wormID, angle, dir, power);
     } else if (type == MORTAR) {

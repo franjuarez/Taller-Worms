@@ -31,7 +31,9 @@ private:
     int wormPlayingID;
     int wormPlayingHealth;
     bool waitingForStatic;
+    bool waitingExtraTime;
     std::chrono::steady_clock::time_point start_time; 
+    std::chrono::steady_clock::time_point start_extra_time;
 
     void loopLogic(int64_t passed_time);
     int updateWinningStatus();
@@ -39,6 +41,7 @@ private:
 
     std::atomic<bool> playing;
     bool cheatOn;
+    bool stillWaiting = false;
 public:
     GameLoop(Queue<std::shared_ptr<Command>>& commandsQueue, StatusBroadcaster& statusBroadcaster, std::shared_ptr<GameMap> gameMap, std::vector<Team> teams, bool* playing);
     ~GameLoop();

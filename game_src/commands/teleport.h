@@ -13,7 +13,7 @@ private:
     Position pos;
 public:
     Teleport(int wormsID, Position pos);
-    bool executeCommand(GameWorld& gameWorld, bool* cheatOn) override;
+    bool executeCommand(GameWorld& gameWorld, bool* cheatOn, bool& needsMove) override;
     void send(Protocol& protocol);
     int getID();
     float getX();

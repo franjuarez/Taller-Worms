@@ -18,9 +18,10 @@ private:
 public:
     Command(int wormID) : wormID(wormID) {}
     virtual ~Command() {}
-    virtual bool executeCommand(GameWorld&, bool* cheatOn) {
+    virtual bool executeCommand(GameWorld&, bool* cheatOn, bool& needsMovement) {
         std::cout << "exec mother class\n";
         *cheatOn = *cheatOn;
+        needsMovement = needsMovement;
         return true;
     }
     virtual void send(Protocol& protocol) = 0;
