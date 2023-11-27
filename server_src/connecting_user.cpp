@@ -1,6 +1,7 @@
 #include "connecting_user.h"
 #include "../game_src/game_info.h"
 #include "../game_src/commands/match_command.h"
+#include "../shared_src/info_struct.h"
 
 
 ConnectingUser::ConnectingUser(std::shared_ptr<InfoStruct> infoStruct, MatchesMonitor& matchesMonitor, bool* playing) : 

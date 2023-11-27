@@ -19,8 +19,8 @@ struct ClientClosed : public std::runtime_error {
 
 class Client {
 private:
-	Protocol protocol;
 	int team;
+	std::shared_ptr<InfoStruct> infoStruct;
 	Queue<std::shared_ptr<Serializable>> gameStatusQueue;
 	Queue<std::shared_ptr<Command>> commandsQueue;
 	Sender sender;
@@ -29,7 +29,7 @@ private:
 	bool keepTalking = true;
 	
 public:
-	Client(Protocol& prot);
+	Client(std::shared_ptr<InfoStruct> infoStruct);
 	~Client();
 
 	std::shared_ptr<Serializable> getGameStatus();

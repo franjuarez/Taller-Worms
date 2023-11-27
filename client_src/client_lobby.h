@@ -4,12 +4,15 @@
 #include "../shared_src/socket.h"
 #include "../shared_src/protocol.h"
 
-class ClientLobby {    
+struct InfoStruct;
+
+class ClientLobby {
+    
+    std::shared_ptr<InfoStruct> infoStruct;
 
 public:
-    Protocol prot;
 
-    ClientLobby(const std::string& hostname, const std::string& servname);
+    ClientLobby(std::shared_ptr<InfoStruct> infoStruct);
 
     void run();
 

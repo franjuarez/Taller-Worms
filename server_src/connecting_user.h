@@ -2,6 +2,7 @@
 #define CONNECTING_USER_H
 
 #include "../shared_src/thread.h"
+#include "../shared_src/info_struct.h"
 #include "match.h"
 #include "match_struct.h"
 #include "matches_monitor.h"

@@ -92,7 +92,7 @@ private:
 	void focusCam();
 
 public:
-	GameView(Protocol& prot);
+	GameView(std::shared_ptr<InfoStruct> infoStruct);
 	~GameView();
 
 	void start();

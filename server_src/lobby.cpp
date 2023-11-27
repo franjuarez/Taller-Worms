@@ -10,6 +10,7 @@
 #include "../game_src/beam_dto.h"
 #include "../game_src/game_map.h"
 #include "../shared_src/socket.h"
+#include "../shared_src/info_struct.h"
 #include "player.h"
 
 #include <memory>

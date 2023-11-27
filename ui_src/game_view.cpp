@@ -81,8 +81,8 @@
 #define MORTAR_PROJECTILE_PATH BASE_PATH + "images/morter_projectile.bmp"
 #define PERDIGON_PROJECTILE_PATH BASE_PATH + "images/perdigon.bmp"
 
-GameView::GameView(Protocol& prot) :
-		client(prot),
+GameView::GameView(std::shared_ptr<InfoStruct> infoStruct) :
+		client(infoStruct),
 		sdl(SDL_INIT_VIDEO | SDL_INIT_AUDIO),
 		sdlttf(),
 		window(WINDOW_NAME,

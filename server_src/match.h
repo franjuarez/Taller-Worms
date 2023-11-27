@@ -18,12 +18,6 @@
 
 class Player;
 
-struct InfoStruct {
-    Protocol prot;
-    InfoStruct(Socket&& socket) : prot(std::move(socket)) {}
-    ~InfoStruct() {}
-
-};
 
 class Match : public Thread {
 

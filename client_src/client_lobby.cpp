@@ -8,7 +8,7 @@
 #define JM "jm"
 #define R "r"
 
-ClientLobby::ClientLobby(const std::string& hostname, const std::string& servname) : prot(hostname, servname) {}
+ClientLobby::ClientLobby(std::shared_ptr<InfoStruct> infoStruct) : infoStruct(infoStruct) {}
 
 
 void ClientLobby::run() {
@@ -29,17 +29,17 @@ void ClientLobby::run() {
             std::cin >>mapName;
 
             MatchCommand* mc = new MatchCommand(NEW_MATCH, numberPlayers, matchName, mapName);
-            mc->send(prot);
+            mc->send(infoStruct->prot);
             return;
 
         } else if (userInput == JM) {
             std::cin >> matchName;
             MatchCommand* mc = new MatchCommand(JOIN, numberPlayers, matchName, mapName);
-            mc->send(prot);
+            mc->send(infoStruct->prot);
             return;
         } else if (userInput == R) {
             MatchCommand* mc = new MatchCommand(REFRESH, numberPlayers, matchName, mapName);
-            mc->send(prot);
+            mc->send(infoStruct->prot);
             showMatches();
         } else {
             std::cout << "Invalid Command\n";
@@ -48,7 +48,7 @@ void ClientLobby::run() {
 }
 
 void ClientLobby::showMatches() {
-    std::shared_ptr<Serializable>gameDynamic(prot.receiveSerializable());
+    std::shared_ptr<Serializable>gameDynamic(infoStruct->prot.receiveSerializable());
     std::shared_ptr<GameInfo> gs = std::dynamic_pointer_cast<GameInfo>(gameDynamic);
     std::cout<< "Showing Available Matches\n";
     std::map<std::string, std::string> matchesAvailable;

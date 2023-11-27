@@ -2,11 +2,11 @@
 
 #include <iostream>
 
-Client::Client(Protocol& prot) : protocol(std::move(prot.getSocket()))
+Client::Client(std::shared_ptr<InfoStruct> infoStruct) : infoStruct(infoStruct)
 , gameStatusQueue(900)
 , commandsQueue(900)
-, sender(protocol, std::ref(commandsQueue), keepTalking)
-, receiver(protocol, std::ref(gameStatusQueue), keepTalking) {
+, sender(infoStruct->prot, std::ref(commandsQueue), keepTalking)
+, receiver(infoStruct->prot, std::ref(gameStatusQueue), keepTalking) {
     lastGameStatus = NULL;
 }
 
@@ -34,7 +34,7 @@ void Client::start() {
 
 void Client::kill() {
     keepTalking = false;
-    protocol.boom();
+    infoStruct->prot.boom();
     commandsQueue.close();
     gameStatusQueue.close();
     join();

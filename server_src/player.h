@@ -10,6 +10,7 @@
 #include "server_sender.h"
 #include "server_receiver.h"
 #include "status_broadcaster.h"
+#include "../shared_src/info_struct.h"
 
 class InfoStruct;
 class Player  {

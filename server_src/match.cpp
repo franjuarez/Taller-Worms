@@ -2,6 +2,7 @@
 #include "game_loop.h"
 #include <string>
 #include "player.h"
+#include "../shared_src/info_struct.h"
 
 
 Match::Match(std::vector<Team> teams, std::shared_ptr<Queue<std::shared_ptr<InfoStruct>>> playerInfoQueue, std::string matchName, std::shared_ptr<GameMap> gameMap, bool* playing) : 

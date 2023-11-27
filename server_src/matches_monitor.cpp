@@ -1,7 +1,7 @@
 #include "matches_monitor.h"
 #include "constants_server.h"
 #include "match_struct.h"
-
+#include "../shared_src/info_struct.h"
 
 MatchesMonitor::MatchesMonitor() {}
 

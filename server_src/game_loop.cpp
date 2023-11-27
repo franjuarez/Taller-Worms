@@ -61,7 +61,6 @@ void GameLoop::loopLogic(int64_t elapsed_time) {
 		waitingForStatic = true;
 	}
 
-	// std::cout << "cheatON " << cheatOn  << std::endl;
 
 	if (waitingForStatic && !cheatOn) {
 		if(gameWorld.allEntitiesAtRest()) {
@@ -79,7 +78,6 @@ void GameLoop::loopLogic(int64_t elapsed_time) {
 void GameLoop::run() {
 	this->wormPlayingID = teams[teamPlayingID].getNextWormID();
 	while(*playing) {
-		// std::cout << "Playing: " << *playing << std::endl;
 		auto current_time = std::chrono::steady_clock::now();
 		auto elapsed_time = std::chrono::duration_cast<std::chrono::milliseconds>(current_time - this->start_time).count();
 		try {
