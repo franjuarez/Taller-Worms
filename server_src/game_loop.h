@@ -40,6 +40,7 @@ private:
 
     bool* playing;
     bool cheatOn;
+    bool gameOver = false;
 public:
     GameLoop(Queue<std::shared_ptr<Command>>& commandsQueue, StatusBroadcaster& statusBroadcaster, std::shared_ptr<GameMap> gameMap, std::vector<Team> teams, bool* playing);
     ~GameLoop();
