@@ -17,6 +17,7 @@ protected:
 
     virtual void beginCollisionWithWorm(Entity* otherBody, b2Contact* contact) = 0;
     void beginCollisionWithWater(Entity* otherBody, b2Contact* contact) override;
+    void beginCollisionWithProjectile(Entity* otherBody, b2Contact* contact) override;
 
     ~SupplyBox();
 };

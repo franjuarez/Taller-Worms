@@ -27,6 +27,7 @@ public:
     virtual void beginCollisionWithWater(Entity* otherBody, b2Contact* contact) = 0;
     virtual void beginCollisionWithBeam(Entity* otherBody, b2Contact* contact) = 0;
     virtual void beginCollisionWithWorm(Entity* otherBody, b2Contact* contact) = 0;
+    virtual void beginCollisionWithSupplyBox(Entity* otherBody, b2Contact* contact);
 
     virtual ExplosivesDTO getDTO() = 0;
 

@@ -334,6 +334,7 @@ Position GameWorld::calculateValidSupplyBoxPosition(){
 
 void GameWorld::dropSupplyBox(int type){
     Position pos = calculateValidSupplyBoxPosition();
+    //guardar en mapa de cajas con id
     std::cout << "Supply box position: " << pos.getX() << ", " << pos.getY() << std::endl;
     // b2BodyDef bd;
     // bd.type = b2_dynamicBody;

@@ -11,4 +11,8 @@ void SupplyBox::beginCollisionWithWater(Entity* otherBody, b2Contact* contact) {
     otherBody->beginCollisionWithSupplyBox(this, contact);
 }
 
+void SupplyBox::beginCollisionWithProjectile(Entity* otherBody, b2Contact* contact) {
+    otherBody->beginCollisionWithSupplyBox(this, contact);
+}
+
 SupplyBox::~SupplyBox() {}

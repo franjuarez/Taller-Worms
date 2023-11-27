@@ -15,6 +15,11 @@ ExplosivesDTO Projectile::getDTO(int projectileType){
     return dto;
 }
 
+void Projectile::beginCollisionWithSupplyBox(Entity* otherBody, b2Contact* contact) {
+    explode();
+    entitiesToRemove.insert(otherBody->body);
+}
+
 int Projectile::getId(){
     return this->id;
 }
