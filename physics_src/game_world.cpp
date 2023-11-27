@@ -453,7 +453,7 @@ GameDynamic* GameWorld::getGameStatus(int id){
         Projectile* projectileData = (Projectile*) projectile.second->GetUserData().pointer;
         projectilesDTO.emplace(projectile.first, projectileData->getDTO());
     }
-    return new GameDynamic(id, wormsDTO, projectilesDTO);
+    return new GameDynamic(id, wormsDTO, projectilesDTO, {});
 }
 
 GameWorld::~GameWorld() {

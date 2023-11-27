@@ -41,6 +41,8 @@ private:
     int decideTypeOfSupplyBox();
     int decideAmmoType();
 
+    void dropSupplyBox();
+
     std::atomic<bool> playing;
     bool cheatOn;
 public:

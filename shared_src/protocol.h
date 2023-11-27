@@ -7,6 +7,7 @@
 #include  "../game_src/beam_dto.h"
 #include  "../game_src/explosives_dto.h"
 #include  "../game_src/position.h"
+#include "../game_src/supply_box_dto.h"
 
 #include <iostream>
 #include <vector>
@@ -55,6 +56,9 @@ private:
 
     void sendWeapons(std::unordered_map<int, ExplosivesDTO> explosives);
     std::unordered_map<int, ExplosivesDTO> receiveWeapons();
+
+    void sendSupplyBox(std::unordered_map<int, SupplyBoxDTO> supplyBox);
+    std::unordered_map<int, SupplyBoxDTO> receiveSupplyBox();
 
     void sendPosition(Position position);
     Position receivePosition();

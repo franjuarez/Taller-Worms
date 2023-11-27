@@ -67,6 +67,7 @@ void GameLoop::loopLogic(int64_t elapsed_time) {
 		if(gameWorld.allEntitiesAtRest()) {
 			waitingForStatic = false;
 			changeWormPlaying(worms);
+			dropSupplyBox();
 		}
 	} else if (waitingForStatic && cheatOn) {
 		if (gameWorld.allEntitiesAtRest()) {
@@ -88,6 +89,14 @@ void GameLoop::run() {
 			std::cout << "Error in game loop: " << e.what() << std::endl;
 			return;
 		}
+	}
+}
+
+
+void GameLoop::dropSupplyBox() {
+	if (shouldDropBox()) {
+		int type = decideTypeOfSupplyBox();
+		gameWorld.dropSupplyBox(type);
 	}
 }
 
