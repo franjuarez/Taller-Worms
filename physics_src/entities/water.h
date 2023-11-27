@@ -4,8 +4,6 @@
 #include "entity.h"
 #include "worm.h"
 
-class Worm;
-
 class Water : public Entity {
     public:
     Water(b2Body* body, std::unordered_set<b2Body*>& entitiesToRemove);

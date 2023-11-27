@@ -3,8 +3,6 @@
 
 #include "supply_box.h"
 
-class Worm;
-
 class ProvitionsSupplyBox : public SupplyBox {
 public:
 

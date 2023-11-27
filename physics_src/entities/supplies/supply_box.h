@@ -5,8 +5,6 @@
 #include "../worm.h"
 #include "../../../game_src/supply_box_dto.h"
 
-class Worm;
-
 class SupplyBox : public Entity {
 protected:
     int id;
