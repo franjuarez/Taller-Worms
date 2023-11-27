@@ -6,9 +6,9 @@ Move::Move(int id, int dir) : Command(id), wormID(id), dir(dir) {}
 
 bool Move::executeCommand(GameWorld& gameWorld, bool* cheatOn, bool& needsMove) {
     *cheatOn = *cheatOn;
-    needsMove = needsMove;
+    // needsMove = needsMove;
     gameWorld.moveWorm(this->wormID, this->dir);
-    return false;
+    return needsMove;
 }
 
 void Move::send(Protocol& protocol) {

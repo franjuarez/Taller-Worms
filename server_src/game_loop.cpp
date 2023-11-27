@@ -24,10 +24,14 @@ void GameLoop::loopLogic(int64_t elapsed_time) {
 			// agregarle un parametro extra a executeCommand para que no se 
 			// ejecuten cosas q no sean de movimiento 
 			waitingExtraTime = command->executeCommand(gameWorld, &cheatOn, waitingExtraTime);
-			if (waitingExtraTime) {
+			if (waitingExtraTime && !stillWaiting) {
+				// std::cout << "en el if\n";
 				this->start_extra_time = std::chrono::steady_clock::now();
+				stillWaiting = true;
 			}
 	}
+
+	
 
 	gameWorld.update();
 	std::shared_ptr<GameDynamic>gameDynamic(gameWorld.getGameStatus(wormPlayingID));
@@ -65,15 +69,19 @@ void GameLoop::loopLogic(int64_t elapsed_time) {
 		auto current_time_t = std::chrono::steady_clock::now();
 		auto extraTime = std::chrono::duration_cast<std::chrono::milliseconds>(current_time_t - this->start_extra_time).count();
 
+		// std::cout << extraTime << std::endl;
+
 		if (extraTime > CONFIG.getExtraTime() * 1000 ) {
-			std::cout << extraTime << std::endl;
+			// std::cout << extraTime << std::endl;
 			waitingForStatic = true;
 			waitingExtraTime = false;
+			stillWaiting = false;
 		}
 	}
 
 	if ((wormPlayingHealth != wormPlayingNewHealth || elapsed_time > CONFIG.getTurnTime() * 1000 )) {
 		waitingForStatic = true;
+		std::cout << "cambio por el tiempo o por la health\n";
 	}
 
 	// std::cout << "cheatON " << cheatOn  << std::endl;
@@ -82,12 +90,14 @@ void GameLoop::loopLogic(int64_t elapsed_time) {
 		if(gameWorld.allEntitiesAtRest()) {
 			waitingForStatic = false;
 			waitingExtraTime = false;
+			stillWaiting = false;
 			changeWormPlaying(worms);
 		}
 	} else if (waitingForStatic && cheatOn) {
 		if (gameWorld.allEntitiesAtRest()) {
 			waitingForStatic = false;
 			waitingExtraTime = false;
+			stillWaiting = false;
 		}
 	} 
 

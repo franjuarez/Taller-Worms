@@ -5,7 +5,7 @@ Jump::Jump(int id, int dir) : Command(id), wormID(id), dir(dir) {}
 
 bool Jump::executeCommand(GameWorld& gameWorld, bool* cheatOn, bool& needsMove) {
     *cheatOn = *cheatOn;
-    needsMove = needsMove;
+    // needsMove = needsMove;
     if (dir == FORWARD_DIR) {
         gameWorld.jumpForwardWorm(wormID);
     } else if (dir == BACKWARD_DIR) {
@@ -13,7 +13,7 @@ bool Jump::executeCommand(GameWorld& gameWorld, bool* cheatOn, bool& needsMove) 
     } else{
         throw std::runtime_error("Invalid direction!");
     }
-    return false;
+    return needsMove;
 }
 
 void Jump::send(Protocol& protocol) {

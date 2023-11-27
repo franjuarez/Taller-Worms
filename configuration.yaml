@@ -4,7 +4,7 @@ resources_directory: resources
 game:
   FPS: 60
   turn_time: 30
-  extra_time: 5
+  extra_time: 3
 
 camera:
   viewfield_x: 25

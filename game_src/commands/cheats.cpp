@@ -6,7 +6,7 @@
 Cheats::Cheats(int wormID, int cheatID) : Command(wormID), wormID(wormID), cheatID(cheatID) {}
 
 bool Cheats::executeCommand(GameWorld& gameWorld, bool* cheatOn, bool& needsMove) {
-    needsMove = needsMove;
+    // needsMove = needsMove;
     if (cheatID == ADD_HEALTH) {
         gameWorld.addHealthToWorm(wormID); 
     } else if (cheatID == ALL_WEAPONS) {
@@ -18,7 +18,7 @@ bool Cheats::executeCommand(GameWorld& gameWorld, bool* cheatOn, bool& needsMove
     } else if (cheatID == RENEW_TURN) {
         *cheatOn = false;
     }
-    return false;
+    return needsMove;
 }
 
 void Cheats::send(Protocol& protocol) {
