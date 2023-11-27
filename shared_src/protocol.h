@@ -90,8 +90,6 @@ public:
     Protocol(const std::string& hostname, const std::string& servname);
     Protocol(const Protocol& protocol);
 
-    Socket getSocket();
-
     void sendMap(GameMap* map);
 
     void sendDynamic(GameDynamic* dynamic);

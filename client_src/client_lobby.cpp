@@ -19,33 +19,52 @@ void ClientLobby::run() {
     while(true) {
         std::cin >> userInput;
 
-        std::string matchName = "";
-        std::string mapName = "";
-        int numberPlayers = 0;
+        std::string matchName;
+        std::string mapName;
+        int numberPlayers;
 
         if (userInput == NM) {
             std::cin >> numberPlayers;
             std::cin >> matchName;
             std::cin >>mapName;
 
-            MatchCommand* mc = new MatchCommand(NEW_MATCH, numberPlayers, matchName, mapName);
-            mc->send(infoStruct->prot);
+            createNewMatch(numberPlayers, matchName, mapName);
             return;
 
         } else if (userInput == JM) {
             std::cin >> matchName;
-            MatchCommand* mc = new MatchCommand(JOIN, numberPlayers, matchName, mapName);
-            mc->send(infoStruct->prot);
+            joinMatch(matchName);
             return;
         } else if (userInput == R) {
-            MatchCommand* mc = new MatchCommand(REFRESH, numberPlayers, matchName, mapName);
-            mc->send(infoStruct->prot);
+            refresh();
             showMatches();
         } else {
             std::cout << "Invalid Command\n";
         }
     }
 }
+
+
+void ClientLobby::createNewMatch( int nrPlayers, std::string matchName, std::string mapName) {
+    MatchCommand* mc = new MatchCommand(NEW_MATCH, nrPlayers, matchName, mapName);
+    mc->send(infoStruct->prot);
+}
+
+void ClientLobby::joinMatch(std::string matchName) {
+    int numberPlayers = 0;
+    std::string mapName = "";
+    MatchCommand* mc = new MatchCommand(JOIN, numberPlayers, matchName, mapName);
+    mc->send(infoStruct->prot);
+}
+
+void ClientLobby::refresh() {
+    int numberPlayers = 0;
+    std::string mapName = "";
+    std::string matchName = "";
+    MatchCommand* mc = new MatchCommand(REFRESH, numberPlayers, matchName, mapName);
+    mc->send(infoStruct->prot);
+}
+
 
 void ClientLobby::showMatches() {
     std::shared_ptr<Serializable>gameDynamic(infoStruct->prot.receiveSerializable());

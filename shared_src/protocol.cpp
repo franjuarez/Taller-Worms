@@ -28,9 +28,6 @@ skt(hostname.c_str(), servname.c_str()) {}
 
 // Protocol::Protocol(const Protocol& protocol) : skt(protocol.getSocket()) {}
 
-Socket Protocol::getSocket() {
-    return std::move(skt);
-}
 
 void Protocol::sendMap(GameMap* gameMap) {
     checkClosed();

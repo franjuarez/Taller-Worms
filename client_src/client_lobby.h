@@ -18,6 +18,12 @@ public:
 
     void showMatches();
 
+    void createNewMatch(int nrPlayers, std::string matchName, std::string mapName);
+
+    void joinMatch(std::string matchName);
+
+    void refresh();
+
     ~ClientLobby();
 };
 
