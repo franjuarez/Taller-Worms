@@ -1,4 +1,5 @@
 #include "provition_supply_box.h"
+#include <iostream>
 
 ProvitionsSupplyBox::ProvitionsSupplyBox(b2Body* body, std::unordered_set<b2Body*>& entitiesToRemove, int id, int type) : 
     SupplyBox(body, entitiesToRemove, id, type) {}

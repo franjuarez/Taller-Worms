@@ -79,7 +79,6 @@ void explosiveExplode(b2Body* projectile, float explosiveDamage, float explosive
             b2Vec2 bodyPos = body->GetPosition();
             float distance = b2Distance(projectilePos, bodyPos);
             float damage = explosiveDamage * (1 - distance / explosiveRadius);
-            std::cout << "Explosion damage: " << damage << std::endl;
             worm->handleExplosion(damage, projectilePos);
             allFoundBodies.insert(body);
         }

@@ -318,7 +318,7 @@ Position GameWorld::calculateValidSupplyBoxPosition(){
     int attempts = 0;
     float y = WORLD_HEIGHT - SUPPLY_BOX_HEIGHT;
     while(attempts < maxAttempts){
-        float x = rand() % (int) (WORLD_WIDTH - SUPPLY_BOX_WIDTH) + SUPPLY_BOX_WIDTH/2;
+        float x = rand() % (int) (WORLD_WIDTH - SUPPLY_BOX_WIDTH/2);
         //raycast to see if there is something below
         b2Vec2 rayEnd = b2Vec2(x, 0);
         SupplyQueryCallback callback;
