@@ -35,8 +35,10 @@ private:
     b2World* world;
     Listener* listener;
     int lastProjectileId;
+    int lastBoxId;
     std::unordered_map<int, b2Body*> projectiles;
     std::unordered_map<int, b2Body*> worms;
+    std::unordered_map<int, b2Body*> boxes;
     std::unordered_set<b2Body*> entitiesToRemove;
     std::vector<createEntity> entitiesToAdd;
 
@@ -64,7 +66,9 @@ private:
 
     void updateDelayedProjectiles(float deltaTime);
 
-    void removeProjectile(b2Body* projectile);
+    void removeProjectileFromMap(b2Body* projectile);
+
+    void removeBoxFromMap(b2Body* box);
     
     void removeEntities();
 

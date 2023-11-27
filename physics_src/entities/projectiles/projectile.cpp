@@ -26,7 +26,7 @@ void Projectile::leaveFragments(){ }
 
 void Projectile::explode(){
     //from aux_functions.cpp
-    explosiveExplode(this->body, this->radius, this->damage);
+    explosiveExplode(this->body, this->damage, this->radius);
     leaveFragments();
     this->entitiesToRemove.insert(this->body);
 }

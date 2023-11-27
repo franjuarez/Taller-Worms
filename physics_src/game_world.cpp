@@ -7,6 +7,7 @@ GameWorld::GameWorld(std::shared_ptr<GameMap> gameMap) {
     this->listener = new Listener(this->world);
     this->world->SetContactListener(this->listener);
     this->lastProjectileId = 0;
+    this->lastBoxId = 0;
 
     createWater();
 
@@ -334,27 +335,28 @@ Position GameWorld::calculateValidSupplyBoxPosition(){
 
 void GameWorld::dropSupplyBox(int type){
     Position pos = calculateValidSupplyBoxPosition();
-    //guardar en mapa de cajas con id
     std::cout << "Supply box position: " << pos.getX() << ", " << pos.getY() << std::endl;
-    // b2BodyDef bd;
-    // bd.type = b2_dynamicBody;
-    // bd.position.Set(pos.getX(), pos.getY());
-    // b2Body* body = this->world->CreateBody(&bd);
-    // b2FixtureDef fd;
-    // b2PolygonShape shape;
-    // shape.SetAsBox(SUPPLY_BOX_WIDTH/2, SUPPLY_BOX_HEIGHT/2);
-    // fd.shape = &shape;
-    // fd.density = 1.0f;
-    // body->CreateFixture(&fd);
-    // body->SetGravityScale(0.5f);//So it falls slower
+    b2BodyDef bd;
+    bd.type = b2_dynamicBody;
+    bd.position.Set(pos.getX(), pos.getY());
+    b2Body* body = this->world->CreateBody(&bd);
+    b2FixtureDef fd;
+    b2PolygonShape shape;
+    shape.SetAsBox(SUPPLY_BOX_WIDTH/2, SUPPLY_BOX_HEIGHT/2);
+    fd.shape = &shape;
+    fd.density = 1.0f;
+    body->CreateFixture(&fd);
+    body->SetGravityScale(0.5f);//So it falls slower
 
-    // if(type == TRAP_SUPPLY){
-    //     TrapSupplyBox* supplyBoxEntity = new TrapSupplyBox(body, entitiesToRemove, type);
-    //     body->GetUserData().pointer = reinterpret_cast<uintptr_t>(supplyBoxEntity);
-    // } else{
-    //     ProvitionsSupplyBox* supplyBoxEntity = new ProvitionsSupplyBox(body, entitiesToRemove, type);
-    //     body->GetUserData().pointer = reinterpret_cast<uintptr_t>(supplyBoxEntity);
-    // }
+    if(type == TRAP_SUPPLY){
+        TrapSupplyBox* supplyBoxEntity = new TrapSupplyBox(body, entitiesToRemove, this->lastBoxId, type);
+        body->GetUserData().pointer = reinterpret_cast<uintptr_t>(supplyBoxEntity);
+    } else{
+        ProvitionsSupplyBox* supplyBoxEntity = new ProvitionsSupplyBox(body, entitiesToRemove, this->lastBoxId, type);
+        body->GetUserData().pointer = reinterpret_cast<uintptr_t>(supplyBoxEntity);
+    }
+    this->boxes[this->lastBoxId] = body;
+    this->lastBoxId++;
 }
 
 void GameWorld::addHealthToWorm(int id){
@@ -378,7 +380,7 @@ void GameWorld::toggleInvincible(){
     }
 }
 
-void GameWorld::removeProjectile(b2Body* projectile){
+void GameWorld::removeProjectileFromMap(b2Body* projectile){
     Projectile* projectileData = (Projectile*) projectile->GetUserData().pointer;
     int id = projectileData->getId();
     auto it = this->projectiles.find(id);
@@ -388,12 +390,24 @@ void GameWorld::removeProjectile(b2Body* projectile){
     this->projectiles.erase(id);
 }
 
+void GameWorld::removeBoxFromMap(b2Body* box){
+    SupplyBox* boxData = (SupplyBox*) box->GetUserData().pointer;
+    int id = boxData->getId();
+    auto it = this->boxes.find(id);
+    if(it == this->boxes.end()){
+        throw std::runtime_error("Box does not exist");
+    }
+    this->boxes.erase(id);
+}
+
 void GameWorld::removeEntities(){
     for(b2Body* body : this->entitiesToRemove){
         Entity* entity = (Entity*) body->GetUserData().pointer;
         EntityType entityType = entity->getEntityType();
         if(entityType == EntityInstantProjectile || entityType == EntityDelayedProjectile){
-            removeProjectile(body);
+            removeProjectileFromMap(body);
+        }  else if (entityType == EntitySupplyBox){
+            removeBoxFromMap(body);
         }
         this->world->DestroyBody(body);
         delete entity;
@@ -454,7 +468,14 @@ GameDynamic* GameWorld::getGameStatus(int id){
         Projectile* projectileData = (Projectile*) projectile.second->GetUserData().pointer;
         projectilesDTO.emplace(projectile.first, projectileData->getDTO());
     }
-    return new GameDynamic(id, wormsDTO, projectilesDTO, {});
+
+    std::unordered_map<int, SupplyBoxDTO> boxesDTO;
+    for (auto& box : this->boxes) {
+        SupplyBox* boxData = (SupplyBox*) box.second->GetUserData().pointer;
+        boxesDTO.emplace(box.first, boxData->getDTO());
+    }
+
+    return new GameDynamic(id, wormsDTO, projectilesDTO, boxesDTO);
 }
 
 GameWorld::~GameWorld() {

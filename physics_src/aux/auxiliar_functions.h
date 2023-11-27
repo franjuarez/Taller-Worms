@@ -23,6 +23,6 @@ float calculateFallHeightFromVelocity(b2Vec2 velocity);
 b2Vec2 calculatVelocityOfProjectile(float maxSpeed, float angle, float direction, float power);
 
 // Explodes an explosive
-void explosiveExplode(b2Body* projectile, float damage, float radius);
+void explosiveExplode(b2Body* projectile, float explosiveDamage, float explosiveRadius);
 
 #endif

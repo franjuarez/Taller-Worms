@@ -57,8 +57,9 @@ b2Vec2 calculatVelocityOfProjectile(float maxSpeed, float angle, float direction
 
 
 #define DEGTORAD 0.0174532925199432957f
+#include <iostream>
 
-void explosiveExplode(b2Body* projectile, float damage, float radius){
+void explosiveExplode(b2Body* projectile, float explosiveDamage, float explosiveRadius){
     b2Vec2 projectilePos = projectile->GetPosition();
     b2World* world = projectile->GetWorld();
     int numberOfRays = 20;
@@ -66,8 +67,8 @@ void explosiveExplode(b2Body* projectile, float damage, float radius){
     for(int i = 0; i < numberOfRays; i++){
         float angle = (i / (float)numberOfRays) * 360 * DEGTORAD;
         b2Vec2 rayDir( sinf(angle), cosf(angle) );
-        b2Vec2 rayEnd = projectilePos + radius * rayDir;
-        ExplosionQueryCallback callback(projectilePos, radius);
+        b2Vec2 rayEnd = projectilePos + explosiveRadius * rayDir;
+        ExplosionQueryCallback callback(projectilePos, explosiveRadius);
         world->RayCast(&callback, projectilePos, rayEnd);
         for(b2Body* body : callback.foundBodies) {
             if(allFoundBodies.find(body) != allFoundBodies.end()){
@@ -77,7 +78,8 @@ void explosiveExplode(b2Body* projectile, float damage, float radius){
             Worm* worm = (Worm*) body->GetUserData().pointer;
             b2Vec2 bodyPos = body->GetPosition();
             float distance = b2Distance(projectilePos, bodyPos);
-            float damage = damage * (1 - distance / radius);
+            float damage = explosiveDamage * (1 - distance / explosiveRadius);
+            std::cout << "Explosion damage: " << damage << std::endl;
             worm->handleExplosion(damage, projectilePos);
             allFoundBodies.insert(body);
         }

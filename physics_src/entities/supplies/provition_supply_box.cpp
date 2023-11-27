@@ -1,7 +1,7 @@
 #include "provition_supply_box.h"
 
-ProvitionsSupplyBox::ProvitionsSupplyBox(b2Body* body, std::unordered_set<b2Body*>& entitiesToRemove, int type) : 
-    SupplyBox(body, entitiesToRemove, type) {}
+ProvitionsSupplyBox::ProvitionsSupplyBox(b2Body* body, std::unordered_set<b2Body*>& entitiesToRemove, int id, int type) : 
+    SupplyBox(body, entitiesToRemove, id, type) {}
 
 void ProvitionsSupplyBox::beginCollisionWithWorm(Entity* otherBody, b2Contact* contact) {
     Worm* worm = (Worm*) otherBody;
@@ -18,6 +18,7 @@ void ProvitionsSupplyBox::beginCollisionWithWorm(Entity* otherBody, b2Contact* c
     }else if(supplyType == TELEPORT_SUPPLY){
         worm->addAmmo(TELEPORT, CONFIG.getTeleportSupplyAmmo());
     }
+    this->entitiesToRemove.insert(this->body);
 }
 
 ProvitionsSupplyBox::~ProvitionsSupplyBox() {}

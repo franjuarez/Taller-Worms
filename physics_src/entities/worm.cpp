@@ -154,6 +154,7 @@ void Worm::handleExplosion(float damage, b2Vec2 explosionCenter){
     b2Vec2 direction = this->body->GetPosition() - explosionCenter;
     direction.Normalize();
     b2Vec2 impulse = b2Vec2(direction.x * damage / CONFIG.getProjectileImpulseFactorX(), damage / CONFIG.getProjectileImpulseFactorY());
+    std::cout << "damage: " << damage << " impulse: " << impulse.x << ", " << impulse.y << std::endl;
     this->body->ApplyLinearImpulseToCenter(impulse, true);
 }
 
