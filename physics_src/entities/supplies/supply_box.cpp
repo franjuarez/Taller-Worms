@@ -16,6 +16,11 @@ SupplyBoxDTO SupplyBox::getDTO() {
     return dto;
 }
 
+void SupplyBox::beginCollisionWithBeam(Entity* otherBody, b2Contact* contact) {
+    this->body->SetLinearVelocity(b2Vec2(0, 0));
+    this->body->SetGravityScale(0);
+}
+
 void SupplyBox::beginCollisionWithWater(Entity* otherBody, b2Contact* contact) {
     otherBody->beginCollisionWithSupplyBox(this, contact);
 }

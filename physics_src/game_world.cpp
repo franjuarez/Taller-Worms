@@ -317,7 +317,7 @@ bool GameWorld::teleportWorm(int id, float x, float y){
 Position GameWorld::calculateValidSupplyBoxPosition(){
     int maxAttempts = 100;
     int attempts = 0;
-    float y = WORLD_HEIGHT - SUPPLY_BOX_HEIGHT;
+    float y = WORLD_HEIGHT/2 - SUPPLY_BOX_HEIGHT;
     while(attempts < maxAttempts){
         float x = rand() % (int) (WORLD_WIDTH - SUPPLY_BOX_WIDTH/2);
         //raycast to see if there is something below
@@ -347,7 +347,7 @@ void GameWorld::dropSupplyBox(int type){
     fd.shape = &shape;
     fd.density = 1.0f;
     body->CreateFixture(&fd);
-    body->SetGravityScale(0.5f);//So it falls slower
+    body->SetGravityScale(0.2f);//So it falls slower
 
     if(type == TRAP_SUPPLY){
         TrapSupplyBox* supplyBoxEntity = new TrapSupplyBox(body, entitiesToRemove, this->lastBoxId, type);
