@@ -166,8 +166,7 @@ void Worm::hitWithBat(int direction){
     MeleeQueryCallback callback;
     b2AABB aabb;
     float batDir = this->direction == LEFT ? -BAT_WIDTH: BAT_WIDTH;
-    float delta = this->direction == LEFT ? -BAT_WIDTH : 0;
-    aabb.lowerBound = b2Vec2(pos.x + delta, pos.y - BAT_HEIGHT/2);
+    aabb.lowerBound = b2Vec2(pos.x + batDir, pos.y - BAT_HEIGHT/2);
     aabb.upperBound = b2Vec2(pos.x + batDir, pos.y + BAT_HEIGHT/2);
     // std::cout << "Worm pos: " << pos.x << ", " << pos.y << std::endl; 
     // std::cout << "Bat AABB: " << aabb.lowerBound.x << ", " << aabb.lowerBound.y << " - " << aabb.upperBound.x << ", " << aabb.upperBound.y << std::endl;
@@ -178,7 +177,7 @@ void Worm::hitWithBat(int direction){
         if(hitBody == this->body){
             continue;
         }
-
+        std::cout << "Hit body type: " << hitBody->GetType() << std::endl;
         Worm* worm = (Worm*) hitBody->GetUserData().pointer;
         b2Vec2 direction = hitBody->GetPosition() - pos;
         direction.Normalize();
