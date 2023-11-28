@@ -9,10 +9,10 @@
 enum action {
     STANDING, //0
     MOVING, //1
-    FALLING, //2
-    JUMPING, //3
-    EJECTED, //4
+    JUMPING, //2
+    EJECTED, //3
 };
+
 
 class Worm : public Entity {
     private:
@@ -24,6 +24,7 @@ class Worm : public Entity {
     bool onGround = false;
     action currentAction;
     std::vector<int> weapons;
+    int max_ammo_per_weapon[AMOUNT_OF_WEAPONS];
     bool invincible;
 
     void moveOnWalkableBeam(b2Body* worm, b2Vec2 normal);
@@ -37,6 +38,7 @@ class Worm : public Entity {
     virtual void beginCollisionWithWater(Entity* otherBody, b2Contact* contact) override;
     virtual void beginCollisionWithBeam(Entity* otherBody, b2Contact* contact) override;
     virtual void beginCollisionWithProjectile(Entity* otherBody, b2Contact* contact) override;
+    virtual void beginCollisionWithSupplyBox(Entity* otherBody, b2Contact* contact) override;
 
     virtual void preSolveCollisionWithBeam(Entity* otherBody, b2Contact* contact, const b2Manifold* oldManifold) override;
 
@@ -71,6 +73,8 @@ class Worm : public Entity {
     bool hasAmmo(int weaponId);
 
     void reduceAmmo(int weaponId);
+
+    void addAmmo(int weaponId, int amount);
 
     //cheats
     void addHealth(int additionalHealth);

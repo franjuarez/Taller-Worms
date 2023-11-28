@@ -27,7 +27,7 @@ beam:
 worm:
   initial_health: 100
   additional_health: 25
-  max_health: 100
+  max_health: 200
 
 move:
   move_velocity: 0.8
@@ -47,27 +47,33 @@ projectile:
   impulse_factor_x: 10
   impulse_factor_y: 5
 
+#-1 of ammo means infinite ammo
+
 bazooka:
   radius: 2
   damage: 50
   starting_ammo: -1
+  max_ammo: -1
 
 green_grenade:
   radius: 2
   damage: 30
   starting_ammo: -1
+  max_ammo: -1
 
 mortar:
   radius: 2
   damage: 50
   fragments: 6
-  starting_ammo: 10
+  supply_ammo: 10
+  max_ammo: 30
 
 red_grenade:
   radius: 2
   damage: 30
   fragments: 6
-  starting_ammo: 10
+  supply_ammo: 10
+  max_ammo: 30
 
 fragments:
   radius: 2
@@ -77,25 +83,55 @@ banana:
   radius: 4
   damage: 70
   bounciness: 0.9
-  starting_ammo: 5
+  supply_ammo: 5
+  max_ammo: 15
 
 bat:
   damage: 10
   impulse_factor: 0.1
-  starting_ammo: -1
+  supply_ammo: -1
+  max_ammo: -1
 
 holy_grenade:
   radius: 8
   damage: 110
-  starting_ammo: 2
+  supply_ammo: 2
+  max_ammo: 6
 
 dynamite:
   radius: 4
   damage: 50
-  starting_ammo: 5
+  supply_ammo: 5
+  max_ammo: 15
 
 air_attack:
   missiles: 6
-  starting_ammo: 2
+  supply_ammo: 2
+  max_ammo: -1
   missile_radius: 2
   missile_damage: 40
+
+teleport:
+  supply_ammo: -1
+  max_ammo: -1
+
+supply_box:
+  probability: 0.3 # Has to be between 0 and 1
+  # The sum of the 3 probabilities must be 1
+  probability_health: 0.4
+  probability_ammo: 0.4
+  probability_trap: 0.2
+  health: 30
+  trap_damage: 50
+  trap_radius: 2
+
+# The sum of all probabilities must be 1
+ammo_box_probabilities:
+  probability_mortar: 0.2
+  probability_red_grenade: 0.2
+  probability_teleport: 0.15
+  probability_bat: 0.15
+  probability_banana: 0.1
+  probability_dynamite: 0.1
+  probability_air_attack: 0.05
+  probability_holy_grenade: 0.05

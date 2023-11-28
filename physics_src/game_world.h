@@ -9,6 +9,7 @@
 
 #include "query_handlers/explosion_handler.h"
 #include "query_handlers/teleport_handler.h"
+#include "query_handlers/supply_box_position_handler.h"
 #include "collision_handler.h"
 #include "listener.h"
 #include "physics_constants.h"
@@ -22,6 +23,8 @@
 #include "entities/projectiles/red_grenade.h"
 #include "entities/projectiles/mortar.h"
 #include "entities/projectiles/banana.h"
+#include "entities/supplies/provition_supply_box.h"
+#include "entities/supplies/trap_supply_box.h"
 
 #include "../game_src/game_map.h"
 #include "../game_src/beam_dto.h"
@@ -32,8 +35,10 @@ private:
     b2World* world;
     Listener* listener;
     int lastProjectileId;
+    int lastBoxId;
     std::unordered_map<int, b2Body*> projectiles;
     std::unordered_map<int, b2Body*> worms;
+    std::unordered_map<int, b2Body*> boxes;
     std::unordered_set<b2Body*> entitiesToRemove;
     std::vector<createEntity> entitiesToAdd;
 
@@ -61,11 +66,15 @@ private:
 
     void updateDelayedProjectiles(float deltaTime);
 
-    void removeProjectile(b2Body* projectile);
+    void removeProjectileFromMap(b2Body* projectile);
+
+    void removeBoxFromMap(b2Body* box);
     
     void removeEntities();
 
     void addFragments();
+
+    Position calculateValidSupplyBoxPosition();
 
 public:
     GameWorld(std::shared_ptr<GameMap> gameMap);
@@ -91,6 +100,8 @@ public:
     void wormHitWithBat(int id, int direction);
 
     bool teleportWorm(int id, float x, float y);
+
+    void dropSupplyBox(int type);
 
     bool allEntitiesAtRest();
 

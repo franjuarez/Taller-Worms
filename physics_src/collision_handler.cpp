@@ -6,24 +6,28 @@ CollisionHandler::CollisionHandler(){
     this->beginCollisionArr[EntityWater] = &Entity::beginCollisionWithWater;
     this->beginCollisionArr[EntityInstantProjectile] = &Entity::beginCollisionWithProjectile;
     this->beginCollisionArr[EntityDelayedProjectile] = &Entity::beginCollisionWithProjectile;
+    this->beginCollisionArr[EntitySupplyBox] = &Entity::beginCollisionWithSupplyBox;
 
     this->preSolveCollisionArr[EntityWorm] = &Entity::preSolveCollisionWithWorm;
     this->preSolveCollisionArr[EntityBeam] = &Entity::preSolveCollisionWithBeam;
     this->preSolveCollisionArr[EntityWater] = nullptr;
     this->preSolveCollisionArr[EntityInstantProjectile] = nullptr;
     this->preSolveCollisionArr[EntityDelayedProjectile] = nullptr;
+    this->preSolveCollisionArr[EntitySupplyBox] = nullptr;
 
     this->postSolveCollisionArr[EntityWorm] = &Entity::postSolveCollisionWithWorm;
     this->postSolveCollisionArr[EntityBeam] = &Entity::postSolveCollisionWithBeam;
     this->postSolveCollisionArr[EntityWater] = nullptr;
     this->postSolveCollisionArr[EntityInstantProjectile] = nullptr;
     this->postSolveCollisionArr[EntityDelayedProjectile] = nullptr;
+    this->postSolveCollisionArr[EntitySupplyBox] = nullptr;
 
     this->endCollisionArr[EntityWorm] = &Entity::endCollisionWithWorm;
     this->endCollisionArr[EntityBeam] = &Entity::endCollisionWithBeam;
     this->endCollisionArr[EntityWater] = nullptr;
     this->endCollisionArr[EntityInstantProjectile] = nullptr;
     this->endCollisionArr[EntityDelayedProjectile] = nullptr;
+    this->endCollisionArr[EntitySupplyBox] = nullptr;
 }
 
 void CollisionHandler::handleBeginCollision(Entity* bodyA, Entity* bodyB, b2Contact* contact) {

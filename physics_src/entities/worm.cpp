@@ -4,7 +4,15 @@ Worm::Worm(b2Body* body, b2Fixture* footSensor, std::unordered_set<b2Body*>& ent
         Entity(body, entitiesToRemove, EntityWorm),
         id(id), team(team), health(health), 
         direction(direction), footSensor(footSensor), currentAction(STANDING),
-        weapons(weapons), invincible(false) {}
+        weapons(weapons), invincible(false) {
+            max_ammo_per_weapon[BAZOOKA] = CONFIG.getBazookaMaxAmmo();
+            max_ammo_per_weapon[GREEN_GRENADE] = CONFIG.getGreenGrenadeMaxAmmo();
+            max_ammo_per_weapon[BAT] = CONFIG.getBatMaxAmmo();
+            max_ammo_per_weapon[TELEPORT] = CONFIG.getTeleportMaxAmmo();
+            max_ammo_per_weapon[MORTAR] = CONFIG.getMortarMaxAmmo();
+            max_ammo_per_weapon[RED_GRENADE] = CONFIG.getRedGrenadeMaxAmmo();
+            max_ammo_per_weapon[BANANA] = CONFIG.getBananaMaxAmmo();
+        }
 
 
 Worm::~Worm() {}
@@ -75,6 +83,19 @@ void Worm::reduceAmmo(int weaponId){
     this->weapons[weaponId] = this->weapons[weaponId] == 0 ? 0 : this->weapons[weaponId] - 1;
 }
 
+void Worm::addAmmo(int weaponId, int amount){
+    if(weaponId < 0 || weaponId >= this->weapons.size()){
+        throw std::runtime_error("Invalid weapon id");
+    }
+    if(this->weapons[weaponId] == INFINITE_AMUNITION){
+        return;
+    }
+    this->weapons[weaponId] += amount;
+    if(this->weapons[weaponId] > max_ammo_per_weapon[weaponId]){
+        this->weapons[weaponId] = max_ammo_per_weapon[weaponId];
+    }
+}
+
 void Worm::getAllWeapons(){
     for(int i = 0; i < this->weapons.size(); i++){
         this->weapons[i] = INFINITE_AMUNITION;
@@ -99,7 +120,7 @@ void Worm::move(int direction){
 }
 
 void Worm::jump(float maxHeight, float distance){
-    if(!this->onGround){
+    if(!this->onGround || this->currentAction == JUMPING){
         return;
     }
     this->currentAction = JUMPING;
@@ -132,6 +153,9 @@ void Worm::handleExplosion(float damage, b2Vec2 explosionCenter){
     takeDamage(damage);
     b2Vec2 direction = this->body->GetPosition() - explosionCenter;
     direction.Normalize();
+    if(this->body->GetLinearVelocity().y < 0){
+        this->body->SetLinearVelocity(b2Vec2(0,0));
+    }
     b2Vec2 impulse = b2Vec2(direction.x * damage / CONFIG.getProjectileImpulseFactorX(), damage / CONFIG.getProjectileImpulseFactorY());
     this->body->ApplyLinearImpulseToCenter(impulse, true);
 }
@@ -142,8 +166,7 @@ void Worm::hitWithBat(int direction){
     MeleeQueryCallback callback;
     b2AABB aabb;
     float batDir = this->direction == LEFT ? -BAT_WIDTH: BAT_WIDTH;
-    float delta = this->direction == LEFT ? -BAT_WIDTH : 0;
-    aabb.lowerBound = b2Vec2(pos.x + delta, pos.y - BAT_HEIGHT/2);
+    aabb.lowerBound = b2Vec2(pos.x + batDir, pos.y - BAT_HEIGHT/2);
     aabb.upperBound = b2Vec2(pos.x + batDir, pos.y + BAT_HEIGHT/2);
     // std::cout << "Worm pos: " << pos.x << ", " << pos.y << std::endl; 
     // std::cout << "Bat AABB: " << aabb.lowerBound.x << ", " << aabb.lowerBound.y << " - " << aabb.upperBound.x << ", " << aabb.upperBound.y << std::endl;
@@ -154,7 +177,7 @@ void Worm::hitWithBat(int direction){
         if(hitBody == this->body){
             continue;
         }
-
+        std::cout << "Hit body type: " << hitBody->GetType() << std::endl;
         Worm* worm = (Worm*) hitBody->GetUserData().pointer;
         b2Vec2 direction = hitBody->GetPosition() - pos;
         direction.Normalize();
@@ -177,6 +200,9 @@ void Worm::beginCollisionWithWater(Entity* otherBody, b2Contact* contact) {
     otherBody->beginCollisionWithWorm(this, contact);
 }
 
+void Worm::beginCollisionWithSupplyBox(Entity* otherBody, b2Contact* contact) {
+    otherBody->beginCollisionWithWorm(this, contact);
+}
 
 void Worm::beginCollisionWithProjectile(Entity* otherBody, b2Contact* contact) {
     otherBody->beginCollisionWithWorm(this, contact);

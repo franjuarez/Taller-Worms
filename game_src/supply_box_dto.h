@@ -4,15 +4,17 @@
 #include "position.h"
 #include "explosives_dto.h"
 
-class PowerUps {
+class SupplyBoxDTO {
 private:
-    ExplosivesDTO content;
+    int id;
+    int content;
     Position pos;
 public:
-    PowerUps(ExplosivesDTO content, Position pos);
+    SupplyBoxDTO(int id, int content, Position pos);
     float getX();
     float getY();
-    ExplosivesDTO getContent();
-    ~PowerUps();
+    int getContent();
+    int getID();
+    ~SupplyBoxDTO();
 };
 #endif

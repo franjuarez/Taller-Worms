@@ -25,3 +25,8 @@ void Water::beginCollisionWithProjectile(Entity* otherBody, b2Contact* contact) 
     UNUSED(otherBody);
     UNUSED(contact);
 }
+
+void Water::beginCollisionWithSupplyBox(Entity* otherBody, b2Contact* contact) {
+    this->entitiesToRemove.insert(otherBody->body);
+    UNUSED(contact);
+}

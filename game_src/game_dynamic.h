@@ -3,6 +3,7 @@
 
 #include "worm_dto.h"
 #include "explosives_dto.h"
+#include "supply_box_dto.h"
 
 #include "constants_game.h"
 
@@ -23,13 +24,14 @@ private:
     int status;
     std::vector<WormDTO> worms;
     std::unordered_map<int, ExplosivesDTO> explosives;
+    std::unordered_map<int, SupplyBoxDTO> supplyBox;
     std::vector<uint32_t> teamsHealth;
 
 public: 
     //martu no me mates por esta linea 
     GameDynamic();
-    GameDynamic(int wormPlayingID, std::vector<WormDTO>worms, std::unordered_map<int, ExplosivesDTO> explosives);
-    GameDynamic(int wormPlayingID, int status, int winnerTeam, std::vector<WormDTO>worms, std::unordered_map<int, ExplosivesDTO> explosives, std::vector<uint32_t> teamsHealth);
+    GameDynamic(int wormPlayingID, std::vector<WormDTO>worms, std::unordered_map<int, ExplosivesDTO> explosives, std::unordered_map<int, SupplyBoxDTO> supplyBox);
+    GameDynamic(int wormPlayingID, int status, int winnerTeam, std::vector<WormDTO>worms, std::unordered_map<int, ExplosivesDTO> explosives, std::unordered_map<int, SupplyBoxDTO> supplyBox, std::vector<uint32_t> teamsHealth);
 
     void send(Protocol& protocol);
     void addWorms(std::vector<WormDTO>worms);
@@ -49,6 +51,8 @@ public:
     uint32_t getTeamHealth(int team);
     int getStatus();
     void setStatus(int status);
+
+    std::unordered_map<int, SupplyBoxDTO> getSupplyBox();
     
     GameDynamic& operator=(const GameDynamic& other);
     GameDynamic(const GameDynamic& other);
