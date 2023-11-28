@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION "3.16.3")
 set(CMAKE_CXX_STANDARD 17)
 project("Worms")
 
+#poner o sacar esta linea dependiendo de si estas en la compu de joaco o en una con qt-dev actualizado
 set(CMAKE_PREFIX_PATH "~/Qt/5.15.15/gcc_64")
 
 
