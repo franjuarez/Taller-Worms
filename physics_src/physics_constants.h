@@ -13,7 +13,7 @@
 #define POSITION_ITERATIONS 3 
 
 #define INFINITE_DAMPING 1000.0f
-#define STANDARD_DAMPING 0.55f
+#define STANDARD_DAMPING 0.5f
 
 //beam
 #define BEAM_HEIGHT 0.8f

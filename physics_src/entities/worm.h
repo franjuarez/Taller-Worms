@@ -20,6 +20,8 @@ class Worm : public Entity {
     int team;
     float health;
     int direction;
+    b2Fixture* footSensor;
+    bool onGround = false;
     action currentAction;
     std::vector<int> weapons;
     bool invincible;
@@ -30,11 +32,10 @@ class Worm : public Entity {
 
 
     public:
-    Worm(b2Body* body, std::unordered_set<b2Body*>& entitiesToRemove, int id, int team, int direction, float health, std::vector<int> weapons);
+    Worm(b2Body* body, b2Fixture* footSensor, std::unordered_set<b2Body*>& entitiesToRemove, int id, int team, int direction, float health, std::vector<int> weapons);
 
     virtual void beginCollisionWithWater(Entity* otherBody, b2Contact* contact) override;
     virtual void beginCollisionWithBeam(Entity* otherBody, b2Contact* contact) override;
-    virtual void beginCollisionWithWorm(Entity* otherBody, b2Contact* contact) override;
     virtual void beginCollisionWithProjectile(Entity* otherBody, b2Contact* contact) override;
 
     virtual void preSolveCollisionWithBeam(Entity* otherBody, b2Contact* contact, const b2Manifold* oldManifold) override;
