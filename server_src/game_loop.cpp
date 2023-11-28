@@ -63,14 +63,25 @@ void GameLoop::loopLogic(int64_t elapsed_time) {
 		wormPlayingHealth = wormPlayingNewHealth;
 	}
 
-	// std::cout << "cheatON " << cheatOn  << std::endl;
 
 	if (waitingForStatic && !cheatOn) {
-		if(gameWorld.allEntitiesAtRest()) {
-			waitingForStatic = false;
-			changeWormPlaying(worms);
-			dropSupplyBox();
+
+		if (gameWorld.allEntitiesAtRest() && !waitingForBox) {
+			waitingForBox = dropSupplyBox();
+			if (!waitingForBox) {
+				std::cout << "una caja se tira, NO deberia entrar aca\n";
+				waitingForStatic = false;
+				changeWormPlaying(worms);
+			}
 		}
+
+		if(gameWorld.allEntitiesAtRest() && waitingForBox) {
+			std::cout << "una caja se tira, deberia entrar aca\n";
+			waitingForStatic = false;
+			waitingForBox = false;
+			changeWormPlaying(worms);
+		}
+
 	} else if (waitingForStatic && cheatOn) {
 		if (gameWorld.allEntitiesAtRest()) {
 			waitingForStatic = false;
@@ -95,11 +106,13 @@ void GameLoop::run() {
 }
 
 
-void GameLoop::dropSupplyBox() {
+int GameLoop::dropSupplyBox() {
 	if (shouldDropBox()) {
 		int type = decideTypeOfSupplyBox();
 		gameWorld.dropSupplyBox(type);
+		return 1;
 	}
+	return 0;
 }
 
 int GameLoop::decideAmmoType() {
