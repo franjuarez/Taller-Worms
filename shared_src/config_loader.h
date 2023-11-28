@@ -19,6 +19,7 @@ private:
     int fps;
     int music_volume;
     int turn_time;
+    int extra_time;
     
     //frontend
     int viewfield_x;
@@ -128,6 +129,7 @@ public:
     int getFps();
     int getMusicVolume();
     int getTurnTime();
+    int getExtraTime();
 
     //frontend
     int getViewfieldX();

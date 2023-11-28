@@ -10,6 +10,7 @@
 #include "mouse_handler.h"
 #include "../game_src/game_dynamic.h"
 #include "../client_src/client.h"
+#include "../shared_src/protocol.h"
 #include "beam_view.h"
 
 using namespace uiConstants;
@@ -91,7 +92,7 @@ private:
 	void focusCam();
 
 public:
-	GameView(const std::string& hostname, const std::string& servname);
+	GameView(std::shared_ptr<InfoStruct> infoStruct);
 	~GameView();
 
 	void start();

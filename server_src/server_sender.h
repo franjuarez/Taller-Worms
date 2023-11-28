@@ -11,12 +11,13 @@ class ServerSender : public Thread {
 
 private:
     Protocol& protocol;
-    Queue<std::shared_ptr<Serializable>>& playerQueue;
+    StatusBroadcaster& statusBroadcaster;
     bool& talking;
+    int playerID;
     // has the queue of each player
 public:
 
-    ServerSender(Protocol& protocol, Queue<std::shared_ptr<Serializable>>& playerQueue, bool& talking);
+    ServerSender(Protocol& protocol, StatusBroadcaster& statusBroadcaster, bool& talking, int playerID);
     ~ServerSender();
 
     void run() override;

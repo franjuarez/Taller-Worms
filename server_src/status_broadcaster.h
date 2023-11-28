@@ -11,6 +11,7 @@
 class StatusBroadcaster {
 
 private:
+    std::mutex m;
     std::map<int, Queue<std::shared_ptr<Serializable>>*> playersQueues;
 
 public:
@@ -18,6 +19,7 @@ public:
     ~StatusBroadcaster();
     void addPlayer(int id, Queue<std::shared_ptr<Serializable>>* playerQueue);
     void broadcast(std::shared_ptr<Serializable> game);
+    void deletePlayer(int id);
     std::shared_ptr<Serializable> getGame(int id);
 };
 #endif

@@ -14,12 +14,15 @@ void ServerReceiver::run() {
     } catch (const ClosedSocket& e){
         std::cout << "Reciever: Se ha cerrado la conexion\n";
         talking = false;
+        return;
     } catch (const ClosedQueue& e){
         std::cout << "Reciever: Se ha cerrado la QUEUE\n";
         talking = false;
+        return;
     } catch (const std::exception& e){
         talking = false;
         std::cout << "Error inesperado" << e.what() << std::endl;
+        return;
     }
 }
 

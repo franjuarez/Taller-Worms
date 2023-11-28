@@ -9,6 +9,7 @@ void StatusBroadcaster::addPlayer(int id, Queue<std::shared_ptr<Serializable>>* 
 }
 
 void StatusBroadcaster::broadcast(std::shared_ptr<Serializable> game) {
+    std::lock_guard<std::mutex> lock(m);
     for (auto& playerQueue : playersQueues) {
         playerQueue.second->push(game);
     }
@@ -16,4 +17,9 @@ void StatusBroadcaster::broadcast(std::shared_ptr<Serializable> game) {
 
 std::shared_ptr<Serializable> StatusBroadcaster::getGame(int id) {
     return playersQueues[id]->pop();
+}
+
+void StatusBroadcaster::deletePlayer(int id) {
+    std::lock_guard<std::mutex> lock(m);
+    playersQueues.erase(id);
 }

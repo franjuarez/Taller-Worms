@@ -2,21 +2,25 @@
 
 #include <iostream>
 
-Client::Client(const std::string& hostname, const std::string& servname) : protocol(hostname, servname)
+Client::Client(std::shared_ptr<InfoStruct> infoStruct) : infoStruct(infoStruct)
 , gameStatusQueue(900)
 , commandsQueue(900)
-, sender(protocol, std::ref(commandsQueue), keepTalking)
-, receiver(protocol, std::ref(gameStatusQueue), keepTalking) {
+, sender(infoStruct->prot, std::ref(commandsQueue), keepTalking)
+, receiver(infoStruct->prot, std::ref(gameStatusQueue), keepTalking) {
     lastGameStatus = NULL;
 }
 
 std::shared_ptr<Serializable> Client::getGameStatus() {
-    if (!lastGameStatus) {
-        lastGameStatus = gameStatusQueue.pop();
+    try {
+        if (!lastGameStatus) {
+            lastGameStatus = gameStatusQueue.pop();
+            return this->lastGameStatus;
+        }
+        while (gameStatusQueue.try_pop(this->lastGameStatus)) {}
         return this->lastGameStatus;
+    } catch (const ClosedQueue& e) {
+        throw ClientClosed();
     }
-    while (gameStatusQueue.try_pop(this->lastGameStatus)) {}
-    return this->lastGameStatus;
 }
 
 void Client::start() {
@@ -30,7 +34,7 @@ void Client::start() {
 
 void Client::kill() {
     keepTalking = false;
-    protocol.boom();
+    infoStruct->prot.boom();
     commandsQueue.close();
     gameStatusQueue.close();
     join();

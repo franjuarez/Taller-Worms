@@ -16,6 +16,7 @@
 class GameDynamic; class GameMap; class Serializable;
 class Command; class Move; class Jump; class LaunchRocket;
 class Teleport; class HitUpclose; class ThrowGrenade; class Cheats;
+class GameInfo; class MatchCommand;
 
 struct ClosedSocket : public std::runtime_error {
     ClosedSocket() : std::runtime_error("Socket is closed") {} 
@@ -59,8 +60,8 @@ private:
     void sendPosition(Position position);
     Position receivePosition();
 
-    void sendMapNames(std::vector<std::string>& mapNames);
-    std::vector<std::string> receiveMapNames();
+    void sendVectorStr(std::vector<std::string> mapNames);
+    std::vector<std::string> receiveVectorStr();
 
     void sendWeaponsMap(std::vector<int> weapons);
     std::vector<int> receiveWeaponsMap();
@@ -70,6 +71,7 @@ private:
 
     GameMap* receiveMap();
     GameDynamic* receiveDynamic();
+    GameInfo* receiveInfo();
 
     std::shared_ptr<Move> receiveMove();
     std::shared_ptr<Jump>  receiveJump();
@@ -78,6 +80,7 @@ private:
     std::shared_ptr<Teleport> receiveTeoleport();
     std::shared_ptr<HitUpclose> receiveHitUpclose();
     std::shared_ptr<Cheats> receiveCheats();
+    std::shared_ptr<MatchCommand> receiveMatchCommand();
 
     void checkClosed();
 
@@ -85,10 +88,13 @@ public:
 
     explicit Protocol(Socket&& skt);
     Protocol(const std::string& hostname, const std::string& servname);
+    Protocol(const Protocol& protocol);
 
     void sendMap(GameMap* map);
 
     void sendDynamic(GameDynamic* dynamic);
+
+    void sendInfo(GameInfo* info);
     
     Serializable* receiveSerializable();
 
@@ -107,6 +113,7 @@ public:
     std::shared_ptr<Command> receiveCommand();
     void sendCheats(Cheats* cheats);
 
+    void sendMatchCommand(MatchCommand* matchCommand);
 
     ~Protocol();
 
