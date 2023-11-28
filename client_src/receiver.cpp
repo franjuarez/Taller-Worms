@@ -1,6 +1,8 @@
 
 #include "receiver.h"
 #include "../game_src/game_dynamic.h"
+#include "../game_src/game_info.h"
+
 #include "../shared_src/protocol.h"
 #include <unistd.h>
 

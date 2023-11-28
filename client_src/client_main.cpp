@@ -1,4 +1,6 @@
 #include "../ui_src/game_view.h"
+#include "client_lobby.h"
+#include "../shared_src/info_struct.h"
 
 #include <iostream>
 
@@ -12,8 +14,13 @@ int main(int argc, char** argv) {
 	}
 
 	try {
-		
-		GameView gv(argv[1], argv[2]);
+
+		std::shared_ptr<InfoStruct> infoStruct = std::make_shared<InfoStruct>(argv[1], argv[2]);
+		ClientLobby cl(infoStruct);
+
+		cl.run();
+
+		GameView gv(infoStruct);
 		gv.start();
 		gv.join();
 	} catch (const std::exception& e) {

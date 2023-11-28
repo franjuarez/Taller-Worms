@@ -13,10 +13,14 @@
 #include "../game_src/game_dynamic.h"
 #include "../game_src/commands/command.h"
 
+struct ClientClosed : public std::runtime_error {
+    ClientClosed() : std::runtime_error("Client is closed") {} 
+}; 
+
 class Client {
 private:
-	Protocol protocol;
 	int team;
+	std::shared_ptr<InfoStruct> infoStruct;
 	Queue<std::shared_ptr<Serializable>> gameStatusQueue;
 	Queue<std::shared_ptr<Command>> commandsQueue;
 	Sender sender;
@@ -25,7 +29,7 @@ private:
 	bool keepTalking = true;
 	
 public:
-	Client(const std::string& hostname, const std::string& servname);
+	Client(std::shared_ptr<InfoStruct> infoStruct);
 	~Client();
 
 	std::shared_ptr<Serializable> getGameStatus();

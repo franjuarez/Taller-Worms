@@ -1,4 +1,6 @@
 #include "game_loop.h"
+#include "status_broadcaster.h"
+#include "../game_src/commands/command.h"
 #include "../game_src/constants_game.h"
 
 #define CONFIG ConfigLoader::getInstance()
@@ -16,9 +18,6 @@ GameLoop::GameLoop(Queue<std::shared_ptr<Command>>& commandsQueue, StatusBroadca
 }
 
 void GameLoop::loopLogic(int64_t elapsed_time) {
-// se encarga de los turnos y que jugador esta al momento.
-// es el que se encarga de que gusano esta al momento
-
 	std::shared_ptr<Command> command;
 	while (commandsQueue.try_pop(command) && !waitingForStatic) {
 			waitingExtraTime = command->executeCommand(gameWorld, &cheatOn, waitingExtraTime);
@@ -112,16 +111,19 @@ void GameLoop::loopLogic(int64_t elapsed_time) {
 
 void GameLoop::run() {
 	this->wormPlayingID = teams[teamPlayingID].getNextWormID();
-	while(playing) {
+	while(*playing && !gameOver) {
 		auto current_time = std::chrono::steady_clock::now();
 		auto elapsed_time = std::chrono::duration_cast<std::chrono::milliseconds>(current_time - this->start_time).count();
 		try {
 			loopLogic(elapsed_time);
 			usleep(RATE*1000);
-		} catch (std::exception& e) {
+		} catch (const ClosedQueue& e){
+        	std::cout << "Reciever: Se ha cerrado la QUEUE\n";
+			return;
+    	} catch (std::exception& e) {
 			std::cout << "Error in game loop: " << e.what() << std::endl;
 			return;
-		}
+		} 
 	}
 }
 
@@ -231,13 +233,23 @@ int GameLoop::updateWinningStatus() {
 		}
 	}
 
+	if (teams.size() == 1) {
+		if (teamsWithWorms == 1) {
+			return PLAYING;
+		}
+		gameOver = true;
+		return ALL_LOST;
+	}
+
 	if (teamsWithWorms > 1) {
 		return PLAYING;
 	} else if (teamsWithWorms == 1) {
+		gameOver = true;
 		return teamPlayingID;
 	}
-
+	gameOver = true;
 	return ALL_LOST;
 }
+
 
 GameLoop::~GameLoop() {}

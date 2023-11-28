@@ -70,7 +70,6 @@ void GameWorld::createWorm(float startingX, float startingY, int id, int team, i
     footSensorFixture.isSensor = true;
     b2Fixture* footSensor = body->CreateFixture(&footSensorFixture);
 
-
     Worm* wormEntity = new Worm(body, footSensor, entitiesToRemove, id, team, RIGHT, health, weapons); //Starts facing right
     body->GetUserData().pointer = reinterpret_cast<uintptr_t>(wormEntity);
 

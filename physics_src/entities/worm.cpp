@@ -110,7 +110,7 @@ void Worm::move(int direction){
     this->currentAction = MOVING;
     this->direction = direction;
 
-    b2Vec2 vel;
+    b2Vec2 vel(0,0);
     if(direction == LEFT){
         vel.x = -CONFIG.getWormMoveVelocity();
     } else {

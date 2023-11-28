@@ -20,11 +20,12 @@
 #include <atomic>
 #include <random>
 
+class StatusBroadcaster;
 
-class GameLoop : public Thread {
+class GameLoop{
 
 private: 
-    Queue<std::shared_ptr<Command>>& commandsQueue; // esta saca los comandos con try pop porque no la deberia bloquear y siempre tiene que estar loopeando
+    Queue<std::shared_ptr<Command>>& commandsQueue; 
     StatusBroadcaster& statusBroadcaster;
     GameWorld gameWorld;
     std::vector<Team> teams;
@@ -35,10 +36,11 @@ private:
     bool waitingExtraTime;
     std::chrono::steady_clock::time_point start_time; 
     std::chrono::steady_clock::time_point start_extra_time;
-    std::atomic<bool> playing;
     bool cheatOn;
     int waitingForBox = 0;
     bool stillWaiting = false;
+    bool* playing;
+    bool gameOver = false;
 
     void loopLogic(int64_t passed_time);
     int updateWinningStatus();
@@ -49,9 +51,10 @@ private:
 
     int dropSupplyBox();
 
+
 public:
     GameLoop(Queue<std::shared_ptr<Command>>& commandsQueue, StatusBroadcaster& statusBroadcaster, std::shared_ptr<GameMap> gameMap, std::vector<Team> teams, bool* playing);
     ~GameLoop();
-    void run() override;
+    void run();
 };
 #endif

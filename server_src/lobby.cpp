@@ -1,109 +1,55 @@
 #include "lobby.h"
 #include "game_loop.h"
+#include "match_struct.h"
+#include "matches_monitor.h"
+#include "connecting_user.h"
 #include "status_broadcaster.h"
 #include <string>
 #include "../game_src/constants_game.h"
 #include "../game_src/worm_dto.h"
 #include "../game_src/beam_dto.h"
 #include "../game_src/game_map.h"
+#include "../shared_src/socket.h"
+#include "../shared_src/info_struct.h"
+#include "player.h"
+
 #include <memory>
+#include <utility>
+#include <arpa/inet.h>
 
 
 Lobby::Lobby(const std::string& hostname, int numberOfPlayers, std::string mapName, bool* playing) 
-: hostname(hostname), skt(hostname.c_str()), mapName(mapName), commandQueue(90), playing(playing) {
+: hostname(hostname), skt(hostname.c_str()), mapName(mapName), playing(playing) {
     this->numberOfPlayers = numberOfPlayers;
-}
-
-std::vector<WormDTO> Lobby::createWorms(std::vector<WormPosition> wormsPositions) {
-    std::vector<WormDTO> worms;
-    for(size_t i = 0; i < wormsPositions.size(); i++){
-        WormDTO worm(i, STARTING_DIRECTON, STARTING_TEAM, CONFIG.getWormInitialHealth(), 0.0, 0.0, 1,
-         Position(wormsPositions[i].x, wormsPositions[i].y), STARTING_WEAPONS);
-        worms.push_back(worm);
-    }
-    return worms;
-}
-
-std::vector<Team> Lobby::createTeams(std::vector<WormDTO>& worms) {
-    std::vector<Team> teams;
-    for(int id = 0; id < numberOfPlayers; id++){
-        Team team(id);
-        teams.push_back(team);
-    }
-    int currentTeam = 0;
-    for(size_t i = 0; i < worms.size(); i++){
-        teams[currentTeam].addWorm(worms[i].getId());
-        worms[i].setTeam(currentTeam);
-        currentTeam = (currentTeam + 1) % numberOfPlayers;
-    }
-    
-    if(currentTeam == 0) return teams;
-
-    for (; currentTeam < numberOfPlayers; currentTeam++){
-        std::vector<int> teamWormsIDs = teams[currentTeam].getWormIDs();
-        for(size_t i = 0; i < teamWormsIDs.size(); i++){
-            worms[teamWormsIDs[i]].addHealth(CONFIG.getWormAdditionalHealth());
-        }
-    }
-
-    return teams;
 }
     
 void Lobby::run() {
+    MatchesMonitor matchesMonitor;
 
-    MapsLoader mapsLoader(CONFIG.getMapsFile());
-    std::vector<std::string> mapNames = mapsLoader.getMapsNames();
-    Map map = mapsLoader.loadMap(mapName);
-    std::vector<WormDTO> worms = createWorms(map.worms);
-    std::vector<BeamDTO> beams = map.beams;
-
-    std::vector<Team> teams = createTeams(worms);
-
-    // se deberian parsear los archivos con los mapas
-    std::vector<std::string> maps = {"merge speedrun"};
-    int idPlayer = 0;
-
-    StatusBroadcaster statusBroadcaster;
-
-    while(idPlayer < numberOfPlayers) {
-        try {
+    try {
+        while (true) {
             Socket peer = skt.accept();
-            std::shared_ptr<GameMap> gameMap =std::make_shared<GameMap>(GameMap(idPlayer, numberOfPlayers, "aloha", beams, worms));
-            Player* player = new Player(std::move(peer), commandQueue, gameMap);
-            statusBroadcaster.addPlayer(idPlayer, player->getPlayerQueue());
-            player->start();
+                        
+            std::shared_ptr<InfoStruct>infoStruct = std::make_shared<InfoStruct>(std::move(peer));
 
+            ConnectingUser* connectingUser = new ConnectingUser(infoStruct, matchesMonitor, playing);
+            connectingUser->start();
+            connectingUsers.push_back(connectingUser);
+            
             reapDead();
-            players.push_back(player);
-            idPlayer++;
-        } catch (std::exception& e) {
-            std::cout << "Error in lobby: " << e.what() << std::endl;
         }
+    } catch (const LibError& e) {
+        std::cout << "Lobby closed" << std::endl;
+        matchesMonitor.closeMatches();
+        std::cout << "Cerra3" << std::endl;
     }
-    // momento eleccion Mapa
-    std::shared_ptr<GameMap> gameMap = std::make_shared<GameMap>(GameMap(0, numberOfPlayers, "aloha", beams, worms));
-    // Inicializar el GameLoop 
-    bool loopActive = true;
-    GameLoop gameLoop(commandQueue, statusBroadcaster, gameMap, teams, &loopActive);
-    gameLoop.start();
-
-
-    while (*playing) {
-        reapDead();
-    }
-
-    loopActive = false;
-
-    killAll();
-
-    gameLoop.join();
 }
 
 void Lobby::reapDead() {
-    players.remove_if([](Player* player) {
-        if (!player->isAlive()) {
-            player->join();
-            delete player;
+    connectingUsers.remove_if([](ConnectingUser* connectingUser) {
+        if (!connectingUser->isActive()) {
+            connectingUser->join();
+            delete connectingUser;
             return true;
         } else {
             return false;
@@ -111,15 +57,25 @@ void Lobby::reapDead() {
     });
 }
 
-void Lobby::killAll() {
-    for (auto& player : players ) {
-        if (player->isAlive()) {
-            player->kill();
-        }
-        player->join();
-        delete player;
-    }
-    players.clear();
+void Lobby::stop() {
+    std::cout << "Stopping lobby" << std::endl;
+    skt.shutdown(SHUT_RDWR);
+    skt.close();
+    killAll();
+    std::cout << "Lobby stopped" << std::endl;
 }
 
-Lobby::~Lobby() {killAll();}
+void Lobby::killAll() {
+    std::cout << "Killing all connecting users" << std::endl;
+    for (auto& connectingUser : connectingUsers ) {
+        if (connectingUser->isActive()) {
+            connectingUser->kill();
+        }
+        connectingUser->join();
+        delete connectingUser;
+    }
+    connectingUsers.clear();
+    std::cout << "All connecting users killed" << std::endl;
+}
+
+Lobby::~Lobby() { }
