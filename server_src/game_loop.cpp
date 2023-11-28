@@ -69,14 +69,12 @@ void GameLoop::loopLogic(int64_t elapsed_time) {
 		if (gameWorld.allEntitiesAtRest() && !waitingForBox) {
 			waitingForBox = dropSupplyBox();
 			if (!waitingForBox) {
-				std::cout << "una caja se tira, NO deberia entrar aca\n";
 				waitingForStatic = false;
 				changeWormPlaying(worms);
 			}
 		}
 
 		if(gameWorld.allEntitiesAtRest() && waitingForBox) {
-			std::cout << "una caja se tira, deberia entrar aca\n";
 			waitingForStatic = false;
 			waitingForBox = false;
 			changeWormPlaying(worms);
@@ -134,7 +132,6 @@ int GameLoop::decideAmmoType() {
 
     int randomIndex = distrib(gen);
 
-	std::cout << "Tipo de arma: " << randomIndex << std::endl;
     switch(randomIndex) {
         case 0: return MORTAR_SUPPLY;
         case 1: return RED_GRENADE_SUPPLY;
@@ -162,7 +159,6 @@ int GameLoop::decideTypeOfSupplyBox() {
 	std::discrete_distribution<> distrib(weights.begin(), weights.end());
 
 	int randomIndex = distrib(gen);
-	std::cout << "Tipo de supply: " << randomIndex << std::endl;
 	switch(randomIndex) {
 		case 0: return HEALTH_SUPPLY;
 		case 1: return decideAmmoType();

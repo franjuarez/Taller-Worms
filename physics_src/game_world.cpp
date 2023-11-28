@@ -317,7 +317,7 @@ bool GameWorld::teleportWorm(int id, float x, float y){
 Position GameWorld::calculateValidSupplyBoxPosition(){
     int maxAttempts = 100;
     int attempts = 0;
-    float y = WORLD_HEIGHT/2 - SUPPLY_BOX_HEIGHT;
+    float y = WORLD_HEIGHT/2;
     while(attempts < maxAttempts){
         float x = rand() % (int) (WORLD_WIDTH - SUPPLY_BOX_WIDTH/2);
         //raycast to see if there is something below
@@ -331,7 +331,6 @@ Position GameWorld::calculateValidSupplyBoxPosition(){
         this->world->RayCast(&callback, b2Vec2(x - SUPPLY_BOX_WIDTH, y), rayEnd);
         foundBeam &= callback.lastIntersectedType == EntityBeam;
         if(foundBeam){
-            std::cout << "Found beam in attempt: " << attempts << std::endl;
             return Position(x, y);
         }
         attempts++;
@@ -340,9 +339,7 @@ Position GameWorld::calculateValidSupplyBoxPosition(){
 }
 
 void GameWorld::dropSupplyBox(int type){
-    std::cout << "Dropping supply box" << std::endl;
     Position pos = calculateValidSupplyBoxPosition();
-    std::cout << "Supply box position: " << pos.getX() << ", " << pos.getY() << std::endl;
     b2BodyDef bd;
     bd.type = b2_dynamicBody;
     bd.position.Set(pos.getX(), pos.getY());
@@ -353,7 +350,8 @@ void GameWorld::dropSupplyBox(int type){
     fd.shape = &shape;
     fd.density = 1.0f;
     body->CreateFixture(&fd);
-    body->SetGravityScale(0.2f);//So it falls slower
+    body->SetGravityScale(0.1f);//So it falls slower
+    body->SetLinearVelocity(b2Vec2(0, -0.01f)); //So it starts falling with velocity
 
     if(type == TRAP_SUPPLY){
         TrapSupplyBox* supplyBoxEntity = new TrapSupplyBox(body, entitiesToRemove, this->lastBoxId, type);
