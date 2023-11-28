@@ -3,12 +3,14 @@
 #include "../game_src/commands/match_command.h"
 #include "../game_src/constants_game.h"
 #include "../game_src/game_info.h"
+#include "../ui_src/game_view.h"
+
 
 #define NM "nm"
 #define JM "jm"
 #define R "r"
 
-ClientLobby::ClientLobby(std::shared_ptr<InfoStruct> infoStruct) : infoStruct(infoStruct) {}
+ClientLobby::ClientLobby(const std::string& hostname, const std::string& servname) : infoStruct(std::make_shared<InfoStruct>(hostname, servname)) {}
 
 
 void ClientLobby::run() {
@@ -48,6 +50,11 @@ void ClientLobby::run() {
 void ClientLobby::createNewMatch( int nrPlayers, std::string matchName, std::string mapName) {
     MatchCommand* mc = new MatchCommand(NEW_MATCH, nrPlayers, matchName, mapName);
     mc->send(infoStruct->prot);
+
+
+    GameView gv(infoStruct);
+    gv.start();
+    gv.join();
 }
 
 void ClientLobby::joinMatch(std::string matchName) {
@@ -55,6 +62,10 @@ void ClientLobby::joinMatch(std::string matchName) {
     std::string mapName = "";
     MatchCommand* mc = new MatchCommand(JOIN, numberPlayers, matchName, mapName);
     mc->send(infoStruct->prot);
+
+    GameView gv(infoStruct);
+    gv.start();
+    gv.join();
 }
 
 void ClientLobby::refresh() {
@@ -65,6 +76,12 @@ void ClientLobby::refresh() {
     mc->send(infoStruct->prot);
 }
 
+
+std::map<std::string, std::string> ClientLobby::getAvailableMatches() {
+    std::shared_ptr<Serializable>gameDynamic(infoStruct->prot.receiveSerializable());
+    std::shared_ptr<GameInfo> gs = std::dynamic_pointer_cast<GameInfo>(gameDynamic);
+    return gs->getMatchesAvailable();
+}
 
 void ClientLobby::showMatches() {
     std::shared_ptr<Serializable>gameDynamic(infoStruct->prot.receiveSerializable());

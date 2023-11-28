@@ -4,6 +4,7 @@
 #include <QDialog>
 #include "joinwindow.h"
 #include "createwindow.h"
+#include "../client_src/client_lobby.h"
 
 namespace Ui {
 class ChooseOptionWindow;
@@ -14,7 +15,7 @@ class ChooseOptionWindow : public QDialog
     Q_OBJECT
 
 public:
-    explicit ChooseOptionWindow(QWidget *parent = nullptr);
+    explicit ChooseOptionWindow(QWidget *parent, ClientLobby&& cl);
     ~ChooseOptionWindow();
 
 private slots:
@@ -25,9 +26,10 @@ private slots:
     void on_joinButton_2_clicked();
 
 private:
+    ClientLobby cl;
     Ui::ChooseOptionWindow *ui;
-    JoinWindow *joinWindow;
     CreateWindow *createWindow;
+    JoinWindow *joinWindow;
 };
 
 #endif // CHOOSEOPTIONWINDOW_H

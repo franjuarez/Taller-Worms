@@ -207,7 +207,6 @@ GameView::GameView(std::shared_ptr<InfoStruct> infoStruct) :
 	}
 
 	//linea solo para poder sacar las fotos
-	currentMatchBackgroundPath = BACKGROUND_04_PATH;
 
 	backgroundSprites.push_back(Texture(renderer, currentMatchBackgroundPath));
 
@@ -563,10 +562,10 @@ void GameView::drawGame(int i) {
 	renderer.Clear();
 	renderer.Copy(backgroundSprites[0], NullOpt, NullOpt);
 	drawBeams(i);
-	//drawWorms(i);
+	drawWorms(i);
 	drawProjectiles(i);
 	drawWater(i);
-	//drawHud(i);
+	drawHud(i);
 
 	/*
 	aca deberia por cada cohete que tengo, verificar si esta en el map recibido

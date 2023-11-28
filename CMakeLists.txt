@@ -59,11 +59,13 @@ target_link_libraries(SharedUi PUBLIC SharedGameLib)
 
 #QT
 find_package(Qt5Widgets CONFIG REQUIRED)
-include_directories(${PROJECT_SOURCE_DIR}/Lobby  ${Qt5Widgets_INCLUDE_DIRS})
+include_directories(${PROJECT_SOURCE_DIR}/client_gui  ${Qt5Widgets_INCLUDE_DIRS})
 qt5_wrap_ui(UI_HEADERS 
-                        ./Lobby/connectwindow.ui
-                        ./Lobby/joinscreen.ui
-                        ./Lobby/main_lobby_window.ui)
+                        ./client_gui/chooseoptionwindow.ui
+                        ./client_gui/choosingwindow.ui
+                        ./client_gui/connectionwindow.ui
+                        ./client_gui/createwindow.ui
+                        ./client_gui/joinwindow.ui)
 
 
 set(CMAKE_AUTOUIC ON)
@@ -72,16 +74,16 @@ set(CMAKE_AUTORCC ON)
 
 include_directories(${PROJECT_BINARY_DIR})
 
-file(GLOB LOBBY CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/Lobby/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/Lobby/*.h")
-add_library(Lobby ${LOBBY} ${UI_HEADERS})
-set_target_properties(Lobby PROPERTIES POSITION_INDEPENDENT_CODE TRUE)
-target_link_libraries(Lobby PUBLIC SharedUi)
+file(GLOB CLIENT_GUI CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/client_gui/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/client_gui/*.h" "${CMAKE_CURRENT_SOURCE_DIR}/client_gui/*.qrc")
+add_library(client_gui ${CLIENT_GUI} ${UI_HEADERS})
+set_target_properties(client_gui PROPERTIES POSITION_INDEPENDENT_CODE TRUE)
+target_link_libraries(client_gui PUBLIC SharedUi)
 
-file(GLOB MAIN CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/main.cpp")
+file(GLOB MAIN CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/client_gui/main.cpp")
 file(GLOB HEADER_FILES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/client_src/*.h")
 file(GLOB CLIENT CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/client_src/*.cpp")
 list(REMOVE_ITEM CLIENT "${CMAKE_CURRENT_SOURCE_DIR}/client_src/client_main.cpp")
-add_executable(wormsremake ${MAIN} ${CLIENT} ${HEADER_FILES})
+add_executable(wormsClient ${MAIN} ${CLIENT} ${HEADER_FILES} ${CMAKE_CURRENT_SOURCE_DIR}/client_gui/resources.qrc)
 
 
 file(GLOB SERVER CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/server_src/*.cpp")
@@ -99,16 +101,16 @@ target_link_libraries(server PUBLIC SharedGameLib)
 target_link_libraries(server PRIVATE yaml-cpp)
 target_compile_options(server PRIVATE $<$<NOT:$<C_COMPILER_ID:MSVC>>:-Wall -Wextra -pedantic -ggdb -DDEBUG -pedantic-errors>)
 
-target_link_libraries(Lobby PUBLIC serverLibrary)
+target_link_libraries(client_gui PUBLIC serverLibrary)
 
-target_link_libraries(wormsremake PRIVATE Threads::Threads)
-target_link_libraries(wormsremake PUBLIC SharedLib)
-target_link_libraries(wormsremake PUBLIC SharedGameLib)
-target_link_libraries(wormsremake PUBLIC SharedUi)
-target_link_libraries(wormsremake PUBLIC Lobby)
-target_link_libraries(wormsremake PUBLIC Qt5::Widgets Qt5::Core)
-target_link_libraries(wormsremake PRIVATE yaml-cpp)
-target_compile_options(wormsremake PRIVATE $<$<NOT:$<C_COMPILER_ID:MSVC>>:-Wall -Wextra -pedantic -ggdb -DDEBUG -pedantic-errors>)
+target_link_libraries(wormsClient PRIVATE Threads::Threads)
+target_link_libraries(wormsClient PUBLIC SharedLib)
+target_link_libraries(wormsClient PUBLIC SharedGameLib)
+target_link_libraries(wormsClient PUBLIC SharedUi)
+target_link_libraries(wormsClient PUBLIC client_gui)
+target_link_libraries(wormsClient PUBLIC Qt5::Widgets Qt5::Core)
+target_link_libraries(wormsClient PRIVATE yaml-cpp)
+target_compile_options(wormsClient PRIVATE $<$<NOT:$<C_COMPILER_ID:MSVC>>:-Wall -Wextra -pedantic -ggdb -DDEBUG -pedantic-errors>)
 
 
 file(GLOB CLIENT_2 CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/client_src/*.cpp")

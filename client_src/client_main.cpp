@@ -15,14 +15,14 @@ int main(int argc, char** argv) {
 
 	try {
 
-		std::shared_ptr<InfoStruct> infoStruct = std::make_shared<InfoStruct>(argv[1], argv[2]);
-		ClientLobby cl(infoStruct);
+		// std::shared_ptr<InfoStruct> infoStruct = std::make_shared<InfoStruct>(argv[1], argv[2]);
+		ClientLobby cl(argv[1], argv[2]);
 
 		cl.run();
 
-		GameView gv(infoStruct);
-		gv.start();
-		gv.join();
+		// GameView gv(infoStruct);
+		// gv.start();
+		// gv.join();
 	} catch (const std::exception& e) {
 		std::cerr << e.what() << std::endl;
 		return ERROR;

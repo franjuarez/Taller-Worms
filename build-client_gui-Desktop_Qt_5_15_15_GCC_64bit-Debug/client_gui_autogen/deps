@@ -171,6 +171,16 @@ client_gui_autogen/timestamp: \
 	/home/joaco/cuatri/taller/tp3_worms/client_gui/joinwindow.h \
 	/home/joaco/cuatri/taller/tp3_worms/client_gui/main.cpp \
 	/home/joaco/cuatri/taller/tp3_worms/client_gui/resources.qrc \
+	/home/joaco/cuatri/taller/tp3_worms/client_src/client_lobby.h \
+	/home/joaco/cuatri/taller/tp3_worms/game_src/beam_dto.h \
+	/home/joaco/cuatri/taller/tp3_worms/game_src/constants_game.h \
+	/home/joaco/cuatri/taller/tp3_worms/game_src/explosives_dto.h \
+	/home/joaco/cuatri/taller/tp3_worms/game_src/position.h \
+	/home/joaco/cuatri/taller/tp3_worms/game_src/worm_dto.h \
+	/home/joaco/cuatri/taller/tp3_worms/shared_src/config_loader.h \
+	/home/joaco/cuatri/taller/tp3_worms/shared_src/constants.h \
+	/home/joaco/cuatri/taller/tp3_worms/shared_src/protocol.h \
+	/home/joaco/cuatri/taller/tp3_worms/shared_src/socket.h \
 	/usr/include/alloca.h \
 	/usr/include/assert.h \
 	/usr/include/c++/9/algorithm \
@@ -279,6 +289,7 @@ client_gui_autogen/timestamp: \
 	/usr/include/c++/9/initializer_list \
 	/usr/include/c++/9/ios \
 	/usr/include/c++/9/iosfwd \
+	/usr/include/c++/9/iostream \
 	/usr/include/c++/9/istream \
 	/usr/include/c++/9/iterator \
 	/usr/include/c++/9/limits \

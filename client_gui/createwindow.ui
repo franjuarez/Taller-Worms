@@ -169,6 +169,47 @@ background-image: transparent;</string>
     <string/>
    </property>
   </widget>
+  <widget class="QWidget" name="verticalLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>120</y>
+     <width>160</width>
+     <height>98</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QSpinBox" name="amtOfPlayersSpinBox">
+      <property name="styleSheet">
+       <string notr="true">border-image: transparent;
+background-image: transparent;
+background-color: rgb(211, 215, 207)
+</string>
+      </property>
+      <property name="minimum">
+       <number>1</number>
+      </property>
+      <property name="maximum">
+       <number>2</number>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="matchNameTextEdit">
+      <property name="styleSheet">
+       <string notr="true">border-image: transparent;
+background-image: transparent;
+background-color: rgb(211, 215, 207)
+</string>
+      </property>
+      <property name="placeholderText">
+       <string>match name</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
  </widget>
  <resources/>
  <connections/>

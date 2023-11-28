@@ -36,7 +36,7 @@
     <string notr="true">background-color: transparent;
 </string>
    </property>
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QLineEdit" name="portLineEdit">
     <property name="geometry">
      <rect>
       <x>116</x>
@@ -127,7 +127,7 @@ font: 700 italic 14pt &quot;Yrsa&quot;;
      <string>address</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_2">
+   <widget class="QLineEdit" name="addressLineEdit">
     <property name="geometry">
      <rect>
       <x>116</x>

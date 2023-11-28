@@ -12,7 +12,7 @@ class ClientLobby {
 
 public:
 
-    ClientLobby(std::shared_ptr<InfoStruct> infoStruct);
+    ClientLobby(const std::string& hostname, const std::string& servname);
 
     void run();
 
@@ -23,6 +23,8 @@ public:
     void joinMatch(std::string matchName);
 
     void refresh();
+
+    std::map<std::string, std::string> getAvailableMatches();
 
     ~ClientLobby();
 };

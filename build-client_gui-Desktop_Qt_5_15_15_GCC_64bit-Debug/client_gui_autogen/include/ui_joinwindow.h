@@ -22,8 +22,8 @@ class Ui_JoinWindow
 {
 public:
     QComboBox *availableMatchesComboBox;
-    QPushButton *pushButton;
-    QPushButton *pushButton_2;
+    QPushButton *joinButton;
+    QPushButton *refreshButton;
 
     void setupUi(QDialog *JoinWindow)
     {
@@ -34,27 +34,33 @@ public:
         availableMatchesComboBox = new QComboBox(JoinWindow);
         availableMatchesComboBox->setObjectName(QString::fromUtf8("availableMatchesComboBox"));
         availableMatchesComboBox->setGeometry(QRect(230, 620, 96, 19));
-        pushButton = new QPushButton(JoinWindow);
-        pushButton->setObjectName(QString::fromUtf8("pushButton"));
-        pushButton->setGeometry(QRect(230, 650, 121, 29));
+        joinButton = new QPushButton(JoinWindow);
+        joinButton->setObjectName(QString::fromUtf8("joinButton"));
+        joinButton->setGeometry(QRect(230, 650, 121, 29));
         QFont font;
         font.setFamily(QString::fromUtf8("Ubuntu Condensed"));
         font.setPointSize(17);
         font.setBold(true);
         font.setItalic(true);
-        pushButton->setFont(font);
-        pushButton->setStyleSheet(QString::fromUtf8("border-image: transparent;\n"
+        joinButton->setFont(font);
+        joinButton->setStyleSheet(QString::fromUtf8("border-image: transparent;\n"
 "background-color: rgb(211, 215, 207);\n"
 "background-image: transparent;\n"
 "\n"
 "color: rgb(237, 212, 0);\n"
 "\n"
 ""));
-        pushButton_2 = new QPushButton(JoinWindow);
-        pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
-        pushButton_2->setGeometry(QRect(330, 620, 21, 21));
-        QIcon icon(QIcon::fromTheme(QString::fromUtf8("object-rotate-left")));
-        pushButton_2->setIcon(icon);
+        refreshButton = new QPushButton(JoinWindow);
+        refreshButton->setObjectName(QString::fromUtf8("refreshButton"));
+        refreshButton->setGeometry(QRect(330, 620, 21, 21));
+        QIcon icon;
+        QString iconThemeName = QString::fromUtf8("object-rotate-left");
+        if (QIcon::hasThemeIcon(iconThemeName)) {
+            icon = QIcon::fromTheme(iconThemeName);
+        } else {
+            icon.addFile(QString::fromUtf8("."), QSize(), QIcon::Normal, QIcon::Off);
+        }
+        refreshButton->setIcon(icon);
 
         retranslateUi(JoinWindow);
 
@@ -64,14 +70,14 @@ public:
     void retranslateUi(QDialog *JoinWindow)
     {
         JoinWindow->setWindowTitle(QCoreApplication::translate("JoinWindow", "Dialog", nullptr));
-        pushButton->setText(QCoreApplication::translate("JoinWindow", "join", nullptr));
-        pushButton_2->setStyleSheet(QCoreApplication::translate("JoinWindow", "border-image: transparent;\n"
+        joinButton->setText(QCoreApplication::translate("JoinWindow", "join", nullptr));
+        refreshButton->setStyleSheet(QCoreApplication::translate("JoinWindow", "border-image: transparent;\n"
 "background-color: rgb(211, 215, 207);\n"
 "background-image: url(:/resources/images/loshorroresdelaguerra.png);\n"
 "color: rgb(237, 212, 0);\n"
 "\n"
 "", nullptr));
-        pushButton_2->setText(QString());
+        refreshButton->setText(QString());
     } // retranslateUi
 
 };

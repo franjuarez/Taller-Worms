@@ -23,10 +23,10 @@ class Ui_ConnectionWindow
 {
 public:
     QWidget *centralwidget;
-    QLineEdit *lineEdit;
+    QLineEdit *portLineEdit;
     QLabel *label_3;
     QLabel *label_2;
-    QLineEdit *lineEdit_2;
+    QLineEdit *addressLineEdit;
     QPushButton *pushButton;
 
     void setupUi(QMainWindow *ConnectionWindow)
@@ -49,16 +49,16 @@ public:
         centralwidget->setAutoFillBackground(false);
         centralwidget->setStyleSheet(QString::fromUtf8("background-color: transparent;\n"
 ""));
-        lineEdit = new QLineEdit(centralwidget);
-        lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
-        lineEdit->setGeometry(QRect(116, 32, 125, 22));
+        portLineEdit = new QLineEdit(centralwidget);
+        portLineEdit->setObjectName(QString::fromUtf8("portLineEdit"));
+        portLineEdit->setGeometry(QRect(116, 32, 125, 22));
         QFont font;
         font.setFamily(QString::fromUtf8("Ubuntu Condensed"));
         font.setPointSize(12);
         font.setBold(true);
-        lineEdit->setFont(font);
-        lineEdit->setAutoFillBackground(false);
-        lineEdit->setStyleSheet(QString::fromUtf8("background-color: rgb(46, 52, 54);\n"
+        portLineEdit->setFont(font);
+        portLineEdit->setAutoFillBackground(false);
+        portLineEdit->setStyleSheet(QString::fromUtf8("background-color: rgb(46, 52, 54);\n"
 "color: rgb(237, 212, 0);\n"
 "\n"
 "border-image: rgb(85, 87, 83)"));
@@ -87,17 +87,17 @@ public:
 "font: 700 italic 14pt \"Yrsa\";\n"
 "\n"
 ""));
-        lineEdit_2 = new QLineEdit(centralwidget);
-        lineEdit_2->setObjectName(QString::fromUtf8("lineEdit_2"));
-        lineEdit_2->setGeometry(QRect(116, 64, 125, 22));
+        addressLineEdit = new QLineEdit(centralwidget);
+        addressLineEdit->setObjectName(QString::fromUtf8("addressLineEdit"));
+        addressLineEdit->setGeometry(QRect(116, 64, 125, 22));
         QSizePolicy sizePolicy1(QSizePolicy::Minimum, QSizePolicy::Maximum);
         sizePolicy1.setHorizontalStretch(0);
         sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(lineEdit_2->sizePolicy().hasHeightForWidth());
-        lineEdit_2->setSizePolicy(sizePolicy1);
-        lineEdit_2->setFont(font);
-        lineEdit_2->setAutoFillBackground(false);
-        lineEdit_2->setStyleSheet(QString::fromUtf8("background-color: rgb(46, 52, 54);\n"
+        sizePolicy1.setHeightForWidth(addressLineEdit->sizePolicy().hasHeightForWidth());
+        addressLineEdit->setSizePolicy(sizePolicy1);
+        addressLineEdit->setFont(font);
+        addressLineEdit->setAutoFillBackground(false);
+        addressLineEdit->setStyleSheet(QString::fromUtf8("background-color: rgb(46, 52, 54);\n"
 "color: rgb(237, 212, 0);\n"
 "\n"
 "border-image: rgb(85, 87, 83)"));
@@ -117,10 +117,10 @@ public:
     void retranslateUi(QMainWindow *ConnectionWindow)
     {
         ConnectionWindow->setWindowTitle(QCoreApplication::translate("ConnectionWindow", "ConnectionWindow", nullptr));
-        lineEdit->setPlaceholderText(QCoreApplication::translate("ConnectionWindow", "1234", nullptr));
+        portLineEdit->setPlaceholderText(QCoreApplication::translate("ConnectionWindow", "1234", nullptr));
         label_3->setText(QCoreApplication::translate("ConnectionWindow", "port", nullptr));
         label_2->setText(QCoreApplication::translate("ConnectionWindow", "address", nullptr));
-        lineEdit_2->setPlaceholderText(QCoreApplication::translate("ConnectionWindow", "127.0.0.1", nullptr));
+        addressLineEdit->setPlaceholderText(QCoreApplication::translate("ConnectionWindow", "127.0.0.1", nullptr));
         pushButton->setText(QCoreApplication::translate("ConnectionWindow", "connect", nullptr));
     } // retranslateUi
 

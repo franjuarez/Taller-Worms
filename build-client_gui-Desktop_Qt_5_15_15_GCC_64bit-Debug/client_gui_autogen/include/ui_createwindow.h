@@ -13,7 +13,11 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QSpinBox>
+#include <QtWidgets/QVBoxLayout>
+#include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
 
@@ -26,6 +30,10 @@ public:
     QPushButton *subsueloButton;
     QPushButton *smallButton;
     QPushButton *testButton;
+    QWidget *verticalLayoutWidget;
+    QVBoxLayout *verticalLayout;
+    QSpinBox *amtOfPlayersSpinBox;
+    QLineEdit *matchNameTextEdit;
 
     void setupUi(QDialog *CreateWindow)
     {
@@ -89,6 +97,32 @@ public:
         sizePolicy.setHeightForWidth(testButton->sizePolicy().hasHeightForWidth());
         testButton->setSizePolicy(sizePolicy);
         testButton->setStyleSheet(QString::fromUtf8("border-image: url(:/resources/images/previews/test_preview.png)"));
+        verticalLayoutWidget = new QWidget(CreateWindow);
+        verticalLayoutWidget->setObjectName(QString::fromUtf8("verticalLayoutWidget"));
+        verticalLayoutWidget->setGeometry(QRect(30, 120, 160, 98));
+        verticalLayout = new QVBoxLayout(verticalLayoutWidget);
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        verticalLayout->setContentsMargins(0, 0, 0, 0);
+        amtOfPlayersSpinBox = new QSpinBox(verticalLayoutWidget);
+        amtOfPlayersSpinBox->setObjectName(QString::fromUtf8("amtOfPlayersSpinBox"));
+        amtOfPlayersSpinBox->setStyleSheet(QString::fromUtf8("border-image: transparent;\n"
+"background-image: transparent;\n"
+"background-color: rgb(211, 215, 207)\n"
+""));
+        amtOfPlayersSpinBox->setMinimum(1);
+        amtOfPlayersSpinBox->setMaximum(2);
+
+        verticalLayout->addWidget(amtOfPlayersSpinBox);
+
+        matchNameTextEdit = new QLineEdit(verticalLayoutWidget);
+        matchNameTextEdit->setObjectName(QString::fromUtf8("matchNameTextEdit"));
+        matchNameTextEdit->setStyleSheet(QString::fromUtf8("border-image: transparent;\n"
+"background-image: transparent;\n"
+"background-color: rgb(211, 215, 207)\n"
+""));
+
+        verticalLayout->addWidget(matchNameTextEdit);
+
 
         retranslateUi(CreateWindow);
 
@@ -104,6 +138,7 @@ public:
         subsueloButton->setText(QString());
         smallButton->setText(QString());
         testButton->setText(QString());
+        matchNameTextEdit->setPlaceholderText(QCoreApplication::translate("CreateWindow", "match name", nullptr));
     } // retranslateUi
 
 };
