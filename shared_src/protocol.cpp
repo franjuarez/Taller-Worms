@@ -56,6 +56,7 @@ void Protocol::sendDynamic(GameDynamic* dynamic) {
     sendChar(dynamic->getWinnerTeam());
     sendWorms(dynamic->getWorms());
     sendWeapons(dynamic->getExplosives());
+    sendSupplyBox(dynamic->getSupplyBox());
     sendVectorInt(dynamic->getTeamsHealth());
     sendUintEight(dynamic->getStatus());
 }
@@ -66,9 +67,10 @@ GameDynamic* Protocol::receiveDynamic() {
     char winnerTeam = receiveChar();
     std::vector<WormDTO> worms = receiveWorms();
     std::unordered_map<int, ExplosivesDTO> weapons = receiveWeapons();
+    std::unordered_map<int, SupplyBoxDTO> supplies = receiveSupplyBox();
     std::vector<uint32_t> teamsHealth = receiveVectorInt();
     uint8_t status = receiveUintEight();
-    return new GameDynamic(wormPlayingID, status, winnerTeam, worms, weapons, teamsHealth);
+    return new GameDynamic(wormPlayingID, status, winnerTeam, worms, weapons, supplies, teamsHealth);
 }
 
 void Protocol::sendInfo(GameInfo* info) {
@@ -320,6 +322,28 @@ std::unordered_map<int, ExplosivesDTO> Protocol::receiveWeapons() {
    return weapons;
 }
 
+
+void Protocol::sendSupplyBox(std::unordered_map<int, SupplyBoxDTO> supplyBoxes) {
+    sendUintEight(supplyBoxes.size());
+    for (auto& supplyBox : supplyBoxes) {
+        sendUintEight(supplyBox.first);
+        sendUintEight(supplyBox.second.getContent());
+        sendPosition(Position(supplyBox.second.getX(), supplyBox.second.getY()));
+    }
+}
+
+
+std::unordered_map<int, SupplyBoxDTO> Protocol::receiveSupplyBox() {
+    uint8_t supplyBoxSize = receiveUintEight();
+    std::unordered_map<int, SupplyBoxDTO> supplyBoxes;
+    for (int i = 0; i < supplyBoxSize; i++) {
+        int id = receiveUintEight();
+        int content = receiveUintEight();
+        Position pos = receivePosition();
+        supplyBoxes.emplace(id, SupplyBoxDTO(id, content, pos));
+    }
+    return supplyBoxes;
+}
 
 
 void Protocol::sendWorms(std::vector<WormDTO> worms) {

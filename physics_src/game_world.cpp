@@ -7,6 +7,7 @@ GameWorld::GameWorld(std::shared_ptr<GameMap> gameMap) {
     this->listener = new Listener(this->world);
     this->world->SetContactListener(this->listener);
     this->lastProjectileId = 0;
+    this->lastBoxId = 0;
 
     createWater();
 
@@ -63,7 +64,7 @@ void GameWorld::createWorm(float startingX, float startingY, int id, int team, i
     body->CreateFixture(&fd);
 
     b2PolygonShape footSensorShape;
-    footSensorShape.SetAsBox(WORM_WIDTH/2 - 0.05f , WORM_HEIGHT/4, b2Vec2(0, -WORM_HEIGHT/2), 0);
+    footSensorShape.SetAsBox(WORM_WIDTH/2 - 0.01f , WORM_HEIGHT/4, b2Vec2(0, -WORM_HEIGHT/2), 0);
     b2FixtureDef footSensorFixture;
     footSensorFixture.shape = &footSensorShape;
     footSensorFixture.isSensor = true;
@@ -96,7 +97,8 @@ void GameWorld::createBeam(float startingX, float startingY, float angle, bool l
     gb.friction = WORM_FRICTION;
     beamBody->CreateFixture(&gb);
 
-    Beam* beamEntity = new Beam(beamBody, entitiesToRemove, angle);
+    bool isWalkable = (abs(angle) > CONFIG.getBeamMaxWalkableAngle()) ? false : true;
+    Beam* beamEntity = new Beam(beamBody, entitiesToRemove, isWalkable);
     beamBody->GetUserData().pointer = reinterpret_cast<uintptr_t>(beamEntity);
 }
 
@@ -167,10 +169,14 @@ b2Body* GameWorld::createBazooka(b2Body* worm, int direction){
 bool GameWorld::wormLaunchBazooka(int id, float angle, int direction, float power){
     checkWormExists(id);
     b2Body* worm = this->worms[id];
+    Worm* wormData = (Worm*) worm->GetUserData().pointer;
+    if(!wormData->hasAmmo(BAZOOKA)){
+        return false; 
+    }
     b2Body* bazooka = createBazooka(worm, direction);
     b2Vec2 vel = calculatVelocityOfProjectile(CONFIG.getProjectileMaxSpeed(), angle, direction, power);
     bazooka->SetLinearVelocity(vel);
-    ((Worm*) worm->GetUserData().pointer)->changeDirection(direction);
+    wormData->changeDirection(direction);
     return true;
 }
 
@@ -212,6 +218,9 @@ bool GameWorld::wormThrowGreenGrenade(int id, float angle, int direction, float 
     checkWormExists(id);
     b2Body* worm = this->worms[id];
     Worm* wormData = (Worm*) worm->GetUserData().pointer;
+    if(!wormData->hasAmmo(GREEN_GRENADE)){
+        return false; 
+    }
     b2Body* granade = createGreenGrenade(worm, direction, explosionTimer);
     b2Vec2 grenadeVel = calculatVelocityOfProjectile(CONFIG.getProjectileMaxSpeed(), angle, direction, power);
     granade->SetLinearVelocity(grenadeVel);
@@ -304,6 +313,56 @@ bool GameWorld::teleportWorm(int id, float x, float y){
     return false;
 }
 
+Position GameWorld::calculateValidSupplyBoxPosition(){
+    int maxAttempts = 100;
+    int attempts = 0;
+    float y = WORLD_HEIGHT/2;
+    while(attempts < maxAttempts){
+        float x = rand() % (int) (WORLD_WIDTH - SUPPLY_BOX_WIDTH/2);
+        //raycast to see if there is something below
+        b2Vec2 rayEnd = b2Vec2(x, 0);
+        bool foundBeam = true;
+        SupplyQueryCallback callback;
+        this->world->RayCast(&callback, b2Vec2(x, y), rayEnd);
+        foundBeam &= callback.lastIntersectedType == EntityBeam;
+        this->world->RayCast(&callback, b2Vec2(x + SUPPLY_BOX_WIDTH, y), rayEnd);
+        foundBeam &= callback.lastIntersectedType == EntityBeam;
+        this->world->RayCast(&callback, b2Vec2(x - SUPPLY_BOX_WIDTH, y), rayEnd);
+        foundBeam &= callback.lastIntersectedType == EntityBeam;
+        if(foundBeam){
+            return Position(x, y);
+        }
+        attempts++;
+    }
+    throw std::runtime_error("Could not find valid position for supply box");
+}
+
+void GameWorld::dropSupplyBox(int type){
+    Position pos = calculateValidSupplyBoxPosition();
+    b2BodyDef bd;
+    bd.type = b2_dynamicBody;
+    bd.position.Set(pos.getX(), pos.getY());
+    b2Body* body = this->world->CreateBody(&bd);
+    b2FixtureDef fd;
+    b2PolygonShape shape;
+    shape.SetAsBox(SUPPLY_BOX_WIDTH/2, SUPPLY_BOX_HEIGHT/2);
+    fd.shape = &shape;
+    fd.density = 1.0f;
+    body->CreateFixture(&fd);
+    body->SetGravityScale(0.1f);//So it falls slower
+    body->SetLinearVelocity(b2Vec2(0, -0.01f)); //So it starts falling with velocity
+
+    if(type == TRAP_SUPPLY){
+        TrapSupplyBox* supplyBoxEntity = new TrapSupplyBox(body, entitiesToRemove, this->lastBoxId, type);
+        body->GetUserData().pointer = reinterpret_cast<uintptr_t>(supplyBoxEntity);
+    } else{
+        ProvitionsSupplyBox* supplyBoxEntity = new ProvitionsSupplyBox(body, entitiesToRemove, this->lastBoxId, type);
+        body->GetUserData().pointer = reinterpret_cast<uintptr_t>(supplyBoxEntity);
+    }
+    this->boxes[this->lastBoxId] = body;
+    this->lastBoxId++;
+}
+
 void GameWorld::addHealthToWorm(int id){
     checkWormExists(id);
     b2Body* worm = this->worms[id];
@@ -325,7 +384,7 @@ void GameWorld::toggleInvincible(){
     }
 }
 
-void GameWorld::removeProjectile(b2Body* projectile){
+void GameWorld::removeProjectileFromMap(b2Body* projectile){
     Projectile* projectileData = (Projectile*) projectile->GetUserData().pointer;
     int id = projectileData->getId();
     auto it = this->projectiles.find(id);
@@ -335,12 +394,24 @@ void GameWorld::removeProjectile(b2Body* projectile){
     this->projectiles.erase(id);
 }
 
+void GameWorld::removeBoxFromMap(b2Body* box){
+    SupplyBox* boxData = (SupplyBox*) box->GetUserData().pointer;
+    int id = boxData->getId();
+    auto it = this->boxes.find(id);
+    if(it == this->boxes.end()){
+        throw std::runtime_error("Box does not exist");
+    }
+    this->boxes.erase(id);
+}
+
 void GameWorld::removeEntities(){
     for(b2Body* body : this->entitiesToRemove){
         Entity* entity = (Entity*) body->GetUserData().pointer;
         EntityType entityType = entity->getEntityType();
         if(entityType == EntityInstantProjectile || entityType == EntityDelayedProjectile){
-            removeProjectile(body);
+            removeProjectileFromMap(body);
+        }  else if (entityType == EntitySupplyBox){
+            removeBoxFromMap(body);
         }
         this->world->DestroyBody(body);
         delete entity;
@@ -401,7 +472,14 @@ GameDynamic* GameWorld::getGameStatus(int id){
         Projectile* projectileData = (Projectile*) projectile.second->GetUserData().pointer;
         projectilesDTO.emplace(projectile.first, projectileData->getDTO());
     }
-    return new GameDynamic(id, wormsDTO, projectilesDTO);
+
+    std::unordered_map<int, SupplyBoxDTO> boxesDTO;
+    for (auto& box : this->boxes) {
+        SupplyBox* boxData = (SupplyBox*) box.second->GetUserData().pointer;
+        boxesDTO.emplace(box.first, boxData->getDTO());
+    }
+
+    return new GameDynamic(id, wormsDTO, projectilesDTO, boxesDTO);
 }
 
 GameWorld::~GameWorld() {

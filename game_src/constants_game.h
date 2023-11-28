@@ -19,6 +19,20 @@ enum /*WEAPON_TYPE*/{
     BANANA,
     FRAGMENT,
 };
+#define AMOUNT_OF_WEAPONS 7
+
+enum /*SUPPLY_BOX_TYPE*/{
+    HEALTH_SUPPLY = 0,
+    MORTAR_SUPPLY,
+    RED_GRENADE_SUPPLY,
+    BANANA_SUPPLY,
+    // HOLY_GRENADE_SUPPLY,
+    // AIR_ATTACK_SUPPLY,
+    // DYNAMITE_SUPPLY,
+    BAT_SUPPLY,
+    TELEPORT_SUPPLY,
+    TRAP_SUPPLY,
+};
 
 enum /* CHEATS */ {
     ADD_HEALTH = 0,
@@ -42,7 +56,6 @@ enum /*MATCH TYPE*/{
 #define PLAYING -1
 #define ALL_LOST -2
 
-#define AMOUNT_OF_WEAPONS 7
 #define INFINITE_AMUNITION -1
 
 #endif

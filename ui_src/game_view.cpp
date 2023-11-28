@@ -333,6 +333,13 @@ void GameView::drawProjectiles(int i) {
 		}
 		it->second.display(i, renderer, camX, camY);
 	}
+
+	std::unordered_map<int, SupplyBoxDTO> boxes = currentGameStatus.getSupplyBox();
+	for (auto it = boxes.begin(); it != boxes.end(); it++) {
+		int x = it->second.getX() * m_to_pix_x - camX;
+		int y = it->second.getY() * m_to_pix_y + WINDOW_HEIGHT - camY;
+		renderer.FillRect(Rect(x,y,20,20));
+	}
 }
 
 void GameView::drawWater(int i) {

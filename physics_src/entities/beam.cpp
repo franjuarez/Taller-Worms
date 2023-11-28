@@ -1,13 +1,11 @@
 #include "beam.h"
 
-Beam::Beam(b2Body* body, std::unordered_set<b2Body*>& entitiesToRemove, float angle) :
- Entity(body, entitiesToRemove, EntityBeam), angle(angle), walkable((abs(angle) > CONFIG.getBeamMaxWalkableAngle()) ? false : true) {}
+Beam::Beam(b2Body* body, std::unordered_set<b2Body*>& entitiesToRemove, bool isWalkable) :
+ Entity(body, entitiesToRemove, EntityBeam), walkable(isWalkable) {}
 
 Beam::~Beam() {}
 
 bool Beam::isWalkable() { return this->walkable; }
-
-float Beam::getAngle() { return this->angle; }
 
 void Beam::beginCollisionWithWater(Entity* otherBody, b2Contact* contact) {
     otherBody->beginCollisionWithBeam(this, contact);

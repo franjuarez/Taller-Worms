@@ -42,9 +42,10 @@ target_link_libraries(SharedUi PUBLIC SDL2pp::SDL2pp)
 file(GLOB HANDLERS CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/physics_src/query_handlers/*.cpp")
 file(GLOB ENTITIES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/physics_src/entities/*.cpp")
 file(GLOB PROJECTILES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/physics_src/entities/projectiles/*.cpp")
+file(GLOB SUPPLY_BOX CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/physics_src/entities/supplies/*.cpp")
 file(GLOB AUX CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/physics_src/aux/*.cpp")
 file(GLOB SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/physics_src/*.cpp")
-add_library(SharedPhysics ${SOURCES} ${ENTITIES} ${PROJECTILES} ${HANDLERS} ${AUX})
+add_library(SharedPhysics ${SOURCES} ${ENTITIES} ${PROJECTILES} ${SUPPLY_BOX} ${HANDLERS} ${AUX})
 target_link_libraries(SharedPhysics PUBLIC box2d SharedLib)
 
 #GAME

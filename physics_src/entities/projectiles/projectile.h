@@ -4,7 +4,6 @@
 #include <vector>
 #include <functional>
 #include "../worm.h"
-#include "../../query_handlers/explosion_handler.h"
 #include "../../../game_src/explosives_dto.h"
 
 typedef std::function<b2Body*(int newId)> createEntity;
@@ -27,6 +26,7 @@ public:
     virtual void beginCollisionWithWater(Entity* otherBody, b2Contact* contact) = 0;
     virtual void beginCollisionWithBeam(Entity* otherBody, b2Contact* contact) = 0;
     virtual void beginCollisionWithWorm(Entity* otherBody, b2Contact* contact) = 0;
+    virtual void beginCollisionWithSupplyBox(Entity* otherBody, b2Contact* contact);
 
     virtual ExplosivesDTO getDTO() = 0;
 

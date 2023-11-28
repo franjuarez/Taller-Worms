@@ -18,6 +18,7 @@
 #include <unistd.h>
 #include <chrono>
 #include <atomic>
+#include <random>
 
 class StatusBroadcaster;
 
@@ -35,15 +36,22 @@ private:
     bool waitingExtraTime;
     std::chrono::steady_clock::time_point start_time; 
     std::chrono::steady_clock::time_point start_extra_time;
+    bool cheatOn;
+    int waitingForBox = 0;
+    bool stillWaiting = false;
+    bool* playing;
+    bool gameOver = false;
 
     void loopLogic(int64_t passed_time);
     int updateWinningStatus();
     void changeWormPlaying(std::vector<WormDTO> worms);
+    bool shouldDropBox();
+    int decideTypeOfSupplyBox();
+    int decideAmmoType();
 
-    bool* playing;
-    bool cheatOn;
-    bool gameOver = false;
-    bool stillWaiting = false;
+    int dropSupplyBox();
+
+
 public:
     GameLoop(Queue<std::shared_ptr<Command>>& commandsQueue, StatusBroadcaster& statusBroadcaster, std::shared_ptr<GameMap> gameMap, std::vector<Team> teams, bool* playing);
     ~GameLoop();

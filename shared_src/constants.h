@@ -34,7 +34,8 @@ enum
 #define STARTING_DIRECTON RIGHT
 
 //all of them
-#define STARTING_WEAPONS {INFINITE_AMUNITION, INFINITE_AMUNITION, 0, 0, 0, 0, 0}
+#define STARTING_WEAPONS {CONFIG.getBazookaStartingAmmo(), CONFIG.getGreenGrenadeStartingAmmo(), 0, 0, 0, 0 , 0}
+// #define STARTING_WEAPONS {INFINITE_AMUNITION, INFINITE_AMUNITION, 0, 0, 0, 0, 0}
 
 
 #endif

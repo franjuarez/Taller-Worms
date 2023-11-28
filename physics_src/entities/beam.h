@@ -6,11 +6,10 @@
 
 class Beam : public Entity {
     private:
-    float angle;
     bool walkable;
 
     public:
-    Beam(b2Body* body, std::unordered_set<b2Body*>& entitiesToRemove, float angle);
+    Beam(b2Body* body, std::unordered_set<b2Body*>& entitiesToRemove, bool isWalkable);
 
     bool isWalkable();
     float getAngle();

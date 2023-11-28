@@ -14,7 +14,7 @@ sender(infoStruct->prot, statusBroadcaster, talking, playerID),
 receiver(infoStruct->prot, commandQueue, talking)
 {
     playerQueue.push(gameMap);
-    std::shared_ptr<GameDynamic> gameDynamic = std::make_shared<GameDynamic>(GameDynamic(-1, gameMap->getWorms(), {}));
+    std::shared_ptr<GameDynamic> gameDynamic = std::make_shared<GameDynamic>(GameDynamic(-1, gameMap->getWorms(), {}, {}));
     gameDynamic->setStatus(WAITING);
     playerQueue.push(gameDynamic);
 

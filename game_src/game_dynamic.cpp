@@ -4,11 +4,12 @@
 GameDynamic::GameDynamic() {}
 
 
-GameDynamic::GameDynamic(int wormPlayingID, std::vector<WormDTO>worms, std::unordered_map<int, ExplosivesDTO> explosives)
-: Serializable() ,wormPlayingID(wormPlayingID), worms(worms), explosives(explosives), teamsHealth() {}
+GameDynamic::GameDynamic(int wormPlayingID, std::vector<WormDTO>worms, std::unordered_map<int, ExplosivesDTO> explosives, std::unordered_map<int, SupplyBoxDTO> supplyBox)
+: Serializable() ,wormPlayingID(wormPlayingID), worms(worms), explosives(explosives), supplyBox(supplyBox), teamsHealth() {}
 
-GameDynamic::GameDynamic(int wormPlayingID, int status, int winnerTeam, std::vector<WormDTO>worms, std::unordered_map<int, ExplosivesDTO> explosives, std::vector<uint32_t> teamsHealth)
-: Serializable() ,wormPlayingID(wormPlayingID), winnerTeam(winnerTeam), status(status), worms(worms), explosives(explosives), teamsHealth(teamsHealth) {}
+GameDynamic::GameDynamic(int wormPlayingID, int status, int winnerTeam, std::vector<WormDTO>worms, std::unordered_map<int, ExplosivesDTO> explosives,
+ std::unordered_map<int, SupplyBoxDTO> supplyBox, std::vector<uint32_t> teamsHealth)
+: Serializable() ,wormPlayingID(wormPlayingID), winnerTeam(winnerTeam), status(status), worms(worms), explosives(explosives), supplyBox(supplyBox), teamsHealth(teamsHealth) {}
 
 void GameDynamic::send(Protocol& protocol) {
     protocol.sendDynamic(this);
@@ -62,6 +63,10 @@ void GameDynamic::setStatus(int newStatus) {
     this->status = newStatus;
 }
 
+std::unordered_map<int, SupplyBoxDTO> GameDynamic::getSupplyBox() {
+    return this->supplyBox;
+}
+
 GameDynamic& GameDynamic::operator=(const GameDynamic& other) {
     if (this == &other) {
         return *this;
@@ -70,6 +75,7 @@ GameDynamic& GameDynamic::operator=(const GameDynamic& other) {
     this->winnerTeam = other.winnerTeam;
     this->worms = other.worms;
     this->explosives = other.explosives;
+    this->supplyBox = other.supplyBox;
     this->teamsHealth = other.teamsHealth;
     this->status = other.status;
     return *this;
