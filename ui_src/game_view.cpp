@@ -23,7 +23,7 @@
 #define WORM_LIFE_FONT_PATH BASE_PATH + "fonts/lazy.ttf"
 #define HUB_FONT_PATH BASE_PATH + "fonts/arcadeclassic/ARCADECLASSIC.TTF"
 
-#define BACKGROUND_PATH BASE_PATH + "images/background.png"
+//#define BACKGROUND_PATH BASE_PATH + "images/background.png"
 #define WAITING_SCREEN_PATH BASE_PATH + "images/dont_panic.bmp"
 #define LOSING_SCREEN_PATH BASE_PATH + "images/Dark_Souls_You_Died_Screen_-_Completely_Black_Screen_0-2_screenshot.png"
 #define BEAM_PATH BASE_PATH + "images/grdl8.png"
@@ -75,6 +75,13 @@
 #define AIM_PATH BASE_PATH + "images/aim_cursor.bmp"
 
 
+#define BACKGROUND_00_PATH  BASE_PATH + "images/scenarios/scenario0.png"
+#define BACKGROUND_01_PATH  BASE_PATH + "images/scenarios/scenario1.png"
+#define BACKGROUND_02_PATH  BASE_PATH + "images/scenarios/scenario2.png"
+#define BACKGROUND_03_PATH  BASE_PATH + "images/scenarios/scenario3.png"
+#define BACKGROUND_04_PATH  BASE_PATH + "images/scenarios/scenario4.png"
+#define BACKGROUND_05_PATH  BASE_PATH + "images/scenarios/scenario5.png"
+
 #define ROCKET_PATH BASE_PATH + "images/rocket.bmp"
 #define EXPLOSION_PATH BASE_PATH + "images/explosion3.bmp"
 
@@ -94,7 +101,7 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 		mixer(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 4096),
 		sound(MUSIC_PATH), // OGG sound file
 		wormsFont(WORM_LIFE_FONT_PATH, 18), hudFont(HUB_FONT_PATH, 42), toolBarFont(WORM_LIFE_FONT_PATH, 11),
-		backgroundSprite(renderer, BACKGROUND_PATH), waitingScreen(renderer, Surface(WAITING_SCREEN_PATH).SetColorKey(true,0)),
+		waitingScreen(renderer, Surface(WAITING_SCREEN_PATH).SetColorKey(true,0)),
 		losingScreen(renderer, LOSING_SCREEN_PATH),
 		beamSprite(renderer, BEAM_PATH),
 		currentWorm(-1, 0, 0, 100, 0.0, 0.0, 1, Position(0,0), {}), //-1 para que se sepa que en realidad no hay alguien con turno
@@ -181,6 +188,28 @@ GameView::GameView(const std::string& hostname, const std::string& servname) :
 	hudTextures.push_back(Texture(renderer, Surface(AIM_PATH).SetColorKey(true, 0)));
 
 
+
+	std::string currentMatchBackgroundPath;
+	std::string mapName = gameMap->getMapName();
+
+	if (mapName == "dust2"){
+		currentMatchBackgroundPath = BACKGROUND_00_PATH;
+	} else if (mapName == "medium") {
+		currentMatchBackgroundPath = BACKGROUND_01_PATH;
+	} else if (mapName == "small") {
+		currentMatchBackgroundPath = BACKGROUND_02_PATH;
+	} else if (mapName == "test") {
+		currentMatchBackgroundPath = BACKGROUND_03_PATH;
+	} else if (mapName == "subsuelo de fiuba") {
+		currentMatchBackgroundPath = BACKGROUND_04_PATH;
+	} else  {
+		currentMatchBackgroundPath = BACKGROUND_05_PATH;
+	}
+
+	//linea solo para poder sacar las fotos
+	currentMatchBackgroundPath = BACKGROUND_04_PATH;
+
+	backgroundSprites.push_back(Texture(renderer, currentMatchBackgroundPath));
 
 
 	this->currentWormId = -1;
@@ -444,7 +473,8 @@ void GameView::drawHud(int i) {
 
 void GameView::drawWinningScreen(int i) {
 	renderer.Clear();
-	renderer.Copy(waitingScreen, NullOpt, NullOpt);
+	renderer.Copy(backgroundSprites[0], NullOpt, NullOpt);
+
 	drawBeams(i);
 
 	for (auto it = wormViews.begin(); it != wormViews.end(); it++) {
@@ -531,12 +561,12 @@ void GameView::drawGame(int i) {
 	//focusCam();
 
 	renderer.Clear();
-	renderer.Copy(backgroundSprite, NullOpt, NullOpt);
+	renderer.Copy(backgroundSprites[0], NullOpt, NullOpt);
 	drawBeams(i);
-	drawWorms(i);
+	//drawWorms(i);
 	drawProjectiles(i);
 	drawWater(i);
-	drawHud(i);
+	//drawHud(i);
 
 	/*
 	aca deberia por cada cohete que tengo, verificar si esta en el map recibido

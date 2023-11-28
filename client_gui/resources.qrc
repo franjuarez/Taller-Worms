@@ -6,5 +6,12 @@
         <file>../resources/images/pantano.png</file>
         <file>../resources/images/Screenshot from 2023-11-11 10-46-54.png</file>
         <file>../resources/images/wormsComicExtended.png</file>
+        <file>../resources/images/previews/subsuelo_preview.png</file>
+        <file>../resources/images/previews/test_preview.png</file>
+        <file>../resources/images/previews/small_preview.png</file>
+        <file>../resources/images/previews/medium_preview.png</file>
+        <file>../resources/images/previews/dust2_preview.png</file>
+        <file>../resources/images/wormsComicExtendedExtended.png</file>
+        <file>../resources/images/wormsComicBackgroundColor.png</file>
     </qresource>
 </RCC>

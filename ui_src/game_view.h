@@ -33,7 +33,7 @@ private:
 	Font hudFont;
 	Font toolBarFont;
 	Chunk sound;
-	Texture backgroundSprite;
+	std::vector<Texture> backgroundSprites;
 	Texture waitingScreen;
 	Texture beamSprite;
 	Texture losingScreen;

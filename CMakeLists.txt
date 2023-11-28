@@ -3,6 +3,9 @@ cmake_minimum_required(VERSION "3.16.3")
 set(CMAKE_CXX_STANDARD 17)
 project("Worms")
 
+set(CMAKE_PREFIX_PATH "~/Qt/5.15.15/gcc_64")
+
+
 set(TESTING OFF CACHE BOOL "Enable testing mode")
 
 if(TESTING)

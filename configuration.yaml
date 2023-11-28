@@ -7,9 +7,9 @@ game:
   turn_time: 10
 
 camera:
-  viewfield_x: 25
-  viewfield_y: 25
-  camera_speed: 3
+  viewfield_x: 35
+  viewfield_y: 35
+  camera_speed: 5
 
 world:
   width: 100

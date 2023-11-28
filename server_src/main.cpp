@@ -20,7 +20,7 @@ int main(int argc, char** argv) {
 
 	const std::string hostname(argv[1]);
 	bool playing = true;
-	Lobby lobby(hostname, HARDCODED_PLAYERS, "medium", &playing);
+	Lobby lobby(hostname, HARDCODED_PLAYERS, "subsuelo de fiuba", &playing);
 
 	lobby.start();
 
