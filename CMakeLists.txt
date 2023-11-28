@@ -3,14 +3,16 @@ cmake_minimum_required(VERSION "3.16.3")
 set(CMAKE_CXX_STANDARD 17)
 project("Worms")
 
-set(TESTING OFF CACHE BOOL "Enable testing mode")
-
-if(TESTING)
-    add_definitions(-DTESTING)
-endif()
 
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
+
+add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/thirdParty/Catch2")
+
+include(CTest)
+
+
+#BOX2D & SDL
 
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/thirdParty/box2d")
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/thirdParty/yaml-cpp-0.8.0")
