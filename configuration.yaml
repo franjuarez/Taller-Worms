@@ -118,10 +118,10 @@ supply_box:
   probability: 1.0 # Has to be between 0 and 1
   # The sum of the 3 probabilities must be 1
   probability_health: 0.4
-  probability_ammo: 0.5
-  probability_trap: 0.1
+  probability_ammo: 0.4
+  probability_trap: 0.2
   health: 25
-  trap_damage: 20
+  trap_damage: 50
   trap_radius: 2
 
 # The sum of all probabilities must be 1

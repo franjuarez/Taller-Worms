@@ -6,7 +6,7 @@
 
 class SupplyQueryCallback : public b2RayCastCallback {
 public:
-    bool foundBeam = false;
+    EntityType lastIntersectedType;
 
     SupplyQueryCallback();
 

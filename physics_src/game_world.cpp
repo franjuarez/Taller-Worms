@@ -322,19 +322,25 @@ Position GameWorld::calculateValidSupplyBoxPosition(){
         float x = rand() % (int) (WORLD_WIDTH - SUPPLY_BOX_WIDTH/2);
         //raycast to see if there is something below
         b2Vec2 rayEnd = b2Vec2(x, 0);
+        bool foundBeam = true;
         SupplyQueryCallback callback;
         this->world->RayCast(&callback, b2Vec2(x, y), rayEnd);
-        if(callback.foundBeam){
+        foundBeam &= callback.lastIntersectedType == EntityBeam;
+        this->world->RayCast(&callback, b2Vec2(x + SUPPLY_BOX_WIDTH, y), rayEnd);
+        foundBeam &= callback.lastIntersectedType == EntityBeam;
+        this->world->RayCast(&callback, b2Vec2(x - SUPPLY_BOX_WIDTH, y), rayEnd);
+        foundBeam &= callback.lastIntersectedType == EntityBeam;
+        if(foundBeam){
             std::cout << "Found beam in attempt: " << attempts << std::endl;
             return Position(x, y);
         }
         attempts++;
     }
-    // return Position(x, y);
-    throw std::runtime_error("Could not find valid position for supply box"); //cambiar
+    throw std::runtime_error("Could not find valid position for supply box");
 }
 
 void GameWorld::dropSupplyBox(int type){
+    std::cout << "Dropping supply box" << std::endl;
     Position pos = calculateValidSupplyBoxPosition();
     std::cout << "Supply box position: " << pos.getX() << ", " << pos.getY() << std::endl;
     b2BodyDef bd;

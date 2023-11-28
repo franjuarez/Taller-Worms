@@ -120,7 +120,7 @@ void Worm::move(int direction){
 }
 
 void Worm::jump(float maxHeight, float distance){
-    if(!this->onGround){
+    if(!this->onGround || this->currentAction == JUMPING){
         return;
     }
     this->currentAction = JUMPING;
@@ -153,6 +153,9 @@ void Worm::handleExplosion(float damage, b2Vec2 explosionCenter){
     takeDamage(damage);
     b2Vec2 direction = this->body->GetPosition() - explosionCenter;
     direction.Normalize();
+    if(this->body->GetLinearVelocity().y < 0){
+        this->body->SetLinearVelocity(b2Vec2(0,0));
+    }
     b2Vec2 impulse = b2Vec2(direction.x * damage / CONFIG.getProjectileImpulseFactorX(), damage / CONFIG.getProjectileImpulseFactorY());
     this->body->ApplyLinearImpulseToCenter(impulse, true);
 }

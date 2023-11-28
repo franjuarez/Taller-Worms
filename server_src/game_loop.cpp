@@ -8,7 +8,7 @@
 GameLoop::GameLoop(Queue<std::shared_ptr<Command>>& commandsQueue, StatusBroadcaster& statusBroadcaster, std::shared_ptr<GameMap> gameMap, std::vector<Team> teams, bool* playing)
 : commandsQueue(commandsQueue), statusBroadcaster(statusBroadcaster), gameWorld(gameMap), teams(teams), playing(playing) {
 	this->teamPlayingID = 0;
-	this->wormPlayingHealth = 100;
+	this->wormPlayingHealth = CONFIG.getWormInitialHealth();
 	this->waitingForStatic = false;
 	this->start_time = std::chrono::steady_clock::now();
 	this->cheatOn = false;
@@ -57,8 +57,10 @@ void GameLoop::loopLogic(int64_t elapsed_time) {
 
 	statusBroadcaster.broadcast(gameDynamic);
 
-	if (wormPlayingHealth != wormPlayingNewHealth || elapsed_time > CONFIG.getTurnTime() * 1000 ) {
+	if (wormPlayingHealth > wormPlayingNewHealth || elapsed_time > CONFIG.getTurnTime() * 1000 ) {
 		waitingForStatic = true;
+	} else if (wormPlayingHealth < wormPlayingNewHealth) {
+		wormPlayingHealth = wormPlayingNewHealth;
 	}
 
 	// std::cout << "cheatON " << cheatOn  << std::endl;
@@ -100,7 +102,6 @@ void GameLoop::dropSupplyBox() {
 	}
 }
 
-
 int GameLoop::decideAmmoType() {
     std::random_device rd;
     std::mt19937 gen(rd());
@@ -136,52 +137,42 @@ int GameLoop::decideAmmoType() {
 
 
 int GameLoop::decideTypeOfSupplyBox() {
-   std::random_device rd;
-   std::mt19937 gen(rd());
+	std::random_device rd;
+	std::mt19937 gen(rd());
 
-   std::vector<float> weights = {
-       CONFIG.getSupplyBoxHealthProbability(),
-       CONFIG.getSupplyBoxAmmoProbability(),
-       CONFIG.getSupplyBoxTrapProbability()
-   };
+	std::vector<float> weights = {
+		CONFIG.getSupplyBoxHealthProbability(),
+		CONFIG.getSupplyBoxAmmoProbability(),
+		CONFIG.getSupplyBoxTrapProbability()
+	};
 
-   std::discrete_distribution<> distrib(weights.begin(), weights.end());
+	std::discrete_distribution<> distrib(weights.begin(), weights.end());
 
-   int randomIndex = distrib(gen);
+	int randomIndex = distrib(gen);
 	std::cout << "Tipo de supply: " << randomIndex << std::endl;
-   switch(randomIndex) {
-       case 0: return HEALTH_SUPPLY;
-       case 1: return decideAmmoType();
-       case 2: return TRAP_SUPPLY;
-       default: return HEALTH_SUPPLY; // por defecto, en caso de que no coincida con ninguno de los casos
-   }
+	switch(randomIndex) {
+		case 0: return HEALTH_SUPPLY;
+		case 1: return decideAmmoType();
+		case 2: return TRAP_SUPPLY;
+		default: return HEALTH_SUPPLY; // por defecto, en caso de que no coincida con ninguno de los casos
+	}
 }
 
 bool GameLoop::shouldDropBox() {
-   std::random_device rd;
-   std::mt19937 gen(rd());
+	std::random_device rd;
+	std::mt19937 gen(rd());
 
-   float probability = CONFIG.getSupplyBoxProbability();
+	float probability = CONFIG.getSupplyBoxProbability();
 
-   std::discrete_distribution<> distrib({1 - probability, probability});
+	std::discrete_distribution<> distrib({1 - probability, probability});
 
-   int randomIndex = distrib(gen);
+	int randomIndex = distrib(gen);
 
-   return randomIndex == 1;
+	return randomIndex == 1;
 }
 
 
 void GameLoop::changeWormPlaying(std::vector<WormDTO> worms) {
-	if(shouldDropBox()){
-		std::cout << "Tiro cajinha" << std::endl;
-		int type = decideTypeOfSupplyBox();
-		this->gameWorld.dropSupplyBox(type);
-	} else{
-		std::cout << "No tiro cajinha" << std::endl;
-	}
-	// std::cout << "cambiando turno! Tiro cajinha" << std::endl;
-	// this->gameWorld.dropSupplyBox(HEALTH_SUPPLY);
-	// std::cout << "termino la cajinha" << std::endl;
 	teamPlayingID = (teamPlayingID + 1) % teams.size();
 
 	for(size_t i = teamPlayingID; true ; i = (i + 1) % teams.size()){
