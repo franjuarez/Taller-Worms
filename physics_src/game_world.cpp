@@ -64,7 +64,7 @@ void GameWorld::createWorm(float startingX, float startingY, int id, int team, i
     body->CreateFixture(&fd);
 
     b2PolygonShape footSensorShape;
-    footSensorShape.SetAsBox(WORM_WIDTH/2 - 0.05f , WORM_HEIGHT/4, b2Vec2(0, -WORM_HEIGHT/2), 0);
+    footSensorShape.SetAsBox(WORM_WIDTH/2 - 0.01f , WORM_HEIGHT/4, b2Vec2(0, -WORM_HEIGHT/2), 0);
     b2FixtureDef footSensorFixture;
     footSensorFixture.shape = &footSensorShape;
     footSensorFixture.isSensor = true;
