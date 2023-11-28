@@ -10,6 +10,7 @@ ConfigLoader::ConfigLoader(const YAML::Node& node) :
     fps(node["game"]["FPS"].as<int>()),
     music_volume(node["game"]["music_volume"].as<int>()),
     turn_time(node["game"]["turn_time"].as<int>()),
+    extra_time(node["game"]["extra_time"].as<int>()),
     
     //frontend
     viewfield_x(node["camera"]["viewfield_x"].as<int>()),
@@ -164,6 +165,10 @@ int ConfigLoader::getMusicVolume() {
 
 int ConfigLoader::getTurnTime() {
     return turn_time;
+}
+
+int ConfigLoader::getExtraTime() {
+    return extra_time;
 }
 
 int ConfigLoader::getViewfieldX() {

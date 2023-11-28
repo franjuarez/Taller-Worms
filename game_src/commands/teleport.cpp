@@ -5,8 +5,11 @@
 Teleport::Teleport(int wormID, Position pos) : Command(wormID), wormID(wormID),
 pos(pos) {}
 
-bool Teleport::executeCommand(GameWorld& gameWorld, bool* cheatOn) {
+bool Teleport::executeCommand(GameWorld& gameWorld, bool* cheatOn, bool& needsMove) {
     *cheatOn = *cheatOn;
+    if (needsMove) {
+        return true;
+    }
     return gameWorld.teleportWorm(wormID, pos.getX(), pos.getY());
 }
 

@@ -3,8 +3,11 @@
 
 HitUpclose::HitUpclose(int wormID, int dir) : Command(wormID), wormID(wormID), dir(dir) {}
 
-bool HitUpclose::executeCommand(GameWorld& gameWorld, bool* cheatOn) {
+bool HitUpclose::executeCommand(GameWorld& gameWorld, bool* cheatOn, bool& needsMove) {
     *cheatOn = *cheatOn;
+    if (needsMove) {
+        return true;
+    }
     gameWorld.wormHitWithBat(wormID, dir);
     return true;
 }
