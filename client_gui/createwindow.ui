@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>952</width>
-    <height>454</height>
+    <height>594</height>
    </rect>
   </property>
   <property name="font">
@@ -28,117 +28,6 @@
    <string notr="true">border-image: url(:/resources/images/pantano.png)
 </string>
   </property>
-  <widget class="QPushButton" name="smallButton">
-   <property name="geometry">
-    <rect>
-     <x>36</x>
-     <y>190</y>
-     <width>145</width>
-     <height>129</height>
-    </rect>
-   </property>
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">border-image: url(:/resources/images/previews/small_preview.png) stretch stretch
-</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="subsueloButton">
-   <property name="geometry">
-    <rect>
-     <x>640</x>
-     <y>190</y>
-     <width>145</width>
-     <height>129</height>
-    </rect>
-   </property>
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">border-image: url(:/resources/images/previews/subsuelo_preview.png)</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="mediumButton">
-   <property name="geometry">
-    <rect>
-     <x>338</x>
-     <y>190</y>
-     <width>145</width>
-     <height>129</height>
-    </rect>
-   </property>
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">border-image: url(:/resources/images/previews/medium_preview.png)</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="dedustButton">
-   <property name="geometry">
-    <rect>
-     <x>489</x>
-     <y>190</y>
-     <width>145</width>
-     <height>129</height>
-    </rect>
-   </property>
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">border-image: url(:/resources/images/previews/dust2_preview.png)</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="testButton">
-   <property name="geometry">
-    <rect>
-     <x>187</x>
-     <y>190</y>
-     <width>145</width>
-     <height>129</height>
-    </rect>
-   </property>
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">border-image: url(:/resources/images/previews/test_preview.png)</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
@@ -167,6 +56,117 @@ background-image: transparent;</string>
    </property>
    <property name="text">
     <string>Choose Map:</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="dedustButton">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>330</y>
+     <width>165</width>
+     <height>179</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-image: url(:/resources/images/previews/dust2_preview.png)</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="mediumButton">
+   <property name="geometry">
+    <rect>
+     <x>553</x>
+     <y>330</y>
+     <width>165</width>
+     <height>179</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-image: url(:/resources/images/previews/medium_preview.png)</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="subsueloButton">
+   <property name="geometry">
+    <rect>
+     <x>724</x>
+     <y>330</y>
+     <width>165</width>
+     <height>179</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-image: url(:/resources/images/previews/subsuelo_preview.png)</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="smallButton">
+   <property name="geometry">
+    <rect>
+     <x>382</x>
+     <y>330</y>
+     <width>165</width>
+     <height>179</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-image: url(:/resources/images/previews/small_preview.png) stretch stretch
+</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="testButton">
+   <property name="geometry">
+    <rect>
+     <x>211</x>
+     <y>330</y>
+     <width>165</width>
+     <height>179</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-image: url(:/resources/images/previews/test_preview.png)</string>
+   </property>
+   <property name="text">
+    <string/>
    </property>
   </widget>
  </widget>

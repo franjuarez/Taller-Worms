@@ -20,18 +20,18 @@ QT_BEGIN_NAMESPACE
 class Ui_CreateWindow
 {
 public:
-    QPushButton *smallButton;
-    QPushButton *subsueloButton;
-    QPushButton *mediumButton;
-    QPushButton *dedustButton;
-    QPushButton *testButton;
     QLabel *label;
+    QPushButton *dedustButton;
+    QPushButton *mediumButton;
+    QPushButton *subsueloButton;
+    QPushButton *smallButton;
+    QPushButton *testButton;
 
     void setupUi(QDialog *CreateWindow)
     {
         if (CreateWindow->objectName().isEmpty())
             CreateWindow->setObjectName(QString::fromUtf8("CreateWindow"));
-        CreateWindow->resize(834, 350);
+        CreateWindow->resize(952, 594);
         QFont font;
         font.setFamily(QString::fromUtf8("DejaVu Serif"));
         font.setPointSize(20);
@@ -41,40 +41,6 @@ public:
         CreateWindow->setAutoFillBackground(false);
         CreateWindow->setStyleSheet(QString::fromUtf8("border-image: url(:/resources/images/pantano.png)\n"
 ""));
-        smallButton = new QPushButton(CreateWindow);
-        smallButton->setObjectName(QString::fromUtf8("smallButton"));
-        smallButton->setGeometry(QRect(36, 190, 145, 129));
-        QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-        sizePolicy.setHorizontalStretch(0);
-        sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(smallButton->sizePolicy().hasHeightForWidth());
-        smallButton->setSizePolicy(sizePolicy);
-        smallButton->setStyleSheet(QString::fromUtf8("border-image: url(:/resources/images/previews/small_preview.png) stretch stretch\n"
-""));
-        subsueloButton = new QPushButton(CreateWindow);
-        subsueloButton->setObjectName(QString::fromUtf8("subsueloButton"));
-        subsueloButton->setGeometry(QRect(640, 190, 145, 129));
-        sizePolicy.setHeightForWidth(subsueloButton->sizePolicy().hasHeightForWidth());
-        subsueloButton->setSizePolicy(sizePolicy);
-        subsueloButton->setStyleSheet(QString::fromUtf8("border-image: url(:/resources/images/previews/subsuelo_preview.png)"));
-        mediumButton = new QPushButton(CreateWindow);
-        mediumButton->setObjectName(QString::fromUtf8("mediumButton"));
-        mediumButton->setGeometry(QRect(338, 190, 145, 129));
-        sizePolicy.setHeightForWidth(mediumButton->sizePolicy().hasHeightForWidth());
-        mediumButton->setSizePolicy(sizePolicy);
-        mediumButton->setStyleSheet(QString::fromUtf8("border-image: url(:/resources/images/previews/medium_preview.png)"));
-        dedustButton = new QPushButton(CreateWindow);
-        dedustButton->setObjectName(QString::fromUtf8("dedustButton"));
-        dedustButton->setGeometry(QRect(489, 190, 145, 129));
-        sizePolicy.setHeightForWidth(dedustButton->sizePolicy().hasHeightForWidth());
-        dedustButton->setSizePolicy(sizePolicy);
-        dedustButton->setStyleSheet(QString::fromUtf8("border-image: url(:/resources/images/previews/dust2_preview.png)"));
-        testButton = new QPushButton(CreateWindow);
-        testButton->setObjectName(QString::fromUtf8("testButton"));
-        testButton->setGeometry(QRect(187, 190, 145, 129));
-        sizePolicy.setHeightForWidth(testButton->sizePolicy().hasHeightForWidth());
-        testButton->setSizePolicy(sizePolicy);
-        testButton->setStyleSheet(QString::fromUtf8("border-image: url(:/resources/images/previews/test_preview.png)"));
         label = new QLabel(CreateWindow);
         label->setObjectName(QString::fromUtf8("label"));
         label->setGeometry(QRect(20, 20, 181, 41));
@@ -89,6 +55,40 @@ public:
 "border-color: rgb(46, 52, 54);\n"
 "border-image: transparent;\n"
 "background-image: transparent;"));
+        dedustButton = new QPushButton(CreateWindow);
+        dedustButton->setObjectName(QString::fromUtf8("dedustButton"));
+        dedustButton->setGeometry(QRect(40, 330, 165, 179));
+        QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(dedustButton->sizePolicy().hasHeightForWidth());
+        dedustButton->setSizePolicy(sizePolicy);
+        dedustButton->setStyleSheet(QString::fromUtf8("border-image: url(:/resources/images/previews/dust2_preview.png)"));
+        mediumButton = new QPushButton(CreateWindow);
+        mediumButton->setObjectName(QString::fromUtf8("mediumButton"));
+        mediumButton->setGeometry(QRect(553, 330, 165, 179));
+        sizePolicy.setHeightForWidth(mediumButton->sizePolicy().hasHeightForWidth());
+        mediumButton->setSizePolicy(sizePolicy);
+        mediumButton->setStyleSheet(QString::fromUtf8("border-image: url(:/resources/images/previews/medium_preview.png)"));
+        subsueloButton = new QPushButton(CreateWindow);
+        subsueloButton->setObjectName(QString::fromUtf8("subsueloButton"));
+        subsueloButton->setGeometry(QRect(724, 330, 165, 179));
+        sizePolicy.setHeightForWidth(subsueloButton->sizePolicy().hasHeightForWidth());
+        subsueloButton->setSizePolicy(sizePolicy);
+        subsueloButton->setStyleSheet(QString::fromUtf8("border-image: url(:/resources/images/previews/subsuelo_preview.png)"));
+        smallButton = new QPushButton(CreateWindow);
+        smallButton->setObjectName(QString::fromUtf8("smallButton"));
+        smallButton->setGeometry(QRect(382, 330, 165, 179));
+        sizePolicy.setHeightForWidth(smallButton->sizePolicy().hasHeightForWidth());
+        smallButton->setSizePolicy(sizePolicy);
+        smallButton->setStyleSheet(QString::fromUtf8("border-image: url(:/resources/images/previews/small_preview.png) stretch stretch\n"
+""));
+        testButton = new QPushButton(CreateWindow);
+        testButton->setObjectName(QString::fromUtf8("testButton"));
+        testButton->setGeometry(QRect(211, 330, 165, 179));
+        sizePolicy.setHeightForWidth(testButton->sizePolicy().hasHeightForWidth());
+        testButton->setSizePolicy(sizePolicy);
+        testButton->setStyleSheet(QString::fromUtf8("border-image: url(:/resources/images/previews/test_preview.png)"));
 
         retranslateUi(CreateWindow);
 
@@ -98,12 +98,12 @@ public:
     void retranslateUi(QDialog *CreateWindow)
     {
         CreateWindow->setWindowTitle(QCoreApplication::translate("CreateWindow", "Dialog", nullptr));
-        smallButton->setText(QString());
-        subsueloButton->setText(QString());
-        mediumButton->setText(QString());
-        dedustButton->setText(QString());
-        testButton->setText(QString());
         label->setText(QCoreApplication::translate("CreateWindow", "Choose Map:", nullptr));
+        dedustButton->setText(QString());
+        mediumButton->setText(QString());
+        subsueloButton->setText(QString());
+        smallButton->setText(QString());
+        testButton->setText(QString());
     } // retranslateUi
 
 };
