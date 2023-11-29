@@ -6,12 +6,10 @@ project("Worms")
 #poner o sacar esta linea dependiendo de si estas en la compu de joaco o en una con qt-dev actualizado
 set(CMAKE_PREFIX_PATH "~/Qt/5.15.15/gcc_64")
 
+add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/thirdParty/Catch2")
+include(CTest)
+include(Catch)
 
-set(TESTING OFF CACHE BOOL "Enable testing mode")
-
-if(TESTING)
-    add_definitions(-DTESTING)
-endif()
 
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
@@ -123,3 +121,10 @@ target_link_libraries(client PUBLIC SharedUi)
 target_link_libraries(client PRIVATE yaml-cpp)
 target_compile_options(client PRIVATE $<$<NOT:$<C_COMPILER_ID:MSVC>>:-Wall -Wextra -pedantic -ggdb -DDEBUG -pedantic-errors>)
 
+file(GLOB TEST_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cpp")
+add_executable(tests ${TEST_SOURCES})
+target_link_libraries(tests PRIVATE Catch2::Catch2WithMain)
+target_link_libraries(tests PUBLIC SharedLib)
+target_link_libraries(tests PUBLIC SharedGameLib)
+
+catch_discover_tests(tests)
