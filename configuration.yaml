@@ -116,7 +116,7 @@ teleport:
   max_ammo: -1
 
 supply_box:
-  probability: 0.3 # Has to be between 0 and 1
+  probability: 1.0 # Has to be between 0 and 1
   # The sum of the 3 probabilities must be 1
   probability_health: 0.4
   probability_ammo: 0.4
