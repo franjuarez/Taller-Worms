@@ -21,7 +21,7 @@ WormDTO Worm::getDTO(){
     Position pos(body->GetPosition().x, body->GetPosition().y);
     float velX = body->GetLinearVelocity().x;
     float velY = body->GetLinearVelocity().y;
-    int onGround = this->onGrounds > 0;
+    int onGround = this->groundsTouching > 0;
     WormDTO dto(id, direction, team, health, velX, velY, onGround, pos, weapons);
     return dto;
 }
@@ -103,7 +103,7 @@ void Worm::getAllWeapons(){
 }
 
 void Worm::move(int direction){
-    if(this->onGrounds < 1){
+    if(!this->onGround){
         return;
     }
     
@@ -120,7 +120,7 @@ void Worm::move(int direction){
 }
 
 void Worm::jump(float maxHeight, float distance){
-    if(this->onGrounds < 1|| this->currentAction == JUMPING){
+    if(!this->onGround|| this->currentAction == JUMPING){
         return;
     }
     this->currentAction = JUMPING;
@@ -177,7 +177,6 @@ void Worm::hitWithBat(int direction){
         if(hitBody == this->body){
             continue;
         }
-        std::cout << "Hit body type: " << hitBody->GetType() << std::endl;
         Worm* worm = (Worm*) hitBody->GetUserData().pointer;
         b2Vec2 direction = hitBody->GetPosition() - pos;
         direction.Normalize();
@@ -228,17 +227,19 @@ void Worm::moveOnWalkableBeam(b2Body* worm, b2Vec2 normal){
 void Worm::beginCollisionWithBeam(Entity* otherBody, b2Contact* contact) {
     UNUSED(contact);
     if(contact->GetFixtureA() == this->footSensor || contact->GetFixtureB() == this->footSensor){
-        this->onGrounds += 1;
-        std::cout << "Sumo On grounds: " << this->onGrounds << std::endl;
+        this->groundsTouching += 1;
         applyFallDamage(this->body->GetLinearVelocity());
         return;
+    }
+    if(this->groundsTouching > 0){
+        this->onGround = true;
     }
 
     Beam* beam = (Beam*) otherBody;
 
     if(beam->isWalkable()){
         b2Vec2 normal = contact->GetManifold()->localNormal;
-        if(this->onGrounds < 1){
+        if(!this->onGround){
             this->body->SetLinearDamping(0.0f);
             return;
         }
@@ -255,7 +256,7 @@ void Worm::preSolveCollisionWithBeam(Entity* otherBody, b2Contact* contact, cons
     }
     Beam* beam = (Beam*) otherBody;
     if(beam->isWalkable()){
-        if(this->onGrounds < 1){
+        if(!this->onGround){
             return;
         }
         if(this->currentAction == STANDING){
@@ -281,7 +282,7 @@ void Worm::postSolveCollisionWithBeam(Entity* otherBody, b2Contact* contact, con
     UNUSED(contact);
     Beam* beam = (Beam*) otherBody;
     if(beam->isWalkable()){
-        if(this->onGrounds < 1){
+        if(!this->onGround){
             return;
         }
         this->body->SetLinearDamping(INFINITE_DAMPING);
@@ -295,8 +296,10 @@ void Worm::postSolveCollisionWithBeam(Entity* otherBody, b2Contact* contact, con
 
 void Worm::endCollisionWithBeam(Entity* otherBody, b2Contact* contact) {
     if(contact->GetFixtureA() == this->footSensor || contact->GetFixtureB() == this->footSensor){
-        this->onGrounds -= 1;
-        std::cout << "Resto, On grounds: " << this->onGrounds << std::endl;
+        this->groundsTouching -= 1;
+    }
+    if(this->groundsTouching <= 0){
+        this->onGround = false;
 
     }
     this->body->SetLinearDamping(STANDARD_DAMPING);
