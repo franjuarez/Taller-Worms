@@ -21,7 +21,7 @@ class Worm : public Entity {
     float health;
     int direction;
     b2Fixture* footSensor;
-    bool onGround = false;
+    int onGrounds = 0;
     action currentAction;
     std::vector<int> weapons;
     int max_ammo_per_weapon[AMOUNT_OF_WEAPONS];

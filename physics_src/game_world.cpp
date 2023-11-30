@@ -1,6 +1,7 @@
 #include "game_world.h"
 
 #define WORM_GROUP_INDEX -1
+#define IMPOSSIBLE_POSITION Position(-999, -999)
 
 GameWorld::GameWorld(std::shared_ptr<GameMap> gameMap) {
     this->world = new b2World(b2Vec2(CONFIG.getWorldGravityX(), CONFIG.getWorldGravityY()));
@@ -334,11 +335,14 @@ Position GameWorld::calculateValidSupplyBoxPosition(){
         }
         attempts++;
     }
-    throw std::runtime_error("Could not find valid position for supply box");
+    return IMPOSSIBLE_POSITION;
 }
 
 void GameWorld::dropSupplyBox(int type){
     Position pos = calculateValidSupplyBoxPosition();
+    if(pos.getX() == IMPOSSIBLE_POSITION.getX() && pos.getY() == IMPOSSIBLE_POSITION.getY()){
+        return;
+    }
     b2BodyDef bd;
     bd.type = b2_dynamicBody;
     bd.position.Set(pos.getX(), pos.getY());
