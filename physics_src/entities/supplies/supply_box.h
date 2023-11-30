@@ -22,6 +22,8 @@ protected:
     void beginCollisionWithWater(Entity* otherBody, b2Contact* contact) override;
     void beginCollisionWithProjectile(Entity* otherBody, b2Contact* contact) override;
 
+    void handleExplosion();
+
     ~SupplyBox();
 };
 

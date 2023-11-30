@@ -58,6 +58,7 @@ b2Vec2 calculatVelocityOfProjectile(float maxSpeed, float angle, float direction
 
 #define DEGTORAD 0.0174532925199432957f
 #include <iostream>
+#include "../entities/supplies/supply_box.h"
 
 void explosiveExplode(b2Body* projectile, float explosiveDamage, float explosiveRadius){
     b2Vec2 projectilePos = projectile->GetPosition();
@@ -74,13 +75,21 @@ void explosiveExplode(b2Body* projectile, float explosiveDamage, float explosive
             if(allFoundBodies.find(body) != allFoundBodies.end()){
                 continue;
             }
-            //Assuming it just affects worms
-            Worm* worm = (Worm*) body->GetUserData().pointer;
-            b2Vec2 bodyPos = body->GetPosition();
-            float distance = b2Distance(projectilePos, bodyPos);
-            float damage = explosiveDamage * (1 - distance / explosiveRadius);
-            worm->handleExplosion(damage, projectilePos);
-            allFoundBodies.insert(body);
+            Entity* type = (Entity*) body->GetUserData().pointer;
+            if(type->getEntityType() == EntitySupplyBox){
+                SupplyBox* supplyBox = (SupplyBox*) body->GetUserData().pointer;
+                allFoundBodies.insert(body);
+                supplyBox->handleExplosion();
+                continue;
+            }
+            if(type->getEntityType() != EntityWorm){
+                Worm* worm = (Worm*) body->GetUserData().pointer;
+                b2Vec2 bodyPos = body->GetPosition();
+                float distance = b2Distance(projectilePos, bodyPos);
+                float damage = explosiveDamage * (1 - distance / explosiveRadius);
+                worm->handleExplosion(damage, projectilePos);
+                allFoundBodies.insert(body);
+            }
         }
     }
 }

@@ -17,6 +17,10 @@ SupplyBoxDTO SupplyBox::getDTO() {
     return dto;
 }
 
+void SupplyBox::handleExplosion() {
+    this->entitiesToRemove.insert(this->body);
+}
+
 void SupplyBox::beginCollisionWithBeam(Entity* otherBody, b2Contact* contact) {
     Beam* beam = (Beam*) otherBody;
     if(beam->isWalkable()) {
