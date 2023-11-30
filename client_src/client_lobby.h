@@ -18,11 +18,13 @@ public:
 
     void showMatches();
 
-    void createNewMatch(int nrPlayers, std::string matchName, std::string mapName);
+    int createNewMatch(int nrPlayers, std::string matchName, std::string mapName);
 
-    void joinMatch(std::string matchName);
+    int joinMatch(std::string matchName);
 
     void refresh();
+
+    void startGame();
 
     std::map<std::string, std::string> getAvailableMatches();
 

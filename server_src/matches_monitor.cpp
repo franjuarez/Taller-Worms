@@ -28,15 +28,16 @@ std::map<std::string, std::string> MatchesMonitor::showMatchesAvailable() {
     return availableMatches;
 }
 
-void MatchesMonitor::changeMatchStatusToPlaying(std::string matchName) {
-    std::map<std::string, std::string> availableMatches;
-    matches[matchName]->status = MATCH_IN_GAME_LOOP;
-}
 
-void MatchesMonitor::sendInfoStruct(std::string matchName, std::shared_ptr<InfoStruct> infoStruct) {
+int MatchesMonitor::joinMatch(std::string matchName, std::shared_ptr<InfoStruct> infoStruct) {
     std::lock_guard<std::mutex> lock(m);
+    if (matches[matchName]->status == MATCH_IN_GAME_LOOP) {
+        return ERROR;
+    }
+
     std::shared_ptr<Queue<std::shared_ptr<InfoStruct>>> infoQueueMatch = matches[matchName]->infoQueue;
     infoQueueMatch->push(infoStruct);
+    return OK;
 }
 
 void MatchesMonitor::closeMatches() {
@@ -48,4 +49,9 @@ void MatchesMonitor::closeMatches() {
     }
     matches.clear();
     std::cout << "Matches cerrados" << std::endl;
+}
+
+bool MatchesMonitor::nameDoesntExists(std::string matchName) {
+    auto name = matches.find(matchName);
+    return name == matches.end();
 }

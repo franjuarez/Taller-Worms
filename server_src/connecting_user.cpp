@@ -39,6 +39,10 @@ void ConnectingUser::run() {
 
 void ConnectingUser::createNewMatch(int numberPlayers, std::string matchName, std::string mapName) {
 
+    if (!matchesMonitor.nameDoesntExists(matchName)) {
+        infoStruct->prot.sendAllOk(ERROR);
+        return;
+    }
 
     MapsLoader mapsLoader(CONFIG.getMapsFile());
     std::vector<std::string> mapNames = mapsLoader.getMapsNames();
@@ -56,13 +60,21 @@ void ConnectingUser::createNewMatch(int numberPlayers, std::string matchName, st
 
     matchesMonitor.addMatchStruct(matchName, matchStruct);
     this->status = INACTIVE;
+    infoStruct->prot.sendAllOk(OK);
 }
 
 
 void ConnectingUser::joinMatch(std::string matchName) {
-    matchesMonitor.sendInfoStruct(matchName, infoStruct);
+
+    // checkear que tenga espacio: si no existe manda 1 y si existe manda 0
+    int code = matchesMonitor.joinMatch(matchName, infoStruct);
+    infoStruct->prot.sendAllOk(code);
+    if (code == ERROR) {
+        return;
+    }
     this->status = INACTIVE;
 }
+
 
 
 void ConnectingUser::refresh() {

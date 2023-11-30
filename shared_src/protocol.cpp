@@ -28,6 +28,17 @@ skt(hostname.c_str(), servname.c_str()) {}
 
 // Protocol::Protocol(const Protocol& protocol) : skt(protocol.getSocket()) {}
 
+void Protocol::sendAllOk(int okCode) {
+    checkClosed();
+    sendUintEight(SEND_ALL_OK);
+    sendUintEight(okCode);
+}
+
+int Protocol::receiveAllOk() {
+    checkClosed();
+    uint8_t protocolCode = receiveUintEight();
+    return receiveUintEight();
+}
 
 void Protocol::sendMap(GameMap* gameMap) {
     checkClosed();

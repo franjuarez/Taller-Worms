@@ -20,9 +20,6 @@ int main(int argc, char** argv) {
 
 		cl.run();
 
-		// GameView gv(infoStruct);
-		// gv.start();
-		// gv.join();
 	} catch (const std::exception& e) {
 		std::cerr << e.what() << std::endl;
 		return ERROR;

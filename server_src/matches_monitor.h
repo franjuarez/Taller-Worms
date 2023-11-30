@@ -21,11 +21,11 @@ public:
 
     std::map<std::string, std::string> showMatchesAvailable(); 
 
-    void changeMatchStatusToPlaying(std::string matchName);
-
-    void sendInfoStruct(std::string matchName, std::shared_ptr<InfoStruct> infoStruct);
+    int joinMatch(std::string matchName, std::shared_ptr<InfoStruct> infoStruct);
 
     void closeMatches();
+
+    bool nameDoesntExists(std::string matchName);
 
     ~MatchesMonitor();
 

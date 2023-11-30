@@ -30,12 +30,26 @@ void ClientLobby::run() {
             std::cin >> matchName;
             std::cin >>mapName;
 
-            createNewMatch(numberPlayers, matchName, mapName);
+            int result = createNewMatch(numberPlayers, matchName, mapName);
+
+            std::cout << result << std::endl;
+
+            if (result == ERROR) {
+                continue;
+            }
+            startGame();
             return;
 
         } else if (userInput == JM) {
             std::cin >> matchName;
-            joinMatch(matchName);
+            int result = joinMatch(matchName);
+
+            std::cout << result << std::endl;
+
+            if (result == ERROR) {
+                continue;
+            }
+            startGame();
             return;
         } else if (userInput == R) {
             refresh();
@@ -47,25 +61,18 @@ void ClientLobby::run() {
 }
 
 
-void ClientLobby::createNewMatch( int nrPlayers, std::string matchName, std::string mapName) {
+int ClientLobby::createNewMatch( int nrPlayers, std::string matchName, std::string mapName) {
     MatchCommand* mc = new MatchCommand(NEW_MATCH, nrPlayers, matchName, mapName);
     mc->send(infoStruct->prot);
-
-
-    GameView gv(infoStruct);
-    gv.start();
-    gv.join();
+    return infoStruct->prot.receiveAllOk();
 }
 
-void ClientLobby::joinMatch(std::string matchName) {
+int ClientLobby::joinMatch(std::string matchName) {
     int numberPlayers = 0;
     std::string mapName = "";
     MatchCommand* mc = new MatchCommand(JOIN, numberPlayers, matchName, mapName);
     mc->send(infoStruct->prot);
-
-    GameView gv(infoStruct);
-    gv.start();
-    gv.join();
+    return infoStruct->prot.receiveAllOk();
 }
 
 void ClientLobby::refresh() {
@@ -74,6 +81,12 @@ void ClientLobby::refresh() {
     std::string matchName = "";
     MatchCommand* mc = new MatchCommand(REFRESH, numberPlayers, matchName, mapName);
     mc->send(infoStruct->prot);
+}
+
+void ClientLobby::startGame() {
+    GameView gv(infoStruct);
+    gv.start();
+    gv.join();
 }
 
 
