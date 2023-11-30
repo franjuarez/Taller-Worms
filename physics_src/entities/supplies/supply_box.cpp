@@ -11,8 +11,10 @@ int SupplyBox::getSupplyType() {
     return this->supplyType;
 }
 
+#include <iostream>
+
 SupplyBoxDTO SupplyBox::getDTO() {
-    bool falling = true;
+    bool falling = this->body->GetLinearVelocity().Length() != 0;
     SupplyBoxDTO dto(this->id, this->supplyType, falling, Position(this->body->GetPosition().x, this->body->GetPosition().y));
     return dto;
 }
