@@ -12,7 +12,8 @@ int SupplyBox::getSupplyType() {
 }
 
 SupplyBoxDTO SupplyBox::getDTO() {
-    SupplyBoxDTO dto(this->id, this->supplyType, Position(this->body->GetPosition().x, this->body->GetPosition().y));
+    bool falling = true;
+    SupplyBoxDTO dto(this->id, this->supplyType, falling, Position(this->body->GetPosition().x, this->body->GetPosition().y));
     return dto;
 }
 

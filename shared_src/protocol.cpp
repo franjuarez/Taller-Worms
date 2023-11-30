@@ -328,6 +328,7 @@ void Protocol::sendSupplyBox(std::unordered_map<int, SupplyBoxDTO> supplyBoxes) 
     for (auto& supplyBox : supplyBoxes) {
         sendUintEight(supplyBox.first);
         sendUintEight(supplyBox.second.getContent());
+        sendUintEight(supplyBox.second.isFalling());
         sendPosition(Position(supplyBox.second.getX(), supplyBox.second.getY()));
     }
 }
@@ -339,8 +340,9 @@ std::unordered_map<int, SupplyBoxDTO> Protocol::receiveSupplyBox() {
     for (int i = 0; i < supplyBoxSize; i++) {
         int id = receiveUintEight();
         int content = receiveUintEight();
+        int falling = receiveUintEight();
         Position pos = receivePosition();
-        supplyBoxes.emplace(id, SupplyBoxDTO(id, content, pos));
+        supplyBoxes.emplace(id, SupplyBoxDTO(id, content, falling, pos));
     }
     return supplyBoxes;
 }
