@@ -134,7 +134,7 @@ void GameWorld::checkWormExists(int id){
     }
 }
 
-b2Body* GameWorld::createProjectile(b2Body* worm, int weaponId, int direction, float width, float height, float restitution = 0.0f){
+b2Body* GameWorld::createProjectile(b2Body* worm, int weaponId, int direction, float width, float height, float restitution = 0.3f){
     b2BodyDef bd;
     bd.type = b2_dynamicBody;
     float deltaX = (direction == LEFT) ? - WORM_WIDTH/2 - width/2 - 0.05f : WORM_WIDTH/2 + width/2 + 0.05f;
