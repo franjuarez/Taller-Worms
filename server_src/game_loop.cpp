@@ -227,9 +227,11 @@ void GameLoop::changeWormPlaying(std::vector<WormDTO> worms) {
 
 int GameLoop::updateWinningStatus() {
 	int teamsWithWorms = 0;
+	int teamWinning = -1;
 	for (size_t i = 0; i < teams.size(); i++) {
 		if (teams[i].hasWorms()) {
 			teamsWithWorms++;
+			teamWinning = i;
 		}
 	}
 
@@ -245,7 +247,7 @@ int GameLoop::updateWinningStatus() {
 		return PLAYING;
 	} else if (teamsWithWorms == 1) {
 		gameOver = true;
-		return teamPlayingID;
+		return teamWinning;
 	}
 	gameOver = true;
 	return ALL_LOST;
