@@ -8,13 +8,15 @@ class SupplyBoxDTO {
 private:
     int id;
     int content;
+    int falling;
     Position pos;
 public:
-    SupplyBoxDTO(int id, int content, Position pos);
+    SupplyBoxDTO(int id, int content, int falling, Position pos);
     float getX();
     float getY();
     int getContent();
     int getID();
+    int isFalling();
     ~SupplyBoxDTO();
 };
 #endif
