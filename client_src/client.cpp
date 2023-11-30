@@ -2,9 +2,11 @@
 
 #include <iostream>
 
+#define MAX_CAP_QUEUE 9000
+
 Client::Client(std::shared_ptr<InfoStruct> infoStruct) : infoStruct(infoStruct)
-, gameStatusQueue(900)
-, commandsQueue(900)
+, gameStatusQueue(MAX_CAP_QUEUE)
+, commandsQueue(MAX_CAP_QUEUE)
 , sender(infoStruct->prot, std::ref(commandsQueue), keepTalking)
 , receiver(infoStruct->prot, std::ref(gameStatusQueue), keepTalking) {
     lastGameStatus = NULL;
