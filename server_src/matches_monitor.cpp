@@ -11,11 +11,20 @@ MatchesMonitor::~MatchesMonitor() {
     }
 }
 
-void MatchesMonitor::addMatchStruct(std::string matchName, std::shared_ptr<MatchesStruct> matchStruct ) {
+int MatchesMonitor::addMatchStruct(std::string matchName, std::shared_ptr<MatchesStruct> matchStruct ) {
     std::lock_guard<std::mutex> lock(m);
+    auto name = matches.find(matchName);
+    if (name != matches.end()) {
+        return ERROR;
+    }
     matches[matchName] = matchStruct;
-    matchStruct->matchStarter->start();
+    return OK;
 }
+
+void MatchesMonitor::startMatch(std::string matchName) {
+    matches[matchName]->matchStarter->start();
+}
+
 
 std::map<std::string, std::string> MatchesMonitor::showMatchesAvailable() {
     std::map<std::string, std::string> availableMatches;
@@ -49,9 +58,4 @@ void MatchesMonitor::closeMatches() {
     }
     matches.clear();
     std::cout << "Matches cerrados" << std::endl;
-}
-
-bool MatchesMonitor::nameDoesntExists(std::string matchName) {
-    auto name = matches.find(matchName);
-    return name == matches.end();
 }

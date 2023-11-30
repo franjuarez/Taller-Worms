@@ -31,9 +31,6 @@ void ClientLobby::run() {
             std::cin >>mapName;
 
             int result = createNewMatch(numberPlayers, matchName, mapName);
-
-            std::cout << result << std::endl;
-
             if (result == ERROR) {
                 continue;
             }
@@ -43,9 +40,6 @@ void ClientLobby::run() {
         } else if (userInput == JM) {
             std::cin >> matchName;
             int result = joinMatch(matchName);
-
-            std::cout << result << std::endl;
-
             if (result == ERROR) {
                 continue;
             }

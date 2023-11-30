@@ -17,7 +17,7 @@ private:
 public: 
     MatchesMonitor();
 
-    void addMatchStruct(std::string matchName, std::shared_ptr<MatchesStruct> matchStruct );
+    int addMatchStruct(std::string matchName, std::shared_ptr<MatchesStruct> matchStruct );
 
     std::map<std::string, std::string> showMatchesAvailable(); 
 
@@ -25,7 +25,7 @@ public:
 
     void closeMatches();
 
-    bool nameDoesntExists(std::string matchName);
+    void startMatch(std::string matchName);
 
     ~MatchesMonitor();
 

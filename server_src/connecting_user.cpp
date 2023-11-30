@@ -39,11 +39,6 @@ void ConnectingUser::run() {
 
 void ConnectingUser::createNewMatch(int numberPlayers, std::string matchName, std::string mapName) {
 
-    if (!matchesMonitor.nameDoesntExists(matchName)) {
-        infoStruct->prot.sendAllOk(ERROR);
-        return;
-    }
-
     MapsLoader mapsLoader(CONFIG.getMapsFile());
     std::vector<std::string> mapNames = mapsLoader.getMapsNames();
     Map map = mapsLoader.loadMap(mapName);
@@ -58,9 +53,13 @@ void ConnectingUser::createNewMatch(int numberPlayers, std::string matchName, st
     std::shared_ptr<GameMap> gameMap = std::make_shared<GameMap>(GameMap(0, numberPlayers, mapName, beams, worms));
     std::shared_ptr<MatchesStruct> matchStruct = std::make_shared<MatchesStruct>(teams, matchName, gameMap, playing, infoQueue);
 
-    matchesMonitor.addMatchStruct(matchName, matchStruct);
+    int code = matchesMonitor.addMatchStruct(matchName, matchStruct);
+    infoStruct->prot.sendAllOk(code);
+    if (code == ERROR) {
+        return;
+    }
+    matchesMonitor.startMatch(matchName);    
     this->status = INACTIVE;
-    infoStruct->prot.sendAllOk(OK);
 }
 
 
