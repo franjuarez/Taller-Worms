@@ -12,7 +12,6 @@ class Beam : public Entity {
     Beam(b2Body* body, std::unordered_set<b2Body*>& entitiesToRemove, bool isWalkable);
 
     bool isWalkable();
-    float getAngle();
     
     virtual void beginCollisionWithWater(Entity* otherBody, b2Contact* contact);
     virtual void beginCollisionWithWorm(Entity* otherBody, b2Contact* contact);

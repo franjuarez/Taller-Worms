@@ -22,6 +22,8 @@ void SupplyBox::beginCollisionWithBeam(Entity* otherBody, b2Contact* contact) {
     if(beam->isWalkable()) {
         this->body->SetLinearVelocity(b2Vec2(0, 0));
         this->body->SetGravityScale(0);
+    } else{
+        this->body->SetGravityScale(0.5);
     }
 }
 

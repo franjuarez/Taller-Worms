@@ -2,11 +2,12 @@
 #define SUPPLY_CALLBACK_H
 
 #include <vector>
-#include "../entities/entity.h"
+#include "../entities/beam.h"
 
 class SupplyQueryCallback : public b2RayCastCallback {
 public:
     EntityType lastIntersectedType;
+    Beam *beam;
 
     SupplyQueryCallback();
 

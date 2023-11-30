@@ -317,20 +317,20 @@ bool GameWorld::teleportWorm(int id, float x, float y){
 Position GameWorld::calculateValidSupplyBoxPosition(){
     int maxAttempts = 100;
     int attempts = 0;
-    float y = WORLD_HEIGHT/2;
     while(attempts < maxAttempts){
         float x = rand() % (int) (WORLD_WIDTH - SUPPLY_BOX_WIDTH/2);
-        //raycast to see if there is something below
-        b2Vec2 rayEnd = b2Vec2(x, 0);
         bool foundBeam = true;
         SupplyQueryCallback callback;
-        this->world->RayCast(&callback, b2Vec2(x, y), rayEnd);
+        this->world->RayCast(&callback, b2Vec2(x, WORLD_HEIGHT), b2Vec2(x, 0));
         foundBeam &= callback.lastIntersectedType == EntityBeam;
-        this->world->RayCast(&callback, b2Vec2(x + SUPPLY_BOX_WIDTH, y), rayEnd);
+        this->world->RayCast(&callback, b2Vec2(x + SUPPLY_BOX_WIDTH/2, WORLD_HEIGHT), b2Vec2(x+ SUPPLY_BOX_WIDTH/2, 0));
         foundBeam &= callback.lastIntersectedType == EntityBeam;
-        this->world->RayCast(&callback, b2Vec2(x - SUPPLY_BOX_WIDTH, y), rayEnd);
+        this->world->RayCast(&callback, b2Vec2(x - SUPPLY_BOX_WIDTH/2, WORLD_HEIGHT), b2Vec2(x - SUPPLY_BOX_WIDTH/2, 0));
         foundBeam &= callback.lastIntersectedType == EntityBeam;
         if(foundBeam){
+            b2Vec2 beamPos = callback.beam->body->GetPosition();
+            float posYFactor = callback.beam->isWalkable() ? 2 : 3;
+            float y = beamPos.y * posYFactor;
             return Position(x, y);
         }
         attempts++;
@@ -353,8 +353,8 @@ void GameWorld::dropSupplyBox(int type){
     fd.shape = &shape;
     fd.density = 1.0f;
     body->CreateFixture(&fd);
-    body->SetGravityScale(0.1f);//So it falls slower
-    body->SetLinearVelocity(b2Vec2(0, -0.01f)); //So it starts falling with velocity
+    body->SetGravityScale(0.0f);//So it falls slower
+    body->SetLinearVelocity(b2Vec2(0, -2.5f)); //So it starts falling with velocity
 
     if(type == TRAP_SUPPLY){
         TrapSupplyBox* supplyBoxEntity = new TrapSupplyBox(body, entitiesToRemove, this->lastBoxId, type);
