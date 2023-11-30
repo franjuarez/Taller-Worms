@@ -9,8 +9,8 @@
 #include "../game_src/game_map.h"
 #include "../game_src/serializable.h"
 
-Socket mockServerS("1234");
-Protocol mockClient("localhost", "1234");
+Socket mockServerS("1233");
+Protocol mockClient("localhost", "1233");
 Socket peer = mockServerS.accept();
 Protocol mockServer(std::move(peer));
 
@@ -136,6 +136,4 @@ TEST_CASE("The amunition sent and received in WormsDTO", "[info]") {
             }
         }
     }
-
-
 }

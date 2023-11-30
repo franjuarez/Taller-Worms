@@ -28,7 +28,6 @@ private:
     std::vector<uint32_t> teamsHealth;
 
 public: 
-    //martu no me mates por esta linea 
     GameDynamic();
     GameDynamic(int wormPlayingID, std::vector<WormDTO>worms, std::unordered_map<int, ExplosivesDTO> explosives, std::unordered_map<int, SupplyBoxDTO> supplyBox);
     GameDynamic(int wormPlayingID, int status, int winnerTeam, std::vector<WormDTO>worms, std::unordered_map<int, ExplosivesDTO> explosives, std::unordered_map<int, SupplyBoxDTO> supplyBox, std::vector<uint32_t> teamsHealth);
