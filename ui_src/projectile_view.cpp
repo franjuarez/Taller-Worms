@@ -7,13 +7,6 @@ rocket(rocket), projectileSpriteSheets(projectileSpriteSheet), frames{8} {
 	startingPoint = 0;
 
 
-	//if (rocket.getType() == BAZOOKA) {
-	//	currentFramesIndex = defaultFramesIndex = ROCKET_FRAMES;
-	//} else if (rocket.getType() == RED_GRENADE) {
-	//	currentFramesIndex = defaultFramesIndex = RED_GRENADE_FRAMES;
-	//} else {
-	//	currentFramesIndex = defaultFramesIndex = RED_GRENADE_FRAMES;
-	//}
 	switch(rocket.getType()) {
 	case BAZOOKA:
 		currentFramesIndex = defaultFramesIndex = ROCKET_FRAMES;
