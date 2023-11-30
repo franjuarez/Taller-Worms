@@ -88,6 +88,9 @@
 #define MORTAR_PROJECTILE_PATH BASE_PATH + "images/morter_projectile.bmp"
 #define PERDIGON_PROJECTILE_PATH BASE_PATH + "images/perdigon.bmp"
 
+#define FALLING_BOX_PATH BASE_PATH + "images/boxSprites/falling_box.bmp"
+#define GLOWING_BOX_PATH BASE_PATH + "images/boxSprites/glowing_box.bmp"
+
 GameView::GameView(std::shared_ptr<InfoStruct> infoStruct) :
 		client(infoStruct),
 		sdl(SDL_INIT_VIDEO | SDL_INIT_AUDIO),
@@ -135,6 +138,11 @@ GameView::GameView(std::shared_ptr<InfoStruct> infoStruct) :
 	rocketSprites.push_back(Texture(renderer, Surface(MORTAR_PROJECTILE_PATH).SetColorKey(true,0)));
 	rocketSprites.push_back(Texture(renderer, Surface(GGRENADE_ICON_PATH).SetColorKey(true,0)));
 	rocketSprites.push_back(Texture(renderer, Surface(PERDIGON_PROJECTILE_PATH).SetColorKey(true,0)));
+
+
+	boxSprites.push_back(Texture(renderer, Surface(FALLING_BOX_PATH).SetColorKey(true,0)));
+	boxSprites.push_back(Texture(renderer, Surface(GLOWING_BOX_PATH).SetColorKey(true,0)));
+	boxSprites.push_back(Texture(renderer, Surface(GLOWING_BOX_PATH).SetColorKey(true,0)));//para cuando no muestra
 
 	//para los gusanos. EXTRAER A SU PROPIA CLASE
 	dynamicSpriteSheets.push_back(Texture(renderer,Surface(STILL_WORM_PATH).SetColorKey(true, 0)));
@@ -285,7 +293,7 @@ void GameView::updateEntities(int i) {
 		winnerTeam = -3;
 
 	/*
-	aca deberia por cada cohete recibido, verificar si esta en mis cohetes, si esta
+	aca deberia por cada box/cohete recibido, verificar si esta en mis cohetes, si esta
 	no hago nada porque ya voy a actualizar en draw, si no esta lo agrego asi empiezo
 	a dibujarlo, no tengo que preocuparme por los que se sacaron esto tambien lo miro
 	a medida que actualizo
@@ -300,6 +308,16 @@ void GameView::updateEntities(int i) {
 			ProjectileView(it->second, rocketSprites)
 		);
 
+	}
+
+	this->recievedBoxes = currentGameStatus.getSupplyBox();
+	for (auto it = recievedBoxes.begin(); it != recievedBoxes.end(); it++) {
+		if (boxViews.find(it->first) != boxViews.end())
+			continue;
+		boxViews.emplace(
+			it->second.getID(),
+			SupplyBoxView(it->second, boxSprites)
+		);
 	}
 
 	
@@ -334,12 +352,24 @@ void GameView::drawProjectiles(int i) {
 		it->second.display(i, renderer, camX, camY);
 	}
 
-	std::unordered_map<int, SupplyBoxDTO> boxes = currentGameStatus.getSupplyBox();
-	for (auto it = boxes.begin(); it != boxes.end(); it++) {
-		int x = it->second.getX() * m_to_pix_x - camX;
-		int y = it->second.getY() * m_to_pix_y + WINDOW_HEIGHT - camY;
-		renderer.FillRect(Rect(x,y,20,20));
+	//std::unordered_map<int, SupplyBoxDTO> boxes = currentGameStatus.getSupplyBox();
+	//for (auto it = boxes.begin(); it != boxes.end(); it++) {
+	//	int x = it->second.getX() * m_to_pix_x - camX;
+	//	int y = it->second.getY() * m_to_pix_y + WINDOW_HEIGHT - camY;
+	//	renderer.FillRect(Rect(x,y,20,20));
+	//}
+}
+
+void GameView::drawBoxes(int i) {
+	for (auto it = boxViews.begin(); it != boxViews.end(); it++) {
+		if (recievedBoxes.find(it->first) != recievedBoxes.end()) {
+			it->second.update(recievedBoxes.at(it->first), i);
+		} else {
+			it->second.open(i);
+		}
+		it->second.display(i, renderer, camX, camY);
 	}
+
 }
 
 void GameView::drawWater(int i) {
@@ -571,6 +601,7 @@ void GameView::drawGame(int i) {
 	drawBeams(i);
 	drawWorms(i);
 	drawProjectiles(i);
+	drawBoxes(i);
 	drawWater(i);
 	drawHud(i);
 
