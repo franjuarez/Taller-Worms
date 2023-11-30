@@ -70,6 +70,12 @@ enum projectileType {
 
 };
 
+enum supplyBoxFrames {
+	FALLING_BOX_FRAMES = 0,
+	GLOWING_BOX_FRAMES,
+	NOT_SHOWING_BOX_FRAMES,
+};
+
 extern const int MUSIC_VOLUME;
 
 extern const int WINDOW_WIDTH;

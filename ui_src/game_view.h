@@ -7,6 +7,7 @@
 #include <cmath>
 #include "worm_view.h"
 #include "projectile_view.h"
+#include "supply_box_view.h"
 #include "mouse_handler.h"
 #include "../game_src/game_dynamic.h"
 #include "../client_src/client.h"
@@ -39,6 +40,7 @@ private:
 	Texture beamSprite;
 	Texture losingScreen;
 	std::vector<Texture> rocketSprites;
+	std::vector<Texture> boxSprites;
 	
 	std::vector<Texture> dynamicSpriteSheets;
 	std::vector<Texture> waterSprites;
@@ -56,7 +58,9 @@ private:
 	MouseHandler mouseHandler;
 
 	std::unordered_map<int, ProjectileView> projectileViews;
+	std::unordered_map<int, SupplyBoxView> boxViews;
 	std::unordered_map<int, ExplosivesDTO> recievedProjectiles;
+	std::unordered_map<int, SupplyBoxDTO> recievedBoxes;
 
 	
 
@@ -80,6 +84,7 @@ private:
 	void drawBeams(int i);
 	void drawWorms(int i);
 	void drawProjectiles(int i);
+	void drawBoxes(int i);
 	void drawWater(int i);
 	void drawHud(int i);
 	void returnKeyCase(int i);
