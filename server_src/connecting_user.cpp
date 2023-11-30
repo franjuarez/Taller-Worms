@@ -9,26 +9,32 @@ status(ACTIVE), infoStruct(infoStruct), matchesMonitor(matchesMonitor), playing(
 
 
 void ConnectingUser::run() {
+    try {
+        GameInfo info(matchesMonitor.showMatchesAvailable());
+        infoStruct->prot.sendInfo(&info);
 
-    GameInfo info(matchesMonitor.showMatchesAvailable());
-    infoStruct->prot.sendInfo(&info);
-
-        // receive -> NewMatch o JoinMatch
-            // en NewMatch : recibir el map name y el match name
-            // en JoinMatch : recibir el match name
-
-    while (status == ACTIVE) {
-        std::shared_ptr<Command> command = infoStruct->prot.receiveCommand();
-        std::shared_ptr<MatchCommand> mc = std::dynamic_pointer_cast<MatchCommand>(command);
-        if (mc->getType() == NEW_MATCH) {
-            createNewMatch(mc->getNrPlayers(), mc->getMatchName(), mc->getMapName());
-        } else if (mc->getType() == JOIN) {
-            joinMatch(mc->getMatchName());
-        } else if (mc->getType() == REFRESH) {
-            refresh();
+        while (status == ACTIVE) {
+            std::shared_ptr<Command> command = infoStruct->prot.receiveCommand();
+            std::shared_ptr<MatchCommand> mc = std::dynamic_pointer_cast<MatchCommand>(command);
+            if (mc->getType() == NEW_MATCH) {
+                createNewMatch(mc->getNrPlayers(), mc->getMatchName(), mc->getMapName());
+            } else if (mc->getType() == JOIN) {
+                joinMatch(mc->getMatchName());
+            } else if (mc->getType() == REFRESH) {
+                refresh();
+            }
         }
+    } catch (const ClosedSocket& e){
+        std::cout << "Reciever: Se ha cerrado la conexion\n";
+        kill();
+        return;
+    } catch (const std::exception& e){
+        std::cout << "Error inesperado" << e.what() << std::endl;
+        kill();
+        return;
     }
-}
+    
+} 
 
 
 void ConnectingUser::createNewMatch(int numberPlayers, std::string matchName, std::string mapName) {
@@ -105,6 +111,7 @@ bool ConnectingUser::isActive() {
 }
 
 void ConnectingUser::kill() {
+    infoStruct->prot.boom();
     this->status = INACTIVE;
 }
 

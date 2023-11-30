@@ -68,6 +68,7 @@ void Lobby::stop() {
 void Lobby::killAll() {
     std::cout << "Killing all connecting users" << std::endl;
     for (auto& connectingUser : connectingUsers ) {
+        std::cout << connectingUser->isActive() << std::endl;
         if (connectingUser->isActive()) {
             connectingUser->kill();
         }
