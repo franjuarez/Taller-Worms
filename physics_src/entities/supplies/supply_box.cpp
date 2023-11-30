@@ -11,8 +11,6 @@ int SupplyBox::getSupplyType() {
     return this->supplyType;
 }
 
-#include <iostream>
-
 SupplyBoxDTO SupplyBox::getDTO() {
     bool falling = this->body->GetLinearVelocity().Length() != 0;
     SupplyBoxDTO dto(this->id, this->supplyType, falling, Position(this->body->GetPosition().x, this->body->GetPosition().y));
@@ -20,8 +18,11 @@ SupplyBoxDTO SupplyBox::getDTO() {
 }
 
 void SupplyBox::beginCollisionWithBeam(Entity* otherBody, b2Contact* contact) {
-    this->body->SetLinearVelocity(b2Vec2(0, 0));
-    this->body->SetGravityScale(0);
+    Beam* beam = (Beam*) otherBody;
+    if(beam->isWalkable()) {
+        this->body->SetLinearVelocity(b2Vec2(0, 0));
+        this->body->SetGravityScale(0);
+    }
 }
 
 void SupplyBox::beginCollisionWithWater(Entity* otherBody, b2Contact* contact) {
