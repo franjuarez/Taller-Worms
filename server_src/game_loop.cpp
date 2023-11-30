@@ -74,7 +74,8 @@ void GameLoop::loopLogic(int64_t elapsed_time) {
 		}
 	}
 
-	if ((wormPlayingHealth > wormPlayingNewHealth || elapsed_time > CONFIG.getTurnTime() * 1000 )) {
+
+	if (wormPlayingHealth > wormPlayingNewHealth || elapsed_time > CONFIG.getTurnTime() * 1000 ) {
 		waitingForStatic = true;
 	} else if (wormPlayingHealth < wormPlayingNewHealth) {
 		wormPlayingHealth = wormPlayingNewHealth;
@@ -87,6 +88,9 @@ void GameLoop::loopLogic(int64_t elapsed_time) {
 			waitingForBox = dropSupplyBox();
 			if (!waitingForBox) {
 				waitingForStatic = false;
+				waitingForBox = false;
+				waitingExtraTime = false;
+				stillWaiting = false;
 				changeWormPlaying(worms);
 			}
 		}
