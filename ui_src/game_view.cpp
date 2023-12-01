@@ -726,7 +726,7 @@ void GameView::processInput(SDL_Event event, int i) {
 	// if (this->currentWormId == -1) {
 		return;
 	}
-	if (event.type != SDL_MOUSEMOTION) {
+	if (event.type != SDL_MOUSEMOTION && event.type != SDL_MOUSEBUTTONDOWN && event.type != SDL_MOUSEBUTTONUP) {
 		camX = currentWorm.getX() * m_to_pix_x - WINDOW_WIDTH / 2;
 		camY = currentWorm.getY() * m_to_pix_y + WINDOW_HEIGHT- WINDOW_HEIGHT / 2;
 
