@@ -1,7 +1,7 @@
 #include "supply_box_dto.h"
 
 
-SupplyBoxDTO::SupplyBoxDTO(int id, int content, Position pos) : id(id), content(content), pos(pos) {}
+SupplyBoxDTO::SupplyBoxDTO(int id, int content, int falling, Position pos) : id(id), content(content), falling(falling), pos(pos) {}
 
 
 float SupplyBoxDTO::getX() {
@@ -18,6 +18,10 @@ int SupplyBoxDTO::getContent() {
 
 int SupplyBoxDTO::getID() {
     return id;
+}
+
+int SupplyBoxDTO::isFalling() {
+    return falling;
 }
 
 SupplyBoxDTO::~SupplyBoxDTO() {}

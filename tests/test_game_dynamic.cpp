@@ -162,10 +162,10 @@ TEST_CASE("Sending and receiving SupplyBoxDTO", "[info]") {
     worms2.push_back(WormDTO(2, 0, 1, 100, 0.9, 4.0, 1, pos, {}));
     worms2.push_back(WormDTO(1, 1, 2,  0, 0.0, 0.333, 0, pos2, {}));
 
-    supplies.emplace(0 ,SupplyBoxDTO(0, 2, Position(1.0, 3.6)));
-    supplies.emplace(2, SupplyBoxDTO(2, 7, Position(1.8666, 5)));
-    supplies.emplace(1, SupplyBoxDTO(1, 5, Position(-1.0, 13.6)));
-    supplies.emplace(6, SupplyBoxDTO(6, 3, Position(10.0, -2.6)));
+    supplies.emplace(0 ,SupplyBoxDTO(0, 2, true, Position(1.0, 3.6)));
+    supplies.emplace(2, SupplyBoxDTO(2, 7, true, Position(1.8666, 5)));
+    supplies.emplace(1, SupplyBoxDTO(1, 5, false, Position(-1.0, 13.6)));
+    supplies.emplace(6, SupplyBoxDTO(6, 3, false,Position(10.0, -2.6)));
 
 
     GameDynamic* gameDynamicSent = new GameDynamic(1, 1, -1, worms2, explosives, supplies, teamsHealth);
@@ -186,6 +186,7 @@ TEST_CASE("Sending and receiving SupplyBoxDTO", "[info]") {
         REQUIRE(suppliesR.second.getX() == suppliesS->second.getX());
         REQUIRE(suppliesR.second.getY() == suppliesS->second.getY());
         REQUIRE(suppliesR.second.getContent() == suppliesS->second.getContent());
+        REQUIRE(suppliesR.second.isFalling() == suppliesS->second.isFalling());
     }
 
 }
