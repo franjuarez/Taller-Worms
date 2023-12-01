@@ -18,7 +18,7 @@ CreateWindow::~CreateWindow()
 
 void CreateWindow::createMatch(std::string map) {
     cl.getAvailableMatches();
-    
+
     int result = this->cl.createNewMatch(
         ui->amtOfPlayersSpinBox->value(),
         ui->matchNameTextEdit->text().toStdString(),
@@ -36,10 +36,7 @@ void CreateWindow::createMatch(std::string map) {
         msgBox.setStyleSheet("QMessageBox { background-color: gray; border: 1px solid gray; }");
     }
 
-
-
     //std::cout << "sale de la funcion" << std::endl;
-
 }
 
 void CreateWindow::on_dedustButton_clicked()
