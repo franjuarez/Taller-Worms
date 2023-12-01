@@ -8,8 +8,8 @@ game:
   extra_time: 3
 
 camera:
-  viewfield_x: 20
-  viewfield_y: 20
+  viewfield_x: 30
+  viewfield_y: 30
   camera_speed: 5
 
 world:

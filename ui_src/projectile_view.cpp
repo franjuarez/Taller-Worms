@@ -3,7 +3,7 @@
 #include <SDL2pp/SDL2pp.hh>
 
 ProjectileView::ProjectileView(ExplosivesDTO rocket, std::vector<Texture>& projectileSpriteSheet) :
-rocket(rocket), projectileSpriteSheets(projectileSpriteSheet), frames{8} {
+rocket(rocket), projectileSpriteSheets(projectileSpriteSheet), frames{11} {
 	startingPoint = 0;
 
 
@@ -23,8 +23,18 @@ rocket(rocket), projectileSpriteSheets(projectileSpriteSheet), frames{8} {
 	case GREEN_GRENADE:
 		currentFramesIndex = defaultFramesIndex = GREEN_GRENADE_FRAMES;
 		break;
+	case AIR_ATTACK:
+		currentFramesIndex = defaultFramesIndex = AIR_STRIKE_FRAMES;
+		break;
+	case DYNAMITE:
+		currentFramesIndex = defaultFramesIndex = DYNAMITE_FRAMES;
+		break;
+	case HOLY_GRENADE:
+		currentFramesIndex = defaultFramesIndex = HG_FRAMES;
+		break;
+
 	default:
-		currentFramesIndex = defaultFramesIndex = ROCKET_FRAMES;
+		currentFramesIndex = defaultFramesIndex = PERDIGON_FRAMES;
 		break;
 	}
 
@@ -53,6 +63,12 @@ rocket(rocket), projectileSpriteSheets(projectileSpriteSheet), frames{8} {
 
 	frames[PERDIGON_FRAMES].push_back(Rect(23,16,13,25));
 
+	frames[DYNAMITE_FRAMES].push_back(Rect(15,14,27,25));
+
+	frames[AIR_STRIKE_FRAMES].push_back(Rect(15,17,25,24));
+
+	frames[HG_FRAMES].push_back(Rect(19,12,20,28));
+
 }
 
 ProjectileView::~ProjectileView() {}
@@ -73,7 +89,8 @@ void ProjectileView::display(int i, Renderer& renderer, int camX, int camY) {
 		currentFrame = 0;
 	}
 
-	float rocketSize = currentFramesIndex == EXPLOSION_FRAMES ? 2 : 0.5;
+
+	float rocketSize = currentFramesIndex == EXPLOSION_FRAMES ? 4 : 0.5;
 
 	int x = ((rocket.getX() - rocketSize/2)  * m_to_pix_x) - camX;
 	int y = ((rocket.getY() + rocketSize/2) * m_to_pix_y + WINDOW_HEIGHT) - camY;
@@ -81,15 +98,19 @@ void ProjectileView::display(int i, Renderer& renderer, int camX, int camY) {
 
 
 	double angle = 0;
-	if (rocket.getType() == RED_GRENADE || rocket.getType() == GREEN_GRENADE) {
+	if (rocket.getType() == RED_GRENADE ||	rocket.getType() == GREEN_GRENADE) {
+
 		angle = i % 180;
-	}else if (rocket.getType() == BANANA) {
-		angle = i*5 % 180;
-	}else if (currentFramesIndex == EXPLOSION_FRAMES) {
-		angle = 0;
+
+	}else if (rocket.getType() == BANANA || rocket.getType() == HOLY_GRENADE) {
+		angle = i*6 % 360;
 	}else /*if (rocket.getType() == BAZOOKA)*/ {
 		angle = -(atan(rocket.getVelY() / rocket.getVelX()) * (180.0 / M_PI)); 
 		angle += (rocket.getVelX() < 0) ? -90 : 90;
+	}
+
+	if (currentFramesIndex == EXPLOSION_FRAMES) {
+		angle = 0;
 	}
 
 	Texture& texture(this->projectileSpriteSheets[currentFramesIndex]);

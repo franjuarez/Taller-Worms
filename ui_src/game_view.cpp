@@ -73,9 +73,9 @@
 #define MORTAR_ICON_PATH BASE_PATH + "images/icons/mortar.bmp"
 #define RGRENADE_ICON_PATH BASE_PATH + "images/icons/rg.bmp"
 #define BANANA_ICON_PATH BASE_PATH + "images/icons/banana.bmp"
-#define SAINT_GRANADE_ICON_PATH BAT_ICON_PATH
-#define DYNAMITE_ICON_PATH BAT_ICON_PATH
-#define AIR_STRIKE_ICON_PATH BAT_ICON_PATH
+#define SAINT_GRANADE_ICON_PATH BASE_PATH + "images/icons/hg.bmp"
+#define DYNAMITE_ICON_PATH BASE_PATH + "images/icons/dynamite.bmp"
+#define AIR_STRIKE_ICON_PATH BASE_PATH + "images/icons/airstrike.bmp"
 
 
 
@@ -96,7 +96,9 @@
 
 #define MORTAR_PROJECTILE_PATH BASE_PATH + "images/morter_projectile.bmp"
 #define PERDIGON_PROJECTILE_PATH BASE_PATH + "images/perdigon.bmp"
-
+#define AIRSTRIKE_PROJECTILE_PATH BASE_PATH + "images/airstrike_projectile.bmp"
+#define DYNAMITE_PROJECTILE_PATH BASE_PATH "images/dynamite_projectile.bmp"
+#define HG_PROJECTILE_PATH BASE_PATH "images/hgrenade.bmp"
 #define FALLING_BOX_PATH BASE_PATH + "images/boxSprites/falling_box.bmp"
 #define GLOWING_BOX_PATH BASE_PATH + "images/boxSprites/glowing_box.bmp"
 
@@ -147,6 +149,9 @@ GameView::GameView(std::shared_ptr<InfoStruct> infoStruct) :
 	rocketSprites.push_back(Texture(renderer, Surface(MORTAR_PROJECTILE_PATH).SetColorKey(true,0)));
 	rocketSprites.push_back(Texture(renderer, Surface(GGRENADE_ICON_PATH).SetColorKey(true,0)));
 	rocketSprites.push_back(Texture(renderer, Surface(PERDIGON_PROJECTILE_PATH).SetColorKey(true,0)));
+	rocketSprites.push_back(Texture(renderer, Surface(DYNAMITE_PROJECTILE_PATH).SetColorKey(true,0)));
+	rocketSprites.push_back(Texture(renderer, Surface(AIRSTRIKE_PROJECTILE_PATH).SetColorKey(true,0)));
+	rocketSprites.push_back(Texture(renderer, Surface(HG_PROJECTILE_PATH).SetColorKey(true,0)));
 
 
 	boxSprites.push_back(Texture(renderer, Surface(FALLING_BOX_PATH).SetColorKey(true,0)));
@@ -732,6 +737,7 @@ void GameView::clickCase(int i, int mouseX, int mouseY) {
 		this->client.execute(std::make_shared<DropDynamite>(DropDynamite(this->currentWormId, bombTimer)));
 		return;
 	case AIR_STRIKE_CODE:
+		this->client.execute(std::make_shared<Teleport>(Teleport(currentWormId, AIR_ATTACK, pos)));		
 		return;
 	case SAINT_GRENADE_CODE:
 		this->client.execute(std::make_shared<ThrowGrenade>(ThrowGrenade(HOLY_GRENADE, this->currentWormId,
