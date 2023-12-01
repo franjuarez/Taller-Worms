@@ -45,11 +45,7 @@ void CreateWindow::createMatch(std::string map) {
             msgBox.setStyleSheet("QMessageBox { background-color: gray; border: 1px solid gray; }");
         }
 
-    std::cout << "salio del apretado de boton" << std::endl;
     }
-
-
-    //std::cout << "sale de la funcion" << std::endl;
 }
 
 void CreateWindow::on_dedustButton_clicked()
