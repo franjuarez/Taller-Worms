@@ -277,6 +277,53 @@ bool GameWorld::wormThrowBanana(int id, float angle, int direction, float power,
     return true;
 }
 
+b2Body* GameWorld::createDynamite(b2Body* worm, int explosionTimer){
+    int id = this->lastProjectileId;
+    b2Body* body = createProjectile(worm, DYNAMITE, RIGHT, DYNAMITE_WIDTH, DYNAMITE_HEIGHT, 0.0f);
+
+    Dynamite* dynamiteEntity = new Dynamite(body, entitiesToRemove, entitiesToAdd, id, CONFIG.getDynamiteDamage(), CONFIG.getDynamiteRadius(), explosionTimer);
+    body->GetUserData().pointer = reinterpret_cast<uintptr_t>(dynamiteEntity);
+
+    return body;
+}
+
+bool GameWorld::wormDropDynamite(int id, int explosionTimer){
+    checkWormExists(id);
+    b2Body* worm = this->worms[id];
+    Worm* wormData = (Worm*) worm->GetUserData().pointer;
+    if(!wormData->hasAmmo(DYNAMITE)){
+        return false; 
+    }
+    b2Body* dynamite = createDynamite(worm, explosionTimer);
+    dynamite->SetLinearVelocity(b2Vec2(0, -1)); //So it falls
+    return true;
+}
+
+b2Body* GameWorld::createHolyGrenade(b2Body* worm, int direction, int explosionTimer){
+    int id = this->lastProjectileId;
+    b2Body* body = createProjectile(worm, HOLY_GRENADE, direction, HOLY_GRENADE_WIDTH, HOLY_GRENADE_HEIGHT);
+
+    HolyGrenade* holyGrenadeEntity = new HolyGrenade(body, entitiesToRemove, entitiesToAdd, id, CONFIG.getHolyGrenadeDamage(), CONFIG.getHolyGrenadeRadius(), explosionTimer);
+    body->GetUserData().pointer = reinterpret_cast<uintptr_t>(holyGrenadeEntity);
+
+    return body;
+}
+
+bool GameWorld::wormThrowHolyGrenade(int id, float angle, int direction, float power, int explosionTimer){
+    checkWormExists(id);
+    b2Body* worm = this->worms[id];
+    Worm* wormData = (Worm*) worm->GetUserData().pointer;
+
+    if(!wormData->hasAmmo(HOLY_GRENADE)){
+        return false; 
+    }
+    b2Body* holyGrenade = createHolyGrenade(worm, direction, explosionTimer);
+    b2Vec2 grenadeVel = calculatVelocityOfProjectile(CONFIG.getProjectileMaxSpeed(), angle, direction, power);
+    holyGrenade->SetLinearVelocity(grenadeVel);
+    wormData->changeDirection(direction);
+    return true;
+}
+
 void GameWorld::wormHitWithBat(int id, int direction){
     checkWormExists(id);
     b2Body* worm = this->worms[id];

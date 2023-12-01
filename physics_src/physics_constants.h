@@ -52,7 +52,14 @@
 //Banana constants
 #define BANANA_WIDTH 0.25f
 #define BANANA_HEIGHT 0.25f
-//taria bueno agregar una constante para ver si la afecta el viento
+
+//Dynamite constants
+#define DYNAMITE_WIDTH 0.25f
+#define DYNAMITE_HEIGHT 0.25f
+
+//Holy grenade constants
+#define HOLY_GRENADE_WIDTH 0.25f
+#define HOLY_GRENADE_HEIGHT 0.25f
 
 //Bat constants
 #define BAT_HEIGHT 0.4f

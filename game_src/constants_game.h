@@ -17,6 +17,8 @@ enum /*WEAPON_TYPE*/{
     MORTAR,
     RED_GRENADE,
     BANANA,
+    DYNAMITE,
+    HOLY_GRENADE,
     FRAGMENT,
 };
 #define AMOUNT_OF_WEAPONS 7
