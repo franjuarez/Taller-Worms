@@ -18,6 +18,13 @@ CreateWindow::~CreateWindow()
 
 void CreateWindow::createMatch(std::string map) {
     //cl.getAvailableMatches();
+    if (ui->matchNameTextEdit->text().size() == 0) {
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Error");
+        msgBox.setText("error creating server");
+        msgBox.exec();
+        msgBox.setStyleSheet("QMessageBox { background-color: gray; border: 1px solid gray; }");
+    }
 
     int result = this->cl.createNewMatch(
         ui->amtOfPlayersSpinBox->value(),
