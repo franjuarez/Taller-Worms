@@ -9,7 +9,7 @@ enum /*Direction*/ {
     BACKWARD_DIR,
 };
 
-enum /*WEAPON_TYPE*/{
+enum /*EXLPOSIVE_TYPE*/{
     BAZOOKA = 0,
     GREEN_GRENADE,
     BAT,
@@ -22,7 +22,8 @@ enum /*WEAPON_TYPE*/{
     HOLY_GRENADE,
     FRAGMENT,
 };
-#define AMOUNT_OF_WEAPONS 7
+
+#define AMOUNT_OF_WEAPONS 10
 
 enum /*SUPPLY_BOX_TYPE*/{
     HEALTH_SUPPLY = 0,

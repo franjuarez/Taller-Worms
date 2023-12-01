@@ -222,8 +222,6 @@ WormView::WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets, Fon
 		h = 45;
 		frames[WWINNER_FRAMES].push_back(Rect(x,y,w,h));
 	}
-
-
 }
 
 int WormView::shoot(int i) {
@@ -234,6 +232,7 @@ int WormView::shoot(int i) {
 
 
 void WormView::toDefault(int i) {
+	std::cout << "se llama a todef" << std::endl;
 	if (currentFramesIndex == HOLDING_AXE_FRAMES ||
 		currentFramesIndex == HOLDING_BAZOKA_FRAMES ||
 		currentFramesIndex == HOLDING_RG_FRAMES ||
@@ -243,6 +242,7 @@ void WormView::toDefault(int i) {
 		currentFramesIndex == HOLDING_TP_FRAMES) {
 
 		currentFramesIndex = STILL_FRAMES;
+		defaultFramesIndex = STILL_FRAMES;
 		this->startingPoint = i;
 	}
 

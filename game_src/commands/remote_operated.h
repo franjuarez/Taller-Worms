@@ -10,12 +10,14 @@ class Protocol;
 class Teleport : public Command {
 private:
     int wormID;
+    int type;
     Position pos;
 public:
-    Teleport(int wormsID, Position pos);
+    Teleport(int wormsID, int type, Position pos);
     bool executeCommand(GameWorld& gameWorld, bool* cheatOn, bool& needsMove) override;
     void send(Protocol& protocol);
     int getID();
+    int getType();
     float getX();
     float getY();
     ~Teleport();

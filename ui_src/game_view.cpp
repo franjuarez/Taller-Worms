@@ -3,9 +3,11 @@
 #include "../game_src/commands/move.h"
 #include "../game_src/commands/jump.h"
 #include "../game_src/commands/launch_bazooka.h"
-#include "../game_src/commands/teleport.h"
+#include "../game_src/commands/remote_operated.h"
 #include "../game_src/commands/hit_upclose.h"
 #include "../game_src/commands/throw_grenade.h"
+#include "../game_src/commands/drop_dynamite.h"
+
 #include "../game_src/commands/cheats.h"
 #include "../shared_src/constants.h"
 
@@ -71,6 +73,13 @@
 #define MORTAR_ICON_PATH BASE_PATH + "images/icons/mortar.bmp"
 #define RGRENADE_ICON_PATH BASE_PATH + "images/icons/rg.bmp"
 #define BANANA_ICON_PATH BASE_PATH + "images/icons/banana.bmp"
+#define SAINT_GRANADE_ICON_PATH BAT_ICON_PATH
+#define DYNAMITE_ICON_PATH BAT_ICON_PATH
+#define AIR_STRIKE_ICON_PATH BAT_ICON_PATH
+
+
+
+
 #define CLOCK_PATH BASE_PATH + "images/clockSpriteSheet.png"
 #define AIM_PATH BASE_PATH + "images/aim_cursor.bmp"
 
@@ -192,6 +201,9 @@ GameView::GameView(std::shared_ptr<InfoStruct> infoStruct) :
 	hudTextures.push_back(Texture(renderer, Surface(MORTAR_ICON_PATH).SetColorKey(true, 0)));
 	hudTextures.push_back(Texture(renderer, Surface(RGRENADE_ICON_PATH).SetColorKey(true, 0)));
 	hudTextures.push_back(Texture(renderer, Surface(BANANA_ICON_PATH).SetColorKey(true, 0)));
+	hudTextures.push_back(Texture(renderer, Surface(DYNAMITE_ICON_PATH).SetColorKey(true, 0)));
+	hudTextures.push_back(Texture(renderer, Surface(AIR_STRIKE_ICON_PATH).SetColorKey(true, 0)));
+	hudTextures.push_back(Texture(renderer, Surface(SAINT_GRANADE_ICON_PATH).SetColorKey(true, 0)));
 	hudTextures.push_back(Texture(renderer, Surface(CLOCK_PATH).SetColorKey(true, 0)));
 	hudTextures.push_back(Texture(renderer, Surface(AIM_PATH).SetColorKey(true, 0)));
 
@@ -443,6 +455,9 @@ void GameView::drawHud(int i) {
 	keybindingsTexts.push_back(Texture(renderer, toolBarFont.RenderText_Solid("I", {255, 255, 255})));
 	keybindingsTexts.push_back(Texture(renderer, toolBarFont.RenderText_Solid("O", {255, 255, 255})));
 	keybindingsTexts.push_back(Texture(renderer, toolBarFont.RenderText_Solid("P", {255, 255, 255})));
+	keybindingsTexts.push_back(Texture(renderer, toolBarFont.RenderText_Solid("F", {255, 255, 255})));
+	keybindingsTexts.push_back(Texture(renderer, toolBarFont.RenderText_Solid("G", {255, 255, 255})));
+	keybindingsTexts.push_back(Texture(renderer, toolBarFont.RenderText_Solid("H", {255, 255, 255})));
 
 	for (int i = 0; i < weapons.size(); i++) {
 		Rect to(
@@ -468,6 +483,7 @@ void GameView::drawHud(int i) {
 
 
 	}
+
 
 	renderer.Copy(hudTextures[CLOCK_ICON], Rect(1,1,126,148), Rect(0,WINDOW_HEIGHT-100,100,100));
 
@@ -660,7 +676,7 @@ void GameView::clickCase(int i, int mouseX, int mouseY) {
 		return;
 	case TP_CODE:
 		this->wormViews.at(this->currentWormId).tp(i);
-		this->client.execute(std::make_shared<Teleport>(Teleport(currentWormId, pos)));		
+		this->client.execute(std::make_shared<Teleport>(Teleport(currentWormId, TELEPORT, pos)));		
 		return;
 	case MORTAR_CODE:
 		this->client.execute(std::make_shared<LaunchRocket>(LaunchRocket(MORTAR, currentWormId, dir, angle, throwPower)));
@@ -673,6 +689,15 @@ void GameView::clickCase(int i, int mouseX, int mouseY) {
 	case BANANA_CODE:
 		this->client.execute(std::make_shared<ThrowGrenade>(ThrowGrenade(BANANA,
 			this->currentWormId,
+			dir, angle, throwPower, bombTimer)));
+		return;
+	case DYNAMITE_CODE:
+		this->client.execute(std::make_shared<DropDynamite>(DropDynamite(this->currentWormId, bombTimer)));
+		return;
+	case AIR_STRIKE_CODE:
+		return;
+	case SAINT_GRENADE_CODE:
+		this->client.execute(std::make_shared<ThrowGrenade>(ThrowGrenade(HOLY_GRENADE, this->currentWormId,
 			dir, angle, throwPower, bombTimer)));
 		return;
 
@@ -703,19 +728,18 @@ void GameView::processInput(SDL_Event event, int i) {
 	}
 	if (event.type == SDL_MOUSEWHEEL){
 		if (event.wheel.y > 0) {
-			inputState = (inputState + 1) % 8;
+			inputState = (inputState + 1) % 11;
 		} else if( event.wheel.y < 0) {
 			inputState--;
 			if (inputState < 0) {
-				inputState = 7;
+				inputState = 10;
 			}
 		}
-		
 			
-
 		switch (inputState) {
 	case 0:
 		this->wormViews.at(currentWormId).toDefault(i);
+		return;
 	case BAZOOKA_CODE:
 		this->wormViews.at(currentWormId).drawBazoka(i);
 		return;
@@ -735,6 +759,18 @@ void GameView::processInput(SDL_Event event, int i) {
 		this->wormViews.at(currentWormId).drawRedGrenade(i);
 		return;
 	case BANANA_CODE:
+		this->wormViews.at(currentWormId).drawBanana(i);
+		return;
+
+	case DYNAMITE_CODE:
+		this->wormViews.at(currentWormId).drawBanana(i);
+		return;
+
+	case AIR_STRIKE_CODE:
+		this->wormViews.at(currentWormId).drawBanana(i);
+		return;
+
+	case SAINT_GRENADE_CODE:
 		this->wormViews.at(currentWormId).drawBanana(i);
 		return;
 
@@ -813,6 +849,22 @@ void GameView::processInput(SDL_Event event, int i) {
 			inputState = BANANA_CODE;
 			this->wormViews.at(currentWormId).drawBanana(i);
 			break;
+
+		case SDLK_f:
+			inputState = DYNAMITE_CODE;
+			this->wormViews.at(currentWormId).drawBanana(i);
+
+			break;
+		case SDLK_g:
+			inputState = AIR_STRIKE_CODE;
+			this->wormViews.at(currentWormId).drawBanana(i);
+
+			break;
+		case SDLK_h:
+			inputState = SAINT_GRENADE_CODE;
+			this->wormViews.at(currentWormId).drawBanana(i);
+			break;
+
 
 
 		case SDLK_z:

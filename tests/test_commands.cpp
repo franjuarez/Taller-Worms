@@ -1,6 +1,7 @@
 #include <catch2/catch_test_macros.hpp>
 #include "../shared_src/protocol.h"
 #include "../shared_src/socket.h"
+#include "../game_src/constants_game.h"
 #include "../game_src/commands/command.h"
 #include "../game_src/commands/hit_upclose.h"
 #include "../game_src/commands/jump.h"
@@ -8,7 +9,7 @@
 #include "../game_src/commands/match_command.h"
 #include "../game_src/commands/move.h"
 #include "../game_src/commands/throw_grenade.h"
-#include "../game_src/commands/teleport.h"
+#include "../game_src/commands/remote_operated.h"
 
 
 Socket mockServerS3("1232");
@@ -69,7 +70,7 @@ TEST_CASE("Sending and receiving Command Teleport", "[info]") {
     int wormdIDSent = 2;
     Position pos(1.3,-6.147);
 
-    Teleport* teleport = new Teleport(wormdIDSent, pos);
+    Teleport* teleport = new Teleport(wormdIDSent, TELEPORT, pos);
 
     teleport->send(mockClient3);
 

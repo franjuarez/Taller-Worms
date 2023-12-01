@@ -24,7 +24,7 @@ rocket(rocket), projectileSpriteSheets(projectileSpriteSheet), frames{8} {
 		currentFramesIndex = defaultFramesIndex = GREEN_GRENADE_FRAMES;
 		break;
 	default:
-		currentFramesIndex = defaultFramesIndex = PERDIGON_FRAMES;
+		currentFramesIndex = defaultFramesIndex = ROCKET_FRAMES;
 		break;
 	}
 

@@ -4,7 +4,7 @@
 #include  "../game_src/commands/move.h"
 #include  "../game_src/commands/jump.h"
 #include "../game_src/commands/launch_bazooka.h"
-#include "../game_src/commands/teleport.h"
+#include "../game_src/commands/remote_operated.h"
 #include "../game_src/commands/hit_upclose.h"
 #include "../game_src/commands/throw_grenade.h"
 #include "../game_src/commands/cheats.h"
@@ -137,6 +137,7 @@ void Protocol::sendTeleport(Teleport* teleport) {
     checkClosed();
     sendUintEight(SEND_COMMAND_TELEPORT);
     sendUintEight(teleport->getID());
+    sendUintEight(teleport->getType());
     sendPosition(Position(teleport->getX(), teleport->getY()));
 }
 
@@ -262,8 +263,9 @@ std::shared_ptr<ThrowGrenade> Protocol::receiveThrowGrenade() {
 std::shared_ptr<Teleport> Protocol::receiveTeoleport() {
     checkClosed();
     uint8_t wormId = receiveUintEight();
+    uint8_t type = receiveUintEight();
     Position pos = receivePosition();
-    return std::make_shared<Teleport>(Teleport(wormId, pos));
+    return std::make_shared<Teleport>(Teleport(wormId, type, pos));
 }
 
 std::shared_ptr<HitUpclose> Protocol::receiveHitUpclose() {
