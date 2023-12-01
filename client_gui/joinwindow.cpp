@@ -27,7 +27,7 @@ JoinWindow::~JoinWindow()
 void JoinWindow::on_refreshButton_clicked()
 {
     ui->availableMatchesComboBox->clear();
-    cl.refresh();
+    //cl.refresh();
     std::map<std::string, std::string> matchNames = cl.getAvailableMatches();
     for (auto it = matchNames.begin(); it != matchNames.end(); it++) {
         ui->availableMatchesComboBox->addItem(QString::fromStdString(it->first));

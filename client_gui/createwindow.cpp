@@ -17,7 +17,7 @@ CreateWindow::~CreateWindow()
 }
 
 void CreateWindow::createMatch(std::string map) {
-    cl.getAvailableMatches();
+    //cl.getAvailableMatches();
 
     int result = this->cl.createNewMatch(
         ui->amtOfPlayersSpinBox->value(),
@@ -25,8 +25,8 @@ void CreateWindow::createMatch(std::string map) {
         map);
 
     if (result == 0) {
-        this->cl.startGame();
         hide();
+        this->cl.startGame();
         QApplication::quit();
     } else {
         QMessageBox msgBox;
