@@ -103,7 +103,7 @@ GameView::GameView(std::shared_ptr<InfoStruct> infoStruct) :
 		renderer(window, -1 /*any driver*/, SDL_RENDERER_ACCELERATED),
 		mixer(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 4096),
 		sound(MUSIC_PATH), // OGG sound file
-		wormsFont(WORM_LIFE_FONT_PATH, 18), hudFont(HUB_FONT_PATH, 42), toolBarFont(WORM_LIFE_FONT_PATH, 11),
+		wormsFont(HUB_FONT_PATH, 26), hudFont(HUB_FONT_PATH, 42), toolBarFont(WORM_LIFE_FONT_PATH, 11),
 		waitingScreen(renderer, Surface(WAITING_SCREEN_PATH).SetColorKey(true,0)),
 		losingScreen(renderer, LOSING_SCREEN_PATH),
 		beamSprite(renderer, BEAM_PATH),
@@ -403,6 +403,24 @@ void GameView::drawHud(int i) {
 		WINDOW_WIDTH - 100, WINDOW_HEIGHT - 85, 100, 100);
 
 	renderer.Copy(totalHpText, NullOpt, TotalHpPosition);
+
+	//equipo actual
+	std::string teamIndicatorText("team   ");
+	teamIndicatorText += ::std::__cxx11::to_string(this->team);
+
+	uint8_t r, g, b;
+	g = (team == 2) || (team == 4) ? 255 : 0;
+	r = (team == 1) || (team == 4) ? 255 : 0;
+	b = team == 3 ? 255 : 0;
+
+
+
+	Texture teamIndicator(renderer,
+		hudFont.RenderText_Solid(teamIndicatorText,
+		SDL_Color{r,g,b}));
+
+
+	renderer.Copy(teamIndicator, NullOpt,Rect(WINDOW_WIDTH - 250, WINDOW_HEIGHT - 85 ,130,100));
 	
 	//lo que este abajo de esto no se grafica entre turnos. bueno para cosas especificos de cada worm
 	if (this->currentWormId == -1) {
@@ -558,7 +576,7 @@ void GameView::draw(int i) {
 		return;
 	}
 
-	if ((this->winnerTeam  >= 0)) {
+	if ((this->winnerTeam  >= 0 && this->team == this->winnerTeam)) {
 		drawWinningScreen(i);
 		return;
 	}
