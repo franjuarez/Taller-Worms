@@ -9,7 +9,7 @@ ChooseOptionWindow::ChooseOptionWindow(QWidget *parent, ClientLobby&& cl) :
     ui->setupUi(this);
     this->joinWindow = NULL;
     this->createWindow = NULL;
-
+    this->aboutWindow = NULL;
 
 }
 
