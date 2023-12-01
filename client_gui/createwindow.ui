@@ -174,8 +174,8 @@ background-image: transparent;</string>
     <rect>
      <x>30</x>
      <y>120</y>
-     <width>160</width>
-     <height>98</height>
+     <width>221</width>
+     <height>91</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
