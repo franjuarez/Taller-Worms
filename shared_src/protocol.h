@@ -118,9 +118,8 @@ public:
 
     int receiveAllOk();
 
-    ~Protocol();
-
     void boom();
 
+    ~Protocol();
 };
 #endif
