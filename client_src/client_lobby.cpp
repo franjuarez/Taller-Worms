@@ -15,7 +15,7 @@ ClientLobby::ClientLobby(const std::string& hostname, const std::string& servnam
 
 void ClientLobby::run() {
 
-    showMatches();
+    // showMatches();
 
     std::string userInput;
     while(true) {
@@ -85,6 +85,7 @@ void ClientLobby::startGame() {
 
 
 std::map<std::string, std::string> ClientLobby::getAvailableMatches() {
+    refresh();
     std::shared_ptr<Serializable>gameDynamic(infoStruct->prot.receiveSerializable());
     std::shared_ptr<GameInfo> gs = std::dynamic_pointer_cast<GameInfo>(gameDynamic);
     return gs->getMatchesAvailable();

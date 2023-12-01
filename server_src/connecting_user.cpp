@@ -10,8 +10,8 @@ status(ACTIVE), infoStruct(infoStruct), matchesMonitor(matchesMonitor), playing(
 
 void ConnectingUser::run() {
     try {
-        GameInfo info(matchesMonitor.showMatchesAvailable());
-        infoStruct->prot.sendInfo(&info);
+        // GameInfo info(matchesMonitor.showMatchesAvailable());
+        // infoStruct->prot.sendInfo(&info);
 
         while (status == ACTIVE) {
             std::shared_ptr<Command> command = infoStruct->prot.receiveCommand();

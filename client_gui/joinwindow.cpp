@@ -40,6 +40,7 @@ void JoinWindow::on_joinButton_clicked()
 {
     hide();
     this->cl.joinMatch(ui->availableMatchesComboBox->currentText().toStdString());
+    this->cl.startGame();
     QApplication::quit();
 
 }
