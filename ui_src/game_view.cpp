@@ -575,15 +575,15 @@ void GameView::focusCam() {
 		x = currentGameStatus.getExplosives().begin()->second.getX();
 		y = currentGameStatus.getExplosives().begin()->second.getY();
 	}
-	//descomentar cuando este IS FALLING
-	//if (x < 0 && y < 0 && currentGameStatus.getSupplyBox().size() >= 1) {
-	//	for (auto it = recievedBoxes.begin(); it != recievedBoxes.end(); it++)  {
-	//		if (it->second.isFalling()) {
-	//			x = it->second.getX();
-	//			y = it->second.getY();
-	//		}
-	//	}
-	//}
+
+	if (x < 0 && y < 0 && currentGameStatus.getSupplyBox().size() >= 1) {
+		for (auto it = recievedBoxes.begin(); it != recievedBoxes.end(); it++)  {
+			if (it->second.isFalling()) {
+				x = it->second.getX();
+				y = it->second.getY();
+			}
+		}
+	}
 
 	if (x < 0 && y < 0) {
 		std::vector<WormDTO> recievedWorms = currentGameStatus.getWorms();
