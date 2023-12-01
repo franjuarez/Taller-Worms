@@ -82,7 +82,7 @@ void explosiveExplode(b2Body* projectile, float explosiveDamage, float explosive
                 supplyBox->handleExplosion();
                 continue;
             }
-            if(type->getEntityType() != EntityWorm){
+            if(type->getEntityType() == EntityWorm){
                 Worm* worm = (Worm*) body->GetUserData().pointer;
                 b2Vec2 bodyPos = body->GetPosition();
                 float distance = b2Distance(projectilePos, bodyPos);
