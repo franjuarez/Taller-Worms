@@ -48,8 +48,8 @@ private:
     bool shouldDropBox();
     int decideTypeOfSupplyBox();
     int decideAmmoType();
-
     int dropSupplyBox();
+    void reset();
 
 
 public:
