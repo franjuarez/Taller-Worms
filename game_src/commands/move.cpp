@@ -6,7 +6,6 @@ Move::Move(int id, int dir) : Command(id), wormID(id), dir(dir) {}
 
 bool Move::executeCommand(GameWorld& gameWorld, bool* cheatOn, bool& needsMove) {
     *cheatOn = *cheatOn;
-    // needsMove = needsMove;
     gameWorld.moveWorm(this->wormID, this->dir);
     return needsMove;
 }

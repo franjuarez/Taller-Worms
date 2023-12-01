@@ -19,6 +19,8 @@ bool ThrowGrenade::executeCommand(GameWorld& gameWorld, bool* cheatOn, bool& nee
         return gameWorld.wormThrowGreenGrenade(wormID, angle, dir, power, timer);
     } else if (type == BANANA) {
         return gameWorld.wormThrowBanana(wormID, angle, dir, power, timer);
+    } else if (type == HOLY_GRENADE) {
+        return gameWorld.wormThrowHolyGrenade(wormID, angle, dir, power, timer);
     }
     return false;
 }
