@@ -9,6 +9,8 @@
 #include "../game_src/commands/throw_grenade.h"
 #include "../game_src/commands/cheats.h"
 #include "../game_src/commands/match_command.h"
+#include "../game_src/commands/drop_dynamite.h"
+
 
 #include "../game_src/serializable.h"
 #include "../game_src/game_dynamic.h"
@@ -161,6 +163,13 @@ void Protocol::sendMatchCommand(MatchCommand* matchCommand) {
     sendString(matchCommand->getMapName());
 }
 
+void Protocol::sendDynamite(DropDynamite* dropDynamite) {
+    checkClosed();
+    sendUintEight(SEND_COMMAND_DYNAMITE);
+    sendUintEight(dropDynamite->getID());
+    sendUintEight(dropDynamite->getTimer());
+}
+
 Serializable* Protocol::receiveSerializable() {
     checkClosed();
     uint8_t protocolCode = receiveUintEight();
@@ -194,6 +203,8 @@ std::shared_ptr<Command> Protocol::receiveCommand() {
         return receiveCheats();
     } else if (protocolCode == SEND_COMMAND_MATCH) {
         return receiveMatchCommand();
+    } else if (protocolCode == SEND_COMMAND_DYNAMITE) {
+        return receiveDynamite();
     }
 
     throw std::runtime_error("Invalid Command");
@@ -276,6 +287,13 @@ std::shared_ptr<MatchCommand> Protocol::receiveMatchCommand() {
     std::string matchName = receiveString();
     std::string maphName = receiveString();
     return std::make_shared<MatchCommand>(MatchCommand(selectType, nrPlayers, matchName, maphName));
+}
+
+std::shared_ptr<DropDynamite> Protocol::receiveDynamite() {
+    checkClosed();
+    uint8_t wormID = receiveUintEight();
+    uint8_t timer = receiveUintEight();
+    return std::make_shared<DropDynamite>(DropDynamite(wormID, timer));
 }
 
 void Protocol::sendVectorStr(std::vector<std::string> allMaps) {
