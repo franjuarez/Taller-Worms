@@ -575,7 +575,26 @@ void GameView::focusCam() {
 		x = currentGameStatus.getExplosives().begin()->second.getX();
 		y = currentGameStatus.getExplosives().begin()->second.getY();
 	}
-	if (x < 0 && y < 0) {/*aca deberia buscar al primero con vel != 0*/}
+
+	if (x < 0 && y < 0 && currentGameStatus.getSupplyBox().size() >= 1) {
+		for (auto it = recievedBoxes.begin(); it != recievedBoxes.end(); it++)  {
+			if (it->second.isFalling()) {
+				x = it->second.getX();
+				y = it->second.getY();
+			}
+		}
+	}
+
+	if (x < 0 && y < 0) {
+		std::vector<WormDTO> recievedWorms = currentGameStatus.getWorms();
+		for (auto &worm : recievedWorms) {
+			if (worm.getVelX() == 0 && worm.getVelY() == 0)
+				continue;
+			x = worm.getX();
+			y = worm.getY();
+		}
+
+	}
 
 	if (x >= 0 && y >= 0) {
 		camX = x * m_to_pix_x - WINDOW_WIDTH / 2;
@@ -688,6 +707,11 @@ void GameView::processInput(SDL_Event event, int i) {
 	if (this->currentWormId == -1 || this->currentWorm.getTeam() != this->team) {
 	// if (this->currentWormId == -1) {
 		return;
+	}
+	if (event.type != SDL_MOUSEMOTION) {
+		camX = currentWorm.getX() * m_to_pix_x - WINDOW_WIDTH / 2;
+		camY = currentWorm.getY() * m_to_pix_y + WINDOW_HEIGHT- WINDOW_HEIGHT / 2;
+
 	}
 	if (event.type == SDL_MOUSEBUTTONDOWN) {
 		if (inputState == 0)
