@@ -12,7 +12,7 @@ bool Move::executeCommand(GameWorld& gameWorld, bool* cheatOn, bool& needsMove) 
 }
 
 void Move::send(Protocol& protocol) {
-    protocol.sendMove(this);
+    protocol.sendCommand(this);
 }
 
 int Move::getID() {
@@ -21,6 +21,10 @@ int Move::getID() {
 
 int Move::getDir() {
     return this->dir;
+}
+
+int Move::getComType() {
+    return this->commandType;
 }
 
 Move::~Move() {}

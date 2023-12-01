@@ -13,7 +13,7 @@ bool HitUpclose::executeCommand(GameWorld& gameWorld, bool* cheatOn, bool& needs
 }
 
 void HitUpclose::send(Protocol& protocol) {
-    protocol.sendHitUpclose(this);
+    protocol.sendCommand(this);
 }
 
 int HitUpclose::getID() {
@@ -22,6 +22,10 @@ int HitUpclose::getID() {
 
 int HitUpclose::getDir() {
     return this->dir;
+}
+
+int HitUpclose::getComType() {
+    return this->commandType;
 }
 
 HitUpclose::~HitUpclose() {}

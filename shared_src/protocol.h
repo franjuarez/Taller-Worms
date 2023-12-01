@@ -73,6 +73,9 @@ private:
     void sendVectorInt(std::vector<uint32_t> vector);
     std::vector<uint32_t> receiveVectorInt();
 
+    void sendMap(GameMap* map);
+    void sendDynamic(GameDynamic* dynamic);
+    void sendInfo(GameInfo* info);
     GameMap* receiveMap();
     GameDynamic* receiveDynamic();
     GameInfo* receiveInfo();
@@ -86,38 +89,30 @@ private:
     std::shared_ptr<Cheats> receiveCheats();
     std::shared_ptr<MatchCommand> receiveMatchCommand();
 
+    void sendMove(Move* move);
+    void sendJump(Jump* jump);
+    void sendLaunchRocket(LaunchRocket* attack);
+    void sendThrowGrenade(ThrowGrenade* throwGrenade);
+    void sendTeleport(Teleport* teleport);
+    void sendHitUpclose(HitUpclose* hitUpclose);
+    void sendCheats(Cheats* cheats);
+    void sendMatchCommand(MatchCommand* matchCommand);
+
     void checkClosed();
 
 public:
 
     explicit Protocol(Socket&& skt);
+
     Protocol(const std::string& hostname, const std::string& servname);
-    Protocol(const Protocol& protocol);
 
-    void sendMap(GameMap* map);
-
-    void sendDynamic(GameDynamic* dynamic);
-
-    void sendInfo(GameInfo* info);
+    void sendSerializable(Serializable* serializable);
     
-    Serializable* receiveSerializable();
+    void sendCommand(Command* command);   
 
-    void sendMove(Move* move);
-
-    void sendJump(Jump* jump);
-
-    void sendLaunchRocket(LaunchRocket* attack);
-
-    void sendThrowGrenade(ThrowGrenade* throwGrenade);
-
-    void sendTeleport(Teleport* teleport);
-    
-    void sendHitUpclose(HitUpclose* hitUpclose);
+    std::shared_ptr<Serializable> receiveSerializable();
 
     std::shared_ptr<Command> receiveCommand();
-    void sendCheats(Cheats* cheats);
-
-    void sendMatchCommand(MatchCommand* matchCommand);
 
     void sendAllOk(int okCode);
 

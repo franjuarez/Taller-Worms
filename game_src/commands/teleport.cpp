@@ -14,7 +14,7 @@ bool Teleport::executeCommand(GameWorld& gameWorld, bool* cheatOn, bool& needsMo
 }
 
 void Teleport::send(Protocol& protocol) {
-    protocol.sendTeleport(this);
+    protocol.sendCommand(this);
 }
 
 int Teleport::getID() {
@@ -27,6 +27,10 @@ float Teleport::getX() {
 
 float Teleport::getY() {
     return this->pos.getY();
+}
+
+int Teleport::getComType() {
+    return this->commandType;
 }
 
 Teleport::~Teleport() {}

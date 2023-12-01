@@ -7,17 +7,7 @@ MatchCommand::MatchCommand(int type, int nrPlayers, std::string match, std::stri
 : Command(PLAYING), type(type), nrPlayers(nrPlayers), match(match), map(map) {}
 
 void MatchCommand::send(Protocol& protocol) {
-    protocol.sendMatchCommand(this);
-}
-
-void MatchCommand::executeCommand(ConnectingUser& connector) {
-    // if (this->type == NEW_MATCH) {
-    //     connector.createNewMatch(nrPlayers, match, map);
-    // }  else if (this->type == JOIN) {
-    //     connector.joinMatch(match);
-    // } else if (this->type == REFRESH) {
-    //     connector.refresh();
-    // }
+    protocol.sendCommand(this);
 }
 
 int MatchCommand::getID() {
@@ -38,6 +28,10 @@ std::string MatchCommand::getMapName() {
 
 std::string MatchCommand::getMatchName() {
     return this->match;
+}
+
+int MatchCommand::getComType() {
+    return this->commandType;
 }
 
 MatchCommand::~MatchCommand() {}
