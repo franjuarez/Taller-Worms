@@ -10,8 +10,8 @@ status(ACTIVE), infoStruct(infoStruct), matchesMonitor(matchesMonitor), playing(
 
 void ConnectingUser::run() {
     try {
-        GameInfo info(matchesMonitor.showMatchesAvailable());
-        infoStruct->prot.sendInfo(&info);
+        // GameInfo info(matchesMonitor.showMatchesAvailable());
+        // infoStruct->prot.sendInfo(&info);
 
         while (status == ACTIVE) {
             std::shared_ptr<Command> command = infoStruct->prot.receiveCommand();
@@ -39,7 +39,6 @@ void ConnectingUser::run() {
 
 void ConnectingUser::createNewMatch(int numberPlayers, std::string matchName, std::string mapName) {
 
-
     MapsLoader mapsLoader(CONFIG.getMapsFile());
     std::vector<std::string> mapNames = mapsLoader.getMapsNames();
     Map map = mapsLoader.loadMap(mapName);
@@ -54,15 +53,27 @@ void ConnectingUser::createNewMatch(int numberPlayers, std::string matchName, st
     std::shared_ptr<GameMap> gameMap = std::make_shared<GameMap>(GameMap(0, numberPlayers, mapName, beams, worms));
     std::shared_ptr<MatchesStruct> matchStruct = std::make_shared<MatchesStruct>(teams, matchName, gameMap, playing, infoQueue);
 
-    matchesMonitor.addMatchStruct(matchName, matchStruct);
+    int code = matchesMonitor.addMatchStruct(matchName, matchStruct);
+    infoStruct->prot.sendAllOk(code);
+    if (code == ERROR) {
+        return;
+    }
+    matchesMonitor.startMatch(matchName);    
     this->status = INACTIVE;
 }
 
 
 void ConnectingUser::joinMatch(std::string matchName) {
-    matchesMonitor.sendInfoStruct(matchName, infoStruct);
+
+    // checkear que tenga espacio: si no existe manda 1 y si existe manda 0
+    int code = matchesMonitor.joinMatch(matchName, infoStruct);
+    infoStruct->prot.sendAllOk(code);
+    if (code == ERROR) {
+        return;
+    }
     this->status = INACTIVE;
 }
+
 
 
 void ConnectingUser::refresh() {
