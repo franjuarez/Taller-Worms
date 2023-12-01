@@ -48,7 +48,11 @@ void ConnectionWindow::on_pushButton_clicked()
         //gv.join();
     } catch (const std::exception& e) {
         std::cerr << e.what() << std::endl;
-        QMessageBox::warning(this, "Error" ,"error conecting to server");
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Error");
+        msgBox.setText("Error joining server");
+        msgBox.exec();
+        msgBox.setStyleSheet("QMessageBox { background-color: gray; border: 1px solid gray; }");
     }
     
 

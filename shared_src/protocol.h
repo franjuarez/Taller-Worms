@@ -122,6 +122,10 @@ public:
 
     void sendMatchCommand(MatchCommand* matchCommand);
 
+    void sendAllOk(int okCode);
+
+    int receiveAllOk();
+
     ~Protocol();
 
     void boom();

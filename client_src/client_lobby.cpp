@@ -15,7 +15,7 @@ ClientLobby::ClientLobby(const std::string& hostname, const std::string& servnam
 
 void ClientLobby::run() {
 
-    showMatches();
+    // showMatches();
 
     std::string userInput;
     while(true) {
@@ -30,12 +30,20 @@ void ClientLobby::run() {
             std::cin >> matchName;
             std::cin >>mapName;
 
-            createNewMatch(numberPlayers, matchName, mapName);
+            int result = createNewMatch(numberPlayers, matchName, mapName);
+            if (result == ERROR) {
+                continue;
+            }
+            startGame();
             return;
 
         } else if (userInput == JM) {
             std::cin >> matchName;
-            joinMatch(matchName);
+            int result = joinMatch(matchName);
+            if (result == ERROR) {
+                continue;
+            }
+            startGame();
             return;
         } else if (userInput == R) {
             refresh();
@@ -47,25 +55,18 @@ void ClientLobby::run() {
 }
 
 
-void ClientLobby::createNewMatch( int nrPlayers, std::string matchName, std::string mapName) {
+int ClientLobby::createNewMatch( int nrPlayers, std::string matchName, std::string mapName) {
     MatchCommand* mc = new MatchCommand(NEW_MATCH, nrPlayers, matchName, mapName);
     mc->send(infoStruct->prot);
-
-
-    GameView gv(infoStruct);
-    gv.start();
-    gv.join();
+    return infoStruct->prot.receiveAllOk();
 }
 
-void ClientLobby::joinMatch(std::string matchName) {
+int ClientLobby::joinMatch(std::string matchName) {
     int numberPlayers = 0;
     std::string mapName = "";
     MatchCommand* mc = new MatchCommand(JOIN, numberPlayers, matchName, mapName);
     mc->send(infoStruct->prot);
-
-    GameView gv(infoStruct);
-    gv.start();
-    gv.join();
+    return infoStruct->prot.receiveAllOk();
 }
 
 void ClientLobby::refresh() {
@@ -76,8 +77,15 @@ void ClientLobby::refresh() {
     mc->send(infoStruct->prot);
 }
 
+void ClientLobby::startGame() {
+    GameView gv(infoStruct);
+    gv.start();
+    gv.join();
+}
+
 
 std::map<std::string, std::string> ClientLobby::getAvailableMatches() {
+    refresh();
     std::shared_ptr<Serializable>gameDynamic(infoStruct->prot.receiveSerializable());
     std::shared_ptr<GameInfo> gs = std::dynamic_pointer_cast<GameInfo>(gameDynamic);
     return gs->getMatchesAvailable();

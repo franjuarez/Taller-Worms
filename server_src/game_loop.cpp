@@ -87,27 +87,19 @@ void GameLoop::loopLogic(int64_t elapsed_time) {
 		if (gameWorld.allEntitiesAtRest() && !waitingForBox) {
 			waitingForBox = dropSupplyBox();
 			if (!waitingForBox) {
-				waitingForStatic = false;
-				waitingForBox = false;
-				waitingExtraTime = false;
-				stillWaiting = false;
+				reset();
 				changeWormPlaying(worms);
 			}
 		}
 
 		if(gameWorld.allEntitiesAtRest() && waitingForBox) {
-			waitingForStatic = false;
-			waitingForBox = false;
-			waitingExtraTime = false;
-			stillWaiting = false;
+			reset();
 			changeWormPlaying(worms);
 		}
 
 	} else if (waitingForStatic && cheatOn) {
 		if (gameWorld.allEntitiesAtRest()) {
-			waitingForStatic = false;
-			waitingExtraTime = false;
-			stillWaiting = false;
+			reset();
 		}
 	} 
 
@@ -255,6 +247,15 @@ int GameLoop::updateWinningStatus() {
 	}
 	gameOver = true;
 	return ALL_LOST;
+}
+
+
+void GameLoop::reset() {
+	waitingForStatic = false;
+	waitingForBox = false;
+	waitingExtraTime = false;
+	stillWaiting = false;
+
 }
 
 

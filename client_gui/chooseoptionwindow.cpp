@@ -9,6 +9,7 @@ ChooseOptionWindow::ChooseOptionWindow(QWidget *parent, ClientLobby&& cl) :
     ui->setupUi(this);
     this->joinWindow = NULL;
     this->createWindow = NULL;
+    this->aboutWindow = NULL;
 
 }
 
@@ -18,6 +19,8 @@ ChooseOptionWindow::~ChooseOptionWindow()
         delete createWindow;
     if (this->joinWindow != NULL)
         delete joinWindow;
+    if (this->aboutWindow != NULL)
+        delete aboutWindow;
     delete ui;
 }
 
@@ -40,5 +43,13 @@ void ChooseOptionWindow::on_createButton_clicked()
 void ChooseOptionWindow::on_joinButton_2_clicked()
 {
     QApplication::quit();
+}
+
+
+void ChooseOptionWindow::on_createButton_2_clicked()
+{
+    this->aboutWindow = new AboutWindow;
+    hide();
+    this->aboutWindow->show();
 }
 

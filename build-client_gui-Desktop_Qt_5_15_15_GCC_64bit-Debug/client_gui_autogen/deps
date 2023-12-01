@@ -161,6 +161,8 @@ client_gui_autogen/timestamp: \
 	/home/joaco/cuatri/taller/tp3_worms/build-client_gui-Desktop_Qt_5_15_15_GCC_64bit-Debug/CMakeFiles/3.24.2/CMakeSystem.cmake \
 	/home/joaco/cuatri/taller/tp3_worms/build-client_gui-Desktop_Qt_5_15_15_GCC_64bit-Debug/client_gui_autogen/moc_predefs.h \
 	/home/joaco/cuatri/taller/tp3_worms/client_gui/CMakeLists.txt \
+	/home/joaco/cuatri/taller/tp3_worms/client_gui/aboutwindow.cpp \
+	/home/joaco/cuatri/taller/tp3_worms/client_gui/aboutwindow.h \
 	/home/joaco/cuatri/taller/tp3_worms/client_gui/chooseoptionwindow.cpp \
 	/home/joaco/cuatri/taller/tp3_worms/client_gui/chooseoptionwindow.h \
 	/home/joaco/cuatri/taller/tp3_worms/client_gui/connectionwindow.cpp \
@@ -176,6 +178,7 @@ client_gui_autogen/timestamp: \
 	/home/joaco/cuatri/taller/tp3_worms/game_src/constants_game.h \
 	/home/joaco/cuatri/taller/tp3_worms/game_src/explosives_dto.h \
 	/home/joaco/cuatri/taller/tp3_worms/game_src/position.h \
+	/home/joaco/cuatri/taller/tp3_worms/game_src/supply_box_dto.h \
 	/home/joaco/cuatri/taller/tp3_worms/game_src/worm_dto.h \
 	/home/joaco/cuatri/taller/tp3_worms/shared_src/config_loader.h \
 	/home/joaco/cuatri/taller/tp3_worms/shared_src/constants.h \
@@ -402,6 +405,7 @@ client_gui_autogen/timestamp: \
 	/usr/include/x86_64-linux-gnu/sys/types.h \
 	/usr/lib/gcc/x86_64-linux-gnu/9/include/stdarg.h \
 	/usr/lib/gcc/x86_64-linux-gnu/9/include/stddef.h \
+	/home/joaco/cuatri/taller/tp3_worms/client_gui/aboutwindow.ui \
 	/home/joaco/cuatri/taller/tp3_worms/client_gui/chooseoptionwindow.ui \
 	/home/joaco/cuatri/taller/tp3_worms/client_gui/connectionwindow.ui \
 	/home/joaco/cuatri/taller/tp3_worms/client_gui/createwindow.ui \

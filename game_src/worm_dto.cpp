@@ -70,6 +70,8 @@ WormDTO& WormDTO::operator=(const WormDTO& other) {
         health = other.health;
         position = other.position;
         weapons = other.weapons;
+        velX = other.velX;
+        velY = other.velY;
     }
   return *this;
 }

@@ -1,7 +1,7 @@
 #include "worm_view.h"
 #include <SDL2pp/SDL2pp.hh>
 #include "../game_src/constants_game.h"
-
+#define SDL_BLACK_COLOR SDL_Color{0,0,0}
 
 
 
@@ -320,11 +320,12 @@ void WormView::jump(int i) {
 }
 
 void WormView::move(int i) {
-	if (currentFramesIndex == WALKING_FRAMES)
-		return;
-
-	this->startingPoint = i;
+	//if (currentFramesIndex != WALKING_FRAMES)
+	//	return;
+	if (currentFramesIndex != WALKING_FRAMES)
+		this->startingPoint = i;
 	this->currentFramesIndex = WALKING_FRAMES;
+	this->defaultFramesIndex = WALKING_FRAMES;
 }
 
 void WormView::hit(int i) {
@@ -430,20 +431,33 @@ void WormView::display(int i, Renderer& renderer, int camX, int camY, int mouseX
 		0, NullOpt, flip
 	);
 
-	//grafico la vida
-	int team = this->worm.getTeam();
-	uint8_t r, g, b;
-	g = (team == 1) || (team == 4) ? 255 : 0;
-	r = (team == 2) || (team == 4) ? 255 : 0;
-	b = team == 3 ? 255 : 0;
-
-	SDL_Color color{r,g,b};
 
 	if (!this->worm.isAlive() || this->currentFramesIndex == WWINNER_FRAMES)
 		return;
+
+	//grafico la vida
+	int team = this->worm.getTeam();
+	uint8_t r, g, b;
+	g = (team == 2) || (team == 4) ? 255 : 0;
+	r = (team == 1) || (team == 4) ? 255 : 0;
+	b = team == 3 ? 255 : 0;
+
+
+	Texture hpContrast(renderer,
+		wormsFont.RenderText_Solid(std::__cxx11::to_string(this->worm.getHealth()),
+		SDL_BLACK_COLOR));	
+
+	SDL_Color color{r,g,b};
 	Texture hp(renderer,
 		wormsFont.RenderText_Solid(std::__cxx11::to_string(this->worm.getHealth()),
 		color));
+
+	renderer.Copy(
+		hpContrast,
+		NullOpt,
+		Rect(Point(x + 0.5*m_to_pix_x ,y - (.5 * - m_to_pix_y)) - Point(2,2), hp.GetSize() + Point(4,4))
+	);
+
 	renderer.Copy(
 		hp,
 		NullOpt,
@@ -455,12 +469,19 @@ void WormView::display(int i, Renderer& renderer, int camX, int camY, int mouseX
 void WormView::update(WormDTO other, int i) {
 	this->worm = other;
 
+	if (worm.getVelX() == 0 && this->defaultFramesIndex == WALKING_FRAMES) {
+		this->defaultFramesIndex = STILL_FRAMES;
+		this->currentFramesIndex;
+	}
+
 	if (!(this->worm.isAlive())) {
 		die();
 	}
 
 	if (this->worm.getHealth() <= 10)
 		surrend();
+
+
 }
 
 void WormView::notifyWinner(int winnerTeam) {

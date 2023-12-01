@@ -1,5 +1,6 @@
 #include "createwindow.h"
 #include "ui_createwindow.h"
+#include <QMessageBox>
 
 CreateWindow::CreateWindow(QWidget *parent, ClientLobby&& cl) :
         QDialog(parent),
@@ -16,16 +17,35 @@ CreateWindow::~CreateWindow()
 }
 
 void CreateWindow::createMatch(std::string map) {
-    cl.getAvailableMatches();
-    hide();
-    this->cl.createNewMatch(
-        ui->amtOfPlayersSpinBox->value(),
-        ui->matchNameTextEdit->text().toStdString(),
-        map);
+    //cl.getAvailableMatches();
+    if (ui->matchNameTextEdit->text().size() == 0) {
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Error");
+        msgBox.setText("error creating server");
+        msgBox.exec();
+        msgBox.setStyleSheet("QMessageBox { background-color: gray; border: 1px solid gray; }");
 
-    QApplication::quit();
-    //std::cout << "sale de la funcion" << std::endl;
+    } else {
 
+        int result = this->cl.createNewMatch(
+            ui->amtOfPlayersSpinBox->value(),
+            ui->matchNameTextEdit->text().toStdString(),
+            map
+        );
+
+        if (result == 0) {
+            hide();
+            this->cl.startGame();
+            QApplication::quit();
+        } else {
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Error");
+            msgBox.setText("error creating server");
+            msgBox.exec();
+            msgBox.setStyleSheet("QMessageBox { background-color: gray; border: 1px solid gray; }");
+        }
+
+    }
 }
 
 void CreateWindow::on_dedustButton_clicked()

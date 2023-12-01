@@ -42,6 +42,7 @@ else()
             chooseoptionwindow.h chooseoptionwindow.cpp chooseoptionwindow.ui
             joinwindow.h joinwindow.cpp joinwindow.ui
             createwindow.h createwindow.cpp createwindow.ui
+            aboutwindow.h aboutwindow.cpp aboutwindow.ui
 
 
 

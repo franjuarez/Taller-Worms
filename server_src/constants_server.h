@@ -3,3 +3,6 @@
 
 #define ACTIVE 0
 #define INACTIVE 1
+
+#define OK 0
+#define ERROR 1

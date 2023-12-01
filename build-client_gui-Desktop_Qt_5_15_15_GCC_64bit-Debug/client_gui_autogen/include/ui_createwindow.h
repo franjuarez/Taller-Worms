@@ -99,7 +99,7 @@ public:
         testButton->setStyleSheet(QString::fromUtf8("border-image: url(:/resources/images/previews/test_preview.png)"));
         verticalLayoutWidget = new QWidget(CreateWindow);
         verticalLayoutWidget->setObjectName(QString::fromUtf8("verticalLayoutWidget"));
-        verticalLayoutWidget->setGeometry(QRect(30, 120, 160, 98));
+        verticalLayoutWidget->setGeometry(QRect(30, 120, 221, 91));
         verticalLayout = new QVBoxLayout(verticalLayoutWidget);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         verticalLayout->setContentsMargins(0, 0, 0, 0);

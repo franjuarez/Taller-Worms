@@ -48,7 +48,11 @@ void Client::join() {
 }
 
 void Client::execute(std::shared_ptr<Command> command) {
-    commandsQueue.push(command);
+    try {
+        commandsQueue.push(command);
+    } catch (const ClosedQueue& e) {
+        throw ClientClosed();
+    } 
 }
 
 

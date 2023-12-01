@@ -4,6 +4,7 @@
 #include <QDialog>
 #include "joinwindow.h"
 #include "createwindow.h"
+#include "aboutwindow.h"
 #include "../client_src/client_lobby.h"
 
 namespace Ui {
@@ -25,11 +26,14 @@ private slots:
 
     void on_joinButton_2_clicked();
 
+    void on_createButton_2_clicked();
+
 private:
     ClientLobby cl;
     Ui::ChooseOptionWindow *ui;
     CreateWindow *createWindow;
     JoinWindow *joinWindow;
+    AboutWindow *aboutWindow;
 };
 
 #endif // CHOOSEOPTIONWINDOW_H
