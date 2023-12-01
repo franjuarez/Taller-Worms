@@ -320,11 +320,12 @@ void WormView::jump(int i) {
 }
 
 void WormView::move(int i) {
-	if (currentFramesIndex == WALKING_FRAMES)
-		return;
-
-	this->startingPoint = i;
+	//if (currentFramesIndex != WALKING_FRAMES)
+	//	return;
+	if (currentFramesIndex != WALKING_FRAMES)
+		this->startingPoint = i;
 	this->currentFramesIndex = WALKING_FRAMES;
+	this->defaultFramesIndex = WALKING_FRAMES;
 }
 
 void WormView::hit(int i) {
@@ -468,12 +469,19 @@ void WormView::display(int i, Renderer& renderer, int camX, int camY, int mouseX
 void WormView::update(WormDTO other, int i) {
 	this->worm = other;
 
+	if (worm.getVelX() == 0 && this->defaultFramesIndex == WALKING_FRAMES) {
+		this->defaultFramesIndex = STILL_FRAMES;
+		this->currentFramesIndex;
+	}
+
 	if (!(this->worm.isAlive())) {
 		die();
 	}
 
 	if (this->worm.getHealth() <= 10)
 		surrend();
+
+
 }
 
 void WormView::notifyWinner(int winnerTeam) {
