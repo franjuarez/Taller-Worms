@@ -24,24 +24,30 @@ void CreateWindow::createMatch(std::string map) {
         msgBox.setText("error creating server");
         msgBox.exec();
         msgBox.setStyleSheet("QMessageBox { background-color: gray; border: 1px solid gray; }");
-    }
 
-    int result = this->cl.createNewMatch(
-        ui->amtOfPlayersSpinBox->value(),
-        ui->matchNameTextEdit->text().toStdString(),
-        map);
-
-    if (result == 0) {
-        hide();
-        this->cl.startGame();
-        QApplication::quit();
     } else {
-        QMessageBox msgBox;
-        msgBox.setWindowTitle("Error");
-        msgBox.setText("error creating server");
-        msgBox.exec();
-        msgBox.setStyleSheet("QMessageBox { background-color: gray; border: 1px solid gray; }");
+
+        int result = this->cl.createNewMatch(
+            ui->amtOfPlayersSpinBox->value(),
+            ui->matchNameTextEdit->text().toStdString(),
+            map
+        );
+
+        if (result == 0) {
+            hide();
+            this->cl.startGame();
+            QApplication::quit();
+        } else {
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Error");
+            msgBox.setText("error creating server");
+            msgBox.exec();
+            msgBox.setStyleSheet("QMessageBox { background-color: gray; border: 1px solid gray; }");
+        }
+
+
     }
+
 
     //std::cout << "sale de la funcion" << std::endl;
 }
