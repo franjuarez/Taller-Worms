@@ -309,6 +309,56 @@ b2Body* GameWorld::createHolyGrenade(b2Body* worm, int direction, int explosionT
     return body;
 }
 
+b2Body* GameWorld::createAirAttackMissile(float startingX, float xDest){
+    b2BodyDef bd;
+    bd.type = b2_dynamicBody;
+    bd.position.Set(startingX, WORLD_HEIGHT);
+    b2Body* body = this->world->CreateBody(&bd);
+    body->SetBullet(true);
+    b2FixtureDef fd;
+    b2PolygonShape shape;
+    shape.SetAsBox(AIR_ATTACK_MISSILE_WIDTH/2, AIR_ATTACK_MISSILE_HEIGHT/2);
+    fd.shape = &shape;
+    fd.density = 1.0f;
+    body->CreateFixture(&fd);
+
+    float velX = 0.0f;
+    if(startingX < xDest){
+        velX = 0.1f;
+    } else{
+        velX = -0.1f;
+    }
+
+    body->SetLinearVelocity(b2Vec2(velX, -1)); //So it falls
+
+    int id = this->lastProjectileId;
+    this->projectiles[this->lastProjectileId] = body;
+    
+    AirAttackMissile* airAttackMissileEntity = new AirAttackMissile(body, entitiesToRemove, entitiesToAdd, id, CONFIG.getAirAttackMissileDamage(), CONFIG.getAirAttackMissileRadius());
+    body->GetUserData().pointer = reinterpret_cast<uintptr_t>(airAttackMissileEntity);
+
+    return body;
+}
+
+bool GameWorld::wormCallAirAttack(int id, float xDest, float yDest){
+    checkWormExists(id);
+    b2Body* worm = this->worms[id];
+    Worm* wormData = (Worm*) worm->GetUserData().pointer;
+
+    if(!wormData->hasAmmo(AIR_ATTACK)){
+        return false; 
+    }
+    float currentX = xDest - AIR_ATTACK_MISSILE_WIDTH - (AIR_ATTACK_MISSILE_AMOUNT/2 * AIR_ATTACK_MISSILE_WIDTH*2);
+    //los separo entre si AIR_ATTACK_MISSILE_WIDTH para que no se superpongan
+    for(int i = 0; i < AIR_ATTACK_MISSILE_AMOUNT; i++){
+        b2Body* missile = createAirAttackMissile(currentX, xDest);
+        std::cout << "Missile created at: " << currentX << std::endl;
+        currentX += AIR_ATTACK_MISSILE_WIDTH*2;
+    }
+    wormData->reduceAmmo(AIR_ATTACK);
+    return true;
+}
+
 bool GameWorld::wormThrowHolyGrenade(int id, float angle, int direction, float power, int explosionTimer){
     checkWormExists(id);
     b2Body* worm = this->worms[id];

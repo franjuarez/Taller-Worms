@@ -25,6 +25,7 @@
 #include "entities/projectiles/banana.h"
 #include "entities/projectiles/dynamite.h"
 #include "entities/projectiles/holy_grenade.h"
+#include "entities/projectiles/air_attack_missile.h"
 #include "entities/supplies/provition_supply_box.h"
 #include "entities/supplies/trap_supply_box.h"
 
@@ -66,6 +67,8 @@ private:
 
     b2Body* createHolyGrenade(b2Body* worm, int direction, int explosionTimer);
 
+    b2Body* createAirAttackMissile(float startingX, float xDest);
+
     bool checkValidTpPosition(float x, float y);
 
     void checkWormExists(int id);
@@ -104,6 +107,8 @@ public:
     bool wormThrowBanana(int id, float angle, int direction, float power, int explosionTimer);
 
     bool wormDropDynamite(int id, int explosionTimer);
+
+    bool wormCallAirAttack(int id, float xDest, float yDest);
 
     bool wormThrowHolyGrenade(int id, float angle, int direction, float power, int explosionTimer);
 

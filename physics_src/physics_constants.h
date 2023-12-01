@@ -57,6 +57,11 @@
 #define DYNAMITE_WIDTH 0.25f
 #define DYNAMITE_HEIGHT 0.25f
 
+//Air attack missile constants
+#define AIR_ATTACK_MISSILE_WIDTH 0.25f
+#define AIR_ATTACK_MISSILE_HEIGHT 0.25f
+#define AIR_ATTACK_MISSILE_AMOUNT 6
+
 //Holy grenade constants
 #define HOLY_GRENADE_WIDTH 0.25f
 #define HOLY_GRENADE_HEIGHT 0.25f
