@@ -5,13 +5,7 @@
 #include "../aux/auxiliar_functions.h"
 #include "../query_handlers/melee_handler.h"
 #include "../../game_src/worm_dto.h"
-
-enum action {
-    STANDING, //0
-    MOVING, //1
-    JUMPING, //2
-    EJECTED, //3
-};
+#include "../../game_src/constants_game.h"
 
 
 class Worm : public Entity {

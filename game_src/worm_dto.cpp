@@ -2,8 +2,8 @@
 
 #include <iostream>
 
-WormDTO::WormDTO(int id, int dir, int team, int health, float velX, float velY, int onGround, Position position, std::vector<int> weapons) 
-: id(id), dir(dir), team(team), health(health), velX(velX), velY(velY), onGround(onGround), position(position), weapons(weapons) {}
+WormDTO::WormDTO(int id, int dir, int team, int health, float velX, float velY, int onGround, int currentAction, Position position, std::vector<int> weapons) 
+: id(id), dir(dir), team(team), health(health), velX(velX), velY(velY), onGround(onGround), currentAction(currentAction), position(position), weapons(weapons) {}
 
 int WormDTO::getId() {
     return this->id;
@@ -23,6 +23,10 @@ int WormDTO::getHealth() {
 
 int WormDTO::isOnGround() {
     return this->onGround;
+}
+
+int WormDTO::getCurrentAction() {
+    return this->currentAction;
 }
 
 float WormDTO::getVelX() {

@@ -22,7 +22,7 @@ WormDTO Worm::getDTO(){
     float velX = body->GetLinearVelocity().x;
     float velY = body->GetLinearVelocity().y;
     int isOnGround = this->onGround;
-    WormDTO dto(id, direction, team, health, velX, velY, isOnGround, pos, weapons);
+    WormDTO dto(id, direction, team, health, velX, velY, isOnGround, currentAction, pos, weapons);
     return dto;
 }
 

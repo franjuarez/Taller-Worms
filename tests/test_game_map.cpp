@@ -24,8 +24,8 @@ TEST_CASE("Testing sending a GameMap") {
     Position pos(9.7, 11.0);
     Position pos2(9.89, 9.1);
 
-    worms.push_back(WormDTO(2, 0, 1, 100, 0.9, 4.0, 1, pos, {}));
-    worms.push_back(WormDTO(1, 1, 2,  0, 0.0, 0.333, 0, pos2, {}));
+    worms.push_back(WormDTO(2, 0, 1, 100, 0.9, 4.0, 1, 0, pos, {}));
+    worms.push_back(WormDTO(1, 1, 2,  0, 0.0, 0.333, 0, 0, pos2, {}));
 
     beams.push_back(BeamDTO(6, Position(10.0f, 10.0f), 0));
     beams.push_back(BeamDTO(3, Position(16.0f, 8.0f), 0));
@@ -49,8 +49,8 @@ TEST_CASE("Testing the worms sent and received in the GameMap", "[info]") {
     Position pos(-9.7, 11.0);
     Position pos2(9.89, -9.1);
 
-    worms.push_back(WormDTO(2, 0, 1, 100, 0.0, 0.0, 1, pos, {}));
-    worms.push_back(WormDTO(1, 0, 2,  100,0.0, 0.0, 1, pos2, {}));
+    worms.push_back(WormDTO(2, 0, 1, 100, 0.0, 0.0, 1, 0, pos, {}));
+    worms.push_back(WormDTO(1, 0, 2,  100,0.0, 0.0, 1, 0, pos2, {}));
 
     GameMap* gameMapSent = new GameMap(1, numTeams, mapName, beams, worms);
 
@@ -74,6 +74,7 @@ TEST_CASE("Testing the worms sent and received in the GameMap", "[info]") {
             REQUIRE(wormsReceived[i].getVelX() == worms[i].getVelX());
             REQUIRE(wormsReceived[i].getVelY() == worms[i].getVelY());
             REQUIRE(wormsReceived[i].isOnGround() == worms[i].isOnGround());
+            REQUIRE(wormsReceived[i].getCurrentAction() == worms[i].getCurrentAction());
             REQUIRE(wormsReceived[i].getWeapons().size() == worms[i].getWeapons().size());
         }
     }
@@ -108,8 +109,8 @@ TEST_CASE("The amunition sent and received in WormsDTO", "[info]") {
         Position pos(-9.7, .0);
     Position pos2(9.89, -9.1);
 
-    worms.push_back(WormDTO(2, 0, 1, 100, 0.0, 0.0, 1, pos, {0,1,7,0,1}));
-    worms.push_back(WormDTO(1, 0, 2,  100,0.0, 0.0, 1, pos2, {2,3,9,4,1,0}));
+    worms.push_back(WormDTO(2, 0, 1, 100, 0.0, 0.0, 1, 0, pos, {0,1,7,0,1}));
+    worms.push_back(WormDTO(1, 0, 2,  100,0.0, 0.0, 1, 0, pos2, {2,3,9,4,1,0}));
 
     GameMap* gameMapSent = new GameMap(1, numTeams, mapName, beams, worms);
 

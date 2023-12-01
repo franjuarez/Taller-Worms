@@ -49,6 +49,13 @@ enum /*MATCH TYPE*/{
     REFRESH,
 };
 
+enum action {
+    STANDING, //0
+    MOVING, //1
+    JUMPING, //2
+    EJECTED, //3
+};
+
 #define WAITING 0
 #define STARTED 1
 

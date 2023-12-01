@@ -111,7 +111,7 @@ std::vector<WormDTO> ConnectingUser::createWorms(std::vector<WormPosition> worms
     std::vector<WormDTO> worms;
     for(size_t i = 0; i < wormsPositions.size(); i++){
         WormDTO worm(i, STARTING_DIRECTON, STARTING_TEAM, CONFIG.getWormInitialHealth(), 0,
-        0.0f, 0.0f, Position(wormsPositions[i].x, wormsPositions[i].y), STARTING_WEAPONS);
+        0.0f, 0.0f, STANDING, Position(wormsPositions[i].x, wormsPositions[i].y), STARTING_WEAPONS);
         worms.push_back(worm);
     }
     return worms;

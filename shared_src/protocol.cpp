@@ -369,6 +369,7 @@ void Protocol::sendWorms(std::vector<WormDTO> worms) {
         sendFloat(worms[i].getVelX());
         sendFloat(worms[i].getVelY());
         sendUintEight(worms[i].isOnGround());
+        sendUintEight(worms[i].getCurrentAction());
         sendPosition(Position(worms[i].getX(), worms[i].getY()));
         sendWeaponsMap(worms[i].getWeapons());
     }
@@ -386,9 +387,10 @@ std::vector<WormDTO> Protocol::receiveWorms() {
         float velX = receiveFloat();
         float velY = receiveFloat();
         uint8_t onGround = receiveUintEight();
+        uint8_t currentAction = receiveUintEight();
         Position pos = receivePosition();
         std::vector<int> weapons = receiveWeaponsMap();
-        WormDTO worm(id, dir, team, health, velX, velY, onGround, pos, weapons);
+        WormDTO worm(id, dir, team, health, velX, velY, onGround, currentAction, pos, weapons);
         worms.push_back(worm);
     }
     return worms;

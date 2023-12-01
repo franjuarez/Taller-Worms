@@ -6,6 +6,7 @@
 #include "../shared_src/socket.h"
 #include "../game_src/game_dynamic.h"
 #include "../game_src/explosives_dto.h"
+#include "../game_src/constants_game.h"
 #include "../game_src/worm_dto.h"
 #include "../game_src/serializable.h"
 #include "../game_src/supply_box_dto.h"
@@ -28,8 +29,8 @@ TEST_CASE("Sending and receiving a GameDynamic") {
     Position pos(9.7, 11.0);
     Position pos2(9.89, 9.1);
 
-    worms2.push_back(WormDTO(2, 0, 1, 100, 0.9, 4.0, 1, pos, {}));
-    worms2.push_back(WormDTO(1, 1, 2,  0, 0.0, 0.333, 0, pos2, {}));
+    worms2.push_back(WormDTO(2, 0, 1, 100, 0.9, 4.0, 1, STANDING, pos, {}));
+    worms2.push_back(WormDTO(1, 1, 2,  0, 0.0, 0.333, 0, MOVING, pos2, {}));
 
 
     GameDynamic* gameDynamicSent = new GameDynamic(1, 1, -1, worms2, explosives, supplies, teamsHealth);
@@ -51,8 +52,8 @@ TEST_CASE("Testing the worms sent and received in the GameDynamic", "[info]") {
     Position pos(-9.7, 11.0);
     Position pos2(9.89, -9.1);
 
-    worms2.push_back(WormDTO(2, 0, 1, 100, 0.0, 0.0, 1, pos, {}));
-    worms2.push_back(WormDTO(1, 0, 2,  100,0.0, 0.0, 1, pos2, {}));
+    worms2.push_back(WormDTO(2, 0, 1, 100, 0.0, 0.0, 1, STANDING, pos, {}));
+    worms2.push_back(WormDTO(1, 0, 2,  100,0.0, 0.0, 1, JUMPING, pos2, {}));
 
     GameDynamic* gameDynamicSent = new GameDynamic(1, 1, -1, worms2, explosives, supplies, teamsHealth);
 
@@ -77,6 +78,7 @@ TEST_CASE("Testing the worms sent and received in the GameDynamic", "[info]") {
             REQUIRE(wormsReceived[i].getVelX() == worms2[i].getVelX());
             REQUIRE(wormsReceived[i].getVelY() == worms2[i].getVelY());
             REQUIRE(wormsReceived[i].isOnGround() == worms2[i].isOnGround());
+            REQUIRE(wormsReceived[i].getCurrentAction() == worms2[i].getCurrentAction());
             REQUIRE(wormsReceived[i].getWeapons().size() == worms2[i].getWeapons().size());
         }
     }
@@ -86,8 +88,8 @@ TEST_CASE("The amunition sent and received in WormsDTO through GameDynamic", "[i
     Position pos(-9.7, .0);
     Position pos2(9.89, -9.1);
 
-    worms2.push_back(WormDTO(2, 0, 1, 100, 0.0, 0.0, 1, pos, {0,1,7,0,1}));
-    worms2.push_back(WormDTO(1, 0, 2,  100,0.0, 0.0, 1, pos2, {2,3,9,4,1,0}));
+    worms2.push_back(WormDTO(2, 0, 1, 100, 0.0, 0.0, 1, STANDING, pos, {0,1,7,0,1}));
+    worms2.push_back(WormDTO(1, 0, 2,  100,0.0, 0.0, 1, MOVING, pos2, {2,3,9,4,1,0}));
 
     GameDynamic* gameDynamicSent = new GameDynamic(1, 1, -1, worms2, explosives, supplies, teamsHealth);
 
@@ -122,8 +124,8 @@ TEST_CASE("Sending and receiving ExplosivesDTO", "[info]") {
     Position pos(9.7, 11.0);
     Position pos2(9.89, 9.1);
 
-    worms2.push_back(WormDTO(2, 0, 1, 100, 0.9, 4.0, 1, pos, {}));
-    worms2.push_back(WormDTO(1, 1, 2,  0, 0.0, 0.333, 0, pos2, {}));
+    worms2.push_back(WormDTO(2, 0, 1, 100, 0.9, 4.0, 1, MOVING, pos, {}));
+    worms2.push_back(WormDTO(1, 1, 2,  0, 0.0, 0.333, 0, JUMPING, pos2, {}));
 
     explosives.emplace(0 ,ExplosivesDTO(0, 0, Position(1.0, 3.6), 5.3, -3.2));
     explosives.emplace(2, ExplosivesDTO(4, 2, Position(1.8666, 5), 5.3, -3.2));
@@ -159,8 +161,8 @@ TEST_CASE("Sending and receiving SupplyBoxDTO", "[info]") {
     Position pos(9.7, 11.0);
     Position pos2(9.89, 9.1);
 
-    worms2.push_back(WormDTO(2, 0, 1, 100, 0.9, 4.0, 1, pos, {}));
-    worms2.push_back(WormDTO(1, 1, 2,  0, 0.0, 0.333, 0, pos2, {}));
+    worms2.push_back(WormDTO(2, 0, 1, 100, 0.9, 4.0, 1, JUMPING, pos, {}));
+    worms2.push_back(WormDTO(1, 1, 2,  0, 0.0, 0.333, 0, MOVING, pos2, {}));
 
     supplies.emplace(0 ,SupplyBoxDTO(0, 2, true, Position(1.0, 3.6)));
     supplies.emplace(2, SupplyBoxDTO(2, 7, true, Position(1.8666, 5)));
@@ -195,8 +197,8 @@ TEST_CASE("Sending and receiving TeamHealth", "[info]") {
     Position pos(-9.7, 11.0);
     Position pos2(9.89, -9.1);
 
-    worms2.push_back(WormDTO(2, 0, 1, 100, 0.0, 0.0, 1, pos, {}));
-    worms2.push_back(WormDTO(1, 0, 2,  100,0.0, 0.0, 1, pos2, {}));
+    worms2.push_back(WormDTO(2, 0, 1, 100, 0.0, 0.0, 1, STANDING, pos, {}));
+    worms2.push_back(WormDTO(1, 0, 2,  100,0.0, 0.0, 1, STANDING, pos2, {}));
 
     GameDynamic* gameDynamicSent = new GameDynamic(1, 1, -1, worms2, explosives, supplies, teamsHealth);
 

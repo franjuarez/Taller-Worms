@@ -14,17 +14,19 @@ private:
     float velX;
     float velY;
     int onGround;
+    int currentAction;
     Position position;
     std::vector<int> weapons;
 
 public:
-    WormDTO(int id, int dir, int team, int health, float velX, float velY, int onGround, Position position, std::vector<int> weapons);
+    WormDTO(int id, int dir, int team, int health, float velX, float velY, int onGround, int currentAction, Position position, std::vector<int> weapons);
     int getId();
     int getDir();
     int getTeam();
     int getHealth();
     int isAlive();
     int isOnGround();
+    int getCurrentAction();
     float getX();
     float getY();
     float getVelX();
