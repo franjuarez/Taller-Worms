@@ -8,6 +8,16 @@ namespace uiConstants {
 
 #define CONFIG ConfigLoader::getInstance()
 
+
+#define TEAM_COLOR_1 {255,255,255}
+#define TEAM_COLOR_2 {255, 0, 0}
+#define TEAM_COLOR_3 {255, 0, 255}
+#define TEAM_COLOR_4 {255, 129, 0}
+
+
+
+
+
 //worm animation constants
 enum FrameType {
 	STILL_FRAMES = 0,
