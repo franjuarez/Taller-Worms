@@ -19,12 +19,14 @@ bool ThrowGrenade::executeCommand(GameWorld& gameWorld, bool* cheatOn, bool& nee
         return gameWorld.wormThrowGreenGrenade(wormID, angle, dir, power, timer);
     } else if (type == BANANA) {
         return gameWorld.wormThrowBanana(wormID, angle, dir, power, timer);
+    } else if (type == HOLY_GRENADE) {
+        return gameWorld.wormThrowHolyGrenade(wormID, angle, dir, power, timer);
     }
     return false;
 }
 
 void ThrowGrenade::send(Protocol& protocol) {
-    protocol.sendThrowGrenade(this);
+    protocol.sendCommand(this);
 }
 
 int ThrowGrenade::getType() {
@@ -49,6 +51,10 @@ float ThrowGrenade::getPower() {
 
 int ThrowGrenade::getTimer() {
     return this->timer;
+}
+
+int ThrowGrenade::getComType() {
+    return this->commandType;
 }
 
 ThrowGrenade::~ThrowGrenade() {}

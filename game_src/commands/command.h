@@ -33,5 +33,6 @@ public:
     }
     virtual void send(Protocol& protocol) = 0;
     virtual int getID() = 0;
+    virtual int getComType() = 0;
 };
 #endif

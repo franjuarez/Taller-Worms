@@ -1,23 +1,24 @@
-#ifndef TELEPORT_H
-#define TELEPORT_H
+#ifndef DROP_DYNAMITE_H
+#define DROP_DYNAMITE_H
 
 #include "command.h"
-#include "../position.h"
 #include "../../shared_src/protocol.h"
 
 class Protocol;
 
-class Teleport : public Command {
+class DropDynamite : public Command {
 private:
     int wormID;
-    Position pos;
+    int timer;
+    int commandType = COMMAND_DYNAMITE;
 public:
-    Teleport(int wormsID, Position pos);
+    DropDynamite(int wormID, int timer);
     bool executeCommand(GameWorld& gameWorld, bool* cheatOn, bool& needsMove) override;
     void send(Protocol& protocol);
     int getID();
-    float getX();
-    float getY();
-    ~Teleport();
+    int getTimer();
+    int getComType();
+    ~DropDynamite();
 };
+
 #endif

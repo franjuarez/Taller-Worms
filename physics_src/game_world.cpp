@@ -9,16 +9,33 @@ GameWorld::GameWorld(std::shared_ptr<GameMap> gameMap) {
     this->world->SetContactListener(this->listener);
     this->lastProjectileId = 0;
     this->lastBoxId = 0;
-
-    createWater();
+    this->worldBegginningY = 0; //always 0
+    this->worldBegginningX = INFINITY;
+    this->worldEndX = -INFINITY;
+    this->worldMaxY = -INFINITY;
 
     std::vector<BeamDTO> beams = gameMap->getBeams();
     for (BeamDTO& beam : beams) {
         float x = beam.getPosition().getX();
         float y = beam.getPosition().getY();
         bool large = beam.getBeamLength() == CONFIG.getBeamLargeLength() ? true : false;
+
+        if(x < this->worldBegginningX){
+            this->worldBegginningX = x;
+        }
+        if(x > worldEndX){
+            worldEndX = x;
+        }
+        if(y > worldMaxY){
+            worldMaxY = y;
+        }
+
         createBeam(x, y, beam.getAngle(), large);
     }
+
+    this->worldBegginningX -= 10;
+    this->worldEndX += 10;
+    this->worldMaxY += 10;
 
     std::vector<WormDTO> worms = gameMap->getWorms();
     for (WormDTO& worm : worms) {
@@ -31,16 +48,20 @@ GameWorld::GameWorld(std::shared_ptr<GameMap> gameMap) {
         
         createWorm(x, y, id, team, health, weapons);
     }
+
+    createWater();
 }
 
 void GameWorld::createWater(){
     b2BodyDef bd;
     bd.type = b2_staticBody;
-    bd.position.Set(WORLD_WIDTH/2, 0);
+    float worldHalf = (this->worldEndX + this->worldBegginningX) / 2.0f;
+    float worldWidth = abs(this->worldEndX - this->worldBegginningX);
+    bd.position.Set(worldHalf, 0);
     b2Body* body = this->world->CreateBody(&bd);
     b2FixtureDef fd;
     b2PolygonShape shape;
-    shape.SetAsBox(WORLD_WIDTH * 2, 0.1f);
+    shape.SetAsBox(worldWidth * 5, 0.1f);
     fd.shape = &shape;
     body->CreateFixture(&fd);
 
@@ -277,6 +298,97 @@ bool GameWorld::wormThrowBanana(int id, float angle, int direction, float power,
     return true;
 }
 
+b2Body* GameWorld::createDynamite(b2Body* worm, int explosionTimer){
+    int id = this->lastProjectileId;
+    b2Body* body = createProjectile(worm, DYNAMITE, RIGHT, DYNAMITE_WIDTH, DYNAMITE_HEIGHT, 0.0f);
+
+    body->SetFixedRotation(true);
+    Dynamite* dynamiteEntity = new Dynamite(body, entitiesToRemove, entitiesToAdd, id, CONFIG.getDynamiteDamage(), CONFIG.getDynamiteRadius(), explosionTimer);
+    body->GetUserData().pointer = reinterpret_cast<uintptr_t>(dynamiteEntity);
+
+    return body;
+}
+
+bool GameWorld::wormDropDynamite(int id, int explosionTimer){
+    checkWormExists(id);
+    b2Body* worm = this->worms[id];
+    Worm* wormData = (Worm*) worm->GetUserData().pointer;
+    if(!wormData->hasAmmo(DYNAMITE)){
+        return false; 
+    }
+    b2Body* dynamite = createDynamite(worm, explosionTimer);
+    dynamite->SetLinearVelocity(b2Vec2(0, -1)); //So it falls
+    return true;
+}
+
+b2Body* GameWorld::createHolyGrenade(b2Body* worm, int direction, int explosionTimer){
+    int id = this->lastProjectileId;
+    b2Body* body = createProjectile(worm, HOLY_GRENADE, direction, HOLY_GRENADE_WIDTH, HOLY_GRENADE_HEIGHT);
+
+    HolyGrenade* holyGrenadeEntity = new HolyGrenade(body, entitiesToRemove, entitiesToAdd, id, CONFIG.getHolyGrenadeDamage(), CONFIG.getHolyGrenadeRadius(), explosionTimer);
+    body->GetUserData().pointer = reinterpret_cast<uintptr_t>(holyGrenadeEntity);
+
+    return body;
+}
+
+b2Body* GameWorld::createAirAttackMissile(float startingX, float xDest){
+    b2BodyDef bd;
+    bd.type = b2_dynamicBody;
+    bd.position.Set(startingX, this->worldMaxY + AIR_ATTACK_MISSILE_HEIGHT);
+    b2Body* body = this->world->CreateBody(&bd);
+    body->SetBullet(true);
+    b2FixtureDef fd;
+    b2PolygonShape shape;
+    shape.SetAsBox(AIR_ATTACK_MISSILE_WIDTH/2, AIR_ATTACK_MISSILE_HEIGHT/2);
+    fd.shape = &shape;
+    fd.density = 1.0f;
+    body->CreateFixture(&fd);
+
+    body->SetLinearVelocity(b2Vec2(0, -1));
+
+    int id = this->lastProjectileId;
+    this->projectiles[this->lastProjectileId] = body;
+    this->lastProjectileId++;
+    
+    AirAttackMissile* airAttackMissileEntity = new AirAttackMissile(body, entitiesToRemove, entitiesToAdd, id, CONFIG.getAirAttackMissileDamage(), CONFIG.getAirAttackMissileRadius());
+    body->GetUserData().pointer = reinterpret_cast<uintptr_t>(airAttackMissileEntity);
+
+    return body;
+}
+
+bool GameWorld::wormCallAirAttack(int id, float xDest, float yDest){
+    checkWormExists(id);
+    b2Body* worm = this->worms[id];
+    Worm* wormData = (Worm*) worm->GetUserData().pointer;
+
+    if(!wormData->hasAmmo(AIR_ATTACK)){
+        return false; 
+    }
+    float currentX = xDest - AIR_ATTACK_MISSILE_WIDTH - (AIR_ATTACK_MISSILE_AMOUNT/2 * AIR_ATTACK_MISSILE_WIDTH*2);
+    //los separo entre si AIR_ATTACK_MISSILE_WIDTH para que no se superpongan
+    for(int i = 0; i < AIR_ATTACK_MISSILE_AMOUNT; i++){
+        b2Body* missile = createAirAttackMissile(currentX, xDest);
+        currentX += AIR_ATTACK_MISSILE_WIDTH*2;
+    }
+    wormData->reduceAmmo(AIR_ATTACK);
+    return true;
+}
+
+bool GameWorld::wormThrowHolyGrenade(int id, float angle, int direction, float power, int explosionTimer){
+    checkWormExists(id);
+    b2Body* worm = this->worms[id];
+    Worm* wormData = (Worm*) worm->GetUserData().pointer;
+
+    if(!wormData->hasAmmo(HOLY_GRENADE)){
+        return false; 
+    }
+    b2Body* holyGrenade = createHolyGrenade(worm, direction, explosionTimer);
+    b2Vec2 grenadeVel = calculatVelocityOfProjectile(CONFIG.getProjectileMaxSpeed(), angle, direction, power);
+    holyGrenade->SetLinearVelocity(grenadeVel);
+    wormData->changeDirection(direction);
+    return true;
+}
+
 void GameWorld::wormHitWithBat(int id, int direction){
     checkWormExists(id);
     b2Body* worm = this->worms[id];
@@ -288,7 +400,7 @@ void GameWorld::wormHitWithBat(int id, int direction){
 }
 
 bool GameWorld::checkValidTpPosition(float x, float y){
-    if(x < 0 || x > WORLD_WIDTH || y < 0 || y > WORLD_HEIGHT){
+    if(y < 0){
         return false;
     }
     b2AABB aabb;
@@ -302,7 +414,7 @@ bool GameWorld::checkValidTpPosition(float x, float y){
 bool GameWorld::teleportWorm(int id, float x, float y){
     checkWormExists(id);
     Worm* wormData = (Worm*) this->worms[id]->GetUserData().pointer;
-    if(!wormData->hasAmmo(TELEPORT)){
+    if(!wormData->hasAmmo(REMOTE_OPERATED)){
         return false;
     }
     if(checkValidTpPosition(x, y)){
@@ -314,18 +426,22 @@ bool GameWorld::teleportWorm(int id, float x, float y){
     return false;
 }
 
+float randomNumberGenerator(float min, float max){
+    return min + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(max-min)));
+}
+
 Position GameWorld::calculateValidSupplyBoxPosition(){
     int maxAttempts = 100;
     int attempts = 0;
     while(attempts < maxAttempts){
-        float x = rand() % (int) (WORLD_WIDTH - SUPPLY_BOX_WIDTH/2);
+        float x = randomNumberGenerator(this->worldBegginningX, this->worldEndX);
         bool foundBeam = true;
         SupplyQueryCallback callback;
-        this->world->RayCast(&callback, b2Vec2(x, WORLD_HEIGHT), b2Vec2(x, 0));
+        this->world->RayCast(&callback, b2Vec2(x, this->worldMaxY), b2Vec2(x, 0));
         foundBeam &= callback.lastIntersectedType == EntityBeam;
-        this->world->RayCast(&callback, b2Vec2(x + SUPPLY_BOX_WIDTH/2, WORLD_HEIGHT), b2Vec2(x+ SUPPLY_BOX_WIDTH/2, 0));
+        this->world->RayCast(&callback, b2Vec2(x + SUPPLY_BOX_WIDTH/2, this->worldMaxY), b2Vec2(x+ SUPPLY_BOX_WIDTH/2, 0));
         foundBeam &= callback.lastIntersectedType == EntityBeam;
-        this->world->RayCast(&callback, b2Vec2(x - SUPPLY_BOX_WIDTH/2, WORLD_HEIGHT), b2Vec2(x - SUPPLY_BOX_WIDTH/2, 0));
+        this->world->RayCast(&callback, b2Vec2(x - SUPPLY_BOX_WIDTH/2, this->worldMaxY), b2Vec2(x - SUPPLY_BOX_WIDTH/2, 0));
         foundBeam &= callback.lastIntersectedType == EntityBeam;
         if(foundBeam){
             b2Vec2 beamPos = callback.beam->body->GetPosition();

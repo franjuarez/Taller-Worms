@@ -8,10 +8,13 @@ Worm::Worm(b2Body* body, b2Fixture* footSensor, std::unordered_set<b2Body*>& ent
             max_ammo_per_weapon[BAZOOKA] = CONFIG.getBazookaMaxAmmo();
             max_ammo_per_weapon[GREEN_GRENADE] = CONFIG.getGreenGrenadeMaxAmmo();
             max_ammo_per_weapon[BAT] = CONFIG.getBatMaxAmmo();
-            max_ammo_per_weapon[TELEPORT] = CONFIG.getTeleportMaxAmmo();
+            max_ammo_per_weapon[REMOTE_OPERATED] = CONFIG.getTeleportMaxAmmo();
             max_ammo_per_weapon[MORTAR] = CONFIG.getMortarMaxAmmo();
             max_ammo_per_weapon[RED_GRENADE] = CONFIG.getRedGrenadeMaxAmmo();
             max_ammo_per_weapon[BANANA] = CONFIG.getBananaMaxAmmo();
+            max_ammo_per_weapon[DYNAMITE] = CONFIG.getDynamiteMaxAmmo();
+            max_ammo_per_weapon[HOLY_GRENADE] = CONFIG.getHolyGrenadeMaxAmmo();
+            max_ammo_per_weapon[AIR_ATTACK] = CONFIG.getAirAttackMaxAmmo();
         }
 
 

@@ -6,8 +6,6 @@
 #define CONFIG ConfigLoader::getInstance()
 
 //World constants
-#define WORLD_WIDTH 100
-#define WORLD_HEIGHT 70
 #define TIME_STEP 1.0f / CONFIG.getFps()
 #define VELOCITY_ITERATIONS 8
 #define POSITION_ITERATIONS 3 
@@ -18,8 +16,8 @@
 //beam
 #define BEAM_HEIGHT 0.8f
 
-#define WORM_HEIGHT 0.9f
-#define WORM_WIDTH 0.7f
+#define WORM_HEIGHT 0.8f
+#define WORM_WIDTH 0.6f
 #define WORM_DENSITY 1.0f
 #define WORM_FRICTION 0.3f
 
@@ -52,7 +50,19 @@
 //Banana constants
 #define BANANA_WIDTH 0.25f
 #define BANANA_HEIGHT 0.25f
-//taria bueno agregar una constante para ver si la afecta el viento
+
+//Dynamite constants
+#define DYNAMITE_WIDTH 0.25f
+#define DYNAMITE_HEIGHT 0.25f
+
+//Air attack missile constants
+#define AIR_ATTACK_MISSILE_WIDTH 0.25f
+#define AIR_ATTACK_MISSILE_HEIGHT 0.25f
+#define AIR_ATTACK_MISSILE_AMOUNT 6
+
+//Holy grenade constants
+#define HOLY_GRENADE_WIDTH 0.25f
+#define HOLY_GRENADE_HEIGHT 0.25f
 
 //Bat constants
 #define BAT_HEIGHT 0.4f

@@ -14,12 +14,13 @@ class GameInfo : public Serializable {
 private:
 
     std::map<std::string,std::string> matchesAvailable;
+    int serializableType = GAME_INFO;
 
 public:
     GameInfo(std::map<std::string, std::string> matchesAvailable);
 
     void send(Protocol& protocol);
-
+    int getSerType();
     // cambiar a un map donde diga en q mapa esta cada partida 
     // los mapNames van a irse harcodeados 
 

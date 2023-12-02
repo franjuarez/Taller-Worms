@@ -26,13 +26,13 @@ int main(int argc, char** argv) {
 
 	while (std::cin.get() != 'q') {}
 
-	std::cout << "Closing server..." << std::endl;
+	// std::cout << "Closing server..." << std::endl;
 
 	playing = false;
 	lobby.stop();
-	std::cout << "Waiting for lobby to close..." << std::endl;
+	// std::cout << "Waiting for lobby to close..." << std::endl;
 	lobby.join();
-	std::cout << "Server closed" << std::endl;
+	// std::cout << "Server closed" << std::endl;
 	
 	return 0;
 }

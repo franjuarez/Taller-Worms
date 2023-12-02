@@ -57,5 +57,3 @@ ExplosivesDTO ProjectileFragment::getDTO() {
 
 ProjectileFragment::~ProjectileFragment() {}
 
-// ProjectileDTO ProjectileFragment::getDTO(){
-

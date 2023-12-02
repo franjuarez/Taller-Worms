@@ -18,6 +18,8 @@ public:
     virtual void beginCollisionWithWater(Entity* otherBody, b2Contact* contact) override;
     virtual void beginCollisionWithBeam(Entity* otherBody, b2Contact* contact) override;
     virtual void beginCollisionWithWorm(Entity* otherBody, b2Contact* contact) override;
+    virtual void beginCollisionWithSupplyBox(Entity* otherBody, b2Contact* contact) override;
+
 
     ~DelayedProjectile() override;
 };

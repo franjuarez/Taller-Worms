@@ -17,7 +17,7 @@ bool Jump::executeCommand(GameWorld& gameWorld, bool* cheatOn, bool& needsMove) 
 }
 
 void Jump::send(Protocol& protocol) {
-    protocol.sendJump(this);
+    protocol.sendCommand(this);
 }
 
 int Jump::getID() {
@@ -26,6 +26,10 @@ int Jump::getID() {
 
 int Jump::getDir() {
     return this->dir;
+}
+
+int Jump::getComType() {
+    return this->commandType;
 }
 
 Jump::~Jump() {}

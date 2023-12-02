@@ -27,6 +27,8 @@ public:
 
     void startMatch(std::string matchName);
 
+    void reapMatches();
+
     ~MatchesMonitor();
 
 };

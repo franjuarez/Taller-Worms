@@ -93,7 +93,7 @@ private:
 	void clickCase(int i, int x, int y);
 
 	void processInput(SDL_Event event, int i);
-
+	void _focusCam(float x, float y);
 	void focusCam();
 
 public:

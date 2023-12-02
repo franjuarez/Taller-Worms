@@ -22,7 +22,7 @@ bool Cheats::executeCommand(GameWorld& gameWorld, bool* cheatOn, bool& needsMove
 }
 
 void Cheats::send(Protocol& protocol) {
-    protocol.sendCheats(this);
+    protocol.sendCommand(this);
 }
 
 int Cheats::getID() {
@@ -31,6 +31,10 @@ int Cheats::getID() {
 
 int Cheats::getCheatID() {
     return this->cheatID;
+}
+
+int Cheats::getComType() {
+    return this->commandType;
 }
 
 Cheats::~Cheats() {}

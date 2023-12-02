@@ -6,13 +6,12 @@ Move::Move(int id, int dir) : Command(id), wormID(id), dir(dir) {}
 
 bool Move::executeCommand(GameWorld& gameWorld, bool* cheatOn, bool& needsMove) {
     *cheatOn = *cheatOn;
-    // needsMove = needsMove;
     gameWorld.moveWorm(this->wormID, this->dir);
     return needsMove;
 }
 
 void Move::send(Protocol& protocol) {
-    protocol.sendMove(this);
+    protocol.sendCommand(this);
 }
 
 int Move::getID() {
@@ -21,6 +20,10 @@ int Move::getID() {
 
 int Move::getDir() {
     return this->dir;
+}
+
+int Move::getComType() {
+    return this->commandType;
 }
 
 Move::~Move() {}

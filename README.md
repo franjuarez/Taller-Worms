@@ -52,7 +52,7 @@ Una vez hecho esto compilar como fue dicho arriba y usar los ejecutables client 
     * `r`: selecciona la Bazooka
     * `t`: selecciona la Granada verde
     * `y`: selecciona el Hacha
-    * `u`: selecciona el Teleport
+    * `u`: selecciona el RemoteOperated
     * `i`: selecciona el Mortero
     * `o`: selecciona la Granada roja
     * `p`: selecciona la Banana

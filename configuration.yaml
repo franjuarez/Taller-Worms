@@ -8,8 +8,8 @@ game:
   extra_time: 3
 
 camera:
-  viewfield_x: 35
-  viewfield_y: 35
+  viewfield_x: 30
+  viewfield_y: 30
   camera_speed: 5
 
 world:
@@ -30,11 +30,11 @@ worm:
   max_health: 200
 
 move:
-  move_velocity: 0.8
+  move_velocity: 1.6
 
 jump:
-  jump_forward_movement_x: 1
-  jump_forward_movement_y: 0.5
+  jump_forward_movement_x: 2.0
+  jump_forward_movement_y: 2.5
   jump_backwards_movement_x: 0.2
   jump_backwards_movement_y: 1.2
 
@@ -44,8 +44,8 @@ height_damage:
 
 projectile:
   max_speed: 20
-  impulse_factor_x: 10
-  impulse_factor_y: 5
+  impulse_factor_x: 15
+  impulse_factor_y: 9
 
 #-1 of ammo means infinite ammo
 
@@ -116,7 +116,7 @@ teleport:
   max_ammo: -1
 
 supply_box:
-  probability: 0.1 # Has to be between 0 and 1
+  probability: 1 # Has to be between 0 and 1
   # The sum of the 3 probabilities must be 1
   probability_health: 0.4
   probability_ammo: 0.4

@@ -12,7 +12,7 @@ GameDynamic::GameDynamic(int wormPlayingID, int status, int winnerTeam, std::vec
 : Serializable() ,wormPlayingID(wormPlayingID), winnerTeam(winnerTeam), status(status), worms(worms), explosives(explosives), supplyBox(supplyBox), teamsHealth(teamsHealth) {}
 
 void GameDynamic::send(Protocol& protocol) {
-    protocol.sendDynamic(this);
+    protocol.sendSerializable(this);
 }
 
 void GameDynamic::addWorms(std::vector<WormDTO> wormVec) {
@@ -65,6 +65,10 @@ void GameDynamic::setStatus(int newStatus) {
 
 std::unordered_map<int, SupplyBoxDTO> GameDynamic::getSupplyBox() {
     return this->supplyBox;
+}
+
+int GameDynamic::getSerType() {
+    return serializableType;
 }
 
 GameDynamic& GameDynamic::operator=(const GameDynamic& other) {

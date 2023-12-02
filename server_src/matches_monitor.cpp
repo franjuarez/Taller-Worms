@@ -13,6 +13,7 @@ MatchesMonitor::~MatchesMonitor() {
 
 int MatchesMonitor::addMatchStruct(std::string matchName, std::shared_ptr<MatchesStruct> matchStruct ) {
     std::lock_guard<std::mutex> lock(m);
+    reapMatches();
     auto name = matches.find(matchName);
     if (name != matches.end()) {
         return ERROR;
@@ -51,11 +52,27 @@ int MatchesMonitor::joinMatch(std::string matchName, std::shared_ptr<InfoStruct>
 
 void MatchesMonitor::closeMatches() {
     std::lock_guard<std::mutex> lock(m);
-    std::cout << "Cerrando matches" << std::endl;
+    // std::cout << "Cerrando matches" << std::endl;
     for (auto& match : matches) {
         match.second->infoQueue->close();
         match.second->matchStarter->join();
     }
     matches.clear();
-    std::cout << "Matches cerrados" << std::endl;
+    // std::cout << "Matches cerrados" << std::endl;
+}
+
+
+void MatchesMonitor::reapMatches() {
+    // std::lock_guard<std::mutex> lock(m);
+    std::vector<std::string> matchesToDelete = {};
+    for (auto& match : matches) {
+        if (match.second->status == MATCH_OVER) {
+            match.second->infoQueue->close();
+            match.second->matchStarter->join();
+            matchesToDelete.push_back(match.first);
+        }
+    }
+    for (long unsigned int i = 0; i < matchesToDelete.size(); i++) {
+        matches.erase(matchesToDelete[i]);
+    }
 }

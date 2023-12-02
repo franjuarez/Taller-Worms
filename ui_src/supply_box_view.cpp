@@ -49,6 +49,9 @@ void SupplyBoxView::display(int i, Renderer& renderer, int camX, int camY) {
 	);
 }
 
+bool SupplyBoxView::isOver() {
+	return this->currentFramesIndex == NOT_SHOWING_BOX_FRAMES;
+}
 
 void SupplyBoxView::open(int i) {
 	currentFramesIndex = defaultFramesIndex = NOT_SHOWING_BOX_FRAMES;

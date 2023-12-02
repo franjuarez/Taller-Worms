@@ -1,5 +1,5 @@
-#ifndef TELEPORT_CALLBACK_H
-#define TELEPORT_CALLBACK_H
+#ifndef REMOTE_OPERATED_CALLBACK_H
+#define REMOTE_OPERATED_CALLBACK_H
 
 #include <vector>
 #include "../entities/beam.h"
