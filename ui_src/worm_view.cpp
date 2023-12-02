@@ -18,49 +18,50 @@ WormView::WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets, Fon
 	float x, y, w, h;
 	
 	//frames for still animation
+
+	x = 19;
+	w = 22;
+	h = 26;
 	for (int i = 0; i < 35; i++) {
-		x = 19;
-		w = 22;
 		y = i*(60) + 16;
-		h = 26;
 		frames[STILL_FRAMES].push_back(Rect(x,y,w,h));
 	}
 
 
 	//frames for jumping animation
+	x = 19;
+	w = 22;
+	h = 36;
 	for (int i = 0; i < 10; i++) {
-		x = 19;
-		w = 22;
 		y = i*(60) + 12;
-		h = 36;
 		frames[JUMPING_FRAMES].push_back(Rect(x,y,w,h));
 	}
 
 	//frames for walking animation
+	w = 28;
+	h = 29;
 	for (int i = 0; i < 15; i++) {
 		x = 11 - (i/2);
-		w = 28;
 		y = i*(60) + 14;
-		h = 29;
 		frames[WALKING_FRAMES].push_back(Rect((int)x,y,w,h));
 	}
 
 	//frames for surrending animation
+	x = 19;
+	w = 29;
+	h = 36;
 	for (int i = 0; i < 16; i++) {
-		x = 19;
-		w = 29;
 		y = i * 60 + 7;
-		h = 36;
 		frames[SURRENDING_FRAMES].push_back(Rect(x,y,w,h));
 	}
 	
 
 	//frames for dying/grave animation
+	x = 18;
+	w = 23;
+	h = 29;
 	for (int i = 0; i < 20; i++) {
-		x = 18;
-		w = 23;
 		y = 60*i + 4;
-		h = 29;
 		frames[POSTMORTEM_FRAMES].push_back(Rect(x,y,w,h));
 	}
 
@@ -71,155 +72,155 @@ WormView::WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets, Fon
 
 
 	//frames for hitting animation
+	x = 0;
+	w = 85;
+	h = 82;
 	for (int i = 0; i < 4; i++) {
-		x = 0;
 		y = i * 104 + 16;
-		w = 85;
-		h = 82;
 		frames[HITTING_FRAMES].push_back(Rect(x,y,w,h));
 	}
 
 	//frames for drawing the axe
+	x = 10;
+	w = 73;
+	h = 78;
 	for (int i = 0; i < 15; i++) {
-		x = 10;
 		y = i * 104 + 20;
-		w = 73;
-		h = 78;
 		frames[DRAWING_AXE_FRAMES].push_back(Rect(x,y,w,h));	
 	}
 
 	//frames for holding the axe still
+	x = 10;
+	w = 73;
+	h = 78;
 	for (int i = 0; i < 18; i++) {
-		x = 10;
 		y = i * 104 + 20;
-		w = 73;
-		h = 78;
 		frames[HOLDING_AXE_FRAMES].push_back(Rect(x,y,w,h));
 	}
 	
 
 	//frames for drawing bazoka
+	x = 13;
+	w = 34;
+	h = 28;
 	for (int i = 0; i < 7; i++) {
-		x = 13;
 		y = i*60 + 15;
-		w = 34;
-		h = 28;
 		frames[DRAWING_BAZOKA_FRAMES].push_back(Rect(x,y,w,h));
 	}
 
 	//frames for holding bazoka
+	x = 13;
+	w = 34;
+	h = 25;
 	for (int i = 0; i < 32; i++) {
-		x = 13;
 		y = i*60  + 17;
-		w = 34;
-		h = 25;
 		frames[HOLDING_BAZOKA_FRAMES].push_back(Rect(x,y,w,h));
 	}
 
 
 	//frames for drawing red grenade
+	x = 18;
+	h = 27;
+	w = 29;
 	for (int i = 0; i < 10; i++)  {
-		x = 18;
 		y = 60*i + 16;
-		w = 29;
-		h = 27;
 		frames[DRAWING_RG_FRAMES].push_back(Rect(x,y,w,h));
 	}
 
 	//frames for holding red grenade
+	x = 13;
+	w = 34;
+	h = 31;
 	for (int i = 0; i < 32; i++) {
-		x = 13;
 		y = i * 60 + 12;
-		w = 34;
-		h = 31;
 		frames[HOLDING_RG_FRAMES].push_back(Rect(x,y,w,h));
 	}
 
 	//drawing banana
+	x = 20;
+	w = 32;
+	h = 27;
 	for (int i = 0; i < 10; i++) {
-		x = 20;
-		w = 32;
 		y = 60 * i + 15;
-		h = 27;
 		frames[DRAWING_BANANA_FRAMES].push_back(Rect(x,y,w,h));
 	}
 	//holding banana
+	x = 13;
+	w = 34;
+	h = 27;
 	for (int i = 0; i < 32; i++) {
-		x = 13;
 		y = i*60 + 15;
-		w = 34;
-		h = 27;
 		frames[HOLDING_BANANA_FRAMES].push_back(Rect(x,y,w,h));
 	}
 	//frames for drawing  green grenademortar
+	x = 18;
+	w = 29;
+	h = 27;
 	for (int i = 0; i < 10; i++)  {
-		x = 18;
 		y = 60*i + 16;
-		w = 29;
-		h = 27;
 		frames[DRAWING_GG_FRAMES].push_back(Rect(x,y,w,h));
 	}
 
 	//frames for holding green grenade
+	x = 13;
+	w = 34;
+	h = 31;
 	for (int i = 0; i < 32; i++) {
-		x = 13;
 		y = i * 60 + 12;
-		w = 34;
-		h = 31;
 		frames[HOLDING_GG_FRAMES].push_back(Rect(x,y,w,h));
 	}
 
 
 		//frames for drawing mortar
+	x = 13;
+	w = 34;
+	h = 28;
 	for (int i = 0; i < 7; i++) {
-		x = 13;
 		y = i*60 + 15;
-		w = 34;
-		h = 28;
 		frames[DRAWING_MORTAR_FRAMES].push_back(Rect(x,y,w,h));
 	}
 
 	//frames for holding mortar
+	x = 13;
+	w = 34;
+	h = 25;
 	for (int i = 0; i < 32; i++) {
-		x = 13;
 		y = i*60  + 17;
-		w = 34;
-		h = 25;
 		frames[HOLDING_MORTAR_FRAMES].push_back(Rect(x,y,w,h));
 	}
 
 	//frames for drawing tp
+	x = 13;
+	w = 28;
+	h = 28;
 	for (int i = 0; i < 10; i++) {
-		x = 13;
 		y = i*60 + 15;
-		w = 28;
-		h = 28;
 		frames[DRAWING_TP_FRAMES].push_back(Rect(x,y,w,h));
 	}
 
 	//frames for holding tp
+	x = 13;
+	w = 29;
+	h = 31;
 	for (int i = 4; i < 45; i += 2) {
-		x = 13;
 		y = i * 60 + 12;
-		w = 29;
-		h = 31;
 		frames[HOLDING_TP_FRAMES].push_back(Rect(x,y,w,h));
 	}
 
+	x = 13;
+	w = 29;
+	h = 31;
 	for (int i = 44; i >= 4; i -= 2) {
-		x = 13;
 		y = i * 60 + 12;
-		w = 29;
-		h = 31;
 		frames[HOLDING_TP_FRAMES].push_back(Rect(x,y,w,h));
 	}
 
 	//frames for when the worm's team won
+	x = 7;
+	w = 45;
+	h = 45;
 	for (int i = 0; i < 14; i++) {
-		x = 7;
 		y = i * 60;
-		w = 45;
-		h = 45;
 		frames[WWINNER_FRAMES].push_back(Rect(x,y,w,h));
 	}
 
