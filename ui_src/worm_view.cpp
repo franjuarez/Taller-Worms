@@ -538,7 +538,7 @@ void WormView::display(int i, Renderer& renderer, int camX, int camY, int mouseX
 	}
 
 	if (currentFramesIndex == HITTING_FRAMES) {
-		x += flip ? 7 : 7;
+		x += flip ? 6 : 6;
 	}
 	Rect destiny(x,y,w,h);
 		
