@@ -596,41 +596,36 @@ void GameView::draw(int i) {
 }
 
 
+void GameView::_focusCam(float x, float y) {
+	this->camX = x * m_to_pix_x - WINDOW_WIDTH / 2;
+	this->camY = y * m_to_pix_y + WINDOW_HEIGHT - WINDOW_HEIGHT / 2;
+}
 
 void GameView::focusCam() {
 	float x,y;
-	x = y = -1.0;
 	if ((currentGameStatus.getExplosives().size() >= 1) && (currentGameStatus.getExplosives().begin()->second.getType() != FRAGMENT)) {
 		x = currentGameStatus.getExplosives().begin()->second.getX();
 		y = currentGameStatus.getExplosives().begin()->second.getY();
+		return _focusCam(x,y);
 	}
 
-	if (x < 0 && y < 0 && currentGameStatus.getSupplyBox().size() >= 1) {
-		for (auto it = recievedBoxes.begin(); it != recievedBoxes.end(); it++)  {
-			if (it->second.isFalling()) {
-				x = it->second.getX();
-				y = it->second.getY();
-			}
+	for (auto it = recievedBoxes.begin(); it != recievedBoxes.end(); it++)  {
+		if (it->second.isFalling()) {
+			x = it->second.getX();
+			y = it->second.getY();
+			return _focusCam(x,y);
 		}
 	}
 
-	if (x < 0 && y < 0) {
-		std::vector<WormDTO> recievedWorms = currentGameStatus.getWorms();
-		for (auto &worm : recievedWorms) {
-			if (worm.getVelX() == 0 && worm.getVelY() == 0)
-				continue;
-			x = worm.getX();
-			y = worm.getY();
-		}
 
+	std::vector<WormDTO> recievedWorms = currentGameStatus.getWorms();
+	for (auto &worm : recievedWorms) {
+		if (worm.getVelX() == 0 && worm.getVelY() == 0)
+			continue;
+		x = worm.getX();
+		y = worm.getY();
+		return _focusCam(x,y);
 	}
-
-	if (x >= 0 && y >= 0) {
-		camX = x * m_to_pix_x - WINDOW_WIDTH / 2;
-		camY = y * m_to_pix_y + WINDOW_HEIGHT - WINDOW_HEIGHT / 2;
-
-	}
-
 
 }
 
