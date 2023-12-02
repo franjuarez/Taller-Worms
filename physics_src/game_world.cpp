@@ -323,17 +323,11 @@ b2Body* GameWorld::createAirAttackMissile(float startingX, float xDest){
     fd.density = 1.0f;
     body->CreateFixture(&fd);
 
-    float velX = 0.0f;
-    if(startingX < xDest){
-        velX = 0.1f;
-    } else{
-        velX = -0.1f;
-    }
-
-    body->SetLinearVelocity(b2Vec2(velX, -1)); //So it falls
+    body->SetLinearVelocity(b2Vec2(0, -1));
 
     int id = this->lastProjectileId;
     this->projectiles[this->lastProjectileId] = body;
+    this->lastProjectileId++;
     
     AirAttackMissile* airAttackMissileEntity = new AirAttackMissile(body, entitiesToRemove, entitiesToAdd, id, CONFIG.getAirAttackMissileDamage(), CONFIG.getAirAttackMissileRadius());
     body->GetUserData().pointer = reinterpret_cast<uintptr_t>(airAttackMissileEntity);
@@ -353,7 +347,6 @@ bool GameWorld::wormCallAirAttack(int id, float xDest, float yDest){
     //los separo entre si AIR_ATTACK_MISSILE_WIDTH para que no se superpongan
     for(int i = 0; i < AIR_ATTACK_MISSILE_AMOUNT; i++){
         b2Body* missile = createAirAttackMissile(currentX, xDest);
-        std::cout << "Missile created at: " << currentX << std::endl;
         currentX += AIR_ATTACK_MISSILE_WIDTH*2;
     }
     wormData->reduceAmmo(AIR_ATTACK);
