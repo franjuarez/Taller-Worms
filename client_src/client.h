@@ -13,9 +13,9 @@
 #include "../game_src/game_dynamic.h"
 #include "../game_src/commands/command.h"
 
-struct ClientClosed : public std::runtime_error {
-    ClientClosed() : std::runtime_error("Client is closed") {} 
-}; 
+// struct ClientClosed : public std::runtime_error {
+//     ClientClosed() : std::runtime_error("Client is closed") {} 
+// }; 
 
 class Client {
 private:

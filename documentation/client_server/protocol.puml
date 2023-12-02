@@ -1,0 +1,116 @@
+@startuml protocol
+
+class Protocol {
+    Socket skt;
+
+    void sendSerializable(Serializable* serializable);
+    void sendCommand(Command* command);   
+    std::shared_ptr<Serializable> receiveSerializable();
+    std::shared_ptr<Command> receiveCommand();
+    void sendAllOk(int okCode);
+    int receiveAllOk();
+    void boom();
+}
+
+
+class Command {
+    int team;
+    int wormID;
+    virtual bool executeCommand(GameWorld&, bool* cheatOn, bool& needsMovement);
+    virtual void executeCommand(ConnectingUser&);
+    virtual void send(Protocol& protocol) = 0;
+    virtual int getID() = 0;
+    virtual int getComType() = 0;
+}
+
+class Serializable {
+    int serializableType;
+    virtual void send(Protocol& protocol) = 0;
+    virtual int getSerType() = 0;
+}
+
+class GameMap {
+    int team;
+    int numberTeams;
+    std::string mapName;
+    std::vector<BeamDTO> beamsMap;
+    std::vector<WormDTO> worms;
+}
+
+class GameDynamic {
+    int wormPlayingID;
+    int winnerTeam;
+    int status;
+    std::vector<WormDTO>;
+    std::unordered_map<int, ExplosivesDTO>;
+    std::unordered_map<int, SupplyBoxDTO>;
+    std::vector<uint32_t>;
+
+}
+
+class GameInfo {
+    std::map<std::string,std::string> matchesAvailable;
+}
+
+class Move {
+    int wormID;
+    int dir;
+}
+
+class Cheats {
+    int wormID;
+    int cheatID;
+}
+
+class HitUpclose {
+    int wormID;
+    int dir;
+}
+
+class Jump {
+    int wormID;
+    int dir;
+}
+
+class LaunchRocket {
+    int type;
+    int wormID;
+    int dir;
+    float angle;
+    float power;
+}
+
+class MatchCommand {
+    int type;
+    int nrPlayers;
+    std::string match;
+    std::string map;
+}
+
+class RemoteOperated {
+    int wormID;
+    Position pos;
+}
+
+class ThrowGrenade {
+    int wormID;
+    Position pos;
+}
+
+Serializable <|-- GameMap
+Serializable <|-- GameDynamic
+Serializable <|-- GameInfo
+
+Command <|-- Move
+Command <|-- Cheats
+Command <|-- HitUpclose
+Command <|-- Jump
+Command <|-- LaunchRocket
+Command <|-- MatchCommand
+Command <|-- RemoteOperated
+Command <|-- ThrowGrenade
+
+Protocol --> Serializable
+Protocol --> Command
+
+@enduml

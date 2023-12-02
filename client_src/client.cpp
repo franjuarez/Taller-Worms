@@ -13,16 +13,13 @@ Client::Client(std::shared_ptr<InfoStruct> infoStruct) : infoStruct(infoStruct)
 }
 
 std::shared_ptr<Serializable> Client::getGameStatus() {
-    try {
-        if (!lastGameStatus) {
-            lastGameStatus = gameStatusQueue.pop();
-            return this->lastGameStatus;
-        }
-        while (gameStatusQueue.try_pop(this->lastGameStatus)) {}
+    if (!lastGameStatus) {
+        lastGameStatus = gameStatusQueue.pop();
         return this->lastGameStatus;
-    } catch (const ClosedQueue& e) {
-        throw ClientClosed();
     }
+    while (gameStatusQueue.try_pop(this->lastGameStatus)) {}
+    return this->lastGameStatus;
+
 }
 
 void Client::start() {
@@ -48,11 +45,7 @@ void Client::join() {
 }
 
 void Client::execute(std::shared_ptr<Command> command) {
-    try {
-        commandsQueue.push(command);
-    } catch (const ClosedQueue& e) {
-        throw ClientClosed();
-    } 
+    commandsQueue.push(command);
 }
 
 

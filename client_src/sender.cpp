@@ -13,15 +13,16 @@ void Sender::run() {
             command->send(protocol);    
         }
     } catch (const ClosedSocket& e){
-        std::cout << "Sender: Se ha cerrado la conexion\n";
         keepTalking = false;
+        throw ClientClosed();
     } catch (const ClosedQueue& e){
-        std::cout << "Sender: Se ha cerrado la queue\n";
         keepTalking = false;
+        throw ClientClosed();
     } catch (std::exception& e){
         std::cout << "Error in receiver: " << e.what() << std::endl;
         keepTalking = false;
-    } 
+        throw ClientClosed();
+    }
 }
 
 Sender::~Sender() {}

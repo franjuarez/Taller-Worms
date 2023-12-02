@@ -1,0 +1,38 @@
+@startuml client
+
+class ClientLobby {
+    std::shared_ptr<InfoStruct> infoStruct;
+    void run();
+    void showMatches();
+    int createNewMatch(int nrPlayers, std::string matchName, std::string mapName);
+    int joinMatch(std::string matchName);
+    void refresh();
+    void startGame();
+    std::map<std::string, std::string> getAvailableMatches();
+}
+
+class Client {
+	int team;
+	std::shared_ptr<InfoStruct> infoStruct;
+	Queue<std::shared_ptr<Serializable>> gameStatusQueue;
+	Queue<std::shared_ptr<Command>> commandsQueue;
+	std::shared_ptr<Serializable> lastGameStatus;
+	bool keepTalking = true;
+}
+
+class Receiver {
+    Protocol& protocol;
+    Queue<std::shared_ptr<Serializable>>& gameStatuses;
+    bool& keepTalking;
+}
+
+class Sender {
+    Protocol& protocol;
+    Queue<std::shared_ptr<Command>>& commandsQueue;
+    bool& keepTalking;
+}
+
+Client --> Receiver
+Client --> Sender
+
+@enduml

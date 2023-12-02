@@ -1,0 +1,129 @@
+@startuml server 
+
+class Lobby {
+    Socket skt;
+    std::string mapName;
+    std::list<ConnectingUser*> connectingUsers;
+    void killAll();
+    void createNewMatch(std::string mapName, std::string matchName);
+    void selectMatch(std::string matchName);
+    void run() override;
+}
+
+class GameLoop {
+    Queue<std::shared_ptr<Command>>& commandsQueue; 
+    StatusBroadcaster& statusBroadcaster;
+    std::vector<Team> teams;
+    bool waitingForStatic;
+    bool waitingExtraTime;
+    bool cheatOn;
+    void loopLogic(int64_t passed_time);
+    int updateWinningStatus();
+    void changeWormPlaying(std::vector<WormDTO> worms);
+    int dropSupplyBox();
+    void run() override;
+}
+
+class Match {
+    std::vector<Team> teams;
+    std::shared_ptr<Queue<std::shared_ptr<InfoStruct>>> playerInfoQueue;
+    std::string matchName;
+    int numberOfPlayers;
+    std::list<Player*> players;
+    std::shared_ptr<GameMap> gameMap;
+    int* status;
+    void killAll();
+    void run() override;
+}
+
+class Player {
+    int playerID;
+    std::shared_ptr<InfoStruct> infoStruct;
+    Queue<std::shared_ptr<Command>>& commandsQueue;
+    Queue<std::shared_ptr<Serializable>> playerQueue; 
+    ServerSender sender;
+    ServerReceiver receiver;
+
+}
+
+class ConnectingUser {
+
+    std::shared_ptr<InfoStruct> infoStruct;
+    MatchesMonitor& matchesMonitor;
+    std::vector<Team> createTeams(std::vector<WormDTO>& worms, int numberOfPlayers);
+    std::vector<WormDTO> createWorms(std::vector<WormPosition> wormsPositions);
+    void createNewMatch(int numberOfPlayers, std::string matchName, std::string mapName);
+    void joinMatch(std::string matchName);
+    void refresh();
+
+}
+
+class MatchesMonitor {
+    std::mutex m;
+    std::map<std::string, std::shared_ptr<MatchesStruct>> matches;
+    int addMatchStruct(std::string matchName, std::shared_ptr<MatchesStruct> matchStruct );
+    std::map<std::string, std::string> showMatchesAvailable(); 
+    int joinMatch(std::string matchName, std::shared_ptr<InfoStruct> infoStruct);
+    void closeMatches();
+    void startMatch(std::string matchName);
+    void reapMatches();
+}
+
+class ServerReceiver {
+    Protocol& protocol;
+    StatusBroadcaster& statusBroadcaster;
+    bool& talking;
+    int playerID;
+}
+
+class ServerSender {
+    Protocol& protocol;
+    StatusBroadcaster& statusBroadcaster;
+    bool& talking;
+    int playerID;
+}
+
+class StatusBroadcaster {
+    std::mutex m;
+    std::map<int, Queue<std::shared_ptr<Serializable>>*> playersQueues;
+    void addPlayer(int id, Queue<std::shared_ptr<Serializable>>* playerQueue);
+    void broadcast(std::shared_ptr<Serializable> game);
+    std::shared_ptr<Serializable> getGame(int id);
+    void deletePlayer(int id);
+    bool isEmpty();
+}
+
+class Team {
+    int teamId;
+    int idPosition;
+    std::vector<int> wormIDs; 
+    int getNextWormID();
+    void removeWormID(int wormID);
+    bool checkWormExists(int wormID);
+    void addWorm(int wormID);
+    std::vector<int> getWormIDs();
+    bool hasWorms();
+}
+
+struct MatchStruct {
+    std::string mapName;
+    std::unique_ptr<Match> matchStarter;
+    std::shared_ptr<Queue<std::shared_ptr<InfoStruct>>> infoQueue;
+}
+
+
+Match --> GameLoop
+Match --> Player  
+
+GameLoop --> Team
+GameLoop --> StatusBroadcaster
+
+Player --> ServerSender
+Player --> ServerReceiver
+
+Lobby --> MatchesMonitor
+Lobby --> ConnectingUser
+
+MatchesMonitor --> MatchStruct : association
+
+@enduml
