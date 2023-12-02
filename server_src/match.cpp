@@ -34,6 +34,8 @@ void Match::run() {
 
     gameLoop.run();
 
+    std::cout << "sali del loop" << std::endl;
+
     commandQueue.close();
 
     killAll();
