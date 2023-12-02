@@ -33,7 +33,7 @@ void GameLoop::run() {
     	} catch (std::exception& e) {
 			std::cout << "Error in game loop: " << e.what() << std::endl;
 			return;
-		} 
+		}
 	}
 }
 
@@ -50,41 +50,16 @@ void GameLoop::loopLogic(int64_t elapsed_time) {
 
 	gameWorld.update();
 	std::shared_ptr<GameDynamic>gameDynamic(gameWorld.getGameStatus(wormPlayingID));
-	if (waitingForStatic && !cheatOn) {
-		gameDynamic->setWormPlayingID(NO_WORM_PLAYING);
-	}
-	
 	std::vector<WormDTO> worms = gameDynamic->getWorms();
-	int wormPlayingNewHealth;
-	std::vector<uint32_t> teamsHealth(teams.size(), 0);
-	for (size_t i = 0; i < worms.size(); i++) {
+	int wormPlayingNewHealth = updateGameDynamic(gameDynamic, worms);
 
-		teamsHealth[worms[i].getTeam()] += worms[i].getHealth();
-		
-		int wormId = worms[i].getId();
-
-		if (wormId == wormPlayingID) {
-			wormPlayingNewHealth = worms[i].getHealth();
-		}
-
-		int wormTeam = worms[i].getTeam();
-		if (!worms[i].isAlive() && teams[wormTeam].checkWormExists(wormId)) {
-			teams[wormTeam].removeWormID(wormId);
-		}
+	if (gameOver) {
+		return;
 	}
-
-	
-	gameDynamic->setTeamsHealth(teamsHealth);
-	int winnerStatus = updateWinningStatus();
-	gameDynamic->setWinnerTeam(winnerStatus);
-	gameDynamic->setStatus(STARTED);
-
-	statusBroadcaster.broadcast(gameDynamic);
 
 	if (waitingExtraTime) {
 		auto current_time_t = std::chrono::steady_clock::now();
 		auto extraTime = std::chrono::duration_cast<std::chrono::milliseconds>(current_time_t - this->start_extra_time).count();
-
 
 		if (extraTime > CONFIG.getExtraTime() * 1000 ) {
 			waitingForStatic = true;
@@ -122,6 +97,40 @@ void GameLoop::loopLogic(int64_t elapsed_time) {
 		}
 	} 
 
+}
+
+
+int GameLoop::updateGameDynamic(std::shared_ptr<GameDynamic> gameDynamic, std::vector<WormDTO> worms) {
+	if (waitingForStatic && !cheatOn) {
+		gameDynamic->setWormPlayingID(NO_WORM_PLAYING);
+	}
+	int wormPlayingNewHealth;
+	std::vector<uint32_t> teamsHealth(teams.size(), 0);
+	for (size_t i = 0; i < worms.size(); i++) {
+
+		teamsHealth[worms[i].getTeam()] += worms[i].getHealth();
+		
+		int wormId = worms[i].getId();
+
+		if (wormId == wormPlayingID) {
+			wormPlayingNewHealth = worms[i].getHealth();
+		}
+
+		int wormTeam = worms[i].getTeam();
+		if (!worms[i].isAlive() && teams[wormTeam].checkWormExists(wormId)) {
+			teams[wormTeam].removeWormID(wormId);
+		}
+	}
+
+	
+	gameDynamic->setTeamsHealth(teamsHealth);
+	int winnerStatus = updateWinningStatus();
+	gameDynamic->setWinnerTeam(winnerStatus);
+	gameDynamic->setStatus(STARTED);
+
+	statusBroadcaster.broadcast(gameDynamic);	
+
+	return wormPlayingNewHealth;
 }
 
 
