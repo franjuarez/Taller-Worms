@@ -281,6 +281,7 @@ b2Body* GameWorld::createDynamite(b2Body* worm, int explosionTimer){
     int id = this->lastProjectileId;
     b2Body* body = createProjectile(worm, DYNAMITE, RIGHT, DYNAMITE_WIDTH, DYNAMITE_HEIGHT, 0.0f);
 
+    body->SetFixedRotation(true);
     Dynamite* dynamiteEntity = new Dynamite(body, entitiesToRemove, entitiesToAdd, id, CONFIG.getDynamiteDamage(), CONFIG.getDynamiteRadius(), explosionTimer);
     body->GetUserData().pointer = reinterpret_cast<uintptr_t>(dynamiteEntity);
 

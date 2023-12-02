@@ -45,7 +45,7 @@ height_damage:
 projectile:
   max_speed: 20
   impulse_factor_x: 10
-  impulse_factor_y: 5
+  impulse_factor_y: 6
 
 #-1 of ammo means infinite ammo
 

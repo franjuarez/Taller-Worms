@@ -2,7 +2,7 @@
 #include "../constants_game.h"
 
 
-DropDynamite::DropDynamite(int id, int dir) : Command(id), wormID(id), timer(timer) {}
+DropDynamite::DropDynamite(int id, int timer) : Command(id), wormID(id), timer(timer) {}
 
 bool DropDynamite::executeCommand(GameWorld& gameWorld, bool* cheatOn, bool& needsMove) {
     *cheatOn = *cheatOn;

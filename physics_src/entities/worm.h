@@ -58,7 +58,7 @@ class Worm : public Entity {
     bool isDead();
 
     int getId();
-
+    
     void changeDirection(int direction);
 
     void move(int direction);
