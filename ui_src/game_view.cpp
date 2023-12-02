@@ -21,7 +21,7 @@
 #define MUSIC_PATH BASE_PATH + "music/AdhesiveWombat_Night Shade.mp3"
 
 #define WORM_LIFE_FONT_PATH BASE_PATH + "fonts/lazy.ttf"
-#define HUB_FONT_PATH BASE_PATH + "fonts/arcadeclassic/ARCADECLASSIC.TTF"
+#define HUD_FONT_PATH BASE_PATH + "fonts/arcadeclassic/ARCADECLASSIC.TTF"
 
 //#define BACKGROUND_PATH BASE_PATH + "images/background.png"
 #define WAITING_SCREEN_PATH BASE_PATH + "images/dont_panic.bmp"
@@ -103,7 +103,7 @@ GameView::GameView(std::shared_ptr<InfoStruct> infoStruct) :
 		renderer(window, -1 /*any driver*/, SDL_RENDERER_ACCELERATED),
 		mixer(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 4096),
 		sound(MUSIC_PATH), // OGG sound file
-		wormsFont(HUB_FONT_PATH, 26), hudFont(HUB_FONT_PATH, 42), toolBarFont(WORM_LIFE_FONT_PATH, 11),
+		wormsFont(HUD_FONT_PATH, 26), hudFont(HUD_FONT_PATH, 42), toolBarFont(WORM_LIFE_FONT_PATH, 11),
 		waitingScreen(renderer, Surface(WAITING_SCREEN_PATH).SetColorKey(true,0)),
 		losingScreen(renderer, LOSING_SCREEN_PATH),
 		beamSprite(renderer, BEAM_PATH),
@@ -519,18 +519,19 @@ void GameView::drawHud(int i) {
 			);
 
 		//power indicator
+		if (inputState != TP_CODE /*&& inputState != AIRSTRIKE_CODE */ && inputState != BAT_CODE) {
+			renderer.SetDrawColor(255,5,5,255);
 
-		renderer.SetDrawColor(255,5,5,255);
-
-		int squares_size = 20;
-		int separation = 5;
-		for (int i = 0; i * (MAX_THROWING_POWER / 10) < throwPower; i ++) {
-			renderer.SetDrawColor(i * 255 / 10, (10-i) * 255 / 10, 5, 250);
-			renderer.FillRect(Rect(
-				WINDOW_WIDTH - (i * (squares_size + separation)) + separation,
-				0, squares_size, squares_size
-			));
-}
+			int squares_size = 20;
+			int separation = 5;
+			for (int i = 0; i * (MAX_THROWING_POWER / 10) < throwPower; i ++) {
+				renderer.SetDrawColor(i * 255 / 10, (10-i) * 255 / 10, 5, 250);
+				renderer.FillRect(Rect(
+					WINDOW_WIDTH - (i * (squares_size + separation)) + separation,
+					0, squares_size, squares_size
+				));
+			}
+		}
 	
 	}
 
