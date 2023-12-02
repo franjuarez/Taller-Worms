@@ -220,7 +220,7 @@ GameView::GameView(std::shared_ptr<InfoStruct> infoStruct) :
 
 
 	this->currentWormId = -1;
-	this->bombTimer = 3;
+	this->bombTimer = 5;
 	this->inputState = 0;
 	this->winnerTeam = -1;
 	this->throwPower = 10;
@@ -456,6 +456,7 @@ void GameView::drawHud(int i) {
 	int toolBarCellMargin = 4;
 
 	float keyHintRelativeSize = 0.2;
+	float ammoHintRelativeSize = 0.3;
 
 	renderer.SetDrawColor(3,3,3, 255);
 	renderer.FillRect(0, 0, 
@@ -494,6 +495,20 @@ void GameView::drawHud(int i) {
 			toolBarH * keyHintRelativeSize);
 
 		renderer.Copy(keybindingsTexts[i], NullOpt, keyhintPosition);
+
+		//if (weapons[i] <= 0)
+		//	break
+		Rect ammoPosition(
+			i*(toolBarCellWidth + toolBarCellMargin) + toolBarCellMargin + (toolBarCellWidth * (1-ammoHintRelativeSize)),
+			verticalMargin + (verticalMargin),
+			toolBarCellWidth * ammoHintRelativeSize,
+			toolBarH * ammoHintRelativeSize
+		);
+		std::string ammoText(weapons[i] <= 0 ? " " : ::std::__cxx11::to_string(weapons[i]));
+
+		Texture ammoIndicator(renderer, hudFont.RenderText_Solid(ammoText, {255,255,255}));
+		renderer.Copy(ammoIndicator, NullOpt, ammoPosition);
+
 
 
 	}
