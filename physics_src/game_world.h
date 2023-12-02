@@ -37,6 +37,10 @@ class GameWorld {
 private:
     b2World* world;
     Listener* listener;
+    float worldBegginningX;
+    float worldBegginningY;
+    float worldMaxY;
+    float worldEndX;
     int lastProjectileId;
     int lastBoxId;
     std::unordered_map<int, b2Body*> projectiles;

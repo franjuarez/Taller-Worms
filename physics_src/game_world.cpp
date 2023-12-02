@@ -9,16 +9,33 @@ GameWorld::GameWorld(std::shared_ptr<GameMap> gameMap) {
     this->world->SetContactListener(this->listener);
     this->lastProjectileId = 0;
     this->lastBoxId = 0;
-
-    createWater();
+    this->worldBegginningY = 0; //always 0
+    this->worldBegginningX = INFINITY;
+    this->worldEndX = -INFINITY;
+    this->worldMaxY = -INFINITY;
 
     std::vector<BeamDTO> beams = gameMap->getBeams();
     for (BeamDTO& beam : beams) {
         float x = beam.getPosition().getX();
         float y = beam.getPosition().getY();
         bool large = beam.getBeamLength() == CONFIG.getBeamLargeLength() ? true : false;
+
+        if(x < this->worldBegginningX){
+            this->worldBegginningX = x;
+        }
+        if(x > worldEndX){
+            worldEndX = x;
+        }
+        if(y > worldMaxY){
+            worldMaxY = y;
+        }
+
         createBeam(x, y, beam.getAngle(), large);
     }
+
+    this->worldBegginningX -= 10;
+    this->worldEndX += 10;
+    this->worldMaxY += 10;
 
     std::vector<WormDTO> worms = gameMap->getWorms();
     for (WormDTO& worm : worms) {
@@ -31,16 +48,20 @@ GameWorld::GameWorld(std::shared_ptr<GameMap> gameMap) {
         
         createWorm(x, y, id, team, health, weapons);
     }
+
+    createWater();
 }
 
 void GameWorld::createWater(){
     b2BodyDef bd;
     bd.type = b2_staticBody;
-    bd.position.Set(WORLD_WIDTH/2, 0);
+    float worldHalf = (this->worldEndX + this->worldBegginningX) / 2.0f;
+    float worldWidth = abs(this->worldEndX - this->worldBegginningX);
+    bd.position.Set(worldHalf, 0);
     b2Body* body = this->world->CreateBody(&bd);
     b2FixtureDef fd;
     b2PolygonShape shape;
-    shape.SetAsBox(WORLD_WIDTH * 2, 0.1f);
+    shape.SetAsBox(worldWidth * 5, 0.1f);
     fd.shape = &shape;
     body->CreateFixture(&fd);
 
@@ -313,7 +334,7 @@ b2Body* GameWorld::createHolyGrenade(b2Body* worm, int direction, int explosionT
 b2Body* GameWorld::createAirAttackMissile(float startingX, float xDest){
     b2BodyDef bd;
     bd.type = b2_dynamicBody;
-    bd.position.Set(startingX, WORLD_HEIGHT);
+    bd.position.Set(startingX, this->worldMaxY + AIR_ATTACK_MISSILE_HEIGHT);
     b2Body* body = this->world->CreateBody(&bd);
     body->SetBullet(true);
     b2FixtureDef fd;
@@ -379,7 +400,7 @@ void GameWorld::wormHitWithBat(int id, int direction){
 }
 
 bool GameWorld::checkValidTpPosition(float x, float y){
-    if(x < 0 || x > WORLD_WIDTH || y < 0 || y > WORLD_HEIGHT){
+    if(y < 0){
         return false;
     }
     b2AABB aabb;
@@ -405,18 +426,25 @@ bool GameWorld::teleportWorm(int id, float x, float y){
     return false;
 }
 
+#include <random>
+#include <ctime>
+
+float randomNumberGenerator(float min, float max){
+    return min + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(max-min)));
+}
+
 Position GameWorld::calculateValidSupplyBoxPosition(){
     int maxAttempts = 100;
     int attempts = 0;
     while(attempts < maxAttempts){
-        float x = rand() % (int) (WORLD_WIDTH - SUPPLY_BOX_WIDTH/2);
+        float x = randomNumberGenerator(this->worldBegginningX, this->worldEndX);
         bool foundBeam = true;
         SupplyQueryCallback callback;
-        this->world->RayCast(&callback, b2Vec2(x, WORLD_HEIGHT), b2Vec2(x, 0));
+        this->world->RayCast(&callback, b2Vec2(x, this->worldMaxY), b2Vec2(x, 0));
         foundBeam &= callback.lastIntersectedType == EntityBeam;
-        this->world->RayCast(&callback, b2Vec2(x + SUPPLY_BOX_WIDTH/2, WORLD_HEIGHT), b2Vec2(x+ SUPPLY_BOX_WIDTH/2, 0));
+        this->world->RayCast(&callback, b2Vec2(x + SUPPLY_BOX_WIDTH/2, this->worldMaxY), b2Vec2(x+ SUPPLY_BOX_WIDTH/2, 0));
         foundBeam &= callback.lastIntersectedType == EntityBeam;
-        this->world->RayCast(&callback, b2Vec2(x - SUPPLY_BOX_WIDTH/2, WORLD_HEIGHT), b2Vec2(x - SUPPLY_BOX_WIDTH/2, 0));
+        this->world->RayCast(&callback, b2Vec2(x - SUPPLY_BOX_WIDTH/2, this->worldMaxY), b2Vec2(x - SUPPLY_BOX_WIDTH/2, 0));
         foundBeam &= callback.lastIntersectedType == EntityBeam;
         if(foundBeam){
             b2Vec2 beamPos = callback.beam->body->GetPosition();

@@ -6,8 +6,6 @@
 #define CONFIG ConfigLoader::getInstance()
 
 //World constants
-#define WORLD_WIDTH 100
-#define WORLD_HEIGHT 70
 #define TIME_STEP 1.0f / CONFIG.getFps()
 #define VELOCITY_ITERATIONS 8
 #define POSITION_ITERATIONS 3 
