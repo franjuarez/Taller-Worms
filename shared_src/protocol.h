@@ -16,7 +16,7 @@
 
 class GameDynamic; class GameMap; class Serializable;
 class Command; class Move; class Jump; class LaunchRocket;
-class Teleport; class HitUpclose; class ThrowGrenade; class Cheats;
+class RemoteOperated; class HitUpclose; class ThrowGrenade; class Cheats;
 class GameInfo; class MatchCommand; class DropDynamite;
 
 struct ClosedSocket : public std::runtime_error {
@@ -73,6 +73,9 @@ private:
     void sendVectorInt(std::vector<uint32_t> vector);
     std::vector<uint32_t> receiveVectorInt();
 
+    void sendMap(GameMap* map);
+    void sendDynamic(GameDynamic* dynamic);
+    void sendInfo(GameInfo* info);
     GameMap* receiveMap();
     GameDynamic* receiveDynamic();
     GameInfo* receiveInfo();
@@ -81,54 +84,45 @@ private:
     std::shared_ptr<Jump>  receiveJump();
     std::shared_ptr<LaunchRocket> receiveLaunchRocket();
     std::shared_ptr<ThrowGrenade> receiveThrowGrenade();
-    std::shared_ptr<Teleport> receiveTeoleport();
+    std::shared_ptr<RemoteOperated> receiveTeoleport();
     std::shared_ptr<HitUpclose> receiveHitUpclose();
     std::shared_ptr<Cheats> receiveCheats();
     std::shared_ptr<MatchCommand> receiveMatchCommand();
     std::shared_ptr<DropDynamite> receiveDynamite();
+
+    void sendMove(Move* move);
+    void sendJump(Jump* jump);
+    void sendLaunchRocket(LaunchRocket* attack);
+    void sendThrowGrenade(ThrowGrenade* throwGrenade);
+    void sendTeleport(RemoteOperated* teleport);
+    void sendHitUpclose(HitUpclose* hitUpclose);
+    void sendCheats(Cheats* cheats);
+    void sendMatchCommand(MatchCommand* matchCommand);
 
     void checkClosed();
 
 public:
 
     explicit Protocol(Socket&& skt);
+
     Protocol(const std::string& hostname, const std::string& servname);
-    Protocol(const Protocol& protocol);
 
-    void sendMap(GameMap* map);
-
-    void sendDynamic(GameDynamic* dynamic);
-
-    void sendInfo(GameInfo* info);
+    void sendSerializable(Serializable* serializable);
     
-    Serializable* receiveSerializable();
+    void sendCommand(Command* command);   
 
-    void sendMove(Move* move);
-
-    void sendJump(Jump* jump);
-
-    void sendLaunchRocket(LaunchRocket* attack);
-
-    void sendThrowGrenade(ThrowGrenade* throwGrenade);
-
-    void sendTeleport(Teleport* teleport);
-    
-    void sendHitUpclose(HitUpclose* hitUpclose);
+    std::shared_ptr<Serializable> receiveSerializable();
 
     void sendDynamite(DropDynamite* dropDynamite);
 
     std::shared_ptr<Command> receiveCommand();
-    void sendCheats(Cheats* cheats);
-
-    void sendMatchCommand(MatchCommand* matchCommand);
 
     void sendAllOk(int okCode);
 
     int receiveAllOk();
 
-    ~Protocol();
-
     void boom();
 
+    ~Protocol();
 };
 #endif

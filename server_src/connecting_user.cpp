@@ -78,7 +78,7 @@ void ConnectingUser::joinMatch(std::string matchName) {
 
 void ConnectingUser::refresh() {
     GameInfo info(matchesMonitor.showMatchesAvailable());
-    infoStruct->prot.sendInfo(&info);
+    infoStruct->prot.sendSerializable(&info);
 }
 
 

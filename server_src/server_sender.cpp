@@ -13,11 +13,11 @@ void ServerSender::run() {
             gameStatus->send(protocol);
         }   
     } catch (const ClosedSocket& e){
-        std::cout << "Sender: Se ha cerrado la conexion\n";
+        // std::cout << "Sender: Se ha cerrado la conexion\n";
         statusBroadcaster.deletePlayer(playerID);
         talking = false;
     } catch (const ClosedQueue& e){
-        std::cout << "Sender: Se ha cerrado la queue\n";\
+        // std::cout << "Sender: Se ha cerrado la queue\n";
         statusBroadcaster.deletePlayer(playerID);
         talking = false;
     } catch (std::exception& e){

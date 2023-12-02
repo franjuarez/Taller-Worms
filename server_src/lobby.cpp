@@ -39,9 +39,9 @@ void Lobby::run() {
             reapDead();
         }
     } catch (const LibError& e) {
-        std::cout << "Lobby closed" << std::endl;
+        // std::cout << "Lobby closed" << std::endl;
         matchesMonitor.closeMatches();
-        std::cout << "Cerra3" << std::endl;
+        // std::cout << "Cerra3" << std::endl;
     }
 }
 
@@ -58,17 +58,16 @@ void Lobby::reapDead() {
 }
 
 void Lobby::stop() {
-    std::cout << "Stopping lobby" << std::endl;
+    // std::cout << "Stopping lobby" << std::endl;
     skt.shutdown(SHUT_RDWR);
     skt.close();
     killAll();
-    std::cout << "Lobby stopped" << std::endl;
+    // std::cout << "Lobby stopped" << std::endl;
 }
 
 void Lobby::killAll() {
-    std::cout << "Killing all connecting users" << std::endl;
+    // std::cout << "Killing all connecting users" << std::endl;
     for (auto& connectingUser : connectingUsers ) {
-        std::cout << connectingUser->isActive() << std::endl;
         if (connectingUser->isActive()) {
             connectingUser->kill();
         }
@@ -76,7 +75,7 @@ void Lobby::killAll() {
         delete connectingUser;
     }
     connectingUsers.clear();
-    std::cout << "All connecting users killed" << std::endl;
+    // std::cout << "All connecting users killed" << std::endl;
 }
 
 Lobby::~Lobby() { }

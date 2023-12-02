@@ -1,25 +1,29 @@
-#ifndef TELEPORT_H
-#define TELEPORT_H
+#ifndef REMOTE_OPERATED_H
+#define REMOTE_OPERATED_H
 
 #include "command.h"
 #include "../position.h"
 #include "../../shared_src/protocol.h"
+#include "../constants_game.h"
+
 
 class Protocol;
 
-class Teleport : public Command {
+class RemoteOperated : public Command {
 private:
     int wormID;
     int type;
     Position pos;
+    int commandType = COMMAND_REMOTE_OPERATED;
 public:
-    Teleport(int wormsID, int type, Position pos);
+    RemoteOperated(int wormsID, int type, Position pos);
     bool executeCommand(GameWorld& gameWorld, bool* cheatOn, bool& needsMove) override;
     void send(Protocol& protocol);
     int getID();
     int getType();
     float getX();
     float getY();
-    ~Teleport();
+    int getComType();
+    ~RemoteOperated();
 };
 #endif

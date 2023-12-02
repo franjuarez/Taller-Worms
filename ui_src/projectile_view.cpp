@@ -73,6 +73,10 @@ rocket(rocket), projectileSpriteSheets(projectileSpriteSheet), frames{11} {
 
 ProjectileView::~ProjectileView() {}
 
+bool ProjectileView::isOver() {
+	return currentFramesIndex == POST_EXPLOSION_FRAMES;
+}
+
 void ProjectileView::explode(int i) {
 	if (currentFramesIndex != ROCKET_FRAMES && currentFramesIndex < RED_GRENADE_FRAMES)
 		return;

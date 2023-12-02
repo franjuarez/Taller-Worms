@@ -21,7 +21,7 @@ bool LaunchRocket::executeCommand(GameWorld& gameWorld, bool* cheatOn, bool& nee
 }
 
 void LaunchRocket::send(Protocol& protocol) {
-    protocol.sendLaunchRocket(this);
+    protocol.sendCommand(this);
 }
 
 int LaunchRocket::getType() {
@@ -42,6 +42,10 @@ float LaunchRocket::getAngle() {
 
 float LaunchRocket::getPower() {
     return this->power;
+}
+
+int LaunchRocket::getComType() {
+    return this->commandType;
 }
 
 LaunchRocket::~LaunchRocket() {}

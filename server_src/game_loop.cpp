@@ -220,13 +220,13 @@ int GameLoop::decideAmmoType() {
     switch(randomIndex) {
         case 0: return MORTAR_SUPPLY;
         case 1: return RED_GRENADE_SUPPLY;
-        case 2: return TELEPORT_SUPPLY;
+        case 2: return REMOTE_OPERATED_SUPPLY;
         case 3: return BAT_SUPPLY;
         case 4: return BANANA_SUPPLY;
         case 5: return DYNAMITE_SUPPLY;
         case 6: return AIR_ATTACK_SUPPLY;
         case 7: return HOLY_GRENADE_SUPPLY;
-        default: return TELEPORT_SUPPLY; // por ahora que no estan todas las armas
+        default: return REMOTE_OPERATED_SUPPLY; // por ahora que no estan todas las armas
     }
 }
 

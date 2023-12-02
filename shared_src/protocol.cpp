@@ -144,9 +144,9 @@ void Protocol::sendThrowGrenade(ThrowGrenade* attack) {
     sendUintEight(attack->getTimer());
 }
 
-void Protocol::sendTeleport(Teleport* teleport) {
+void Protocol::sendTeleport(RemoteOperated* teleport) {
     checkClosed();
-    sendUintEight(SEND_COMMAND_TELEPORT);
+    sendUintEight(SEND_COMMAND_REMOTE_OPERATED);
     sendUintEight(teleport->getID());
     sendUintEight(teleport->getType());
     sendPosition(Position(teleport->getX(), teleport->getY()));
@@ -182,18 +182,53 @@ void Protocol::sendDynamite(DropDynamite* dropDynamite) {
     sendUintEight(dropDynamite->getTimer());
 }
 
-Serializable* Protocol::receiveSerializable() {
+void Protocol::sendSerializable(Serializable* serializable) {
+    int type = serializable->getSerType();
+    if (type == GAME_DYNAMIC) {
+        sendDynamic(dynamic_cast<GameDynamic*>(serializable));
+    } else if (type == GAME_MAP) {
+        sendMap(dynamic_cast<GameMap*>(serializable));
+    } else if (type == GAME_INFO) {
+        sendInfo(dynamic_cast<GameInfo*>(serializable));
+    }
+}
+
+std::shared_ptr<Serializable> Protocol::receiveSerializable() {
     checkClosed();
     uint8_t protocolCode = receiveUintEight();
     if (protocolCode == SEND_MAP) {
-        return receiveMap();
+        return std::shared_ptr<Serializable>(receiveMap());
     } else if (protocolCode == SEND_DYNAMIC) {
-        GameDynamic* dynamic = receiveDynamic();
-        return dynamic;
+        return std::shared_ptr<Serializable>(receiveDynamic());
     } else if (protocolCode == SEND_INFO) {
-        return receiveInfo();
+        return std::shared_ptr<Serializable>(receiveInfo());
     }
     throw std::runtime_error("Invalid Serializable");
+}
+
+
+void Protocol::sendCommand(Command* command) {
+    int type = command->getComType();
+
+    if (type == COMMAND_CHEAT) {
+        sendCheats(dynamic_cast<Cheats*>(command));
+    } else if (type == COMMAND_GRENADE) {
+        sendThrowGrenade(dynamic_cast<ThrowGrenade*>(command));
+    } else if (type == COMMAND_JUMP) {
+        sendJump(dynamic_cast<Jump*>(command));
+    } else if (type == COMMAND_MATCH) {
+        sendMatchCommand(dynamic_cast<MatchCommand*>(command));
+    } else if (type == COMMAND_MOVE) {
+        sendMove(dynamic_cast<Move*>(command));
+    } else if (type == COMMAND_ROCKET) {
+        sendLaunchRocket(dynamic_cast<LaunchRocket*>(command));
+    } else if (type == COMMAND_REMOTE_OPERATED) {
+        sendTeleport(dynamic_cast<RemoteOperated*>(command));
+    } else if (type == COMMAND_HIT_UPCLOSE) {
+        sendHitUpclose(dynamic_cast<HitUpclose*>(command));
+    } else if (type == COMMAND_DYNAMITE) {
+        sendDynamite(dynamic_cast<DropDynamite*>(command));
+    }
 }
 
 std::shared_ptr<Command> Protocol::receiveCommand() {
@@ -205,7 +240,7 @@ std::shared_ptr<Command> Protocol::receiveCommand() {
         return receiveJump();
     } else if (protocolCode == SEND_COMMAND_ROCKET) {
         return receiveLaunchRocket();
-    } else if (protocolCode == SEND_COMMAND_TELEPORT) {
+    } else if (protocolCode == SEND_COMMAND_REMOTE_OPERATED) {
         return receiveTeoleport();
     } else if (protocolCode == SEND_COMMAND_HIT_UPCLOSE) {
         return receiveHitUpclose();
@@ -271,12 +306,12 @@ std::shared_ptr<ThrowGrenade> Protocol::receiveThrowGrenade() {
     return std::make_shared<ThrowGrenade>(ThrowGrenade(type, wormId, dir, angle, power, timer));
 }
 
-std::shared_ptr<Teleport> Protocol::receiveTeoleport() {
+std::shared_ptr<RemoteOperated> Protocol::receiveTeoleport() {
     checkClosed();
     uint8_t wormId = receiveUintEight();
     uint8_t type = receiveUintEight();
     Position pos = receivePosition();
-    return std::make_shared<Teleport>(Teleport(wormId, type, pos));
+    return std::make_shared<RemoteOperated>(RemoteOperated(wormId, type, pos));
 }
 
 std::shared_ptr<HitUpclose> Protocol::receiveHitUpclose() {

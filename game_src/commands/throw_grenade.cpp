@@ -26,7 +26,7 @@ bool ThrowGrenade::executeCommand(GameWorld& gameWorld, bool* cheatOn, bool& nee
 }
 
 void ThrowGrenade::send(Protocol& protocol) {
-    protocol.sendThrowGrenade(this);
+    protocol.sendCommand(this);
 }
 
 int ThrowGrenade::getType() {
@@ -51,6 +51,10 @@ float ThrowGrenade::getPower() {
 
 int ThrowGrenade::getTimer() {
     return this->timer;
+}
+
+int ThrowGrenade::getComType() {
+    return this->commandType;
 }
 
 ThrowGrenade::~ThrowGrenade() {}

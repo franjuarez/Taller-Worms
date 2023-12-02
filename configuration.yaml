@@ -44,8 +44,8 @@ height_damage:
 
 projectile:
   max_speed: 20
-  impulse_factor_x: 12
-  impulse_factor_y: 8
+  impulse_factor_x: 15
+  impulse_factor_y: 9
 
 #-1 of ammo means infinite ammo
 
@@ -116,11 +116,11 @@ teleport:
   max_ammo: -1
 
 supply_box:
-  probability: 1 # Has to be between 0 and 1
+  probability: 0.1 # Has to be between 0 and 1
   # The sum of the 3 probabilities must be 1
-  probability_health: 0
-  probability_ammo: 1
-  probability_trap: 0
+  probability_health: 0.4
+  probability_ammo: 0.4
+  probability_trap: 0.2
   health: 30
   trap_damage: 50
   trap_radius: 2
@@ -128,10 +128,10 @@ supply_box:
 # The sum of all probabilities must be 1
 ammo_box_probabilities:
   probability_mortar: 0.2
-  probability_red_grenade: 0.0
-  probability_teleport: 0.0
+  probability_red_grenade: 0.2
+  probability_teleport: 0.15
   probability_bat: 0.15
-  probability_banana: 0.0
+  probability_banana: 0.1
   probability_dynamite: 0.1
-  probability_air_attack: 0.25
-  probability_holy_grenade: 0.3
+  probability_air_attack: 0.05
+  probability_holy_grenade: 0.05

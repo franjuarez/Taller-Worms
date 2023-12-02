@@ -13,7 +13,7 @@ bool DropDynamite::executeCommand(GameWorld& gameWorld, bool* cheatOn, bool& nee
 }
 
 void DropDynamite::send(Protocol& protocol) {
-    protocol.sendDynamite(this);
+    protocol.sendCommand(this);
 }
 
 int DropDynamite::getID() {
@@ -22,6 +22,10 @@ int DropDynamite::getID() {
 
 int DropDynamite::getTimer() {
     return this->timer;
+}
+
+int DropDynamite::getComType() {
+    return this->commandType;
 }
 
 DropDynamite::~DropDynamite() {}

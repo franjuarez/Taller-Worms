@@ -414,7 +414,7 @@ bool GameWorld::checkValidTpPosition(float x, float y){
 bool GameWorld::teleportWorm(int id, float x, float y){
     checkWormExists(id);
     Worm* wormData = (Worm*) this->worms[id]->GetUserData().pointer;
-    if(!wormData->hasAmmo(TELEPORT)){
+    if(!wormData->hasAmmo(REMOTE_OPERATED)){
         return false;
     }
     if(checkValidTpPosition(x, y)){

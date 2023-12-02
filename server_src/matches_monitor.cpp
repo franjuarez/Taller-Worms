@@ -52,13 +52,13 @@ int MatchesMonitor::joinMatch(std::string matchName, std::shared_ptr<InfoStruct>
 
 void MatchesMonitor::closeMatches() {
     std::lock_guard<std::mutex> lock(m);
-    std::cout << "Cerrando matches" << std::endl;
+    // std::cout << "Cerrando matches" << std::endl;
     for (auto& match : matches) {
         match.second->infoQueue->close();
         match.second->matchStarter->join();
     }
     matches.clear();
-    std::cout << "Matches cerrados" << std::endl;
+    // std::cout << "Matches cerrados" << std::endl;
 }
 
 

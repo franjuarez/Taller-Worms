@@ -5,11 +5,15 @@ GameInfo::GameInfo(std::map<std::string, std::string> matchesAvailable) :
 matchesAvailable(matchesAvailable) {}
 
 void GameInfo::send(Protocol& protocol) {
-    protocol.sendInfo(this);
+    protocol.sendSerializable(this);
 }
 
 std::map<std::string, std::string> GameInfo::getMatchesAvailable() {
     return matchesAvailable;
+}
+
+int GameInfo::getSerType() {
+    return serializableType;
 }
 
 GameInfo::~GameInfo() {}

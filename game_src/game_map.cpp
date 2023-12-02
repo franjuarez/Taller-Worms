@@ -42,7 +42,11 @@ std::vector<WormDTO> GameMap::getWorms() {
 }
 
 void GameMap::send(Protocol& protocol) {
-    protocol.sendMap(this);
+    protocol.sendSerializable(this);
+}
+
+int GameMap::getSerType() {
+    return serializableType;
 }
 
 GameMap::~GameMap() {}

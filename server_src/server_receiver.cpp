@@ -12,11 +12,11 @@ void ServerReceiver::run() {
             commandsQueue.push(command);
         }
     } catch (const ClosedSocket& e){
-        std::cout << "Reciever: Se ha cerrado la conexion\n";
+        // std::cout << "Reciever: Se ha cerrado la conexion\n";
         talking = false;
         return;
     } catch (const ClosedQueue& e){
-        std::cout << "Reciever: Se ha cerrado la QUEUE\n";
+        // std::cout << "Reciever: Se ha cerrado la QUEUE\n";
         talking = false;
         return;
     } catch (const std::exception& e){

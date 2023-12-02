@@ -65,17 +65,17 @@ TEST_CASE("Sending and receiving Command HitUpclose", "[info]") {
     REQUIRE(hitUpCloseReceived->getDir() == hitUpClose->getDir());
 }
 
-TEST_CASE("Sending and receiving Command Teleport", "[info]") {
+TEST_CASE("Sending and receiving Command RemoteOperated", "[info]") {
 
     int wormdIDSent = 2;
     Position pos(1.3,-6.147);
 
-    Teleport* teleport = new Teleport(wormdIDSent, TELEPORT, pos);
+    RemoteOperated* teleport = new RemoteOperated(wormdIDSent, REMOTE_OPERATED, pos);
 
     teleport->send(mockClient3);
 
     std::shared_ptr<Command>commandReceived(mockServer3.receiveCommand());
-    std::shared_ptr<Teleport> teleportReceived = std::dynamic_pointer_cast<Teleport>(commandReceived);
+    std::shared_ptr<RemoteOperated> teleportReceived = std::dynamic_pointer_cast<RemoteOperated>(commandReceived);
 
     REQUIRE(teleportReceived->getID() == teleport->getID());
     REQUIRE(teleportReceived->getX() == teleport->getX());

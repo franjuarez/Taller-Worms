@@ -23,7 +23,7 @@
 #define MUSIC_PATH BASE_PATH + "music/AdhesiveWombat_Night Shade.mp3"
 
 #define WORM_LIFE_FONT_PATH BASE_PATH + "fonts/lazy.ttf"
-#define HUB_FONT_PATH BASE_PATH + "fonts/arcadeclassic/ARCADECLASSIC.TTF"
+#define HUD_FONT_PATH BASE_PATH + "fonts/arcadeclassic/ARCADECLASSIC.TTF"
 
 //#define BACKGROUND_PATH BASE_PATH + "images/background.png"
 #define WAITING_SCREEN_PATH BASE_PATH + "images/dont_panic.bmp"
@@ -125,7 +125,7 @@ GameView::GameView(std::shared_ptr<InfoStruct> infoStruct) :
 		renderer(window, -1 /*any driver*/, SDL_RENDERER_ACCELERATED),
 		mixer(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 4096),
 		sound(MUSIC_PATH), // OGG sound file
-		wormsFont(HUB_FONT_PATH, 26), hudFont(HUB_FONT_PATH, 42), toolBarFont(WORM_LIFE_FONT_PATH, 11),
+		wormsFont(HUD_FONT_PATH, 26), hudFont(HUD_FONT_PATH, 42), toolBarFont(WORM_LIFE_FONT_PATH, 11),
 		waitingScreen(renderer, Surface(WAITING_SCREEN_PATH).SetColorKey(true,0)),
 		losingScreen(renderer, LOSING_SCREEN_PATH),
 		beamSprite(renderer, BEAM_PATH),
@@ -252,7 +252,7 @@ GameView::GameView(std::shared_ptr<InfoStruct> infoStruct) :
 
 
 	this->currentWormId = -1;
-	this->bombTimer = 3;
+	this->bombTimer = 5;
 	this->inputState = 0;
 	this->winnerTeam = -1;
 	this->throwPower = 10;
@@ -375,13 +375,18 @@ void GameView::drawProjectiles(int i) {
 	su nueva intancia. si no esta es porque choco y por ende tengo que indicarle que explote
 	*/
 	
-	for (auto it = projectileViews.begin(); it != projectileViews.end(); it++) {
+	for (auto it = projectileViews.begin(); it != projectileViews.end();) {
 		if (recievedProjectiles.find(it->first) != recievedProjectiles.end()) {
 			it->second.update(recievedProjectiles.at(it->first), i);
 		} else {
 			it->second.explode(i);
 		}
 		it->second.display(i, renderer, camX, camY);
+		if (not it->second.isOver()) {
+			it++;
+		} else {
+			it = projectileViews.erase(it);
+		}
 	}
 
 	//std::unordered_map<int, SupplyBoxDTO> boxes = currentGameStatus.getSupplyBox();
@@ -393,13 +398,19 @@ void GameView::drawProjectiles(int i) {
 }
 
 void GameView::drawBoxes(int i) {
-	for (auto it = boxViews.begin(); it != boxViews.end(); it++) {
+	for (auto it = boxViews.begin(); it != boxViews.end();) {
 		if (recievedBoxes.find(it->first) != recievedBoxes.end()) {
 			it->second.update(recievedBoxes.at(it->first), i);
 		} else {
 			it->second.open(i);
 		}
 		it->second.display(i, renderer, camX, camY);
+
+		if (not it->second.isOver()) {
+			it++;
+		} else {
+			it = boxViews.erase(it);
+		}
 	}
 
 }
@@ -477,6 +488,7 @@ void GameView::drawHud(int i) {
 	int toolBarCellMargin = 4;
 
 	float keyHintRelativeSize = 0.2;
+	float ammoHintRelativeSize = 0.3;
 
 	renderer.SetDrawColor(3,3,3, 255);
 	renderer.FillRect(0, 0, 
@@ -519,6 +531,20 @@ void GameView::drawHud(int i) {
 
 		renderer.Copy(keybindingsTexts[i], NullOpt, keyhintPosition);
 
+		//if (weapons[i] <= 0)
+		//	break
+		Rect ammoPosition(
+			i*(toolBarCellWidth + toolBarCellMargin) + toolBarCellMargin + (toolBarCellWidth * (1-ammoHintRelativeSize)),
+			verticalMargin + (verticalMargin),
+			toolBarCellWidth * ammoHintRelativeSize,
+			toolBarH * ammoHintRelativeSize
+		);
+		std::string ammoText(weapons[i] <= 0 ? " " : ::std::__cxx11::to_string(weapons[i]));
+
+		Texture ammoIndicator(renderer, hudFont.RenderText_Solid(ammoText, {255,255,255}));
+		renderer.Copy(ammoIndicator, NullOpt, ammoPosition);
+
+
 
 	}
 
@@ -544,18 +570,19 @@ void GameView::drawHud(int i) {
 			);
 
 		//power indicator
+		if (inputState != TP_CODE /*&& inputState != AIRSTRIKE_CODE */ && inputState != BAT_CODE) {
+			renderer.SetDrawColor(255,5,5,255);
 
-		renderer.SetDrawColor(255,5,5,255);
-
-		int squares_size = 20;
-		int separation = 5;
-		for (int i = 0; i * (MAX_THROWING_POWER / 10) < throwPower; i ++) {
-			renderer.SetDrawColor(i * 255 / 10, (10-i) * 255 / 10, 5, 250);
-			renderer.FillRect(Rect(
-				WINDOW_WIDTH - (i * (squares_size + separation)) + separation,
-				0, squares_size, squares_size
-			));
-}
+			int squares_size = 20;
+			int separation = 5;
+			for (int i = 0; i * (MAX_THROWING_POWER / 10) < throwPower; i ++) {
+				renderer.SetDrawColor(i * 255 / 10, (10-i) * 255 / 10, 5, 250);
+				renderer.FillRect(Rect(
+					WINDOW_WIDTH - (i * (squares_size + separation)) + separation,
+					0, squares_size, squares_size
+				));
+			}
+		}
 	
 	}
 
@@ -621,41 +648,36 @@ void GameView::draw(int i) {
 }
 
 
+void GameView::_focusCam(float x, float y) {
+	this->camX = x * m_to_pix_x - WINDOW_WIDTH / 2;
+	this->camY = y * m_to_pix_y + WINDOW_HEIGHT - WINDOW_HEIGHT / 2;
+}
 
 void GameView::focusCam() {
 	float x,y;
-	x = y = -1.0;
 	if ((currentGameStatus.getExplosives().size() >= 1) && (currentGameStatus.getExplosives().begin()->second.getType() != FRAGMENT)) {
 		x = currentGameStatus.getExplosives().begin()->second.getX();
 		y = currentGameStatus.getExplosives().begin()->second.getY();
+		return _focusCam(x,y);
 	}
 
-	if (x < 0 && y < 0 && currentGameStatus.getSupplyBox().size() >= 1) {
-		for (auto it = recievedBoxes.begin(); it != recievedBoxes.end(); it++)  {
-			if (it->second.isFalling()) {
-				x = it->second.getX();
-				y = it->second.getY();
-			}
+	for (auto it = recievedBoxes.begin(); it != recievedBoxes.end(); it++)  {
+		if (it->second.isFalling()) {
+			x = it->second.getX();
+			y = it->second.getY();
+			return _focusCam(x,y);
 		}
 	}
 
-	if (x < 0 && y < 0) {
-		std::vector<WormDTO> recievedWorms = currentGameStatus.getWorms();
-		for (auto &worm : recievedWorms) {
-			if (worm.getVelX() == 0 && worm.getVelY() == 0)
-				continue;
-			x = worm.getX();
-			y = worm.getY();
-		}
 
+	std::vector<WormDTO> recievedWorms = currentGameStatus.getWorms();
+	for (auto &worm : recievedWorms) {
+		if (worm.getVelX() == 0 && worm.getVelY() == 0)
+			continue;
+		x = worm.getX();
+		y = worm.getY();
+		return _focusCam(x,y);
 	}
-
-	if (x >= 0 && y >= 0) {
-		camX = x * m_to_pix_x - WINDOW_WIDTH / 2;
-		camY = y * m_to_pix_y + WINDOW_HEIGHT - WINDOW_HEIGHT / 2;
-
-	}
-
 
 }
 
@@ -733,7 +755,7 @@ void GameView::clickCase(int i, int mouseX, int mouseY) {
 		return;
 	case TP_CODE:
 		this->wormViews.at(this->currentWormId).tp(i);
-		this->client.execute(std::make_shared<Teleport>(Teleport(currentWormId, TELEPORT, pos)));		
+		this->client.execute(std::make_shared<RemoteOperated>(RemoteOperated(currentWormId, REMOTE_OPERATED, pos)));		
 		return;
 	case MORTAR_CODE:
 		this->client.execute(std::make_shared<LaunchRocket>(LaunchRocket(MORTAR, currentWormId, dir, angle, throwPower)));
@@ -752,7 +774,7 @@ void GameView::clickCase(int i, int mouseX, int mouseY) {
 		this->client.execute(std::make_shared<DropDynamite>(DropDynamite(this->currentWormId, bombTimer)));
 		return;
 	case AIR_STRIKE_CODE:
-		this->client.execute(std::make_shared<Teleport>(Teleport(currentWormId, AIR_ATTACK, pos)));		
+		this->client.execute(std::make_shared<RemoteOperated>(RemoteOperated(currentWormId, AIR_ATTACK, pos)));		
 		return;
 	case SAINT_GRENADE_CODE:
 		this->client.execute(std::make_shared<ThrowGrenade>(ThrowGrenade(HOLY_GRENADE, this->currentWormId,

@@ -21,6 +21,8 @@ private:
     std::string mapName;
     std::vector<BeamDTO> beamsMap;
     std::vector<WormDTO> worms;
+
+    int serializableType = GAME_MAP;
 public:
     GameMap(int team, int numberTeams, std::string mapName, std::vector<BeamDTO> beamsMap, std::vector<WormDTO> worms);
     int getTeam();
@@ -32,6 +34,7 @@ public:
     int getNumberOfBeams();
     int getNumberOfWorms();
     void send(Protocol& protocol);
+    int getSerType();
     ~GameMap();
 };
 #endif
