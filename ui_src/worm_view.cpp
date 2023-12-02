@@ -403,7 +403,7 @@ void WormView::drawAxe(int i) {
 }
 
 void WormView::jump(int i) {
-	if (currentFramesIndex == JUMPING_FRAMES)
+	if (currentFramesIndex == JUMPING_FRAMES || currentFramesIndex == WORM_FLY_FRAMES)
 		return;
 	this->startingPoint = i;
 	this->currentFramesIndex = JUMPING_FRAMES;
@@ -589,6 +589,17 @@ void WormView::display(int i, Renderer& renderer, int camX, int camY, int mouseX
 
 void WormView::update(WormDTO other, int i) {
 	this->worm = other;
+
+	switch(worm.getCurrentAction()) {
+	case MOVING:
+		move(i);
+		break;
+	case JUMPING:
+		jump(i);
+		break;
+	default:
+		break;
+	}
 
 	if (worm.getVelX() == 0 && this->defaultFramesIndex == WALKING_FRAMES) {
 		this->defaultFramesIndex = STILL_FRAMES;

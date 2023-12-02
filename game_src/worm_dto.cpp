@@ -76,6 +76,7 @@ WormDTO& WormDTO::operator=(const WormDTO& other) {
         weapons = other.weapons;
         velX = other.velX;
         velY = other.velY;
+        currentAction = other.currentAction;
     }
   return *this;
 }
