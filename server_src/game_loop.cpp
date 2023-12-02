@@ -17,6 +17,27 @@ GameLoop::GameLoop(Queue<std::shared_ptr<Command>>& commandsQueue, StatusBroadca
 	this->cheatOn = false;
 }
 
+
+void GameLoop::run() {
+	this->wormPlayingID = teams[teamPlayingID].getNextWormID();
+	while(*playing && !gameOver) {
+		auto current_time = std::chrono::steady_clock::now();
+		auto elapsed_time = std::chrono::duration_cast<std::chrono::milliseconds>(current_time - this->start_time).count();
+		try {
+			loopLogic(elapsed_time);
+			usleep(RATE*1000);
+			checkPlayers();
+		} catch (const ClosedQueue& e){
+        	std::cout << "Reciever: Se ha cerrado la QUEUE\n";
+			return;
+    	} catch (std::exception& e) {
+			std::cout << "Error in game loop: " << e.what() << std::endl;
+			return;
+		} 
+	}
+}
+
+
 void GameLoop::loopLogic(int64_t elapsed_time) {
 	std::shared_ptr<Command> command;
 	while (commandsQueue.try_pop(command) && !waitingForStatic) {
@@ -26,8 +47,6 @@ void GameLoop::loopLogic(int64_t elapsed_time) {
 				stillWaiting = true;
 			}
 	}
-
-	
 
 	gameWorld.update();
 	std::shared_ptr<GameDynamic>gameDynamic(gameWorld.getGameStatus(wormPlayingID));
@@ -105,21 +124,67 @@ void GameLoop::loopLogic(int64_t elapsed_time) {
 
 }
 
-void GameLoop::run() {
-	this->wormPlayingID = teams[teamPlayingID].getNextWormID();
-	while(*playing && !gameOver) {
-		auto current_time = std::chrono::steady_clock::now();
-		auto elapsed_time = std::chrono::duration_cast<std::chrono::milliseconds>(current_time - this->start_time).count();
-		try {
-			loopLogic(elapsed_time);
-			usleep(RATE*1000);
-		} catch (const ClosedQueue& e){
-        	std::cout << "Reciever: Se ha cerrado la QUEUE\n";
-			return;
-    	} catch (std::exception& e) {
-			std::cout << "Error in game loop: " << e.what() << std::endl;
-			return;
-		} 
+
+void GameLoop::changeWormPlaying(std::vector<WormDTO> worms) {
+	teamPlayingID = (teamPlayingID + 1) % teams.size();
+
+	for(size_t i = teamPlayingID; true ; i = (i + 1) % teams.size()){
+		if(teams[i].hasWorms()){
+			teamPlayingID = i;
+			break;
+		}
+	}
+
+	wormPlayingID = teams[teamPlayingID].getNextWormID();
+	for (size_t i = 0; i < worms.size(); i++) {
+		if (worms[i].getId() == wormPlayingID) {
+			this->wormPlayingHealth = worms[i].getHealth();
+			break;
+		}
+	}
+	this->start_time = std::chrono::steady_clock::now();
+}
+
+int GameLoop::updateWinningStatus() {
+	int teamsWithWorms = 0;
+	int teamWinning = -1;
+	for (size_t i = 0; i < teams.size(); i++) {
+		if (teams[i].hasWorms()) {
+			teamsWithWorms++;
+			teamWinning = i;
+		}
+	}
+
+	if (teams.size() == 1) {
+		if (teamsWithWorms == 1) {
+			return PLAYING;
+		}
+		gameOver = true;
+		return ALL_LOST;
+	}
+
+	if (teamsWithWorms > 1) {
+		return PLAYING;
+	} else if (teamsWithWorms == 1) {
+		gameOver = true;
+		return teamWinning;
+	}
+	gameOver = true;
+	return ALL_LOST;
+}
+
+
+void GameLoop::reset() {
+	waitingForStatic = false;
+	waitingForBox = false;
+	waitingExtraTime = false;
+	stillWaiting = false;
+
+}
+
+void GameLoop::checkPlayers() {
+	if (statusBroadcaster.isEmpty()) {
+		gameOver = true;
 	}
 }
 
@@ -199,64 +264,5 @@ bool GameLoop::shouldDropBox() {
 
 	return randomIndex == 1;
 }
-
-
-void GameLoop::changeWormPlaying(std::vector<WormDTO> worms) {
-	teamPlayingID = (teamPlayingID + 1) % teams.size();
-
-	for(size_t i = teamPlayingID; true ; i = (i + 1) % teams.size()){
-		if(teams[i].hasWorms()){
-			teamPlayingID = i;
-			break;
-		}
-	}
-
-	wormPlayingID = teams[teamPlayingID].getNextWormID();
-	for (size_t i = 0; i < worms.size(); i++) {
-		if (worms[i].getId() == wormPlayingID) {
-			this->wormPlayingHealth = worms[i].getHealth();
-			break;
-		}
-	}
-	this->start_time = std::chrono::steady_clock::now();
-}
-
-int GameLoop::updateWinningStatus() {
-	int teamsWithWorms = 0;
-	int teamWinning = -1;
-	for (size_t i = 0; i < teams.size(); i++) {
-		if (teams[i].hasWorms()) {
-			teamsWithWorms++;
-			teamWinning = i;
-		}
-	}
-
-	if (teams.size() == 1) {
-		if (teamsWithWorms == 1) {
-			return PLAYING;
-		}
-		gameOver = true;
-		return ALL_LOST;
-	}
-
-	if (teamsWithWorms > 1) {
-		return PLAYING;
-	} else if (teamsWithWorms == 1) {
-		gameOver = true;
-		return teamWinning;
-	}
-	gameOver = true;
-	return ALL_LOST;
-}
-
-
-void GameLoop::reset() {
-	waitingForStatic = false;
-	waitingForBox = false;
-	waitingExtraTime = false;
-	stillWaiting = false;
-
-}
-
 
 GameLoop::~GameLoop() {}

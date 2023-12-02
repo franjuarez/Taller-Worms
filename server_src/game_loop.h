@@ -50,6 +50,7 @@ private:
     int decideAmmoType();
     int dropSupplyBox();
     void reset();
+    void checkPlayers();
 
 
 public:

@@ -37,6 +37,8 @@ void Match::run() {
     commandQueue.close();
 
     killAll();
+
+    *status = MATCH_OVER;
 }
 
 

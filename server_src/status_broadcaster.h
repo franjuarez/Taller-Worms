@@ -20,6 +20,7 @@ public:
     void addPlayer(int id, Queue<std::shared_ptr<Serializable>>* playerQueue);
     void broadcast(std::shared_ptr<Serializable> game);
     void deletePlayer(int id);
+    bool isEmpty();
     std::shared_ptr<Serializable> getGame(int id);
 };
 #endif
