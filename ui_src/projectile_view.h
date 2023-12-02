@@ -23,7 +23,7 @@ public:
 	
 	ProjectileView(ExplosivesDTO projectile, std::vector<Texture>& projectileSpriteSheets);
 	~ProjectileView();
-
+	bool isOver();
 	void explode(int i);
 	void display(int i, Renderer& renderer, int camX, int camY);
 	void update(ExplosivesDTO other, int i);

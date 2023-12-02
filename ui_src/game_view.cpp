@@ -343,13 +343,18 @@ void GameView::drawProjectiles(int i) {
 	su nueva intancia. si no esta es porque choco y por ende tengo que indicarle que explote
 	*/
 	
-	for (auto it = projectileViews.begin(); it != projectileViews.end(); it++) {
+	for (auto it = projectileViews.begin(); it != projectileViews.end();) {
 		if (recievedProjectiles.find(it->first) != recievedProjectiles.end()) {
 			it->second.update(recievedProjectiles.at(it->first), i);
 		} else {
 			it->second.explode(i);
 		}
 		it->second.display(i, renderer, camX, camY);
+		if (not it->second.isOver()) {
+			it++;
+		} else {
+			it = projectileViews.erase(it);
+		}
 	}
 
 	//std::unordered_map<int, SupplyBoxDTO> boxes = currentGameStatus.getSupplyBox();
@@ -361,13 +366,19 @@ void GameView::drawProjectiles(int i) {
 }
 
 void GameView::drawBoxes(int i) {
-	for (auto it = boxViews.begin(); it != boxViews.end(); it++) {
+	for (auto it = boxViews.begin(); it != boxViews.end();) {
 		if (recievedBoxes.find(it->first) != recievedBoxes.end()) {
 			it->second.update(recievedBoxes.at(it->first), i);
 		} else {
 			it->second.open(i);
 		}
 		it->second.display(i, renderer, camX, camY);
+
+		if (not it->second.isOver()) {
+			it++;
+		} else {
+			it = boxViews.erase(it);
+		}
 	}
 
 }
