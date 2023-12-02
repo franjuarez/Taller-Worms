@@ -1,4 +1,4 @@
-
+#include "sender.h"
 #include "receiver.h"
 #include "../game_src/game_dynamic.h"
 #include "../game_src/game_info.h"
@@ -19,11 +19,14 @@ void Receiver::run() {
         }
     } catch (const ClosedSocket& e){
         keepTalking = false;
+        throw ClientClosed();
     } catch (const ClosedQueue& e){
         keepTalking = false;
+        throw ClientClosed();
     } catch (std::exception& e){
         std::cout << "Error in receiver: " << e.what() << std::endl;
         keepTalking = false;
+        throw ClientClosed();
     }
 }
 

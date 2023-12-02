@@ -1,0 +1,25 @@
+@startuml new match sequence
+
+actor Client 
+
+Client -> ClientLobby : createNewMatch(nrPlayers, matchName, mapName)
+
+ClientLobby ->Protocol : MatchCommand
+
+Protocol -> ConnectingUser : MatchCommand
+
+ConnectingUser -> MatchesMonitor : addMatchStruct()
+
+MatchesMonitor -> ConnectingUser : okCode
+
+ConnectingUser -> Protocol : sendAllOk(okCode)
+
+Protocol -> ClientLobby : receiveAllOk()
+
+ConnectingUser -> MatchesMonitor : startMatch(matchName)
+
+MatchesMonitor -> Match : start()
+
+ClientLobby -> GameView : start()
+
+@enduml
