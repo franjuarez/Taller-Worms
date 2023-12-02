@@ -36,6 +36,9 @@ public:
 	void drawMortar(int i);
 	void drawBazoka(int i);
 	void drawAxe(int i);
+	void drawDynamite(int i);
+	void drawAirstrike(int i);
+	void drawSg(int i);
 	void jump(int i);
 	void move(int i);
 	void hit(int i);

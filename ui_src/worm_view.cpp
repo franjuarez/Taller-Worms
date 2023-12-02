@@ -8,10 +8,9 @@
 WormView::WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets, Font& wormsFont) : 
 	worm(worm),
 	dynamicSpriteSheets(dynamicSpriteSheets),
-	frames{22},
+	frames{AMT_OF_FRAME_TYPES},
 	wormsFont(wormsFont) {
-	defaultFramesIndex = STILL_FRAMES;
-	currentFramesIndex = STILL_FRAMES;
+	defaultFramesIndex = currentFramesIndex = STILL_FRAMES;
 	startingPoint = 0;
 	angle = 0;
 	//looping = true;
@@ -22,7 +21,7 @@ WormView::WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets, Fon
 		x = 19;
 		w = 22;
 		y = i*(60) + 16;
-		h = 26;
+		h = 28;
 		frames[STILL_FRAMES].push_back(Rect(x,y,w,h));
 	}
 
@@ -170,7 +169,7 @@ WormView::WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets, Fon
 	}
 
 
-		//frames for drawing mortar
+	//frames for drawing mortar
 	for (int i = 0; i < 7; i++) {
 		x = 13;
 		y = i*60 + 15;
@@ -222,6 +221,60 @@ WormView::WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets, Fon
 		h = 45;
 		frames[WWINNER_FRAMES].push_back(Rect(x,y,w,h));
 	}
+
+	//frames for drawing dynamite
+	for (int i = 0; i < 10; i++) {
+		x = 19;
+		y = i * 60 + 17;
+		w = 27;
+		h = 27;
+		frames[DRAWING_DYNAMITE_FRAMES].push_back(Rect(x,y,w,h));
+	}
+
+	//frames for holding dynamite
+	for (int i = 6; i < 10; i++) {
+		x = 19;
+		y = i * 60 + 17;
+		w = 27;
+		h = 27;
+		frames[HOLDING_DYNAMITE_FRAMES].push_back(Rect(x,y,w,h));
+	}
+	
+	//frames for drawing airstrike
+	for (int i = 0; i < 10; i++) {
+		x = 13;
+		y = i*60 + 15;
+		w = 28;
+		h = 28;
+		frames[DRAWING_AIRSTRIKE_FRAMES].push_back(Rect(x,y,w,h));
+	}
+
+	//frames for holding airstrike
+	for (int i = 0; i < 10; i += 2) {
+		x = 12;
+		y = i*60 + 14;
+		w = 30;
+		h = 30;
+		frames[HOLDING_AIRSTRIKE_FRAMES].push_back(Rect(x,y,w,h));
+	}
+
+	//frames for drawing hg
+	for (int i = 0; i < 10; i++)  {
+		x = 13;
+		y = i * 60 + 12;
+		w = 30;
+		h = 31;
+		frames[DRAWING_SG_FRAMES].push_back(Rect(x,y,w,h));
+	}
+	//frames for drawing hg
+	for (int i = 0; i < 32; i++) {
+		x = 13;
+		y = i * 60 + 12;
+		w = 30;
+		h = 31;
+		frames[HOLDING_SG_FRAMES].push_back(Rect(x,y,w,h));
+	}
+
 }
 
 int WormView::shoot(int i) {
@@ -232,14 +285,16 @@ int WormView::shoot(int i) {
 
 
 void WormView::toDefault(int i) {
-	std::cout << "se llama a todef" << std::endl;
-	if (currentFramesIndex == HOLDING_AXE_FRAMES ||
-		currentFramesIndex == HOLDING_BAZOKA_FRAMES ||
-		currentFramesIndex == HOLDING_RG_FRAMES ||
-		currentFramesIndex == HOLDING_BANANA_FRAMES ||
-		currentFramesIndex == HOLDING_GG_FRAMES ||
-		currentFramesIndex == HOLDING_MORTAR_FRAMES || 
-		currentFramesIndex == HOLDING_TP_FRAMES) {
+	if (currentFramesIndex == HOLDING_AXE_FRAMES
+		||currentFramesIndex == HOLDING_BAZOKA_FRAMES
+		||currentFramesIndex == HOLDING_RG_FRAMES
+		||currentFramesIndex == HOLDING_BANANA_FRAMES
+		||currentFramesIndex == HOLDING_GG_FRAMES
+		||currentFramesIndex == HOLDING_MORTAR_FRAMES 
+		||currentFramesIndex == HOLDING_SG_FRAMES
+		||currentFramesIndex == HOLDING_DYNAMITE_FRAMES
+		||currentFramesIndex == HOLDING_TP_FRAMES
+		|| currentFramesIndex == HOLDING_AIRSTRIKE_FRAMES){	
 
 		currentFramesIndex = STILL_FRAMES;
 		defaultFramesIndex = STILL_FRAMES;
@@ -248,6 +303,32 @@ void WormView::toDefault(int i) {
 
 	this->defaultFramesIndex = STILL_FRAMES;
 }
+
+void WormView::drawDynamite(int i) {
+	if (currentFramesIndex == DRAWING_DYNAMITE_FRAMES ||
+		currentFramesIndex == HOLDING_DYNAMITE_FRAMES)
+		return;
+	this->startingPoint = i;
+	this->currentFramesIndex = DRAWING_DYNAMITE_FRAMES;
+	this->defaultFramesIndex = HOLDING_DYNAMITE_FRAMES;
+}
+void WormView::drawAirstrike(int i) {
+	if (currentFramesIndex == DRAWING_AIRSTRIKE_FRAMES ||
+		currentFramesIndex == HOLDING_AIRSTRIKE_FRAMES)
+		return;
+	this->startingPoint = i;
+	this->currentFramesIndex = DRAWING_AIRSTRIKE_FRAMES;
+	this->defaultFramesIndex = HOLDING_AIRSTRIKE_FRAMES;
+}
+void WormView::drawSg(int i) {
+	if (currentFramesIndex == DRAWING_SG_FRAMES ||
+		currentFramesIndex == HOLDING_SG_FRAMES)
+		return;
+	this->startingPoint = i;
+	this->currentFramesIndex = DRAWING_SG_FRAMES;
+	this->defaultFramesIndex = HOLDING_SG_FRAMES;
+}
+
 
 void WormView::drawGreenGrenade(int i) {
 	if (currentFramesIndex == DRAWING_GG_FRAMES ||
@@ -375,7 +456,10 @@ void WormView::display(int i, Renderer& renderer, int camX, int camY, int mouseX
 		|| currentFramesIndex == HOLDING_MORTAR_FRAMES
 		|| currentFramesIndex == HOLDING_RG_FRAMES
 		|| currentFramesIndex == HOLDING_BANANA_FRAMES
-		|| currentFramesIndex == HOLDING_GG_FRAMES) {
+		|| currentFramesIndex == HOLDING_GG_FRAMES
+		|| currentFramesIndex == HOLDING_DYNAMITE_FRAMES
+		|| currentFramesIndex == HOLDING_AIRSTRIKE_FRAMES
+		|| currentFramesIndex == HOLDING_SG_FRAMES) {
 
 		float dx = ((mouseX + camX) / m_to_pix_x) - this->worm.getX() ;
 		float dy = ((mouseY + camY - WINDOW_HEIGHT) / m_to_pix_y) - this->worm.getY();

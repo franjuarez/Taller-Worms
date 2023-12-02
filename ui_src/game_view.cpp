@@ -49,7 +49,18 @@
 #define WORM_HOLDING_MORTAR_PATH BASE_PATH + "images/holding_mortar.bmp"
 #define WORM_DRAWING_TP_PATH BASE_PATH + "images/drawing_tp.bmp"
 #define WORM_HOLDING_TP_PATH BASE_PATH + "images/holding_tp.bmp"
+
+#define WORM_HOLDING_DYNAMITE_PATH BASE_PATH "images/draw_dynamite.bmp" //ajustar con frames
+#define WORM_DRAWING_DYNAMITE_PATH BASE_PATH "images/draw_dynamite.bmp"
+
+#define WORM_HOLDING_AIRSTRIKE_PATH BASE_PATH "images/call_airstrike.bmp"
+#define WORM_DRAWING_AIRSTRIKE_PATH BASE_PATH "images/drawing_airstrike.bmp"
+
+#define WORM_HOLDING_HG_PATH BASE_PATH "images/holding_hg.bmp"
+#define WORM_DRAWING_HG_PATH BASE_PATH "images/drawing_hg.bmp"
+
 #define WWINER_ANIMATION_PATH BASE_PATH + "images/wwinner.bmp"
+
 
 #define GRAVE_PATH BASE_PATH + "images/grave1.bmp"
 #define WATER_PATH_00 BASE_PATH + "images/water/blue00.bmp"
@@ -180,9 +191,13 @@ GameView::GameView(std::shared_ptr<InfoStruct> infoStruct) :
 	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_HOLDING_MORTAR_PATH).SetColorKey(true, 0)));
 	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_DRAWING_TP_PATH).SetColorKey(true, 0)));
 	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_HOLDING_TP_PATH).SetColorKey(true, 0)));
+	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_DRAWING_DYNAMITE_PATH).SetColorKey(true, 0)));
+	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_HOLDING_DYNAMITE_PATH).SetColorKey(true, 0)));
+	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_DRAWING_AIRSTRIKE_PATH).SetColorKey(true, 0)));
+	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_HOLDING_AIRSTRIKE_PATH).SetColorKey(true, 0)));
+	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_DRAWING_HG_PATH).SetColorKey(true, 0)));
+	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_HOLDING_HG_PATH).SetColorKey(true, 0)));
 	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WWINER_ANIMATION_PATH).SetColorKey(true, 0)));
-
-
 
 	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_01).SetColorKey(true, 0).SetBlendMode(SDL_BLENDMODE_BLEND).SetAlphaMod(220)));
 	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_02).SetColorKey(true, 0).SetBlendMode(SDL_BLENDMODE_BLEND).SetAlphaMod(220)));
@@ -811,15 +826,15 @@ void GameView::processInput(SDL_Event event, int i) {
 		return;
 
 	case DYNAMITE_CODE:
-		this->wormViews.at(currentWormId).drawBanana(i);
+		this->wormViews.at(currentWormId).drawDynamite(i);
 		return;
 
 	case AIR_STRIKE_CODE:
-		this->wormViews.at(currentWormId).drawBanana(i);
+		this->wormViews.at(currentWormId).drawAirstrike(i);
 		return;
 
 	case SAINT_GRENADE_CODE:
-		this->wormViews.at(currentWormId).drawBanana(i);
+		this->wormViews.at(currentWormId).drawSg(i);
 		return;
 
 	default:
