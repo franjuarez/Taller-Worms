@@ -10,7 +10,7 @@ WormView::WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets, Fon
 	dynamicSpriteSheets(dynamicSpriteSheets),
 	frames{AMT_OF_FRAME_TYPES},
 	wormsFont(wormsFont) {
-	defaultFramesIndex = currentFramesIndex = STILL_FRAMES;
+	defaultFramesIndex = currentFramesIndex = WORM_STILL;
 	startingPoint = 0;
 	angle = 0;
 	//looping = true;
@@ -278,6 +278,13 @@ WormView::WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets, Fon
 		frames[HOLDING_SG_FRAMES].push_back(Rect(x,y,w,h));
 	}
 
+	x = 16;
+	w = 30;
+	h = 31;
+	for (int i = 0; i < 30; i++) {
+		y = i * 60 + 15;
+		frames[WORM_FLY_FRAMES].push_back(Rect(x,y,w,h));
+	}
 }
 
 int WormView::shoot(int i) {
