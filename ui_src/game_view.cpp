@@ -451,19 +451,29 @@ void GameView::drawHud(int i) {
 	std::string teamIndicatorText("team   ");
 	teamIndicatorText += ::std::__cxx11::to_string(this->team);
 
-	uint8_t r, g, b;
-	g = (team == 2) || (team == 4) ? 255 : 0;
-	r = (team == 1) || (team == 4) ? 255 : 0;
-	b = team == 3 ? 255 : 0;
-
-
+	SDL_Color teamIndicatorcolor;
+	switch (team) {
+	case 0:
+		teamIndicatorcolor = TEAM_COLOR_1;
+		break;
+	case 1:
+		teamIndicatorcolor = TEAM_COLOR_2;
+		break;
+	case 2:
+		teamIndicatorcolor = TEAM_COLOR_3;
+		break;
+	case 3:
+		teamIndicatorcolor = TEAM_COLOR_4;
+		break;
+	}
 
 	Texture teamIndicator(renderer,
 		hudFont.RenderText_Solid(teamIndicatorText,
-		SDL_Color{r,g,b}));
-
-
-	renderer.Copy(teamIndicator, NullOpt,Rect(WINDOW_WIDTH - 250, WINDOW_HEIGHT - 85 ,130,100));
+		teamIndicatorcolor));
+	Rect teamIndicatorPosition(WINDOW_WIDTH - 250, WINDOW_HEIGHT - 85 ,130,100);
+	renderer.SetDrawColor(0,0,0,150);
+	renderer.FillRect(teamIndicatorPosition);
+	renderer.Copy(teamIndicator, NullOpt,teamIndicatorPosition);
 	
 	//lo que este abajo de esto no se grafica entre turnos. bueno para cosas especificos de cada worm
 	if (this->currentWormId == -1) {
@@ -475,7 +485,7 @@ void GameView::drawHud(int i) {
 		Rect(21, 60 * ((i/4) % 30) + 16, 19, 33),
 		Rect(
 			this->currentWorm.getX() * m_to_pix_x - camX,
-			((this->currentWorm.getY() + 1.5) * m_to_pix_y) + WINDOW_HEIGHT - camY,
+			((this->currentWorm.getY() + 2.5) * m_to_pix_y) + WINDOW_HEIGHT - camY,
 			20, 20
 			)
 		);
