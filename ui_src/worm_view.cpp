@@ -10,7 +10,7 @@ WormView::WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets, Fon
 	dynamicSpriteSheets(dynamicSpriteSheets),
 	frames{AMT_OF_FRAME_TYPES},
 	wormsFont(wormsFont) {
-	defaultFramesIndex = currentFramesIndex = STILL_FRAMES;
+	defaultFramesIndex = currentFramesIndex = WORM_STILL;
 	startingPoint = 0;
 	angle = 0;
 	//looping = true;
@@ -235,11 +235,11 @@ WormView::WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets, Fon
 	}
 
 	//frames for holding dynamite
+	x = 19;
+	w = 27;
+	h = 27;
 	for (int i = 6; i < 10; i++) {
-		x = 19;
 		y = i * 60 + 17;
-		w = 27;
-		h = 27;
 		frames[HOLDING_DYNAMITE_FRAMES].push_back(Rect(x,y,w,h));
 	}
 	
@@ -253,31 +253,38 @@ WormView::WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets, Fon
 	}
 
 	//frames for holding airstrike
+	x = 12;
+	w = 30;
+	h = 30;
 	for (int i = 0; i < 10; i += 2) {
-		x = 12;
 		y = i*60 + 14;
-		w = 30;
-		h = 30;
 		frames[HOLDING_AIRSTRIKE_FRAMES].push_back(Rect(x,y,w,h));
 	}
 
 	//frames for drawing hg
+	x = 13;
+	w = 30;
+	h = 31;
 	for (int i = 0; i < 10; i++)  {
-		x = 13;
 		y = i * 60 + 12;
-		w = 30;
-		h = 31;
 		frames[DRAWING_SG_FRAMES].push_back(Rect(x,y,w,h));
 	}
 	//frames for drawing hg
+	x = 13;
+	w = 30;
+	h = 31;
 	for (int i = 0; i < 32; i++) {
-		x = 13;
 		y = i * 60 + 12;
-		w = 30;
-		h = 31;
 		frames[HOLDING_SG_FRAMES].push_back(Rect(x,y,w,h));
 	}
 
+	x = 16;
+	w = 30;
+	h = 31;
+	for (int i = 0; i < 30; i++) {
+		y = i * 60 + 15;
+		frames[WORM_FLY_FRAMES].push_back(Rect(x,y,w,h));
+	}
 }
 
 int WormView::shoot(int i) {
@@ -523,32 +530,34 @@ void WormView::display(int i, Renderer& renderer, int camX, int camY, int mouseX
 		return;
 
 	//grafico la vida
-	int team = this->worm.getTeam();
-	uint8_t r, g, b;
-	g = (team == 2) || (team == 4) ? 255 : 0;
-	r = (team == 1) || (team == 4) ? 255 : 0;
-	b = team == 3 ? 255 : 0;
+	
+	SDL_Color color;
+	switch (this->worm.getTeam()) {
+	case 0:
+		color = TEAM_COLOR_1;
+		break;
+	case 1:
+		color = TEAM_COLOR_2;
+		break;
+	case 2:
+		color = TEAM_COLOR_3;
+		break;
+	case 3:
+		color = TEAM_COLOR_4;
+		break;
+	}
 
-
-	Texture hpContrast(renderer,
-		wormsFont.RenderText_Solid(std::__cxx11::to_string(this->worm.getHealth()),
-		SDL_BLACK_COLOR));	
-
-	SDL_Color color{r,g,b};
 	Texture hp(renderer,
 		wormsFont.RenderText_Solid(std::__cxx11::to_string(this->worm.getHealth()),
 		color));
 
-	renderer.Copy(
-		hpContrast,
-		NullOpt,
-		Rect(Point(x + 0.5*m_to_pix_x ,y - (.5 * - m_to_pix_y)) - Point(2,2), hp.GetSize() + Point(4,4))
-	);
-
+	Rect hpPosition(Point(x,y - (1 * - m_to_pix_y)), hp.GetSize());
+	renderer.SetDrawColor(0,0,0, 150);
+	renderer.FillRect(hpPosition);
 	renderer.Copy(
 		hp,
 		NullOpt,
-		Rect(Point(x + 0.5*m_to_pix_x ,y - (.5 * - m_to_pix_y)), hp.GetSize())
+		hpPosition
 	);
 
 }

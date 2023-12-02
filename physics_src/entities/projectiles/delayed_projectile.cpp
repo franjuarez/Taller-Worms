@@ -26,4 +26,11 @@ void DelayedProjectile::beginCollisionWithWorm(Entity* otherBody, b2Contact* con
     UNUSED(otherBody);
 }
 
+void DelayedProjectile::beginCollisionWithSupplyBox(Entity* otherBody, b2Contact* contact) {
+    UNUSED(contact);
+    UNUSED(otherBody);
+    otherBody->body->SetLinearDamping(INFINITE_DAMPING);
+    otherBody->body->SetLinearVelocity(b2Vec2(0, 0));
+}
+
 DelayedProjectile::~DelayedProjectile() {}
