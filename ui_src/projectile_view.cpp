@@ -108,7 +108,10 @@ void ProjectileView::display(int i, Renderer& renderer, int camX, int camY) {
 
 	}else if (rocket.getType() == BANANA || rocket.getType() == HOLY_GRENADE) {
 		angle = i*6 % 360;
-	}else /*if (rocket.getType() == BAZOOKA)*/ {
+	} else if (rocket.getType() == DYNAMITE) {
+		angle = 0;
+
+	} else /*if (rocket.getType() == BAZOOKA)*/ {
 		angle = -(atan(rocket.getVelY() / rocket.getVelX()) * (180.0 / M_PI)); 
 		angle += (rocket.getVelX() < 0) ? -90 : 90;
 	}

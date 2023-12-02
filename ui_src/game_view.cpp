@@ -937,17 +937,17 @@ void GameView::processInput(SDL_Event event, int i) {
 
 		case SDLK_f:
 			inputState = DYNAMITE_CODE;
-			this->wormViews.at(currentWormId).drawBanana(i);
+			this->wormViews.at(currentWormId).drawDynamite(i);
 
 			break;
 		case SDLK_g:
 			inputState = AIR_STRIKE_CODE;
-			this->wormViews.at(currentWormId).drawBanana(i);
+			this->wormViews.at(currentWormId).drawAirstrike(i);
 
 			break;
 		case SDLK_h:
 			inputState = SAINT_GRENADE_CODE;
-			this->wormViews.at(currentWormId).drawBanana(i);
+			this->wormViews.at(currentWormId).drawSg(i);
 			break;
 
 
