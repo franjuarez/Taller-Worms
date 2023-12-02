@@ -28,14 +28,5 @@ void ProvitionsSupplyBox::beginCollisionWithWorm(Entity* otherBody, b2Contact* c
     }
     this->entitiesToRemove.insert(this->body);
 }
-/*
-andan bien:
--rg
--banana
--tp
--bat
-mal: holy, air
-
-*/
 
 ProvitionsSupplyBox::~ProvitionsSupplyBox() {}
