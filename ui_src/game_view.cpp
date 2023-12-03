@@ -57,6 +57,7 @@
 #define WORM_DRAWING_HG_PATH BASE_PATH "images/drawing_hg.bmp"
 #define WWINER_ANIMATION_PATH BASE_PATH + "images/wwinner.bmp"
 #define WORM_FLY_ANIMATION_PATH BASE_PATH + "images/worm_fly.bmp"
+#define WORM_BACKFLIP_PATH BASE_PATH "images/worm_backflip.bmp"
 
 
 #define GRAVE_PATH BASE_PATH + "images/grave1.bmp"
@@ -196,6 +197,7 @@ GameView::GameView(std::shared_ptr<InfoStruct> infoStruct) :
 	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_HOLDING_HG_PATH).SetColorKey(true, 0)));
 	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WWINER_ANIMATION_PATH).SetColorKey(true, 0)));
 	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_FLY_ANIMATION_PATH).SetColorKey(true, 0)));
+	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_BACKFLIP_PATH).SetColorKey(true, 0)));
 
 	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_01).SetColorKey(true, 0).SetBlendMode(SDL_BLENDMODE_BLEND).SetAlphaMod(220)));
 	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_02).SetColorKey(true, 0).SetBlendMode(SDL_BLENDMODE_BLEND).SetAlphaMod(220)));
@@ -732,7 +734,7 @@ void GameView::moveCase(int i, int dir) {
 
 void GameView::backspaceKeyCase(int i) {
 	this->client.execute(std::make_shared<Jump>(Jump(currentWormId, 3)));
-	this->wormViews.at(this->currentWormId).jump(i);
+	this->wormViews.at(this->currentWormId).backflip(i);
 
 }
 
@@ -747,6 +749,7 @@ void GameView::clickCase(int i, int mouseX, int mouseY) {
 	if (this->currentWorm.getWeapons()[inputState - 1] == 0) {
 		return;
 	}
+	this->wormViews.at(this->currentWormId).toDefault(i);
 	switch (inputState) {
 	case BAZOOKA_CODE:
 		
