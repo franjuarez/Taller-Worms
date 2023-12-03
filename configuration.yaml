@@ -35,8 +35,8 @@ move:
 jump:
   jump_forward_movement_x: 2.0
   jump_forward_movement_y: 2.5
-  jump_backwards_movement_x: 0.2
-  jump_backwards_movement_y: 1.2
+  jump_backwards_movement_x: 0.4
+  jump_backwards_movement_y: 1.4
 
 height_damage:
   min_height_to_damage: 2
@@ -116,7 +116,7 @@ teleport:
   max_ammo: -1
 
 supply_box:
-  probability: 1 # Has to be between 0 and 1
+  probability: 0 # Has to be between 0 and 1
   # The sum of the 3 probabilities must be 1
   probability_health: 0.4
   probability_ammo: 0.4

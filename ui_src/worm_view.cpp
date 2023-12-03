@@ -280,9 +280,18 @@ WormView::WormView(WormDTO& worm, std::vector<Texture>& dynamicSpriteSheets, Fon
 	x = 16;
 	w = 30;
 	h = 31;
-	for (int i = 0; i < 30; i++) {
+	for (int i = 0; i < 28; i++) {
 		y = i * 60 + 15;
 		frames[WORM_FLY_FRAMES].push_back(Rect(x,y,w,h));
+	}
+
+
+	x = 14;
+	w = 30;
+	h = 31;
+	for (int i = 31; i >= 0; i -= 3) {
+		y = i * 60 + 15;
+		frames[WORM_BACKFLIP_FRAMES].push_back(Rect(x,y,w,h));
 	}
 }
 
@@ -403,10 +412,19 @@ void WormView::drawAxe(int i) {
 }
 
 void WormView::jump(int i) {
-	if (currentFramesIndex == JUMPING_FRAMES || currentFramesIndex == WORM_FLY_FRAMES)
+	if (currentFramesIndex == JUMPING_FRAMES || currentFramesIndex == WORM_FLY_FRAMES
+		|| currentFramesIndex == WORM_BACKFLIP_FRAMES)
 		return;
 	this->startingPoint = i;
 	this->currentFramesIndex = JUMPING_FRAMES;
+	this->defaultFramesIndex = WORM_FLY_FRAMES;
+}
+
+void WormView::backflip(int i) {
+	if (currentFramesIndex == WORM_BACKFLIP_FRAMES)
+		return;
+	this->startingPoint = i;
+	this->currentFramesIndex = WORM_BACKFLIP_FRAMES;
 	this->defaultFramesIndex = WORM_FLY_FRAMES;
 }
 
@@ -436,7 +454,7 @@ void WormView::tp(int i) {
 void WormView::fly(int i) {
 	if (currentFramesIndex == WORM_FLY_FRAMES)
 		return;
-	//this->startingPoint = i;
+	this->startingPoint = i;
 	this->currentFramesIndex = WORM_FLY_FRAMES;
 	this->defaultFramesIndex = WORM_FLY_FRAMES;
 }
@@ -508,7 +526,8 @@ void WormView::display(int i, Renderer& renderer, int camX, int camY, int mouseX
 		currentFrame = (((angle + 90.0f) / 180.0f) * (this->frames[currentFramesIndex].size()));
 
 		if (currentFramesIndex == WORM_FLY_FRAMES) {
-			currentFrame = this->frames[currentFramesIndex].size() - currentFrame;
+			currentFrame = (this->frames[currentFramesIndex].size() - 1) - currentFrame;
+
 		}
 	} else { //si es una animacion calculo en base al frame en el que estoy
 		flip = worm.getDir();
@@ -607,14 +626,20 @@ void WormView::update(WormDTO other, int i) {
 
 	if ((worm.getVelY() <= 0.2 && worm.getVelY() >= -0.2) && this->currentFramesIndex == WORM_FLY_FRAMES) {
 		
-		if (currentFramesIndex != JUMPING_FRAMES)
+		if (currentFramesIndex != JUMPING_FRAMES /*&& currentFramesIndex != WORM_BACKFLIP_FRAMES*/)
 			this->currentFramesIndex = STILL_FRAMES;
 		this->defaultFramesIndex = STILL_FRAMES;
 		this->startingPoint = i;
 	}
 
-	
-	if (abs(worm.getVelX()) > 0.1 && currentFramesIndex == STILL_FRAMES) {
+
+
+	//std::cout << "vel en y: " << worm.getVelY();
+	//std::cout << "abs" << abs(worm.getVelY());
+	//std::cout << "comparacion: " << (abs(worm.getVelY()) > 0.1);
+
+	if (( abs(worm.getVelX()) > 0.1 || abs(worm.getVelY()) > 0.1) && currentFramesIndex == STILL_FRAMES) {
+		std::cout << "entro" << std::endl;
 		fly(i);
 	}
 

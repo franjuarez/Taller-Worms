@@ -40,6 +40,7 @@ public:
 	void drawAirstrike(int i);
 	void drawSg(int i);
 	void jump(int i);
+	void backflip(int i);
 	void move(int i);
 	void hit(int i);
 	void tp(int i);
