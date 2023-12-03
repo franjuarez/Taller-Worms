@@ -21,18 +21,15 @@
 
 #define BASE_PATH "/var/TPworms/resources/"
 
-<<<<<<< HEAD
-#define MUSIC_PATH BASE_PATH "music/AdhesiveWombat_Night Shade.mp3"
-=======
-#define MUSIC_PATH BASE_PATH + "music/AdhesiveWombat_Night Shade.mp3"
-#define THROW_SFX_PATH BASE_PATH + "music/throw_sfx.mp3"
+
+#define MUSIC_PATH BASE_PATH  "music/AdhesiveWombat_Night Shade.mp3"
+#define THROW_SFX_PATH BASE_PATH  "music/throw_sfx.mp3"
 #define EXPLOSION_SFX_PATH BASE_PATH "music/explosion_2_sfx.mp3"
 #define EQUIP_SFX_PATH BASE_PATH "music/equip_sfx.mp3"
 #define TP_SFX_PATH BASE_PATH "music/tp_3_sfx.mp3"
 #define DYNAMITE_SFX_PATH BASE_PATH "music/dynamite_2_sfx.mp3"
 #define LAUNCH_SFX_PATH BASE_PATH "music/launch_sfx.mp3"
 
->>>>>>> cfe8b0abad93ea48f1f35a5897c98a1c7cbdf993
 
 #define WORM_LIFE_FONT_PATH BASE_PATH  "fonts/lazy.ttf"
 #define HUD_FONT_PATH BASE_PATH  "fonts/arcadeclassic/ARCADECLASSIC.TTF"
