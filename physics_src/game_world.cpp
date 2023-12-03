@@ -435,21 +435,32 @@ Position GameWorld::calculateValidSupplyBoxPosition(){
     int attempts = 0;
     while(attempts < maxAttempts){
         float x = randomNumberGenerator(this->worldBegginningX, this->worldEndX);
-        bool foundBeam = true;
         SupplyQueryCallback callback;
         this->world->RayCast(&callback, b2Vec2(x, this->worldMaxY), b2Vec2(x, 0));
-        foundBeam &= callback.lastIntersectedType == EntityBeam;
-        this->world->RayCast(&callback, b2Vec2(x + SUPPLY_BOX_WIDTH/2, this->worldMaxY), b2Vec2(x+ SUPPLY_BOX_WIDTH/2, 0));
-        foundBeam &= callback.lastIntersectedType == EntityBeam;
-        this->world->RayCast(&callback, b2Vec2(x - SUPPLY_BOX_WIDTH/2, this->worldMaxY), b2Vec2(x - SUPPLY_BOX_WIDTH/2, 0));
-        foundBeam &= callback.lastIntersectedType == EntityBeam;
-        if(foundBeam){
-            b2Vec2 beamPos = callback.beam->body->GetPosition();
-            float posYFactor = callback.beam->isWalkable() ? 2 : 3;
-            float y = beamPos.y * posYFactor;
-            return Position(x, y);
+        if(callback.lastIntersectedType != EntityBeam){
+            attempts++;
+            continue;
         }
-        attempts++;
+        b2Body* foundBeam = callback.beam;
+        bool found = true;
+        float offset = 0.3f;
+        float step = 0.1f;
+        float currX = x - SUPPLY_BOX_WIDTH/2;
+        for(float i = -offset; i <= SUPPLY_BOX_WIDTH + offset; i+=step){
+            float test = currX + i;
+            this->world->RayCast(&callback, b2Vec2(test, this->worldMaxY), b2Vec2(test, 0));
+            if(callback.lastIntersectedType != EntityBeam || callback.beam != foundBeam){
+                found = false;
+                break;
+            }
+        }
+        if(!found){
+            attempts++;
+            continue;
+        }
+        b2Vec2 beamPos = foundBeam->GetPosition();
+        float y = beamPos.y * 2;
+        return Position(x, y);
     }
     return IMPOSSIBLE_POSITION;
 }
