@@ -5,10 +5,11 @@ sudo apt-get install libsdl2-image-dev
 sudo apt-get install libsdl2-ttf-dev
 sudo apt-get install libsdl2-mixer-dev
 sudo apt-get install qtbase5-dev
-echo "Done!"
+echo "Installation complete!"
 
 echo "Building..."
 mkdir build
 cd build
 cmake ..
-make install -j4
+sudo make install -j4
+echo "Build complete! Ready for use!"
