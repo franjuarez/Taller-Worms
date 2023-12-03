@@ -62,7 +62,42 @@ El cliente por si mismo no conoce la implementacion de la logica del juego. Su f
 
 ## Protocolo de Comunicacion 
 
-El Protocol es quien facilita la comunicacion 
+El Protocol es quien facilita la comunicacion entre servidor y usuario. Se encarda de manejar el envio de las dos clases madre Serializable y Command. 
+
+Serializable cuenta con 3 clases hija:
+    
+    - GameDynamic
+    - GameInfo
+    - GameMap
+
+Las 3 presentan al cliente con la informacion necesaria en los 3 estados del juego. GameInfo es quein contiene la informacion sobre las partidas disponibles a las que el jugador se puede unir. GameMap es la que contiene los estados iniciales de todo lo pertinente para iniciar la partida del lado del cliente -> la posicion de las vigas, de los gusanos, el id del jugador, la cantidad de jugadores. Por ultimo GameDynamic es la encargada de enviar el estado actual del juego -> el gusano del cual es el turno, si hay algun equipo ganador, la salud de cada equipo, la informacion actualizada de cada WormDTO, la informacion de cada ExplosiveDTO y la informacion de las SupplyBoxDTO disponibles. 
+
+Los DTO son las clases que cuentan con la informacion especifica de los objetos dinamicos del mundo. Estos son los objetos que cambian de posicion, de valor o dejan de existir en el mundo.
+
+Command cuenta con 10 clases hiajs: 
+    
+    - Move
+    - Jump 
+    - HitUpclose
+    - LaunchRocket
+    - ThrowGrenade
+    - DropDynamite
+    - RemoteOperated
+    - MatchCommand
+    - Cheats
+
+Cada una de estas clases representa una accion especifica que puede hacer el usuario. 
+
+Move, Jump y Cheats son acciones que no utilizan herramientas y no le cuestan el turno al usuario (y pueden ejecutarse en los 3 segundos extra). Move y Jump interactuan directamente con la fisica, recibiendo respuesta en actualizaciones del GameWorld. Mientras que Cheats puede interactuar tanto con GameWorld como con GameLoop, haciendo coasas como cambiar armas o frenar el paso de los turnos o volviendo a los gusanos invencibles. 
+
+HitUpclose, LaunchRocket, ThrowGrenade, RemoteOperated y DropDynamite son consideradas acciones que utilizan herramientas que interactuan todas directamente con el GameWorld, por lo cual su uso genera un cambio de turno, y no pueden ser utilizadas en los 3 segundos extra.  
+
+MatchCommand le permite crear/unirse a una partida y actualizar las partidas disponibles.
+
+Protocol es quien sabe como enviar todas estas sub-clases, mientras que tanto seervidor como cliente envian y reciben punteros a las clases madres. Es la clase que tiene acceso a los sockets de ambas partes y por ello sabe como enviar los diferentes tipos de datos.  
+
+Se trabajo en todas las partes posibles con shared_pointers para un manejo de memoria optimo. 
+
 
 ## Diagramas de clase
 
