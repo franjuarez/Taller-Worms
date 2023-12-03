@@ -21,8 +21,7 @@
 
 #define BASE_PATH "/var/TPworms/resources/"
 
-
-#define MUSIC_PATH BASE_PATH  "music/AdhesiveWombat_Night Shade.mp3"
+#define MUSIC_PATH BASE_PATH "music/AdhesiveWombat_Night Shade.mp3"
 #define THROW_SFX_PATH BASE_PATH  "music/throw_sfx.mp3"
 #define EXPLOSION_SFX_PATH BASE_PATH "music/explosion_2_sfx.mp3"
 #define EQUIP_SFX_PATH BASE_PATH "music/equip_sfx.mp3"
