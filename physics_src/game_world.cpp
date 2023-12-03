@@ -535,6 +535,16 @@ void GameWorld::removeBoxFromMap(b2Body* box){
     this->boxes.erase(id);
 }
 
+void GameWorld::removeWormFromMap(b2Body* worm){
+    Worm* wormData = (Worm*) worm->GetUserData().pointer;
+    int id = wormData->getId();
+    auto it = this->worms.find(id);
+    if(it == this->worms.end()){
+        throw std::runtime_error("Worm does not exist");
+    }
+    this->worms.erase(id);
+}
+
 void GameWorld::removeEntities(){
     for(b2Body* body : this->entitiesToRemove){
         Entity* entity = (Entity*) body->GetUserData().pointer;
@@ -543,6 +553,8 @@ void GameWorld::removeEntities(){
             removeProjectileFromMap(body);
         }  else if (entityType == EntitySupplyBox){
             removeBoxFromMap(body);
+        } else if(entityType == EntityWorm){
+            removeWormFromMap(body);
         }
         this->world->DestroyBody(body);
         delete entity;
@@ -592,10 +604,10 @@ void GameWorld::update() {
 }
 
 GameDynamic* GameWorld::getGameStatus(int id){
-    std::vector<WormDTO> wormsDTO;
-    for (auto& worm : this->worms) {
+    std::unordered_map<int, WormDTO> wormsDTO;
+    for(auto& worm: this->worms){
         Worm* wormData = (Worm*) worm.second->GetUserData().pointer;
-        wormsDTO.push_back(wormData->getDTO());
+        wormsDTO.emplace(worm.first, wormData->getDTO());
     }
 
     std::unordered_map<int, ExplosivesDTO> projectilesDTO;
