@@ -403,7 +403,7 @@ void WormView::drawAxe(int i) {
 }
 
 void WormView::jump(int i) {
-	if (currentFramesIndex == JUMPING_FRAMES)
+	if (currentFramesIndex == JUMPING_FRAMES || currentFramesIndex == WORM_FLY_FRAMES)
 		return;
 	this->startingPoint = i;
 	this->currentFramesIndex = JUMPING_FRAMES;
@@ -534,7 +534,11 @@ void WormView::display(int i, Renderer& renderer, int camX, int camY, int mouseX
 		x = (worm.getX() * m_to_pix_x - camX) - (this->frames[currentFramesIndex][currentFrame].GetW())/2;
 		y = (worm.getY() * m_to_pix_y + WINDOW_HEIGHT - camY) - (this->frames[currentFramesIndex][currentFrame].GetH()/2);
 		w = 3*m_to_pix_x;
-		h = -3*m_to_pix_y;
+		h = -3.4*m_to_pix_y;
+	}
+
+	if (currentFramesIndex == HITTING_FRAMES) {
+		x += flip ? 6 : 6;
 	}
 	Rect destiny(x,y,w,h);
 		
@@ -585,6 +589,17 @@ void WormView::display(int i, Renderer& renderer, int camX, int camY, int mouseX
 
 void WormView::update(WormDTO other, int i) {
 	this->worm = other;
+
+	switch(worm.getCurrentAction()) {
+	case MOVING:
+		move(i);
+		break;
+	case JUMPING:
+		jump(i);
+		break;
+	default:
+		break;
+	}
 
 	if (worm.getVelX() == 0 && this->defaultFramesIndex == WALKING_FRAMES) {
 		this->defaultFramesIndex = STILL_FRAMES;
