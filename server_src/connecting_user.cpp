@@ -49,8 +49,10 @@ void ConnectingUser::createNewMatch(int numberPlayers, std::string matchName, st
 
     std::shared_ptr<Queue<std::shared_ptr<InfoStruct>>> infoQueue = std::make_shared<Queue<std::shared_ptr<InfoStruct>>>();
     infoQueue->push(infoStruct);
+
+    std::unordered_map<int, WormDTO> wormsMap = makeWormsMap(worms);
     
-    std::shared_ptr<GameMap> gameMap = std::make_shared<GameMap>(GameMap(0, numberPlayers, mapName, beams, worms));
+    std::shared_ptr<GameMap> gameMap = std::make_shared<GameMap>(GameMap(0, numberPlayers, mapName, beams, wormsMap));
     std::shared_ptr<MatchesStruct> matchStruct = std::make_shared<MatchesStruct>(teams, matchName, gameMap, playing, infoQueue);
 
     int code = matchesMonitor.addMatchStruct(matchName, matchStruct);
@@ -115,6 +117,13 @@ std::vector<WormDTO> ConnectingUser::createWorms(std::vector<WormPosition> worms
         worms.push_back(worm);
     }
     return worms;
+}
+
+std::unordered_map<int, WormDTO> ConnectingUser::makeWormsMap(std::vector<WormDTO>& worms) {
+    std::unordered_map<int, WormDTO> wormsMap;
+    for (int i = 0; i < worms.size(); i++) {
+        wormsMap.emplace(worms[i].getId(), worms[i]);
+    }
 }
     
 bool ConnectingUser::isActive() {

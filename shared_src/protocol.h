@@ -52,8 +52,8 @@ private:
     void sendBeams(std::vector<BeamDTO> beams);
     std::vector<BeamDTO> receiveBeams();
 
-    void sendWorms(std::vector<WormDTO> worms);
-    std::vector<WormDTO> receiveWorms();
+    void sendWorms(std::unordered_map<int, WormDTO> worms);
+    std::unordered_map<int, WormDTO> receiveWorms();
 
     void sendWeapons(std::unordered_map<int, ExplosivesDTO> explosives);
     std::unordered_map<int, ExplosivesDTO> receiveWeapons();

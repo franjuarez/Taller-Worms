@@ -22,7 +22,7 @@ private:
     int wormPlayingID;
     int winnerTeam = PLAYING;
     int status;
-    std::vector<WormDTO> worms;
+    std::unordered_map<int, WormDTO> worms;
     std::unordered_map<int, ExplosivesDTO> explosives;
     std::unordered_map<int, SupplyBoxDTO> supplyBox;
     std::vector<uint32_t> teamsHealth;
@@ -30,14 +30,14 @@ private:
     int serializableType = GAME_DYNAMIC;
 public: 
     GameDynamic();
-    GameDynamic(int wormPlayingID, std::vector<WormDTO>worms, std::unordered_map<int, ExplosivesDTO> explosives, std::unordered_map<int, SupplyBoxDTO> supplyBox);
-    GameDynamic(int wormPlayingID, int status, int winnerTeam, std::vector<WormDTO>worms, std::unordered_map<int, ExplosivesDTO> explosives, std::unordered_map<int, SupplyBoxDTO> supplyBox, std::vector<uint32_t> teamsHealth);
+    GameDynamic(int wormPlayingID, std::unordered_map<int, WormDTO> worms, std::unordered_map<int, ExplosivesDTO> explosives, std::unordered_map<int, SupplyBoxDTO> supplyBox);
+    GameDynamic(int wormPlayingID, int status, int winnerTeam, std::unordered_map<int, WormDTO> worms, std::unordered_map<int, ExplosivesDTO> explosives, std::unordered_map<int, SupplyBoxDTO> supplyBox, std::vector<uint32_t> teamsHealth);
 
     void send(Protocol& protocol);
     int getSerType();
-    void addWorms(std::vector<WormDTO>worms);
+    void addWorms(std::unordered_map<int, WormDTO> worms);
 
-    std::vector<WormDTO> getWorms();
+    std::unordered_map<int, WormDTO> getWorms();
     std::unordered_map<int, ExplosivesDTO> getExplosives();
 
     int getWormPlayingID();

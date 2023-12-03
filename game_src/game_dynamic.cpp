@@ -4,10 +4,10 @@
 GameDynamic::GameDynamic() {}
 
 
-GameDynamic::GameDynamic(int wormPlayingID, std::vector<WormDTO>worms, std::unordered_map<int, ExplosivesDTO> explosives, std::unordered_map<int, SupplyBoxDTO> supplyBox)
+GameDynamic::GameDynamic(int wormPlayingID, std::unordered_map<int, WormDTO> worms, std::unordered_map<int, ExplosivesDTO> explosives, std::unordered_map<int, SupplyBoxDTO> supplyBox)
 : Serializable() ,wormPlayingID(wormPlayingID), worms(worms), explosives(explosives), supplyBox(supplyBox), teamsHealth() {}
 
-GameDynamic::GameDynamic(int wormPlayingID, int status, int winnerTeam, std::vector<WormDTO>worms, std::unordered_map<int, ExplosivesDTO> explosives,
+GameDynamic::GameDynamic(int wormPlayingID, int status, int winnerTeam, std::unordered_map<int, WormDTO> worms, std::unordered_map<int, ExplosivesDTO> explosives,
  std::unordered_map<int, SupplyBoxDTO> supplyBox, std::vector<uint32_t> teamsHealth)
 : Serializable() ,wormPlayingID(wormPlayingID), winnerTeam(winnerTeam), status(status), worms(worms), explosives(explosives), supplyBox(supplyBox), teamsHealth(teamsHealth) {}
 
@@ -15,11 +15,11 @@ void GameDynamic::send(Protocol& protocol) {
     protocol.sendSerializable(this);
 }
 
-void GameDynamic::addWorms(std::vector<WormDTO> wormVec) {
+void GameDynamic::addWorms(std::unordered_map<int, WormDTO> wormVec) {
     worms = wormVec;
 }
 
-std::vector<WormDTO> GameDynamic::getWorms() {
+std::unordered_map<int, WormDTO> GameDynamic::getWorms() {
     return this->worms;
 }
 

@@ -20,17 +20,17 @@ private:
     int numberTeams;
     std::string mapName;
     std::vector<BeamDTO> beamsMap;
-    std::vector<WormDTO> worms;
+    std::unordered_map<int, WormDTO>worms;
 
     int serializableType = GAME_MAP;
 public:
-    GameMap(int team, int numberTeams, std::string mapName, std::vector<BeamDTO> beamsMap, std::vector<WormDTO> worms);
+    GameMap(int team, int numberTeams, std::string mapName, std::vector<BeamDTO> beamsMap, std::unordered_map<int, WormDTO>worms);
     int getTeam();
     void setTeam(int newTeam);
     int getNumberTeams();
     std::string getMapName();
     std::vector<BeamDTO> getBeams();
-    std::vector<WormDTO> getWorms();
+    std::unordered_map<int, WormDTO> getWorms();
     int getNumberOfBeams();
     int getNumberOfWorms();
     void send(Protocol& protocol);
