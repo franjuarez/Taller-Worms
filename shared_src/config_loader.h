@@ -12,9 +12,6 @@ private:
     //maps
     std::string maps_file;
 
-    //resources
-    std::string resources_dir;
-    
     //game
     int fps;
     int music_volume;
@@ -154,9 +151,6 @@ public:
 
     //maps
     std::string getMapsFile();
-
-    //resources
-    std::string getResourcesDirectory();
 
     //game
     int getFps();

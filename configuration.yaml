@@ -1,5 +1,4 @@
 maps_file: map_names.yaml
-resources_directory: resources
 
 game:
   FPS: 60
