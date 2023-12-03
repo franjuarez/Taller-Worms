@@ -105,6 +105,15 @@ enum supplyBoxFrames {
 	NOT_SHOWING_BOX_FRAMES,
 };
 
+enum sfxs {
+	THROW_SFX = 0,
+	EXPLOSION_SFX,
+	EQUIP_SFX,
+	TP_SFX,
+	DYNAMITE_SFX,
+	LAUNCH_SFX
+};
+
 extern const int MUSIC_VOLUME;
 
 extern const int WINDOW_WIDTH;
