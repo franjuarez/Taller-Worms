@@ -297,15 +297,19 @@ void GameView::stop() {
 void GameView::playSound(int sound_id/*, bool playAlways*/) {
 	
 	try {
-		mixer.PlayChannel(-1, sfx[sound_id], 0);
-	} catch (SDL2pp::Exception &e) {}
+		int channel = mixer.PlayChannel(-1, sfx[sound_id], 0);
+		mixer.SetVolume(channel, SFX_VOLUME);
+	} catch (SDL2pp::Exception &e) {
+	/*cuando sdl arregle su funcion 
+	yo voy a arreglar mi catch*/
+	}
 }
 
 
 void GameView::updateEntities(int i) {
 	this->currentGameStatus = *std::dynamic_pointer_cast<GameDynamic>(client.getGameStatus());
 
-	//std::shared_ptr<GameDynamic> gs = std::dynamic_pointer_cast<GameDynamic>(client.getGameStatus());
+
 	int oldid = this->currentWormId;
 
 	std::vector<WormDTO> recievedWorms = currentGameStatus.getWorms();

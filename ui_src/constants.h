@@ -115,7 +115,7 @@ enum sfxs {
 };
 
 extern const int MUSIC_VOLUME;
-
+extern const int SFX_VOLUME;
 extern const int WINDOW_WIDTH;
 extern const int WINDOW_HEIGHT;
 extern const float m_to_pix_x;
