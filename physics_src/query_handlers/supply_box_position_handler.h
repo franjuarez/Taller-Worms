@@ -7,7 +7,7 @@
 class SupplyQueryCallback : public b2RayCastCallback {
 public:
     EntityType lastIntersectedType;
-    Beam *beam;
+    b2Body *beam;
 
     SupplyQueryCallback();
 
