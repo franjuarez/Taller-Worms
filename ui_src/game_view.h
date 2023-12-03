@@ -35,6 +35,7 @@ private:
 	Font hudFont;
 	Font toolBarFont;
 	Chunk sound;
+	std::vector<Chunk> sfx;
 	std::vector<Texture> backgroundSprites;
 	Texture waitingScreen;
 	Texture beamSprite;
@@ -73,6 +74,7 @@ private:
 	int throwPower;
 	bool buttonPressing;
 
+	void playSound(int sound_id);
 	void updateEntities(int i);
 	void loadWorms(std::vector<WormDTO>& recievedWorms);
 	void loadBeams(std::vector<BeamDTO>& beams);

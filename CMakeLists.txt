@@ -94,18 +94,20 @@ add_executable(wormsClient ${MAIN} ${CLIENT} ${HEADER_FILES} ${CMAKE_CURRENT_SOU
 file(GLOB SERVER CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/server_src/*.cpp")
 add_library(serverLibrary ${SERVER})
 
+target_link_libraries(serverLibrary PRIVATE Threads::Threads)
 target_link_libraries(serverLibrary PUBLIC SharedLib)
 target_link_libraries(serverLibrary PUBLIC SharedGameLib)
 
 add_executable(server ${SERVER})
 
+target_link_libraries(server PRIVATE Threads::Threads)
 target_link_libraries(server PUBLIC SharedLib)
 target_link_libraries(server PUBLIC SharedGameLib)
 target_link_libraries(server PRIVATE yaml-cpp)
 target_compile_options(server PRIVATE $<$<NOT:$<C_COMPILER_ID:MSVC>>:-Wall -Wextra -pedantic -ggdb -DDEBUG -pedantic-errors>)
 
 target_link_libraries(client_gui PUBLIC serverLibrary)
-
+target_link_libraries(wormsClient PRIVATE Threads::Threads)
 target_link_libraries(wormsClient PUBLIC SharedLib)
 target_link_libraries(wormsClient PUBLIC SharedGameLib)
 target_link_libraries(wormsClient PUBLIC SharedUi)

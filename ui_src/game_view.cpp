@@ -17,10 +17,22 @@
 #define RATE (1000.f / FPS)
 #define AIM_SIZE 0.5
 #define MAX_THROWING_POWER 120
+#define PLAY_IN_LOOP -1
 
 #define BASE_PATH "/var/TPworms/resources/"
 
+<<<<<<< HEAD
 #define MUSIC_PATH BASE_PATH "music/AdhesiveWombat_Night Shade.mp3"
+=======
+#define MUSIC_PATH BASE_PATH + "music/AdhesiveWombat_Night Shade.mp3"
+#define THROW_SFX_PATH BASE_PATH + "music/throw_sfx.mp3"
+#define EXPLOSION_SFX_PATH BASE_PATH "music/explosion_2_sfx.mp3"
+#define EQUIP_SFX_PATH BASE_PATH "music/equip_sfx.mp3"
+#define TP_SFX_PATH BASE_PATH "music/tp_3_sfx.mp3"
+#define DYNAMITE_SFX_PATH BASE_PATH "music/dynamite_2_sfx.mp3"
+#define LAUNCH_SFX_PATH BASE_PATH "music/launch_sfx.mp3"
+
+>>>>>>> cfe8b0abad93ea48f1f35a5897c98a1c7cbdf993
 
 #define WORM_LIFE_FONT_PATH BASE_PATH  "fonts/lazy.ttf"
 #define HUD_FONT_PATH BASE_PATH  "fonts/arcadeclassic/ARCADECLASSIC.TTF"
@@ -149,82 +161,89 @@ GameView::GameView(std::shared_ptr<InfoStruct> infoStruct) :
 
 
 	rocketSprites.push_back(Texture(renderer, Surface(ROCKET_PATH).SetColorKey(true,0)));
-	rocketSprites.push_back(Texture(renderer, Surface(EXPLOSION_PATH).SetColorKey(true,0)));
-	//le paso algo que pueda ser transparente si se agarra la porcion correcta para que se pueda hacer que desaparezca
-	rocketSprites.push_back(Texture(renderer, Surface(EXPLOSION_PATH).SetColorKey(true,0)));
-	rocketSprites.push_back(Texture(renderer, Surface(RGRENADE_ICON_PATH).SetColorKey(true,0)));
-	rocketSprites.push_back(Texture(renderer, Surface(BANANA_ICON_PATH).SetColorKey(true,0)));
-	rocketSprites.push_back(Texture(renderer, Surface(MORTAR_PROJECTILE_PATH).SetColorKey(true,0)));
-	rocketSprites.push_back(Texture(renderer, Surface(GGRENADE_ICON_PATH).SetColorKey(true,0)));
-	rocketSprites.push_back(Texture(renderer, Surface(PERDIGON_PROJECTILE_PATH).SetColorKey(true,0)));
-	rocketSprites.push_back(Texture(renderer, Surface(DYNAMITE_PROJECTILE_PATH).SetColorKey(true,0)));
-	rocketSprites.push_back(Texture(renderer, Surface(AIRSTRIKE_PROJECTILE_PATH).SetColorKey(true,0)));
-	rocketSprites.push_back(Texture(renderer, Surface(HG_PROJECTILE_PATH).SetColorKey(true,0)));
+		rocketSprites.push_back(Texture(renderer, Surface(EXPLOSION_PATH).SetColorKey(true,0)));
+		//le paso algo que pueda ser transparente si se agarra la porcion correcta para que se pueda hacer que desaparezca
+		rocketSprites.push_back(Texture(renderer, Surface(EXPLOSION_PATH).SetColorKey(true,0)));
+		rocketSprites.push_back(Texture(renderer, Surface(RGRENADE_ICON_PATH).SetColorKey(true,0)));
+		rocketSprites.push_back(Texture(renderer, Surface(BANANA_ICON_PATH).SetColorKey(true,0)));
+		rocketSprites.push_back(Texture(renderer, Surface(MORTAR_PROJECTILE_PATH).SetColorKey(true,0)));
+		rocketSprites.push_back(Texture(renderer, Surface(GGRENADE_ICON_PATH).SetColorKey(true,0)));
+		rocketSprites.push_back(Texture(renderer, Surface(PERDIGON_PROJECTILE_PATH).SetColorKey(true,0)));
+		rocketSprites.push_back(Texture(renderer, Surface(DYNAMITE_PROJECTILE_PATH).SetColorKey(true,0)));
+		rocketSprites.push_back(Texture(renderer, Surface(AIRSTRIKE_PROJECTILE_PATH).SetColorKey(true,0)));
+		rocketSprites.push_back(Texture(renderer, Surface(HG_PROJECTILE_PATH).SetColorKey(true,0)));
 
 
 	boxSprites.push_back(Texture(renderer, Surface(FALLING_BOX_PATH).SetColorKey(true,0)));
-	boxSprites.push_back(Texture(renderer, Surface(GLOWING_BOX_PATH).SetColorKey(true,0)));
-	boxSprites.push_back(Texture(renderer, Surface(GLOWING_BOX_PATH).SetColorKey(true,0)));//para cuando no muestra
+		boxSprites.push_back(Texture(renderer, Surface(GLOWING_BOX_PATH).SetColorKey(true,0)));
+		boxSprites.push_back(Texture(renderer, Surface(GLOWING_BOX_PATH).SetColorKey(true,0)));//para cuando no muestra
 
 	//para los gusanos. EXTRAER A SU PROPIA CLASE
 	dynamicSpriteSheets.push_back(Texture(renderer,Surface(STILL_WORM_PATH).SetColorKey(true, 0)));
-	dynamicSpriteSheets.push_back(Texture(renderer,Surface(JUMPING_WORM_PATH).SetColorKey(true, 0)));
-	dynamicSpriteSheets.push_back(Texture(renderer,Surface(WALKING_WORM_PATH).SetColorKey(true,0)));
-	dynamicSpriteSheets.push_back(Texture(renderer,Surface(SURRENDING_WORM_PATH).SetColorKey(true, 0)));
-	dynamicSpriteSheets.push_back(Texture(renderer,Surface(GRAVE_PATH).SetColorKey(true, 0)));
-	dynamicSpriteSheets.push_back(Texture(renderer,Surface(TP_WORM_PATH).SetColorKey(true, 0)));
-	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_HITTING_PATH).SetColorKey(true, 0)));
-	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_DRAWING_AXE_PATH).SetColorKey(true, 0)));
-	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_HOLDING_AXE_PATH).SetColorKey(true, 0)));
-	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_DRAWING_BAZOKA_PATH).SetColorKey(true, 0)));
-	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_HOLDING_BAZOKA_PATH).SetColorKey(true, 0)));
-	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_DRAWING_RG_PATH).SetColorKey(true, 0)));
-	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_HOLDING_RG_PATH).SetColorKey(true, 0)));
-	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_DRAWING_BANANA_PATH).SetColorKey(true, 0)));
-	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_HOLDING_BANANA_PATH).SetColorKey(true, 0)));
-	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_DRAWING_GG_PATH).SetColorKey(true, 0)));
-	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_HOLDING_GG_PATH).SetColorKey(true, 0)));
-	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_DRAWING_MORTAR_PATH).SetColorKey(true, 0)));
-	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_HOLDING_MORTAR_PATH).SetColorKey(true, 0)));
-	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_DRAWING_TP_PATH).SetColorKey(true, 0)));
-	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_HOLDING_TP_PATH).SetColorKey(true, 0)));
-	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_DRAWING_DYNAMITE_PATH).SetColorKey(true, 0)));
-	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_HOLDING_DYNAMITE_PATH).SetColorKey(true, 0)));
-	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_DRAWING_AIRSTRIKE_PATH).SetColorKey(true, 0)));
-	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_HOLDING_AIRSTRIKE_PATH).SetColorKey(true, 0)));
-	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_DRAWING_HG_PATH).SetColorKey(true, 0)));
-	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_HOLDING_HG_PATH).SetColorKey(true, 0)));
-	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WWINER_ANIMATION_PATH).SetColorKey(true, 0)));
-	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_FLY_ANIMATION_PATH).SetColorKey(true, 0)));
-	dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_BACKFLIP_PATH).SetColorKey(true, 0)));
+		dynamicSpriteSheets.push_back(Texture(renderer,Surface(JUMPING_WORM_PATH).SetColorKey(true, 0)));
+		dynamicSpriteSheets.push_back(Texture(renderer,Surface(WALKING_WORM_PATH).SetColorKey(true,0)));
+		dynamicSpriteSheets.push_back(Texture(renderer,Surface(SURRENDING_WORM_PATH).SetColorKey(true, 0)));
+		dynamicSpriteSheets.push_back(Texture(renderer,Surface(GRAVE_PATH).SetColorKey(true, 0)));
+		dynamicSpriteSheets.push_back(Texture(renderer,Surface(TP_WORM_PATH).SetColorKey(true, 0)));
+		dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_HITTING_PATH).SetColorKey(true, 0)));
+		dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_DRAWING_AXE_PATH).SetColorKey(true, 0)));
+		dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_HOLDING_AXE_PATH).SetColorKey(true, 0)));
+		dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_DRAWING_BAZOKA_PATH).SetColorKey(true, 0)));
+		dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_HOLDING_BAZOKA_PATH).SetColorKey(true, 0)));
+		dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_DRAWING_RG_PATH).SetColorKey(true, 0)));
+		dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_HOLDING_RG_PATH).SetColorKey(true, 0)));
+		dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_DRAWING_BANANA_PATH).SetColorKey(true, 0)));
+		dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_HOLDING_BANANA_PATH).SetColorKey(true, 0)));
+		dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_DRAWING_GG_PATH).SetColorKey(true, 0)));
+		dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_HOLDING_GG_PATH).SetColorKey(true, 0)));
+		dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_DRAWING_MORTAR_PATH).SetColorKey(true, 0)));
+		dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_HOLDING_MORTAR_PATH).SetColorKey(true, 0)));
+		dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_DRAWING_TP_PATH).SetColorKey(true, 0)));
+		dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_HOLDING_TP_PATH).SetColorKey(true, 0)));
+		dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_DRAWING_DYNAMITE_PATH).SetColorKey(true, 0)));
+		dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_HOLDING_DYNAMITE_PATH).SetColorKey(true, 0)));
+		dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_DRAWING_AIRSTRIKE_PATH).SetColorKey(true, 0)));
+		dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_HOLDING_AIRSTRIKE_PATH).SetColorKey(true, 0)));
+		dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_DRAWING_HG_PATH).SetColorKey(true, 0)));
+		dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_HOLDING_HG_PATH).SetColorKey(true, 0)));
+		dynamicSpriteSheets.push_back(Texture(renderer, Surface(WWINER_ANIMATION_PATH).SetColorKey(true, 0)));
+		dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_FLY_ANIMATION_PATH).SetColorKey(true, 0)));
+		dynamicSpriteSheets.push_back(Texture(renderer, Surface(WORM_BACKFLIP_PATH).SetColorKey(true, 0)));
 
 	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_01).SetColorKey(true, 0).SetBlendMode(SDL_BLENDMODE_BLEND).SetAlphaMod(220)));
-	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_02).SetColorKey(true, 0).SetBlendMode(SDL_BLENDMODE_BLEND).SetAlphaMod(220)));
-	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_00).SetColorKey(true, 0).SetBlendMode(SDL_BLENDMODE_BLEND).SetAlphaMod(220)));
-	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_03).SetColorKey(true, 0).SetBlendMode(SDL_BLENDMODE_BLEND).SetAlphaMod(220)));
-	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_04).SetColorKey(true, 0).SetBlendMode(SDL_BLENDMODE_BLEND).SetAlphaMod(220)));
-	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_05).SetColorKey(true, 0).SetBlendMode(SDL_BLENDMODE_BLEND).SetAlphaMod(220)));
-	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_06).SetColorKey(true, 0).SetBlendMode(SDL_BLENDMODE_BLEND).SetAlphaMod(220)));
-	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_07).SetColorKey(true, 0).SetBlendMode(SDL_BLENDMODE_BLEND).SetAlphaMod(220)));
-	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_08).SetColorKey(true, 0).SetBlendMode(SDL_BLENDMODE_BLEND).SetAlphaMod(220)));
-	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_09).SetColorKey(true, 0).SetBlendMode(SDL_BLENDMODE_BLEND).SetAlphaMod(220)));
-	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_10).SetColorKey(true, 0).SetBlendMode(SDL_BLENDMODE_BLEND).SetAlphaMod(220)));
-	waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_11).SetColorKey(true, 0).SetBlendMode(SDL_BLENDMODE_BLEND).SetAlphaMod(220)));
+		waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_02).SetColorKey(true, 0).SetBlendMode(SDL_BLENDMODE_BLEND).SetAlphaMod(220)));
+		waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_00).SetColorKey(true, 0).SetBlendMode(SDL_BLENDMODE_BLEND).SetAlphaMod(220)));
+		waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_03).SetColorKey(true, 0).SetBlendMode(SDL_BLENDMODE_BLEND).SetAlphaMod(220)));
+		waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_04).SetColorKey(true, 0).SetBlendMode(SDL_BLENDMODE_BLEND).SetAlphaMod(220)));
+		waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_05).SetColorKey(true, 0).SetBlendMode(SDL_BLENDMODE_BLEND).SetAlphaMod(220)));
+		waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_06).SetColorKey(true, 0).SetBlendMode(SDL_BLENDMODE_BLEND).SetAlphaMod(220)));
+		waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_07).SetColorKey(true, 0).SetBlendMode(SDL_BLENDMODE_BLEND).SetAlphaMod(220)));
+		waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_08).SetColorKey(true, 0).SetBlendMode(SDL_BLENDMODE_BLEND).SetAlphaMod(220)));
+		waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_09).SetColorKey(true, 0).SetBlendMode(SDL_BLENDMODE_BLEND).SetAlphaMod(220)));
+		waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_10).SetColorKey(true, 0).SetBlendMode(SDL_BLENDMODE_BLEND).SetAlphaMod(220)));
+		waterSprites.push_back(Texture(renderer,Surface(WATER_PATH_11).SetColorKey(true, 0).SetBlendMode(SDL_BLENDMODE_BLEND).SetAlphaMod(220)));
 
 
 	hudTextures.push_back(Texture(renderer, Surface(CURR_WORM_PATH).SetColorKey(true, 0)));
-	hudTextures.push_back(Texture(renderer, Surface(BAZOOKA_ICON_PATH).SetColorKey(true, 0)));
-	hudTextures.push_back(Texture(renderer, Surface(GGRENADE_ICON_PATH).SetColorKey(true, 0)));
-	hudTextures.push_back(Texture(renderer, Surface(BAT_ICON_PATH).SetColorKey(true, 0)));
-	hudTextures.push_back(Texture(renderer, Surface(TP_ICON_PATH).SetColorKey(true, 0)));
-	hudTextures.push_back(Texture(renderer, Surface(MORTAR_ICON_PATH).SetColorKey(true, 0)));
-	hudTextures.push_back(Texture(renderer, Surface(RGRENADE_ICON_PATH).SetColorKey(true, 0)));
-	hudTextures.push_back(Texture(renderer, Surface(BANANA_ICON_PATH).SetColorKey(true, 0)));
-	hudTextures.push_back(Texture(renderer, Surface(DYNAMITE_ICON_PATH).SetColorKey(true, 0)));
-	hudTextures.push_back(Texture(renderer, Surface(AIR_STRIKE_ICON_PATH).SetColorKey(true, 0)));
-	hudTextures.push_back(Texture(renderer, Surface(SAINT_GRANADE_ICON_PATH).SetColorKey(true, 0)));
-	hudTextures.push_back(Texture(renderer, Surface(CLOCK_PATH).SetColorKey(true, 0)));
-	hudTextures.push_back(Texture(renderer, Surface(AIM_PATH).SetColorKey(true, 0)));
+		hudTextures.push_back(Texture(renderer, Surface(BAZOOKA_ICON_PATH).SetColorKey(true, 0)));
+		hudTextures.push_back(Texture(renderer, Surface(GGRENADE_ICON_PATH).SetColorKey(true, 0)));
+		hudTextures.push_back(Texture(renderer, Surface(BAT_ICON_PATH).SetColorKey(true, 0)));
+		hudTextures.push_back(Texture(renderer, Surface(TP_ICON_PATH).SetColorKey(true, 0)));
+		hudTextures.push_back(Texture(renderer, Surface(MORTAR_ICON_PATH).SetColorKey(true, 0)));
+		hudTextures.push_back(Texture(renderer, Surface(RGRENADE_ICON_PATH).SetColorKey(true, 0)));
+		hudTextures.push_back(Texture(renderer, Surface(BANANA_ICON_PATH).SetColorKey(true, 0)));
+		hudTextures.push_back(Texture(renderer, Surface(DYNAMITE_ICON_PATH).SetColorKey(true, 0)));
+		hudTextures.push_back(Texture(renderer, Surface(AIR_STRIKE_ICON_PATH).SetColorKey(true, 0)));
+		hudTextures.push_back(Texture(renderer, Surface(SAINT_GRANADE_ICON_PATH).SetColorKey(true, 0)));
+		hudTextures.push_back(Texture(renderer, Surface(CLOCK_PATH).SetColorKey(true, 0)));
+		hudTextures.push_back(Texture(renderer, Surface(AIM_PATH).SetColorKey(true, 0)));
+
+	sfx.push_back(Chunk(THROW_SFX_PATH));
+	sfx.push_back(Chunk(EXPLOSION_SFX_PATH));
+	sfx.push_back(Chunk(EQUIP_SFX_PATH));
+	sfx.push_back(Chunk(TP_SFX_PATH));
+	sfx.push_back(Chunk(DYNAMITE_SFX_PATH));
+	sfx.push_back(Chunk(LAUNCH_SFX_PATH));
 
 
 
@@ -256,8 +275,6 @@ GameView::GameView(std::shared_ptr<InfoStruct> infoStruct) :
 	this->winnerTeam = -1;
 	this->throwPower = 10;
 	this->buttonPressing = false;
-
-
 }
 
 void GameView::loadBeams(std::vector<BeamDTO>& beams) {
@@ -280,10 +297,22 @@ void GameView::stop() {
 	this->not_closed = false;
 }
 
+void GameView::playSound(int sound_id/*, bool playAlways*/) {
+	
+	try {
+		int channel = mixer.PlayChannel(-1, sfx[sound_id], 0);
+		mixer.SetVolume(channel, SFX_VOLUME);
+	} catch (SDL2pp::Exception &e) {
+	/*cuando sdl arregle su funcion 
+	yo voy a arreglar mi catch*/
+	}
+}
+
+
 void GameView::updateEntities(int i) {
 	this->currentGameStatus = *std::dynamic_pointer_cast<GameDynamic>(client.getGameStatus());
 
-	//std::shared_ptr<GameDynamic> gs = std::dynamic_pointer_cast<GameDynamic>(client.getGameStatus());
+
 	int oldid = this->currentWormId;
 
 	std::vector<WormDTO> recievedWorms = currentGameStatus.getWorms();
@@ -338,6 +367,13 @@ void GameView::updateEntities(int i) {
 			it->second.getID(),
 			ProjectileView(it->second, rocketSprites)
 		);
+		int type = it->second.getType();
+		if (type == GREEN_GRENADE || type == RED_GRENADE || type == BANANA || type == HOLY_GRENADE)
+			playSound(THROW_SFX);
+		else if (type == DYNAMITE)
+			playSound(DYNAMITE_SFX);
+		else if (type == BAZOOKA || type == MORTAR || type == AIR_ATTACK)
+			playSound(LAUNCH_SFX);
 
 	}
 
@@ -379,6 +415,9 @@ void GameView::drawProjectiles(int i) {
 			it->second.update(recievedProjectiles.at(it->first), i);
 		} else {
 			it->second.explode(i);
+			playSound(EXPLOSION_SFX);
+
+
 		}
 		it->second.display(i, renderer, camX, camY);
 		if (not it->second.isOver()) {
@@ -766,6 +805,7 @@ void GameView::clickCase(int i, int mouseX, int mouseY) {
 	case TP_CODE:
 		this->wormViews.at(this->currentWormId).tp(i);
 		this->client.execute(std::make_shared<RemoteOperated>(RemoteOperated(currentWormId, REMOTE_OPERATED, pos)));		
+		playSound(TP_SFX);
 		return;
 	case MORTAR_CODE:
 		this->client.execute(std::make_shared<LaunchRocket>(LaunchRocket(MORTAR, currentWormId, dir, angle, throwPower)));
@@ -824,8 +864,10 @@ void GameView::processInput(SDL_Event event, int i) {
 	if (event.type == SDL_MOUSEWHEEL){
 		if (event.wheel.y > 0) {
 			inputState = (inputState + 1) % 11;
+			playSound(EQUIP_SFX);
 		} else if( event.wheel.y < 0) {
 			inputState--;
+			playSound(EQUIP_SFX);
 			if (inputState < 0) {
 				inputState = 10;
 			}
@@ -916,47 +958,65 @@ void GameView::processInput(SDL_Event event, int i) {
 			break;
 		case SDLK_r: //podria ser un mapa pero seria igual de feo en el constructor
 			inputState = BAZOOKA_CODE;
+			playSound(EQUIP_SFX);
+
 			this->wormViews.at(currentWormId).drawBazoka(i);
 			break;
 		case SDLK_t:
 			inputState = GGRENADE_CODE;
+			playSound(EQUIP_SFX);
+
 			this->wormViews.at(currentWormId).drawGreenGrenade(i);
 			break;
 		case SDLK_y:
 			if (this->currentWorm.getWeapons()[BAT_CODE] == 0)
 				return;
 			inputState = BAT_CODE;
+			playSound(EQUIP_SFX);
+
 			wormViews.at(currentWormId).drawAxe(i);
 			break;
 		case SDLK_u:
 			inputState = TP_CODE;
+			playSound(EQUIP_SFX);
+
 			wormViews.at(currentWormId).drawTp(i);
 			break;
 		case SDLK_i:
 			inputState = MORTAR_CODE;
+			playSound(EQUIP_SFX);
+
 			this->wormViews.at(currentWormId).drawMortar(i);
 			break;
 		case SDLK_o:
 			inputState = RGRENADE_CODE;
+			playSound(EQUIP_SFX);
+
 			this->wormViews.at(currentWormId).drawRedGrenade(i);
 			break;
 		case SDLK_p:
 			inputState = BANANA_CODE;
+			playSound(EQUIP_SFX);
+
 			this->wormViews.at(currentWormId).drawBanana(i);
 			break;
 
 		case SDLK_f:
 			inputState = DYNAMITE_CODE;
+			playSound(EQUIP_SFX);
+
 			this->wormViews.at(currentWormId).drawDynamite(i);
 
 			break;
 		case SDLK_g:
 			inputState = AIR_STRIKE_CODE;
+			playSound(EQUIP_SFX);
 			this->wormViews.at(currentWormId).drawAirstrike(i);
 
 			break;
 		case SDLK_h:
 			inputState = SAINT_GRENADE_CODE;
+			playSound(EQUIP_SFX);
 			this->wormViews.at(currentWormId).drawSg(i);
 			break;
 
@@ -988,7 +1048,7 @@ void GameView::processInput(SDL_Event event, int i) {
 }
 
 void GameView::start() {
-	mixer.PlayChannel(-1, sound);
+	mixer.PlayChannel(-1, sound, PLAY_IN_LOOP);
 
 	int i = 0;
 	int t1 = SDL_GetTicks();

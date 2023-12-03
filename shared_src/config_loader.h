@@ -15,6 +15,7 @@ private:
     //game
     int fps;
     int music_volume;
+    int sfx_volume;
     int turn_time;
     int extra_time;
     
@@ -155,6 +156,7 @@ public:
     //game
     int getFps();
     int getMusicVolume();
+    int getSfxVolume();
     int getTurnTime();
     int getExtraTime();
 
