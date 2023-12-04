@@ -634,6 +634,9 @@ void GameView::drawHud(int i) {
 
 void GameView::drawWinningScreen(int i) {
 	renderer.Clear();
+
+	mouseHandler.updateCam();
+	
 	renderer.Copy(backgroundSprites[0], NullOpt, NullOpt);
 
 	drawBeams(i);
