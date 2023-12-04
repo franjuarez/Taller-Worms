@@ -1,11 +1,11 @@
 #include "config_loader.h"
 
+#define PATH_TO_CONFIG_FILE "/etc/TPworms/configuration.yaml"
+
 ConfigLoader::ConfigLoader(const YAML::Node& node) :
     //maps
     maps_file(node["maps_file"].as<std::string>()),
 
-    //resources
-    resources_dir(node["resources_directory"].as<std::string>()),
     //game
     fps(node["game"]["FPS"].as<int>()),
     music_volume(node["game"]["music_volume"].as<int>()),
@@ -142,7 +142,7 @@ ConfigLoader::ConfigLoader(const YAML::Node& node) :
     {}
 
 ConfigLoader& ConfigLoader::getInstance() {
-    static ConfigLoader instance(YAML::LoadFile("../configuration.yaml"));
+    static ConfigLoader instance(YAML::LoadFile(PATH_TO_CONFIG_FILE));
     return instance;
 }
 
@@ -150,10 +150,6 @@ ConfigLoader::~ConfigLoader() {}
 
 std::string ConfigLoader::getMapsFile() {
     return maps_file;
-}
-
-std::string ConfigLoader::getResourcesDirectory() {
-    return resources_dir;
 }
 
 int ConfigLoader::getFps() {

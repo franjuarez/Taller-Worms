@@ -134,3 +134,15 @@ target_link_libraries(tests PUBLIC SharedLib)
 target_link_libraries(tests PUBLIC SharedGameLib)
 
 catch_discover_tests(tests)
+
+#Installer
+
+set(BIN_INSTALL_DIR "/usr/bin")
+set(SHARED_DIR "/usr/lib")
+set(CONF_INSTALL_DIR "/etc/TPworms")
+set(VAR_INSTALL_DIR "/var/TPworms")
+
+install(TARGETS wormsClient server client DESTINATION ${BIN_INSTALL_DIR}  PERMISSIONS WORLD_READ WORLD_WRITE WORLD_EXECUTE)
+install(TARGETS SharedLib SharedUi SharedPhysics SharedGameLib client_gui serverLibrary DESTINATION ${SHARED_DIR} PERMISSIONS WORLD_READ WORLD_WRITE WORLD_EXECUTE)
+install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/maps" "${CMAKE_CURRENT_SOURCE_DIR}/resources" DESTINATION ${VAR_INSTALL_DIR} FILE_PERMISSIONS WORLD_READ WORLD_WRITE)
+install(FILES "configuration.yaml" DESTINATION ${CONF_INSTALL_DIR} PERMISSIONS WORLD_READ WORLD_WRITE)

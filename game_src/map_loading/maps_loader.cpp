@@ -1,6 +1,6 @@
 #include "maps_loader.h"
 
-#define PATH "../maps/"
+#define PATH "/var/TPworms/maps/"
 
 MapsLoader::MapsLoader(const std::string mapsFile): file(PATH + mapsFile) {
     try{
