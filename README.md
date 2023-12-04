@@ -78,13 +78,13 @@ Dentro veremos:
 
 ![join-game-lobby](https://github.com/franjuarez/Taller-Worms/assets/90098530/bd984d29-78f4-435d-9d79-dd920881548b)
 
-
 En esta decidimos a que partida unirnos a traves del menu desplegable. En caso de crear partidas despuesde tener abierto el cliente se puede tocar el boton de refresh para buscar las ultimas partidas creadas.
 
 ### Ejemplo
 
 Dejamos un pequeño ejemplo de como se puede crear una partida y unirse a ella:
 
+https://github.com/franjuarez/Taller-Worms/assets/90098530/5981a719-9928-4e01-b0df-fc507f8a5cee
 
 ## Configuraciones
 
