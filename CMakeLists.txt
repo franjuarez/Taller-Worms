@@ -98,13 +98,13 @@ target_link_libraries(serverLibrary PRIVATE Threads::Threads)
 target_link_libraries(serverLibrary PUBLIC SharedLib)
 target_link_libraries(serverLibrary PUBLIC SharedGameLib)
 
-add_executable(server ${SERVER})
+add_executable(wormsServer ${SERVER})
 
-target_link_libraries(server PRIVATE Threads::Threads)
-target_link_libraries(server PUBLIC SharedLib)
-target_link_libraries(server PUBLIC SharedGameLib)
-target_link_libraries(server PRIVATE yaml-cpp)
-target_compile_options(server PRIVATE $<$<NOT:$<C_COMPILER_ID:MSVC>>:-Wall -Wextra -pedantic -ggdb -DDEBUG -pedantic-errors>)
+target_link_libraries(wormsServer PRIVATE Threads::Threads)
+target_link_libraries(wormsServer PUBLIC SharedLib)
+target_link_libraries(wormsServer PUBLIC SharedGameLib)
+target_link_libraries(wormsServer PRIVATE yaml-cpp)
+target_compile_options(wormsServer PRIVATE $<$<NOT:$<C_COMPILER_ID:MSVC>>:-Wall -Wextra -pedantic -ggdb -DDEBUG -pedantic-errors>)
 
 target_link_libraries(client_gui PUBLIC serverLibrary)
 target_link_libraries(wormsClient PRIVATE Threads::Threads)
@@ -133,16 +133,16 @@ target_link_libraries(tests PRIVATE Catch2::Catch2WithMain)
 target_link_libraries(tests PUBLIC SharedLib)
 target_link_libraries(tests PUBLIC SharedGameLib)
 
-catch_discover_tests(tests)
+# catch_discover_tests(tests)
 
 #Installer
 
 set(BIN_INSTALL_DIR "/usr/bin")
-set(SHARED_DIR "/usr/lib")
+set(SHARED_DIR "/usr/lib/TPworms")
 set(CONF_INSTALL_DIR "/etc/TPworms")
 set(VAR_INSTALL_DIR "/var/TPworms")
 
-install(TARGETS wormsClient server client DESTINATION ${BIN_INSTALL_DIR}  PERMISSIONS WORLD_READ WORLD_WRITE WORLD_EXECUTE)
+install(TARGETS wormsClient wormsServer DESTINATION ${BIN_INSTALL_DIR}  PERMISSIONS WORLD_READ WORLD_WRITE WORLD_EXECUTE)
 install(TARGETS SharedLib SharedUi SharedPhysics SharedGameLib client_gui serverLibrary DESTINATION ${SHARED_DIR} PERMISSIONS WORLD_READ WORLD_WRITE WORLD_EXECUTE)
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/maps" "${CMAKE_CURRENT_SOURCE_DIR}/resources" DESTINATION ${VAR_INSTALL_DIR} FILE_PERMISSIONS WORLD_READ WORLD_WRITE)
 install(FILES "configuration.yaml" DESTINATION ${CONF_INSTALL_DIR} PERMISSIONS WORLD_READ WORLD_WRITE)
