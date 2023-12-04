@@ -1,4 +1,6 @@
-# **Worms 2**
+# **Worms**
+
+![worms-cover](https://github.com/franjuarez/Taller-Worms/assets/90098530/4fe08251-3309-4836-98e1-9c32221e30eb)
 
 ## Dependencias
 * Sistema operativo Linux
