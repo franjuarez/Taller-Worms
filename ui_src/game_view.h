@@ -42,12 +42,10 @@ private:
 	Texture beamSprite;
 	Texture losingScreen;
 	std::vector<Texture> rocketSprites;
-	std::vector<Texture> boxSprites;
-	
+	std::vector<Texture> boxSprites;	
 	std::vector<Texture> dynamicSpriteSheets;
 	std::vector<Texture> waterSprites;
 	std::vector<BeamView> beamViews;
-	std::unordered_map<int, WormView> wormViews;
 	WormDTO currentWorm;
 	std::vector<Texture> hudTextures;
 	int team;
@@ -59,10 +57,12 @@ private:
 	int mouseY;
 	MouseHandler mouseHandler;
 
+	std::unordered_map<int, WormView> wormViews;
 	std::unordered_map<int, ProjectileView> projectileViews;
 	std::unordered_map<int, SupplyBoxView> boxViews;
 	std::unordered_map<int, ExplosivesDTO> recievedProjectiles;
 	std::unordered_map<int, SupplyBoxDTO> recievedBoxes;
+	std::unordered_map<int, WormDTO> recievedWorms;
 
 	
 
@@ -77,7 +77,7 @@ private:
 
 	void playSound(int sound_id);
 	void updateEntities(int i);
-	void loadWorms(std::vector<WormDTO>& recievedWorms);
+	//void loadWorms(std::vector<WormDTO>& recievedWorms);
 	void loadBeams(std::vector<BeamDTO>& beams);
 	void draw(int i);
 	void drawWaitingScreen(int i);

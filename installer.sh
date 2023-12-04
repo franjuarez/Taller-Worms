@@ -11,5 +11,9 @@ echo "Building..."
 mkdir build
 cd build
 cmake ..
-sudo make install -j4
-echo "Build complete! Ready for use!"
+if sudo make install -j4; then
+  echo "Build complete! Ready for use!"
+else
+  echo "Error: Failed to install. Check the error message above for details."
+fi
+

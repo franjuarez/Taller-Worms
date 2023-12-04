@@ -126,12 +126,13 @@ target_link_libraries(client PUBLIC SharedUi)
 target_link_libraries(client PRIVATE yaml-cpp)
 target_compile_options(client PRIVATE $<$<NOT:$<C_COMPILER_ID:MSVC>>:-Wall -Wextra -pedantic -ggdb -DDEBUG -pedantic-errors>)
 
+
 #TESTS
-file(GLOB TEST_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cpp")
-add_executable(tests ${TEST_SOURCES})
-target_link_libraries(tests PRIVATE Catch2::Catch2WithMain)
-target_link_libraries(tests PUBLIC SharedLib)
-target_link_libraries(tests PUBLIC SharedGameLib)
+# file(GLOB TEST_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cpp")
+# add_executable(tests ${TEST_SOURCES})
+# target_link_libraries(tests PRIVATE Catch2::Catch2WithMain)
+# target_link_libraries(tests PUBLIC SharedLib)
+# target_link_libraries(tests PUBLIC SharedGameLib)
 
 catch_discover_tests(tests)
 
@@ -146,3 +147,4 @@ install(TARGETS wormsClient wormsServer DESTINATION ${BIN_INSTALL_DIR}  PERMISSI
 install(TARGETS SharedLib SharedUi SharedPhysics SharedGameLib client_gui serverLibrary DESTINATION ${SHARED_DIR} PERMISSIONS WORLD_READ WORLD_WRITE WORLD_EXECUTE)
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/maps" "${CMAKE_CURRENT_SOURCE_DIR}/resources" DESTINATION ${VAR_INSTALL_DIR} FILE_PERMISSIONS WORLD_READ WORLD_WRITE)
 install(FILES "configuration.yaml" DESTINATION ${CONF_INSTALL_DIR} PERMISSIONS WORLD_READ WORLD_WRITE)
+

@@ -56,7 +56,7 @@ GameMap* Protocol::receiveMap() {
     uint8_t team = receiveUintEight();
     uint8_t numberTeams = receiveUintEight();
     std::string mapName = receiveString();
-    std::vector<WormDTO> worms = receiveWorms();
+    std::unordered_map<int, WormDTO> worms = receiveWorms();
     std::vector<BeamDTO> beams = receiveBeams();
     return new GameMap(team, numberTeams, mapName, beams, worms);
 }
@@ -67,6 +67,7 @@ void Protocol::sendDynamic(GameDynamic* dynamic) {
     sendUintEight(SEND_DYNAMIC); 
     sendChar(dynamic->getWormPlayingID());
     sendChar(dynamic->getWinnerTeam());
+    sendUintSixteen(dynamic->getTimer());
     sendWorms(dynamic->getWorms());
     sendWeapons(dynamic->getExplosives());
     sendSupplyBox(dynamic->getSupplyBox());
@@ -78,12 +79,13 @@ GameDynamic* Protocol::receiveDynamic() {
     checkClosed();
     char wormPlayingID = receiveChar();
     char winnerTeam = receiveChar();
-    std::vector<WormDTO> worms = receiveWorms();
+    uint16_t timer = receiveUintSixteen();
+    std::unordered_map<int, WormDTO> worms = receiveWorms();
     std::unordered_map<int, ExplosivesDTO> weapons = receiveWeapons();
     std::unordered_map<int, SupplyBoxDTO> supplies = receiveSupplyBox();
     std::vector<uint32_t> teamsHealth = receiveVectorInt();
     uint8_t status = receiveUintEight();
-    return new GameDynamic(wormPlayingID, status, winnerTeam, worms, weapons, supplies, teamsHealth);
+    return new GameDynamic(wormPlayingID, status, winnerTeam, timer, worms, weapons, supplies, teamsHealth);
 }
 
 void Protocol::sendInfo(GameInfo* info) {
@@ -414,26 +416,26 @@ std::unordered_map<int, SupplyBoxDTO> Protocol::receiveSupplyBox() {
 }
 
 
-void Protocol::sendWorms(std::vector<WormDTO> worms) {
+void Protocol::sendWorms(std::unordered_map<int, WormDTO> worms) {
     sendUintEight(worms.size());
-    for (int i = 0; i < worms.size(); i++) {
-        sendUintEight(worms[i].getId());
-        sendUintEight(worms[i].getDir());
-        sendUintEight(worms[i].getTeam());
-        sendUintEight(worms[i].getHealth());
-        sendFloat(worms[i].getVelX());
-        sendFloat(worms[i].getVelY());
-        sendUintEight(worms[i].isOnGround());
-        sendUintEight(worms[i].getCurrentAction());
-        sendPosition(Position(worms[i].getX(), worms[i].getY()));
-        sendWeaponsMap(worms[i].getWeapons());
+    for (auto& worm : worms) {
+        sendUintEight(worm.first);
+        sendUintEight(worm.second.getDir());
+        sendUintEight(worm.second.getTeam());
+        sendUintEight(worm.second.getHealth());
+        sendFloat(worm.second.getVelX());
+        sendFloat(worm.second.getVelY());
+        sendUintEight(worm.second.isOnGround());
+        sendUintEight(worm.second.getCurrentAction());
+        sendPosition(Position(worm.second.getX(), worm.second.getY()));
+        sendWeaponsMap(worm.second.getWeapons());
     }
 
 }
 
-std::vector<WormDTO> Protocol::receiveWorms() {
+std::unordered_map<int, WormDTO> Protocol::receiveWorms() {
     uint8_t numberOfWorms = receiveUintEight();
-    std::vector<WormDTO> worms; 
+    std::unordered_map<int, WormDTO> worms; 
     for (int i = 0; i < numberOfWorms; i++) {
         uint8_t id = receiveUintEight();
         uint8_t dir = receiveUintEight();
@@ -445,8 +447,7 @@ std::vector<WormDTO> Protocol::receiveWorms() {
         uint8_t currentAction = receiveUintEight();
         Position pos = receivePosition();
         std::vector<int> weapons = receiveWeaponsMap();
-        WormDTO worm(id, dir, team, health, velX, velY, onGround, currentAction, pos, weapons);
-        worms.push_back(worm);
+        worms.emplace(id, WormDTO(id, dir, team, health, velX, velY, onGround, currentAction, pos, weapons));
     }
     return worms;
 }

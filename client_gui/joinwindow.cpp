@@ -37,6 +37,9 @@ void JoinWindow::on_refreshButton_clicked()
 
 void JoinWindow::on_joinButton_clicked()
 {
+    if (ui->availableMatchesComboBox->currentIndex() == -1) {
+        return;
+    }
     hide();
     //try {
         this->cl.joinMatch(ui->availableMatchesComboBox->currentText().toStdString());

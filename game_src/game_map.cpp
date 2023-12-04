@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-GameMap::GameMap(int team, int numberTeams, std::string mapName, std::vector<BeamDTO> beamsMap, std::vector<WormDTO> worms) : 
+GameMap::GameMap(int team, int numberTeams, std::string mapName, std::vector<BeamDTO> beamsMap, std::unordered_map<int, WormDTO> worms) : 
 Serializable(), 
 team(team),
 numberTeams(numberTeams),
@@ -37,7 +37,7 @@ int GameMap::getNumberOfWorms() {
 std::vector<BeamDTO> GameMap::getBeams() {
     return this->beamsMap;
 }
-std::vector<WormDTO> GameMap::getWorms() {
+std::unordered_map<int, WormDTO>GameMap::getWorms() {
     return this->worms;
 }
 

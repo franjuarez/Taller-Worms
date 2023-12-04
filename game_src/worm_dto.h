@@ -19,7 +19,8 @@ private:
     std::vector<int> weapons;
 
 public:
-    WormDTO(int id, int dir, int team, int health, float velX, float velY, int onGround, int currentAction, Position position, std::vector<int> weapons);
+    WormDTO(int id, int dir, int team, int health, float velX, float velY, int onGround, 
+    int currentAction, Position position, std::vector<int> weapons);
     int getId();
     int getDir();
     int getTeam();

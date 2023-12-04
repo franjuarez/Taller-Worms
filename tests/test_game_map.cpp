@@ -17,15 +17,18 @@ Protocol mockServer(std::move(peer));
 std::string mapName = "small";
 int numTeams = 2;
 std::vector<BeamDTO> beams;
-std::vector<WormDTO> worms;
+std::unordered_map<int, WormDTO> worms = {};
 
 
 TEST_CASE("Testing sending a GameMap") {
     Position pos(9.7, 11.0);
     Position pos2(9.89, 9.1);
 
-    worms.push_back(WormDTO(2, 0, 1, 100, 0.9, 4.0, 1, 0, pos, {}));
-    worms.push_back(WormDTO(1, 1, 2,  0, 0.0, 0.333, 0, 0, pos2, {}));
+
+    WormDTO w2(2, 0, 1, 100, 0.9, 4.0, 1, 0, pos, {});
+    WormDTO w1(1, 1, 2,  0, 0.0, 0.333, 0, 0, pos2, {});
+    worms.emplace(2, w2);
+    worms.emplace(1, w1);
 
     beams.push_back(BeamDTO(6, Position(10.0f, 10.0f), 0));
     beams.push_back(BeamDTO(3, Position(16.0f, 8.0f), 0));
@@ -49,8 +52,10 @@ TEST_CASE("Testing the worms sent and received in the GameMap", "[info]") {
     Position pos(-9.7, 11.0);
     Position pos2(9.89, -9.1);
 
-    worms.push_back(WormDTO(2, 0, 1, 100, 0.0, 0.0, 1, 0, pos, {}));
-    worms.push_back(WormDTO(1, 0, 2,  100,0.0, 0.0, 1, 0, pos2, {}));
+    WormDTO w2(2, 0, 1, 100, 0.9, 4.0, 1, 0, pos, {});
+    WormDTO w1(1, 1, 2,  0, 0.0, 0.333, 0, 0, pos2, {});
+    worms.emplace(2, w2);
+    worms.emplace(1, w1);
 
     GameMap* gameMapSent = new GameMap(1, numTeams, mapName, beams, worms);
 
@@ -60,7 +65,7 @@ TEST_CASE("Testing the worms sent and received in the GameMap", "[info]") {
 
     REQUIRE(gameMapReceived->getNumberOfWorms() == gameMapSent->getNumberOfWorms());
 
-    std::vector<WormDTO> wormsReceived = gameMapReceived->getWorms(); 
+    std::unordered_map<int, WormDTO> wormsReceived = gameMapReceived->getWorms(); 
     for(int i = 0; i < gameMapSent->getNumberOfWorms(); i++) {
         SECTION("WormInfo"){        
             CAPTURE(i);
@@ -106,11 +111,13 @@ TEST_CASE("Testing the beams sent and received in GameMap", "[info]") {
 }
 
 TEST_CASE("The amunition sent and received in WormsDTO", "[info]") {
-        Position pos(-9.7, .0);
+    Position pos(-9.7, .0);
     Position pos2(9.89, -9.1);
 
-    worms.push_back(WormDTO(2, 0, 1, 100, 0.0, 0.0, 1, 0, pos, {0,1,7,0,1}));
-    worms.push_back(WormDTO(1, 0, 2,  100,0.0, 0.0, 1, 0, pos2, {2,3,9,4,1,0}));
+    WormDTO w2(2, 0, 1, 100, 0.9, 4.0, 1, 0, pos, {});
+    WormDTO w1(1, 1, 2,  0, 0.0, 0.333, 0, 0, pos2, {});
+    worms.emplace(2, w2);
+    worms.emplace(1, w1);
 
     GameMap* gameMapSent = new GameMap(1, numTeams, mapName, beams, worms);
 
@@ -120,7 +127,7 @@ TEST_CASE("The amunition sent and received in WormsDTO", "[info]") {
 
     REQUIRE(gameMapReceived->getNumberOfWorms() == gameMapSent->getNumberOfWorms());
 
-    std::vector<WormDTO> wormsReceived = gameMapReceived->getWorms(); 
+    std::unordered_map<int, WormDTO> wormsReceived = gameMapReceived->getWorms(); 
     for(int i = 0; i < gameMapSent->getNumberOfWorms(); i++) {
         SECTION("WormInfo"){        
             CAPTURE(i);

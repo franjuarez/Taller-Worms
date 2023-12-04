@@ -4,22 +4,22 @@
 GameDynamic::GameDynamic() {}
 
 
-GameDynamic::GameDynamic(int wormPlayingID, std::vector<WormDTO>worms, std::unordered_map<int, ExplosivesDTO> explosives, std::unordered_map<int, SupplyBoxDTO> supplyBox)
+GameDynamic::GameDynamic(int wormPlayingID, std::unordered_map<int, WormDTO> worms, std::unordered_map<int, ExplosivesDTO> explosives, std::unordered_map<int, SupplyBoxDTO> supplyBox)
 : Serializable() ,wormPlayingID(wormPlayingID), worms(worms), explosives(explosives), supplyBox(supplyBox), teamsHealth() {}
 
-GameDynamic::GameDynamic(int wormPlayingID, int status, int winnerTeam, std::vector<WormDTO>worms, std::unordered_map<int, ExplosivesDTO> explosives,
+GameDynamic::GameDynamic(int wormPlayingID, int status, int winnerTeam, int timer, std::unordered_map<int, WormDTO> worms, std::unordered_map<int, ExplosivesDTO> explosives,
  std::unordered_map<int, SupplyBoxDTO> supplyBox, std::vector<uint32_t> teamsHealth)
-: Serializable() ,wormPlayingID(wormPlayingID), winnerTeam(winnerTeam), status(status), worms(worms), explosives(explosives), supplyBox(supplyBox), teamsHealth(teamsHealth) {}
+: Serializable() ,wormPlayingID(wormPlayingID), winnerTeam(winnerTeam), status(status), timer(timer), worms(worms), explosives(explosives), supplyBox(supplyBox), teamsHealth(teamsHealth) {}
 
 void GameDynamic::send(Protocol& protocol) {
     protocol.sendSerializable(this);
 }
 
-void GameDynamic::addWorms(std::vector<WormDTO> wormVec) {
+void GameDynamic::addWorms(std::unordered_map<int, WormDTO> wormVec) {
     worms = wormVec;
 }
 
-std::vector<WormDTO> GameDynamic::getWorms() {
+std::unordered_map<int, WormDTO> GameDynamic::getWorms() {
     return this->worms;
 }
 
@@ -71,6 +71,14 @@ int GameDynamic::getSerType() {
     return serializableType;
 }
 
+int GameDynamic::getTimer() {
+    return this->timer;
+}
+
+void GameDynamic::setTimer(int time) {
+    this->timer = time;
+}
+
 GameDynamic& GameDynamic::operator=(const GameDynamic& other) {
     if (this == &other) {
         return *this;
@@ -82,6 +90,7 @@ GameDynamic& GameDynamic::operator=(const GameDynamic& other) {
     this->supplyBox = other.supplyBox;
     this->teamsHealth = other.teamsHealth;
     this->status = other.status;
+    this->timer = other.timer;
     return *this;
 }
 

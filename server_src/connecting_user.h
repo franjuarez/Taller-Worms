@@ -20,7 +20,7 @@ private:
     bool* playing;
     std::vector<Team> createTeams(std::vector<WormDTO>& worms, int numberOfPlayers);
     std::vector<WormDTO> createWorms(std::vector<WormPosition> wormsPositions);
-
+    std::unordered_map<int, WormDTO> makeWormsMap(std::vector<WormDTO>& worms);
 public:
     ConnectingUser(std::shared_ptr<InfoStruct> infoStruct, MatchesMonitor& matchesMonitor, bool* playing);
     void run() override;
