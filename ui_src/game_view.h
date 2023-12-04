@@ -34,6 +34,7 @@ private:
 	Font wormsFont;
 	Font hudFont;
 	Font toolBarFont;
+	Font messageFont;
 	Chunk sound;
 	std::vector<Chunk> sfx;
 	std::vector<Texture> backgroundSprites;
