@@ -17,7 +17,7 @@ float calculateVerticalVelocityForHeight(float desiredHeight){
 
     float v = quadraticSolution1 > 0 ? quadraticSolution1 : quadraticSolution2;
 
-    return v * 60.0f;
+    return v * CONFIG.getFps();
 }
 
 float getTimestepsToTop(b2Vec2& startingVelocity){

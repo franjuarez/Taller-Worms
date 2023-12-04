@@ -527,6 +527,7 @@ void WormView::display(int i, Renderer& renderer, int camX, int camY, int mouseX
 
 		if (currentFramesIndex == WORM_FLY_FRAMES) {
 			currentFrame = (this->frames[currentFramesIndex].size() - 1) - currentFrame;
+			currentFrame %= this->frames[currentFramesIndex].size();
 
 		}
 	} else { //si es una animacion calculo en base al frame en el que estoy
@@ -639,7 +640,6 @@ void WormView::update(WormDTO other, int i) {
 	//std::cout << "comparacion: " << (abs(worm.getVelY()) > 0.1);
 
 	if (( abs(worm.getVelX()) > 0.1 || abs(worm.getVelY()) > 0.1) && currentFramesIndex == STILL_FRAMES) {
-		std::cout << "entro" << std::endl;
 		fly(i);
 	}
 

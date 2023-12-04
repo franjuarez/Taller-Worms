@@ -71,7 +71,7 @@ private:
 
     b2Body* createHolyGrenade(b2Body* worm, int direction, int explosionTimer);
 
-    b2Body* createAirAttackMissile(float startingX, float xDest);
+    b2Body* createAirAttackMissile(float startingX, float xDest, float velX);
 
     bool checkValidTpPosition(float x, float y);
 

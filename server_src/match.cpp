@@ -22,7 +22,6 @@ void Match::run() {
 
         std::shared_ptr<GameMap> playerMap = std::make_shared<GameMap>(idPlayer, numberOfPlayers, gameMap->getMapName(), gameMap->getBeams(), gameMap->getWorms());
         Player* player = new Player(infoStruct, idPlayer, commandQueue, statusBroadcaster, playerMap);
-        std::cout << "Creo al player!\n";
         players.push_back(player);
         player->start();
         idPlayer++;
