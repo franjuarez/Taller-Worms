@@ -53,7 +53,7 @@ Una vez instalado el juego este se puede correr desde cualquier directorio de la
 
 Una vez introducida la IP y el puerto veremos la siguiente pantalla:
 
-<!-- start-lobby.png -->
+![start-lobby](https://github.com/franjuarez/Taller-Worms/assets/90098530/3d40a9e2-be88-425a-b91c-4c6c4971a7f6)
 
 ### Crear una partida
 
@@ -61,7 +61,7 @@ Para jugar primero hay que crearla, por ende tocamos la opcion: `Create Game`.
 
 Dentro veremos la siguiente pantalla:
 
-<!-- create-game-lobby.png -->
+![create-game-lobby](https://github.com/franjuarez/Taller-Worms/assets/90098530/b854fe5b-8875-4aa6-81ea-c8e01f4e9e38)
 
 En esta debemos elegir:
 * La cantidad de jugadores (1-4)
@@ -76,13 +76,15 @@ Para unirse a una partida navegamos hacia `Join Game`.
 
 Dentro veremos:
 
-<!-- join-game-lobby.png -->
+![join-game-lobby](https://github.com/franjuarez/Taller-Worms/assets/90098530/bd984d29-78f4-435d-9d79-dd920881548b)
+
 
 En esta decidimos a que partida unirnos a traves del menu desplegable. En caso de crear partidas despuesde tener abierto el cliente se puede tocar el boton de refresh para buscar las ultimas partidas creadas.
 
 ### Ejemplo
 
 Dejamos un pequeño ejemplo de como se puede crear una partida y unirse a ella:
+
 
 ## Configuraciones
 
@@ -136,4 +138,5 @@ Se pueden ver ejemplos dentro de la carpeta que ayudaran a entender mas facilmen
   *  `c `: Vuelve a todos los gusanos invencibles, al tocarlo de vuelta se desactiva el cheat
   *  `v `: Deja estatico el turno, sin importar el tiempo/ perdida de vida/ uso de herramienta
   *  `b `: Vuelve a permitir los cambios de turno
+
 
