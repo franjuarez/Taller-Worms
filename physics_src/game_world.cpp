@@ -331,7 +331,7 @@ b2Body* GameWorld::createHolyGrenade(b2Body* worm, int direction, int explosionT
     return body;
 }
 
-b2Body* GameWorld::createAirAttackMissile(float startingX, float xDest){
+b2Body* GameWorld::createAirAttackMissile(float startingX, float xDest, float velX){
     b2BodyDef bd;
     bd.type = b2_dynamicBody;
     bd.position.Set(startingX, this->worldMaxY + AIR_ATTACK_MISSILE_HEIGHT);
@@ -344,7 +344,7 @@ b2Body* GameWorld::createAirAttackMissile(float startingX, float xDest){
     fd.density = 1.0f;
     body->CreateFixture(&fd);
 
-    body->SetLinearVelocity(b2Vec2(0, -1));
+    body->SetLinearVelocity(b2Vec2(velX, -1));
 
     int id = this->lastProjectileId;
     this->projectiles[this->lastProjectileId] = body;
@@ -364,11 +364,13 @@ bool GameWorld::wormCallAirAttack(int id, float xDest, float yDest){
     if(!wormData->hasAmmo(AIR_ATTACK)){
         return false; 
     }
-    float currentX = xDest - AIR_ATTACK_MISSILE_WIDTH - (AIR_ATTACK_MISSILE_AMOUNT/2 * AIR_ATTACK_MISSILE_WIDTH*2);
+    float currentX = xDest - 5 - AIR_ATTACK_MISSILE_WIDTH - (AIR_ATTACK_MISSILE_AMOUNT/2 * AIR_ATTACK_MISSILE_WIDTH*2);
+    float velX = (xDest - currentX) / 2;
     //los separo entre si AIR_ATTACK_MISSILE_WIDTH para que no se superpongan
     for(int i = 0; i < AIR_ATTACK_MISSILE_AMOUNT; i++){
-        b2Body* missile = createAirAttackMissile(currentX, xDest);
+        b2Body* missile = createAirAttackMissile(currentX, xDest, velX);
         currentX += AIR_ATTACK_MISSILE_WIDTH*2;
+        velX += AIR_ATTACK_MISSILE_WIDTH*2;
     }
     wormData->reduceAmmo(AIR_ATTACK);
     return true;
