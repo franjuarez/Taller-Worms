@@ -74,7 +74,7 @@ Las 3 presentan al cliente con la informacion necesaria en los 3 estados del jue
 
 Los DTO son las clases que cuentan con la informacion especifica de los objetos dinamicos del mundo. Estos son los objetos que cambian de posicion, de valor o dejan de existir en el mundo.
 
-Command cuenta con 10 clases hiajs: 
+Command cuenta con 9 clases hijas: 
     
     - Move
     - Jump 
@@ -96,7 +96,6 @@ MatchCommand le permite crear/unirse a una partida y actualizar las partidas dis
 
 Protocol es quien sabe como enviar todas estas sub-clases, mientras que tanto seervidor como cliente envian y reciben punteros a las clases madres. Es la clase que tiene acceso a los sockets de ambas partes y por ello sabe como enviar los diferentes tipos de datos.  
 
-Se trabajo en todas las partes posibles con shared_pointers para un manejo de memoria optimo. 
 
 
 ## Diagramas de clase
