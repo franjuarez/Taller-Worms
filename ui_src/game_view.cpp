@@ -325,8 +325,6 @@ void GameView::updateEntities(int i) {
 	}
 
 
-
-
 	bool anyAlive = false;
 	for (auto &worm : recievedWorms) {
 		this->wormViews.at(worm.getId()).update(worm, i);

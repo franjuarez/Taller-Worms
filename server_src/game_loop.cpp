@@ -51,7 +51,7 @@ void GameLoop::loopLogic(int64_t elapsed_time) {
 	gameWorld.update();
 	std::shared_ptr<GameDynamic>gameDynamic(gameWorld.getGameStatus(wormPlayingID));
 	std::vector<WormDTO> worms = gameDynamic->getWorms();
-	int wormPlayingNewHealth = updateGameDynamic(gameDynamic, worms);
+	int wormPlayingNewHealth = updateGameDynamic(gameDynamic, worms, elapsed_time);
 
 	if (gameOver) {
 		return;
@@ -100,7 +100,7 @@ void GameLoop::loopLogic(int64_t elapsed_time) {
 }
 
 
-int GameLoop::updateGameDynamic(std::shared_ptr<GameDynamic> gameDynamic, std::vector<WormDTO> worms) {
+int GameLoop::updateGameDynamic(std::shared_ptr<GameDynamic> gameDynamic, std::vector<WormDTO> worms, int64_t elapsed_time) {
 	if (waitingForStatic && !cheatOn) {
 		gameDynamic->setWormPlayingID(NO_WORM_PLAYING);
 	}
@@ -127,7 +127,7 @@ int GameLoop::updateGameDynamic(std::shared_ptr<GameDynamic> gameDynamic, std::v
 	int winnerStatus = updateWinningStatus();
 	gameDynamic->setWinnerTeam(winnerStatus);
 	gameDynamic->setStatus(STARTED);
-
+	gameDynamic->setTimer(elapsed_time/1000);
 	statusBroadcaster.broadcast(gameDynamic);	
 
 	return wormPlayingNewHealth;

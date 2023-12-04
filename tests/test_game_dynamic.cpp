@@ -33,7 +33,7 @@ TEST_CASE("Sending and receiving a GameDynamic") {
     worms2.push_back(WormDTO(1, 1, 2,  0, 0.0, 0.333, 0, MOVING, pos2, {}));
 
 
-    GameDynamic* gameDynamicSent = new GameDynamic(1, 1, -1, worms2, explosives, supplies, teamsHealth);
+    GameDynamic* gameDynamicSent = new GameDynamic(1, 1, -1, 15, worms2, explosives, supplies, teamsHealth);
 
     gameDynamicSent->send(mockServer2);
 
@@ -55,7 +55,7 @@ TEST_CASE("Testing the worms sent and received in the GameDynamic", "[info]") {
     worms2.push_back(WormDTO(2, 0, 1, 100, 0.0, 0.0, 1, STANDING, pos, {}));
     worms2.push_back(WormDTO(1, 0, 2,  100,0.0, 0.0, 1, JUMPING, pos2, {}));
 
-    GameDynamic* gameDynamicSent = new GameDynamic(1, 1, -1, worms2, explosives, supplies, teamsHealth);
+    GameDynamic* gameDynamicSent = new GameDynamic(1, 1, -1, 15, worms2, explosives, supplies, teamsHealth);
 
     gameDynamicSent->send(mockServer2);
 
@@ -91,7 +91,7 @@ TEST_CASE("The amunition sent and received in WormsDTO through GameDynamic", "[i
     worms2.push_back(WormDTO(2, 0, 1, 100, 0.0, 0.0, 1, STANDING, pos, {0,1,7,0,1}));
     worms2.push_back(WormDTO(1, 0, 2,  100,0.0, 0.0, 1, MOVING, pos2, {2,3,9,4,1,0}));
 
-    GameDynamic* gameDynamicSent = new GameDynamic(1, 1, -1, worms2, explosives, supplies, teamsHealth);
+    GameDynamic* gameDynamicSent = new GameDynamic(1, 1, -1, 3, worms2, explosives, supplies, teamsHealth);
 
     gameDynamicSent->send(mockServer2);
 
@@ -133,7 +133,7 @@ TEST_CASE("Sending and receiving ExplosivesDTO", "[info]") {
     explosives.emplace(6, ExplosivesDTO(0, 6, Position(10.0, -2.6), 5.3, -3.2));
 
 
-    GameDynamic* gameDynamicSent = new GameDynamic(1, 1, -1, worms2, explosives, supplies, teamsHealth);
+    GameDynamic* gameDynamicSent = new GameDynamic(1, 1, -1, 54, worms2, explosives, supplies, teamsHealth);
 
     gameDynamicSent->send(mockServer2);
 
@@ -170,7 +170,7 @@ TEST_CASE("Sending and receiving SupplyBoxDTO", "[info]") {
     supplies.emplace(6, SupplyBoxDTO(6, 3, false,Position(10.0, -2.6)));
 
 
-    GameDynamic* gameDynamicSent = new GameDynamic(1, 1, -1, worms2, explosives, supplies, teamsHealth);
+    GameDynamic* gameDynamicSent = new GameDynamic(1, 1, -1, 9, worms2, explosives, supplies, teamsHealth);
 
     gameDynamicSent->send(mockServer2);
 
@@ -200,7 +200,7 @@ TEST_CASE("Sending and receiving TeamHealth", "[info]") {
     worms2.push_back(WormDTO(2, 0, 1, 100, 0.0, 0.0, 1, STANDING, pos, {}));
     worms2.push_back(WormDTO(1, 0, 2,  100,0.0, 0.0, 1, STANDING, pos2, {}));
 
-    GameDynamic* gameDynamicSent = new GameDynamic(1, 1, -1, worms2, explosives, supplies, teamsHealth);
+    GameDynamic* gameDynamicSent = new GameDynamic(1, 1, -1, 6, worms2, explosives, supplies, teamsHealth);
 
     gameDynamicSent->send(mockServer2);
 

@@ -51,7 +51,7 @@ private:
     int dropSupplyBox();
     void reset();
     void checkPlayers();
-    int updateGameDynamic(std::shared_ptr<GameDynamic> gameDynamic, std::vector<WormDTO> worms);
+    int updateGameDynamic(std::shared_ptr<GameDynamic> gameDynamic, std::vector<WormDTO> worms, int64_t elapsed_time);
 
 
 public:

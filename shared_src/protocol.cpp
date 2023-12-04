@@ -67,6 +67,7 @@ void Protocol::sendDynamic(GameDynamic* dynamic) {
     sendUintEight(SEND_DYNAMIC); 
     sendChar(dynamic->getWormPlayingID());
     sendChar(dynamic->getWinnerTeam());
+    sendUintSixteen(dynamic->getTimer());
     sendWorms(dynamic->getWorms());
     sendWeapons(dynamic->getExplosives());
     sendSupplyBox(dynamic->getSupplyBox());
@@ -78,12 +79,13 @@ GameDynamic* Protocol::receiveDynamic() {
     checkClosed();
     char wormPlayingID = receiveChar();
     char winnerTeam = receiveChar();
+    uint16_t timer = receiveUintSixteen();
     std::vector<WormDTO> worms = receiveWorms();
     std::unordered_map<int, ExplosivesDTO> weapons = receiveWeapons();
     std::unordered_map<int, SupplyBoxDTO> supplies = receiveSupplyBox();
     std::vector<uint32_t> teamsHealth = receiveVectorInt();
     uint8_t status = receiveUintEight();
-    return new GameDynamic(wormPlayingID, status, winnerTeam, worms, weapons, supplies, teamsHealth);
+    return new GameDynamic(wormPlayingID, status, winnerTeam, timer, worms, weapons, supplies, teamsHealth);
 }
 
 void Protocol::sendInfo(GameInfo* info) {
