@@ -51,8 +51,7 @@ private:
     int dropSupplyBox();
     void reset();
     void checkPlayers();
-    int updateGameDynamic(std::shared_ptr<GameDynamic> gameDynamic, std::unordered_map<int, WormDTO> worms);
-
+    int updateGameDynamic(std::shared_ptr<GameDynamic> gameDynamic, std::unordered_map<int, WormDTO> worms, int64_t elapsed_time);
 
 public:
     GameLoop(Queue<std::shared_ptr<Command>>& commandsQueue, StatusBroadcaster& statusBroadcaster, std::shared_ptr<GameMap> gameMap, std::vector<Team> teams, bool* playing);

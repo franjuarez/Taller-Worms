@@ -326,6 +326,7 @@ void GameView::updateEntities(int i) {
 		}
 	}
 
+
 	bool anyAlive = false;
 	for (auto it = recievedWorms.begin(); it != recievedWorms.end(); it++) {
 		anyAlive |= (it->second.isAlive());

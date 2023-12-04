@@ -23,6 +23,7 @@ private:
     int winnerTeam = PLAYING;
     int status;
     std::unordered_map<int, WormDTO> worms;
+    int timer;
     std::unordered_map<int, ExplosivesDTO> explosives;
     std::unordered_map<int, SupplyBoxDTO> supplyBox;
     std::vector<uint32_t> teamsHealth;
@@ -31,7 +32,8 @@ private:
 public: 
     GameDynamic();
     GameDynamic(int wormPlayingID, std::unordered_map<int, WormDTO> worms, std::unordered_map<int, ExplosivesDTO> explosives, std::unordered_map<int, SupplyBoxDTO> supplyBox);
-    GameDynamic(int wormPlayingID, int status, int winnerTeam, std::unordered_map<int, WormDTO> worms, std::unordered_map<int, ExplosivesDTO> explosives, std::unordered_map<int, SupplyBoxDTO> supplyBox, std::vector<uint32_t> teamsHealth);
+    GameDynamic(int wormPlayingID, int status, int winnerTeam, int timer, std::unordered_map<int, WormDTO> worms, std::unordered_map<int, ExplosivesDTO> explosives, std::unordered_map<int, SupplyBoxDTO> supplyBox, std::vector<uint32_t> teamsHealth);
+
 
     void send(Protocol& protocol);
     int getSerType();
@@ -53,6 +55,8 @@ public:
     int getStatus();
     void setStatus(int status);
 
+    int getTimer();
+    void setTimer(int timer);
     std::unordered_map<int, SupplyBoxDTO> getSupplyBox();
     
     GameDynamic& operator=(const GameDynamic& other);

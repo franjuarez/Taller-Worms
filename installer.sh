@@ -16,3 +16,4 @@ if sudo make install -j4; then
 else
   echo "Error: Failed to install. Check the error message above for details."
 fi
+
