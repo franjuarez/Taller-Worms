@@ -4,9 +4,14 @@
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
-    ConnectionWindow w;
-    w.setWindowFlags(Qt::Window | Qt::MSWindowsFixedSizeDialogHint);
-    w.show();
-    return a.exec();
+    try {
+        QApplication a(argc, argv);
+        ConnectionWindow w;
+        w.setWindowFlags(Qt::Window | Qt::MSWindowsFixedSizeDialogHint);
+        w.show();
+        return a.exec();
+    } catch (const std::exception& e) {
+        std::cerr << "abracadabra" << e.what() << std::endl;
+        return 1;
+    }
 }

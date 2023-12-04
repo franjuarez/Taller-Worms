@@ -19,7 +19,6 @@ std::shared_ptr<Serializable> Client::getGameStatus() {
     }
     while (gameStatusQueue.try_pop(this->lastGameStatus)) {}
     return this->lastGameStatus;
-
 }
 
 void Client::start() {
@@ -27,7 +26,7 @@ void Client::start() {
         sender.start();
         receiver.start();
     } catch (std::exception& e) {
-        std::cout << "Error in client: " << e.what() << std::endl;
+        // std::cout << "Error in client: " << e.what() << std::endl;
     }
 }
 
@@ -45,7 +44,11 @@ void Client::join() {
 }
 
 void Client::execute(std::shared_ptr<Command> command) {
-    commandsQueue.push(command);
+    try {
+        commandsQueue.push(command);
+    } catch (std::exception& e) {
+        std::cout << "Error in client: " << e.what() << std::endl;
+    }
 }
 
 

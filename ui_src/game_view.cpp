@@ -307,9 +307,14 @@ void GameView::playSound(int sound_id/*, bool playAlways*/) {
 
 
 void GameView::updateEntities(int i) {
-	this->currentGameStatus = *std::dynamic_pointer_cast<GameDynamic>(client.getGameStatus());
-
-
+	try {
+		this->currentGameStatus = *std::dynamic_pointer_cast<GameDynamic>(client.getGameStatus());
+	} catch (std::exception& e) {
+		std::cout << "Error in client: " << e.what() << std::endl;
+	} catch (...) {
+		std::cout << "Error in client: " << "unknown" << std::endl;
+	}
+	
 	int oldid = this->currentWormId;
 
 	std::vector<WormDTO> recievedWorms = currentGameStatus.getWorms();
@@ -1065,40 +1070,46 @@ void GameView::start() {
 	int i = 0;
 	int t1 = SDL_GetTicks();
 	//float durationInSeconds;
-	while(not_closed) {
-		SDL_Event event;
-        //unsigned int frame_ticks = SDL_GetTicks();
-		while (SDL_PollEvent(&event)) {
-            if (event.type == SDL_QUIT) {
-				return;
+	try {
+		while(not_closed) {
+			SDL_Event event;
+			//unsigned int frame_ticks = SDL_GetTicks();
+			while (SDL_PollEvent(&event)) {
+				if (event.type == SDL_QUIT) {
+					return;
+				}
+				SDL_GetMouseState( &mouseX, &mouseY );
+				mouseHandler.handleMovement(mouseX, mouseY);
+
+				if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_q) {
+					return;
+				}
+				processInput(event, i);
 			}
-			SDL_GetMouseState( &mouseX, &mouseY );
-			mouseHandler.handleMovement(mouseX, mouseY);
 
-			if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_q) {
-				return;
+			draw(i);
+
+			int t2 = SDL_GetTicks();
+			float rest = RATE - (t2 - t1);
+
+			if (rest < 0) { //me tomo mas tiempo del que tenia
+				int behind = -rest; //behind -> por cuanto me pase
+				//lo que deberia dormir para despertar justo en el inicio de la ventana de un frame
+				rest = RATE - fmod(behind, RATE);
+
+				//la cantidad de frames que me saltie y que por ende, deberia dormir
+				float lost = behind + rest;
+				t1 += lost;
+				i += (int )(lost / RATE);
 			}
-			processInput(event, i);
+			t1 += RATE; //le sume lo perdido y la rate asique esta actualizado
+			i++;
+			SDL_Delay(rest);
 		}
-
-		draw(i);
-
-		int t2 = SDL_GetTicks();
-		float rest = RATE - (t2 - t1);
-
-		if (rest < 0) { //me tomo mas tiempo del que tenia
-			int behind = -rest; //behind -> por cuanto me pase
-			//lo que deberia dormir para despertar justo en el inicio de la ventana de un frame
-			rest = RATE - fmod(behind, RATE);
-
-			//la cantidad de frames que me saltie y que por ende, deberia dormir
-			float lost = behind + rest;
-			t1 += lost;
-			i += (int )(lost / RATE);
-		}
-		t1 += RATE; //le sume lo perdido y la rate asique esta actualizado
-		i++;
-		SDL_Delay(rest);
+	} catch (std::exception& e) {
+		std::cout << "Error in client: " << e.what() << std::endl;
+	} catch (...) {
+		std::cout << "Error in client: " << "unknown" << std::endl;
 	}
 }
 
@@ -1106,4 +1117,6 @@ void GameView::join() {
 	this->client.kill();
 }
 
-GameView::~GameView() {}
+GameView::~GameView() {
+	this->client.kill();
+}

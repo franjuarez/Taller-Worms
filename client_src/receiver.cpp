@@ -1,11 +1,10 @@
-#include "sender.h"
 #include "receiver.h"
 #include "../game_src/game_dynamic.h"
 #include "../game_src/game_info.h"
 
 #include "../shared_src/protocol.h"
 #include <unistd.h>
-
+#include "client_error.h"
 #include <iostream>
 
 Receiver::Receiver(Protocol& protocol, Queue<std::shared_ptr<Serializable>>& q, bool& keepTalking) 
@@ -18,15 +17,25 @@ void Receiver::run() {
             gameStatuses.push(gameDynamic);
         }
     } catch (const ClosedSocket& e){
+            if (!keepTalking) {
+            return;
+        }
         keepTalking = false;
-        throw ClientClosed();
+        return;
+        // throw ClientClosed();
     } catch (const ClosedQueue& e){
+        if (!keepTalking) {
+            return;
+        }
         keepTalking = false;
-        throw ClientClosed();
+        return;
+        // throw ClientClosed();
     } catch (std::exception& e){
-        std::cout << "Error in receiver: " << e.what() << std::endl;
+        if (!keepTalking) {
+            return;
+        }
         keepTalking = false;
-        throw ClientClosed();
+        // throw ClientClosed();
     }
 }
 
