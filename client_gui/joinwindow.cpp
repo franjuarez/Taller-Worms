@@ -39,9 +39,11 @@ void JoinWindow::on_refreshButton_clicked()
 void JoinWindow::on_joinButton_clicked()
 {
     hide();
-    this->cl.joinMatch(ui->availableMatchesComboBox->currentText().toStdString());
-    this->cl.startGame();
-    QApplication::quit();
+    try {
+        this->cl.joinMatch(ui->availableMatchesComboBox->currentText().toStdString());
+        this->cl.startGame();
+        QApplication::quit();
+    }
 
 }
 

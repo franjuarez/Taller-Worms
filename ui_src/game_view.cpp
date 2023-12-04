@@ -29,9 +29,10 @@
 #define DYNAMITE_SFX_PATH BASE_PATH "music/dynamite_2_sfx.mp3"
 #define LAUNCH_SFX_PATH BASE_PATH "music/launch_sfx.mp3"
 
-
 #define WORM_LIFE_FONT_PATH BASE_PATH  "fonts/lazy.ttf"
 #define HUD_FONT_PATH BASE_PATH  "fonts/arcadeclassic/ARCADECLASSIC.TTF"
+#define BIG_FONT_PATH BASE_PATH  "fonts/higher-jump/higher-jump.ttf"
+
 #define BACKGROUND_PATH BASE_PATH  "images/background.png"
 #define WAITING_SCREEN_PATH BASE_PATH  "images/dont_panic.bmp"
 #define LOSING_SCREEN_PATH BASE_PATH  "images/Dark_Souls_You_Died_Screen_-_Completely_Black_Screen_0-2_screenshot.png"
@@ -130,7 +131,7 @@ GameView::GameView(std::shared_ptr<InfoStruct> infoStruct) :
 		renderer(window, -1 /*any driver*/, SDL_RENDERER_ACCELERATED),
 		mixer(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 4096),
 		sound(MUSIC_PATH), // OGG sound file
-		wormsFont(HUD_FONT_PATH, 26), hudFont(HUD_FONT_PATH, 42), toolBarFont(WORM_LIFE_FONT_PATH, 11),
+		wormsFont(HUD_FONT_PATH, 26), hudFont(HUD_FONT_PATH, 42), toolBarFont(WORM_LIFE_FONT_PATH, 11), messageFont(BIG_FONT_PATH, 60),
 		waitingScreen(renderer, Surface(WAITING_SCREEN_PATH).SetColorKey(true,0)),
 		losingScreen(renderer, LOSING_SCREEN_PATH),
 		beamSprite(renderer, BEAM_PATH),
@@ -636,7 +637,7 @@ void GameView::drawWinningScreen(int i) {
 	renderer.Clear();
 
 	mouseHandler.updateCam();
-	
+
 	renderer.Copy(backgroundSprites[0], NullOpt, NullOpt);
 
 	drawBeams(i);
@@ -648,6 +649,18 @@ void GameView::drawWinningScreen(int i) {
 	}
 
 	drawWater(i);
+
+	Texture msg(renderer,
+		hudFont.RenderText_Solid("YOU WON!!",
+		{0,0,0}));
+
+	Rect textPosition(
+		Point(WINDOW_WIDTH/2, WINDOW_HEIGHT/2) - Point(msg.GetSize() / 2),
+		Point(WINDOW_WIDTH/2, WINDOW_HEIGHT/2) + (msg.GetSize() / 2));
+
+	renderer.Copy(msg, NullOpt, textPosition);
+
+
 	renderer.Present();
 
 
