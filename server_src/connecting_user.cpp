@@ -22,11 +22,9 @@ void ConnectingUser::run() {
             }
         }
     } catch (const ClosedSocket& e){
-        std::cout << "Reciever: Se ha cerrado la conexion\n";
         kill();
         return;
     } catch (const std::exception& e){
-        std::cout << "Error inesperado" << e.what() << std::endl;
         kill();
         return;
     }
@@ -119,7 +117,9 @@ bool ConnectingUser::isActive() {
 }
 
 void ConnectingUser::kill() {
-    infoStruct->prot.boom();
+    try {
+        infoStruct->prot.boom();
+    } catch (const std::exception& e) {}
     this->status = INACTIVE;
 }
 

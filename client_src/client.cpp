@@ -1,5 +1,5 @@
 #include "client.h"
-
+#include "client_error.h"
 #include <iostream>
 
 #define MAX_CAP_QUEUE 9000
@@ -13,12 +13,16 @@ Client::Client(std::shared_ptr<InfoStruct> infoStruct) : infoStruct(infoStruct)
 }
 
 std::shared_ptr<Serializable> Client::getGameStatus() {
-    if (!lastGameStatus) {
-        lastGameStatus = gameStatusQueue.pop();
+    try {
+        if (!lastGameStatus) {
+            lastGameStatus = gameStatusQueue.pop();
+            return this->lastGameStatus;
+        }
+        while (gameStatusQueue.try_pop(this->lastGameStatus)) {}
         return this->lastGameStatus;
+    } catch (const ClosedQueue& e) {
+        throw ClientClosed();
     }
-    while (gameStatusQueue.try_pop(this->lastGameStatus)) {}
-    return this->lastGameStatus;
 }
 
 void Client::start() {
@@ -31,10 +35,12 @@ void Client::start() {
 }
 
 void Client::kill() {
-    keepTalking = false;
-    infoStruct->prot.boom();
-    commandsQueue.close();
-    gameStatusQueue.close();
+    try {
+        keepTalking = false;
+        infoStruct->prot.boom();
+        commandsQueue.close();
+        gameStatusQueue.close();
+    } catch (const ClosedQueue& e) {}
     join();
 }
 
@@ -47,7 +53,7 @@ void Client::execute(std::shared_ptr<Command> command) {
     try {
         commandsQueue.push(command);
     } catch (std::exception& e) {
-        std::cout << "Error in client: " << e.what() << std::endl;
+        throw ClientClosed();
     }
 }
 

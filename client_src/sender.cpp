@@ -14,23 +14,24 @@ void Sender::run() {
             command->send(protocol);    
         }
     } catch (const ClosedSocket& e){
+        commandsQueue.close();
         if (!keepTalking) {
             return;
         }
         keepTalking = false;
-        throw ClientClosed();
+        // throw ClientClosed();
     } catch (const ClosedQueue& e){
         if (!keepTalking) {
             return;
         }
         keepTalking = false;
-        throw ClientClosed();
+        // throw ClientClosed();
     } catch (std::exception& e){
         if (!keepTalking) {
             return;
         }
         keepTalking = false;
-        throw ClientClosed();
+        // throw ClientClosed();
     }
 }
 

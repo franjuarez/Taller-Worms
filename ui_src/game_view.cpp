@@ -119,6 +119,8 @@
 #define FALLING_BOX_PATH BASE_PATH  "images/boxSprites/falling_box.bmp"
 #define GLOWING_BOX_PATH BASE_PATH "images/boxSprites/glowing_box.bmp"
 
+#include "../client_src/client_error.h"
+
 GameView::GameView(std::shared_ptr<InfoStruct> infoStruct) :
 		client(infoStruct),
 		sdl(SDL_INIT_VIDEO | SDL_INIT_AUDIO),
@@ -307,13 +309,9 @@ void GameView::playSound(int sound_id/*, bool playAlways*/) {
 
 
 void GameView::updateEntities(int i) {
-	try {
-		this->currentGameStatus = *std::dynamic_pointer_cast<GameDynamic>(client.getGameStatus());
-	} catch (std::exception& e) {
-		std::cout << "Error in client: " << e.what() << std::endl;
-	} catch (...) {
-		std::cout << "Error in client: " << "unknown" << std::endl;
-	}
+
+	this->currentGameStatus = *std::dynamic_pointer_cast<GameDynamic>(client.getGameStatus());
+
 	
 	int oldid = this->currentWormId;
 
@@ -329,8 +327,6 @@ void GameView::updateEntities(int i) {
 			wormViews.at(oldid).toDefault(0);
 		}
 	}
-
-
 
 
 	bool anyAlive = false;
@@ -1106,10 +1102,10 @@ void GameView::start() {
 			i++;
 			SDL_Delay(rest);
 		}
-	} catch (std::exception& e) {
-		std::cout << "Error in client: " << e.what() << std::endl;
+	} catch (const ClientClosed& e) {
+		std::cout << "Error in smth: " << e.what() << std::endl;
 	} catch (...) {
-		std::cout << "Error in client: " << "unknown" << std::endl;
+		std::cout << "Error in smth: " << "unknown" << std::endl;
 	}
 }
 
@@ -1117,6 +1113,4 @@ void GameView::join() {
 	this->client.kill();
 }
 
-GameView::~GameView() {
-	this->client.kill();
-}
+GameView::~GameView() {}
