@@ -37,14 +37,15 @@ GameWorld::GameWorld(std::shared_ptr<GameMap> gameMap) {
     this->worldEndX += 10;
     this->worldMaxY += 10;
 
-    std::vector<WormDTO> worms = gameMap->getWorms();
-    for (WormDTO& worm : worms) {
-        float x = worm.getPosition().getX();
-        float y = worm.getPosition().getY();
-        int id = worm.getId();
-        int team = worm.getTeam();
-        int health = worm.getHealth();
-        std::vector<int> weapons = worm.getWeapons();
+    std::unordered_map<int, WormDTO> worms = gameMap->getWorms();
+    //for (WormDTO& worm : worms) {
+    for (auto it = worms.begin(); it != worms.end(); it++) {
+        float x = it->second.getPosition().getX();
+        float y = it->second.getPosition().getY();
+        int id = it->second.getId();
+        int team = it->second.getTeam();
+        int health = it->second.getHealth();
+        std::vector<int> weapons = it->second.getWeapons();
         
         createWorm(x, y, id, team, health, weapons);
     }

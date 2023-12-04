@@ -121,9 +121,10 @@ std::vector<WormDTO> ConnectingUser::createWorms(std::vector<WormPosition> worms
 
 std::unordered_map<int, WormDTO> ConnectingUser::makeWormsMap(std::vector<WormDTO>& worms) {
     std::unordered_map<int, WormDTO> wormsMap;
-    for (int i = 0; i < worms.size(); i++) {
+    for (long unsigned int i = 0; i < worms.size(); i++) {
         wormsMap.emplace(worms[i].getId(), worms[i]);
     }
+    return wormsMap;
 }
     
 bool ConnectingUser::isActive() {

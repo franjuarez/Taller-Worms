@@ -50,7 +50,7 @@ void GameLoop::loopLogic(int64_t elapsed_time) {
 
 	gameWorld.update();
 	std::shared_ptr<GameDynamic>gameDynamic(gameWorld.getGameStatus(wormPlayingID));
-	std::vector<WormDTO> worms = gameDynamic->getWorms();
+	std::unordered_map<int, WormDTO> worms = gameDynamic->getWorms();
 	int wormPlayingNewHealth = updateGameDynamic(gameDynamic, worms);
 
 	if (gameOver) {
@@ -100,28 +100,28 @@ void GameLoop::loopLogic(int64_t elapsed_time) {
 }
 
 
-int GameLoop::updateGameDynamic(std::shared_ptr<GameDynamic> gameDynamic, std::vector<WormDTO> worms) {
+int GameLoop::updateGameDynamic(std::shared_ptr<GameDynamic> gameDynamic, std::unordered_map<int, WormDTO> worms) {
 	if (waitingForStatic && !cheatOn) {
 		gameDynamic->setWormPlayingID(NO_WORM_PLAYING);
 	}
 	int wormPlayingNewHealth;
 	std::vector<uint32_t> teamsHealth(teams.size(), 0);
-	for (size_t i = 0; i < worms.size(); i++) {
 
-		teamsHealth[worms[i].getTeam()] += worms[i].getHealth();
-		
-		int wormId = worms[i].getId();
+	for(auto& worm : worms) {
+		teamsHealth[worm.second.getTeam()] += worm.second.getHealth();
+
+		int wormId = worm.second.getId();
 
 		if (wormId == wormPlayingID) {
-			wormPlayingNewHealth = worms[i].getHealth();
+			wormPlayingNewHealth = worm.second.getHealth();
 		}
 
-		int wormTeam = worms[i].getTeam();
-		if (!worms[i].isAlive() && teams[wormTeam].checkWormExists(wormId)) {
+		int wormTeam = worm.second.getTeam();
+
+		if (!worm.second.isAlive() && teams[wormTeam].checkWormExists(wormId)) {
 			teams[wormTeam].removeWormID(wormId);
 		}
 	}
-
 	
 	gameDynamic->setTeamsHealth(teamsHealth);
 	int winnerStatus = updateWinningStatus();
@@ -134,7 +134,7 @@ int GameLoop::updateGameDynamic(std::shared_ptr<GameDynamic> gameDynamic, std::v
 }
 
 
-void GameLoop::changeWormPlaying(std::vector<WormDTO> worms) {
+void GameLoop::changeWormPlaying(std::unordered_map<int, WormDTO> worms) {
 	teamPlayingID = (teamPlayingID + 1) % teams.size();
 
 	for(size_t i = teamPlayingID; true ; i = (i + 1) % teams.size()){
@@ -145,9 +145,9 @@ void GameLoop::changeWormPlaying(std::vector<WormDTO> worms) {
 	}
 
 	wormPlayingID = teams[teamPlayingID].getNextWormID();
-	for (size_t i = 0; i < worms.size(); i++) {
-		if (worms[i].getId() == wormPlayingID) {
-			this->wormPlayingHealth = worms[i].getHealth();
+	for (auto& worm : worms) {
+		if (worm.second.getId() == wormPlayingID) {
+			this->wormPlayingHealth = worm.second.getHealth();
 			break;
 		}
 	}

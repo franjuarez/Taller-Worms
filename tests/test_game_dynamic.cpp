@@ -19,7 +19,7 @@ Protocol mockServer2(std::move(peer2));
 
 std::string mapName2 = "small";
 int numTeams2 = 2;
-std::vector<WormDTO> worms2;
+std::unordered_map<int, WormDTO> worms2 = {};
 std::unordered_map<int, ExplosivesDTO> explosives = {};
 std::unordered_map<int, SupplyBoxDTO> supplies = {};
 std::vector<uint32_t> teamsHealth = {};
@@ -28,9 +28,10 @@ TEST_CASE("Sending and receiving a GameDynamic") {
 
     Position pos(9.7, 11.0);
     Position pos2(9.89, 9.1);
-
-    worms2.push_back(WormDTO(2, 0, 1, 100, 0.9, 4.0, 1, STANDING, pos, {}));
-    worms2.push_back(WormDTO(1, 1, 2,  0, 0.0, 0.333, 0, MOVING, pos2, {}));
+    WormDTO w2(2, 0, 1, 100, 0.9, 4.0, 1, STANDING, pos, {});
+    WormDTO w1(1, 1, 2,  0, 0.0, 0.333, 0, MOVING, pos2, {});
+    worms2.emplace(2, w2);
+    worms2.emplace(1, w1);
 
 
     GameDynamic* gameDynamicSent = new GameDynamic(1, 1, -1, worms2, explosives, supplies, teamsHealth);
@@ -52,8 +53,10 @@ TEST_CASE("Testing the worms sent and received in the GameDynamic", "[info]") {
     Position pos(-9.7, 11.0);
     Position pos2(9.89, -9.1);
 
-    worms2.push_back(WormDTO(2, 0, 1, 100, 0.0, 0.0, 1, STANDING, pos, {}));
-    worms2.push_back(WormDTO(1, 0, 2,  100,0.0, 0.0, 1, JUMPING, pos2, {}));
+    WormDTO w2(2, 0, 1, 100, 0.9, 4.0, 1, STANDING, pos, {});
+    WormDTO w1(1, 1, 2,  0, 0.0, 0.333, 0, MOVING, pos2, {});
+    worms2.emplace(2, w2);
+    worms2.emplace(1, w1);
 
     GameDynamic* gameDynamicSent = new GameDynamic(1, 1, -1, worms2, explosives, supplies, teamsHealth);
 
@@ -64,7 +67,7 @@ TEST_CASE("Testing the worms sent and received in the GameDynamic", "[info]") {
 
     REQUIRE(gameDynamicReceived->getWorms().size() == gameDynamicSent->getWorms().size());
 
-    std::vector<WormDTO> wormsReceived = gameDynamicReceived->getWorms(); 
+    std::unordered_map<int, WormDTO> wormsReceived = gameDynamicReceived->getWorms(); 
     for(int i = 0; i < gameDynamicReceived->getWorms().size(); i++) {
         SECTION("WormInfo"){        
             CAPTURE(i);
@@ -82,14 +85,21 @@ TEST_CASE("Testing the worms sent and received in the GameDynamic", "[info]") {
             REQUIRE(wormsReceived[i].getWeapons().size() == worms2[i].getWeapons().size());
         }
     }
+
 }
 
 TEST_CASE("The amunition sent and received in WormsDTO through GameDynamic", "[info]") {
     Position pos(-9.7, .0);
     Position pos2(9.89, -9.1);
 
-    worms2.push_back(WormDTO(2, 0, 1, 100, 0.0, 0.0, 1, STANDING, pos, {0,1,7,0,1}));
-    worms2.push_back(WormDTO(1, 0, 2,  100,0.0, 0.0, 1, MOVING, pos2, {2,3,9,4,1,0}));
+    WormDTO w2(2, 0, 1, 100, 0.9, 4.0, 1, STANDING, pos,  {0,1,7,0,1});
+    WormDTO w1(1, 1, 2,  0, 0.0, 0.333, 0, MOVING, pos2, {2,3,9,4,1,0});
+    worms2.emplace(2, w2);
+    worms2.emplace(1, w1);
+    
+    
+    //worms2.emplace(2, WormDTO(2, 0, 1, 100, 0.0, 0.0, 1, STANDING, pos, {0,1,7,0,1}));
+    //worms2.emplace(1, WormDTO(1, 0, 2,  100,0.0, 0.0, 1, MOVING, pos2, {2,3,9,4,1,0}));
 
     GameDynamic* gameDynamicSent = new GameDynamic(1, 1, -1, worms2, explosives, supplies, teamsHealth);
 
@@ -100,7 +110,7 @@ TEST_CASE("The amunition sent and received in WormsDTO through GameDynamic", "[i
 
     REQUIRE(gameDynamicReceived->getWorms().size() == gameDynamicSent->getWorms().size());
 
-    std::vector<WormDTO> wormsReceived = gameDynamicReceived->getWorms(); 
+    std::unordered_map<int, WormDTO> wormsReceived = gameDynamicReceived->getWorms(); 
     for(int i = 0; i < gameDynamicReceived->getWorms().size(); i++) {
         SECTION("WormInfo"){        
             CAPTURE(i);
@@ -123,9 +133,12 @@ TEST_CASE("The amunition sent and received in WormsDTO through GameDynamic", "[i
 TEST_CASE("Sending and receiving ExplosivesDTO", "[info]") {
     Position pos(9.7, 11.0);
     Position pos2(9.89, 9.1);
+    
 
-    worms2.push_back(WormDTO(2, 0, 1, 100, 0.9, 4.0, 1, MOVING, pos, {}));
-    worms2.push_back(WormDTO(1, 1, 2,  0, 0.0, 0.333, 0, JUMPING, pos2, {}));
+    WormDTO w2(2, 0, 1, 100, 0.9, 4.0, 1, JUMPING, pos, {});
+    WormDTO w1(1, 1, 2,  0, 0.0, 0.333, 0, STANDING, pos2, {});
+    worms2.emplace(2, w2);
+    worms2.emplace(1, w1);
 
     explosives.emplace(0 ,ExplosivesDTO(0, 0, Position(1.0, 3.6), 5.3, -3.2));
     explosives.emplace(2, ExplosivesDTO(4, 2, Position(1.8666, 5), 5.3, -3.2));
@@ -161,8 +174,10 @@ TEST_CASE("Sending and receiving SupplyBoxDTO", "[info]") {
     Position pos(9.7, 11.0);
     Position pos2(9.89, 9.1);
 
-    worms2.push_back(WormDTO(2, 0, 1, 100, 0.9, 4.0, 1, JUMPING, pos, {}));
-    worms2.push_back(WormDTO(1, 1, 2,  0, 0.0, 0.333, 0, MOVING, pos2, {}));
+    WormDTO w2(2, 0, 1, 100, 0.9, 4.0, 1, JUMPING, pos, {});
+    WormDTO w1(1, 1, 2,  0, 0.0, 0.333, 0, MOVING, pos2, {});
+    worms2.emplace(2, w2);
+    worms2.emplace(1, w1);
 
     supplies.emplace(0 ,SupplyBoxDTO(0, 2, true, Position(1.0, 3.6)));
     supplies.emplace(2, SupplyBoxDTO(2, 7, true, Position(1.8666, 5)));
@@ -197,8 +212,10 @@ TEST_CASE("Sending and receiving TeamHealth", "[info]") {
     Position pos(-9.7, 11.0);
     Position pos2(9.89, -9.1);
 
-    worms2.push_back(WormDTO(2, 0, 1, 100, 0.0, 0.0, 1, STANDING, pos, {}));
-    worms2.push_back(WormDTO(1, 0, 2,  100,0.0, 0.0, 1, STANDING, pos2, {}));
+    WormDTO w2(2, 0, 1, 100, 0.9, 4.0, 1, STANDING, pos, {});
+    WormDTO w1(1, 1, 2,  0, 0.0, 0.333, 0, JUMPING, pos2, {});
+    worms2.emplace(2, w2);  
+    worms2.emplace(1, w1);
 
     GameDynamic* gameDynamicSent = new GameDynamic(1, 1, -1, worms2, explosives, supplies, teamsHealth);
 

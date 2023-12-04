@@ -142,8 +142,8 @@ GameView::GameView(std::shared_ptr<InfoStruct> infoStruct) :
 
 	//rocketSPrites.push_back(/*textura de la explosion*/);
 	
-	std::vector<WormDTO> recievedWorms = gameMap->getWorms();
-	loadWorms(recievedWorms);
+	recievedWorms = gameMap->getWorms();
+	//loadWorms(recievedWorms);
 	
 	std::vector<BeamDTO> beams = gameMap->getBeams();
 	loadBeams(beams);
@@ -268,14 +268,14 @@ void GameView::loadBeams(std::vector<BeamDTO>& beams) {
 	}
 }
 
-void GameView::loadWorms(std::vector<WormDTO>& recievedWorms) {
-	for (auto &worm : recievedWorms) {
-		wormViews.emplace(
-			worm.getId(),
-			WormView(worm, dynamicSpriteSheets, wormsFont)
-		);
-	}
-}
+//void GameView::loadWorms(std::vector<WormDTO>& recievedWorms) {
+//	for (auto &worm : recievedWorms) {
+//		wormViews.emplace(
+//			worm.getId(),
+//			WormView(worm, dynamicSpriteSheets, wormsFont)
+//		);
+//	}
+//}
 
 void GameView::stop() {
 	this->not_closed = false;
@@ -287,9 +287,10 @@ void GameView::updateEntities(int i) {
 	//std::shared_ptr<GameDynamic> gs = std::dynamic_pointer_cast<GameDynamic>(client.getGameStatus());
 	int oldid = this->currentWormId;
 
-	std::vector<WormDTO> recievedWorms = currentGameStatus.getWorms();
+	this->recievedWorms = currentGameStatus.getWorms();
 
 	this->currentWormId = currentGameStatus.getWormPlayingID();
+	std::cout << currentWormId << std::endl;
 	if (oldid != currentWormId) {
 		inputState = 0;
 		buttonPressing = false;
@@ -300,18 +301,25 @@ void GameView::updateEntities(int i) {
 		}
 	}
 
-
-
-
 	bool anyAlive = false;
-	for (auto &worm : recievedWorms) {
-		this->wormViews.at(worm.getId()).update(worm, i);
-		if (worm.getId() == this->currentWormId) {
-			this->currentWorm = worm;
-		}
-		if (worm.isAlive())
-			anyAlive = true;
+	for (auto it = recievedWorms.begin(); it != recievedWorms.end(); it++) {
+		anyAlive |= (it->second.isAlive());
+		if (it->second.getId() == this->currentWormId)
+			this->currentWorm = it->second;
+		if (wormViews.find(it->first) != wormViews.end())
+			continue;
+		wormViews.emplace(it->second.getId(),
+			WormView(it->second, dynamicSpriteSheets, wormsFont));
 	}
+	//bool anyAlive = false;
+	//for (auto &worm : recievedWorms) {
+	//	this->wormViews.at(worm.getId()).update(worm, i);
+	//	if (worm.getId() == this->currentWormId) {
+	//		this->currentWorm = worm;
+	//	}
+	//	if (worm.isAlive())
+	//		anyAlive = true;
+	//}
 
 	if (oldid != currentWormId && currentWormId != -1) {
 		camX = currentWorm.getX() * m_to_pix_x - WINDOW_WIDTH / 2;
@@ -363,9 +371,18 @@ void GameView::drawBeams(int i) {
 }
 
 void GameView::drawWorms(int i) {
+	//for (auto it = wormViews.begin(); it != wormViews.end(); it++) {
+	//	//confirmar que esto esta trabajando inplace y no hace copia
+	//	it->second.display(i, this->renderer, camX, camY, mouseX, mouseY);
+	//}
+
 	for (auto it = wormViews.begin(); it != wormViews.end(); it++) {
-		//confirmar que esto esta trabajando inplace y no hace copia
-		it->second.display(i, this->renderer, camX, camY, mouseX, mouseY);
+		if (recievedWorms.find(it->first) != recievedWorms.end()) {
+			it->second.update(recievedWorms.at(it->first), i);
+		} else {
+			it->second.die();
+		}
+		it->second.display(i, renderer, camX, camY, mouseX, mouseY);
 	}
 }
 
@@ -680,12 +697,11 @@ void GameView::focusCam() {
 	}
 
 
-	std::vector<WormDTO> recievedWorms = currentGameStatus.getWorms();
 	for (auto &worm : recievedWorms) {
-		if (worm.getVelX() == 0 && worm.getVelY() == 0)
+		if (worm.second.getVelX() == 0 && worm.second.getVelY() == 0)
 			continue;
-		x = worm.getX();
-		y = worm.getY();
+		x = worm.second.getX();
+		y = worm.second.getY();
 		return _focusCam(x,y);
 	}
 
