@@ -297,7 +297,6 @@ void GameView::stop() {
 }
 
 void GameView::playSound(int sound_id/*, bool playAlways*/) {
-	
 	try {
 		int channel = mixer.PlayChannel(-1, sfx[sound_id], 0);
 		mixer.SetVolume(channel, SFX_VOLUME);
@@ -535,6 +534,8 @@ void GameView::drawHud(int i) {
 		return;
 	}
 
+
+
 	renderer.Copy(
 		hudTextures[CURRENT_WORM_INDICATOR_TEXTURE],
 		Rect(21, 60 * ((i/4) % 30) + 16, 19, 33),
@@ -623,7 +624,13 @@ void GameView::drawHud(int i) {
 		hudFont.RenderText_Solid(std::__cxx11::to_string(bombTimer) + "   sec", timeColor));
 
 
+	Texture timeLeftText(renderer,
+		hudFont.RenderText_Solid(std::__cxx11::to_string(CONFIG.getTurnTime() - currentGameStatus.getTimer()), timeColor));
+
+
 	renderer.Copy(timerText, NullOpt, Rect(100,WINDOW_HEIGHT-50,50,50));
+	renderer.Copy(timeLeftText, NullOpt, Rect(100,WINDOW_HEIGHT- 50 - 50,50,50));
+
 
 	int aimSize = AIM_SIZE * m_to_pix_x;
 	if (inputState != 0) {
