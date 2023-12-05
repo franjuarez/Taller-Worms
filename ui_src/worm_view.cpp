@@ -643,10 +643,6 @@ void WormView::update(WormDTO other, int i) {
 		fly(i);
 	}
 
-	if (!(this->worm.isAlive())) {
-		die();
-	}
-
 	if (this->worm.getHealth() <= 10)
 		surrend();
 

@@ -45,6 +45,7 @@ void Worm::die(){
         return;
     }
     this->health = 0;
+    entitiesToRemove.insert(this->body);
 }
 
 void Worm::addHealth(int additionalHealth){
