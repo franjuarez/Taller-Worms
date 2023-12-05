@@ -58,7 +58,8 @@ int SupplyBoxView::open(int i) {
 
 	if (this->box.getContent() == TRAP_SUPPLY)
 		return EXPLOSION_SFX;
-	//if (this->box.getType() == HEALTH_SUPPLY)
+	if (this->box.getContent() == HEALTH_SUPPLY)
+		return HEAL_SFX;
 	return EQUIP_SFX;
 
 }

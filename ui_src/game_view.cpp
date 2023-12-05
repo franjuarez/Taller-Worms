@@ -31,6 +31,7 @@
 #define DRAW_AXE_SFX_PATH BASE_PATH "music/draw_axe_sfx.mp3"
 #define USE_AXE_SFX_PATH BASE_PATH "music/use_axe_sfx.mp3"
 #define FALL_SFX_PATH BASE_PATH "music/fall_sfx.mp3"
+#define HEAL_SFX_PATH BASE_PATH "music/heal_sfx.mp3"
 
 
 #define WORM_LIFE_FONT_PATH BASE_PATH  "fonts/lazy.ttf"
@@ -250,6 +251,7 @@ GameView::GameView(std::shared_ptr<InfoStruct> infoStruct) :
 		sfx.push_back(Chunk(DRAW_AXE_SFX_PATH));
 		sfx.push_back(Chunk(USE_AXE_SFX_PATH));
 		sfx.push_back(Chunk(FALL_SFX_PATH));
+		sfx.push_back(Chunk(HEAL_SFX_PATH));
 
 
 
@@ -320,7 +322,7 @@ void GameView::updateEntities(int i) {
 		inputState = 0;
 		buttonPressing = false;
 		throwPower = 10;
-		SDL_ShowCursor(SDL_ENABLE);
+		//SDL_ShowCursor(SDL_ENABLE);
 		if (oldid != -1) { //si se termino el turno
 			wormViews.at(oldid).toDefault(0);
 		}
@@ -637,30 +639,35 @@ void GameView::drawHud(int i) {
 
 
 	int aimSize = AIM_SIZE * m_to_pix_x;
-	if (inputState != 0) {
-		SDL_ShowCursor(SDL_DISABLE);
-		renderer.Copy(
-			hudTextures[AIM_ICON],
-			Rect(0,0,39,39),
-			Rect(mouseX - (aimSize / 2) , mouseY - (aimSize / 2), aimSize,aimSize)
-			);
-
-		//power indicator
-		if (inputState != TP_CODE && inputState != AIR_STRIKE_CODE && inputState != BAT_CODE) {
-			renderer.SetDrawColor(255,5,5,255);
-
-			int squares_size = 20;
-			int separation = 5;
-			for (int i = 0; i * (MAX_THROWING_POWER / 10) < throwPower; i ++) {
-				renderer.SetDrawColor(i * 255 / 10, (10-i) * 255 / 10, 5, 250);
-				renderer.FillRect(Rect(
-					WINDOW_WIDTH - (i * (squares_size + separation)) + separation,
-					0, squares_size, squares_size
-				));
-			}
-		}
-	
+	if (inputState == 0) {
+		SDL_ShowCursor(SDL_ENABLE);
+		return;
 	}
+
+	
+	SDL_ShowCursor(SDL_DISABLE);
+	renderer.Copy(
+		hudTextures[AIM_ICON],
+		Rect(0,0,39,39),
+		Rect(mouseX - (aimSize / 2) , mouseY - (aimSize / 2), aimSize,aimSize)
+		);
+
+	//power indicator
+	if (inputState != TP_CODE && inputState != AIR_STRIKE_CODE && inputState != BAT_CODE) {
+		renderer.SetDrawColor(255,5,5,255);
+
+		int squares_size = 20;
+		int separation = 5;
+		for (int i = 0; i * (MAX_THROWING_POWER / 10) < throwPower; i ++) {
+			renderer.SetDrawColor(i * 255 / 10, (10-i) * 255 / 10, 5, 250);
+			renderer.FillRect(Rect(
+				WINDOW_WIDTH - (i * (squares_size + separation)) + separation,
+				0, squares_size, squares_size
+			));
+		}
+	}
+	
+	
 
 }
 
@@ -829,6 +836,11 @@ void GameView::returnKeyCase(int i) {
 void GameView::moveCase(int i, int dir) {
 	this->client.execute(std::make_shared<Move>(Move(currentWormId, dir)));
     this->wormViews.at(this->currentWormId).move(i);
+    if (inputState != 0)
+    	if (inputState != BAT_CODE)
+    		playSound(EQUIP_SFX);
+    	else playSound(DRAW_AXE_SFX);
+
     this->inputState = 0;
 }
 
