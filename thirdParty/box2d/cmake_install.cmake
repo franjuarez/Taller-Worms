@@ -1,4 +1,4 @@
-# Install script for directory: /home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d
+# Install script for directory: /home/monke/Desktop/Taller/Taller-Worms/thirdParty/box2d
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -43,18 +43,18 @@ if(NOT DEFINED CMAKE_OBJDUMP)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include" TYPE DIRECTORY FILES "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d/include/box2d")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include" TYPE DIRECTORY FILES "/home/monke/Desktop/Taller/Taller-Worms/thirdParty/box2d/include/box2d")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d/src/cmake_install.cmake")
-  include("/home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d/unit-test/cmake_install.cmake")
-  include("/home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d/extern/glad/cmake_install.cmake")
-  include("/home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d/extern/glfw/cmake_install.cmake")
-  include("/home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d/extern/imgui/cmake_install.cmake")
-  include("/home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d/extern/sajson/cmake_install.cmake")
-  include("/home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d/testbed/cmake_install.cmake")
+  include("/home/monke/Desktop/Taller/Taller-Worms/thirdParty/box2d/src/cmake_install.cmake")
+  include("/home/monke/Desktop/Taller/Taller-Worms/thirdParty/box2d/unit-test/cmake_install.cmake")
+  include("/home/monke/Desktop/Taller/Taller-Worms/thirdParty/box2d/extern/glad/cmake_install.cmake")
+  include("/home/monke/Desktop/Taller/Taller-Worms/thirdParty/box2d/extern/glfw/cmake_install.cmake")
+  include("/home/monke/Desktop/Taller/Taller-Worms/thirdParty/box2d/extern/imgui/cmake_install.cmake")
+  include("/home/monke/Desktop/Taller/Taller-Worms/thirdParty/box2d/extern/sajson/cmake_install.cmake")
+  include("/home/monke/Desktop/Taller/Taller-Worms/thirdParty/box2d/testbed/cmake_install.cmake")
 
 endif()
 

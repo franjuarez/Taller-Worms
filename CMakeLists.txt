@@ -128,13 +128,18 @@ target_compile_options(client PRIVATE $<$<NOT:$<C_COMPILER_ID:MSVC>>:-Wall -Wext
 
 
 #TESTS
-# file(GLOB TEST_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cpp")
-# add_executable(tests ${TEST_SOURCES})
-# target_link_libraries(tests PRIVATE Catch2::Catch2WithMain)
-# target_link_libraries(tests PUBLIC SharedLib)
-# target_link_libraries(tests PUBLIC SharedGameLib)
+file(GLOB TEST_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cpp")
+find_package(Catch2 REQUIRED)
+add_executable(tests ${TEST_SOURCES})
+target_link_libraries(tests PRIVATE Catch2::Catch2WithMain)
+target_link_libraries(tests PUBLIC SharedLib)
+target_link_libraries(tests PUBLIC SharedGameLib)
+add_dependencies(tests SharedLib SharedGameLib)
 
-# catch_discover_tests(tests)
+option(TESTING "Enable testing" OFF)
+if(TESTING)
+    catch_discover_tests(tests WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/tests)
+endif()
 
 #Installer
 

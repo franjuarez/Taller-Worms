@@ -57,13 +57,23 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "/home/martu/Facu/Taller I/Taller-Worms"
+CMAKE_SOURCE_DIR = /home/monke/Desktop/Taller/Taller-Worms
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "/home/martu/Facu/Taller I/Taller-Worms"
+CMAKE_BINARY_DIR = /home/monke/Desktop/Taller/Taller-Worms
 
 #=============================================================================
 # Targets provided globally by CMake.
+
+# Special rule for the target test
+test:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
+	/usr/bin/ctest --force-new-ctest-process $(ARGS)
+.PHONY : test
+
+# Special rule for the target test
+test/fast: test
+.PHONY : test/fast
 
 # Special rule for the target edit_cache
 edit_cache:
@@ -132,14 +142,14 @@ install/strip/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	cd "/home/martu/Facu/Taller I/Taller-Worms" && $(CMAKE_COMMAND) -E cmake_progress_start "/home/martu/Facu/Taller I/Taller-Worms/CMakeFiles" "/home/martu/Facu/Taller I/Taller-Worms/thirdParty/box2d/extern/glad//CMakeFiles/progress.marks"
-	cd "/home/martu/Facu/Taller I/Taller-Worms" && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 thirdParty/box2d/extern/glad/all
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/martu/Facu/Taller I/Taller-Worms/CMakeFiles" 0
+	cd /home/monke/Desktop/Taller/Taller-Worms && $(CMAKE_COMMAND) -E cmake_progress_start /home/monke/Desktop/Taller/Taller-Worms/CMakeFiles /home/monke/Desktop/Taller/Taller-Worms/thirdParty/box2d/extern/glad//CMakeFiles/progress.marks
+	cd /home/monke/Desktop/Taller/Taller-Worms && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 thirdParty/box2d/extern/glad/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/monke/Desktop/Taller/Taller-Worms/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd "/home/martu/Facu/Taller I/Taller-Worms" && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 thirdParty/box2d/extern/glad/clean
+	cd /home/monke/Desktop/Taller/Taller-Worms && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 thirdParty/box2d/extern/glad/clean
 .PHONY : clean
 
 # The main clean target
@@ -148,23 +158,23 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd "/home/martu/Facu/Taller I/Taller-Worms" && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 thirdParty/box2d/extern/glad/preinstall
+	cd /home/monke/Desktop/Taller/Taller-Worms && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 thirdParty/box2d/extern/glad/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd "/home/martu/Facu/Taller I/Taller-Worms" && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 thirdParty/box2d/extern/glad/preinstall
+	cd /home/monke/Desktop/Taller/Taller-Worms && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 thirdParty/box2d/extern/glad/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd "/home/martu/Facu/Taller I/Taller-Worms" && $(CMAKE_COMMAND) -P "/home/martu/Facu/Taller I/Taller-Worms/CMakeFiles/VerifyGlobs.cmake"
-	cd "/home/martu/Facu/Taller I/Taller-Worms" && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/monke/Desktop/Taller/Taller-Worms && $(CMAKE_COMMAND) -P /home/monke/Desktop/Taller/Taller-Worms/CMakeFiles/VerifyGlobs.cmake
+	cd /home/monke/Desktop/Taller/Taller-Worms && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 thirdParty/box2d/extern/glad/CMakeFiles/glad.dir/rule:
-	cd "/home/martu/Facu/Taller I/Taller-Worms" && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 thirdParty/box2d/extern/glad/CMakeFiles/glad.dir/rule
+	cd /home/monke/Desktop/Taller/Taller-Worms && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 thirdParty/box2d/extern/glad/CMakeFiles/glad.dir/rule
 .PHONY : thirdParty/box2d/extern/glad/CMakeFiles/glad.dir/rule
 
 # Convenience name for target.
@@ -173,7 +183,7 @@ glad: thirdParty/box2d/extern/glad/CMakeFiles/glad.dir/rule
 
 # fast build rule for target.
 glad/fast:
-	cd "/home/martu/Facu/Taller I/Taller-Worms" && $(MAKE) $(MAKESILENT) -f thirdParty/box2d/extern/glad/CMakeFiles/glad.dir/build.make thirdParty/box2d/extern/glad/CMakeFiles/glad.dir/build
+	cd /home/monke/Desktop/Taller/Taller-Worms && $(MAKE) $(MAKESILENT) -f thirdParty/box2d/extern/glad/CMakeFiles/glad.dir/build.make thirdParty/box2d/extern/glad/CMakeFiles/glad.dir/build
 .PHONY : glad/fast
 
 src/gl.o: src/gl.c.o
@@ -181,7 +191,7 @@ src/gl.o: src/gl.c.o
 
 # target to build an object file
 src/gl.c.o:
-	cd "/home/martu/Facu/Taller I/Taller-Worms" && $(MAKE) $(MAKESILENT) -f thirdParty/box2d/extern/glad/CMakeFiles/glad.dir/build.make thirdParty/box2d/extern/glad/CMakeFiles/glad.dir/src/gl.c.o
+	cd /home/monke/Desktop/Taller/Taller-Worms && $(MAKE) $(MAKESILENT) -f thirdParty/box2d/extern/glad/CMakeFiles/glad.dir/build.make thirdParty/box2d/extern/glad/CMakeFiles/glad.dir/src/gl.c.o
 .PHONY : src/gl.c.o
 
 src/gl.i: src/gl.c.i
@@ -189,7 +199,7 @@ src/gl.i: src/gl.c.i
 
 # target to preprocess a source file
 src/gl.c.i:
-	cd "/home/martu/Facu/Taller I/Taller-Worms" && $(MAKE) $(MAKESILENT) -f thirdParty/box2d/extern/glad/CMakeFiles/glad.dir/build.make thirdParty/box2d/extern/glad/CMakeFiles/glad.dir/src/gl.c.i
+	cd /home/monke/Desktop/Taller/Taller-Worms && $(MAKE) $(MAKESILENT) -f thirdParty/box2d/extern/glad/CMakeFiles/glad.dir/build.make thirdParty/box2d/extern/glad/CMakeFiles/glad.dir/src/gl.c.i
 .PHONY : src/gl.c.i
 
 src/gl.s: src/gl.c.s
@@ -197,7 +207,7 @@ src/gl.s: src/gl.c.s
 
 # target to generate assembly for a file
 src/gl.c.s:
-	cd "/home/martu/Facu/Taller I/Taller-Worms" && $(MAKE) $(MAKESILENT) -f thirdParty/box2d/extern/glad/CMakeFiles/glad.dir/build.make thirdParty/box2d/extern/glad/CMakeFiles/glad.dir/src/gl.c.s
+	cd /home/monke/Desktop/Taller/Taller-Worms && $(MAKE) $(MAKESILENT) -f thirdParty/box2d/extern/glad/CMakeFiles/glad.dir/build.make thirdParty/box2d/extern/glad/CMakeFiles/glad.dir/src/gl.c.s
 .PHONY : src/gl.c.s
 
 # Help Target
@@ -212,6 +222,7 @@ help:
 	@echo "... install/strip"
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
+	@echo "... test"
 	@echo "... glad"
 	@echo "... src/gl.o"
 	@echo "... src/gl.i"
@@ -227,7 +238,7 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd "/home/martu/Facu/Taller I/Taller-Worms" && $(CMAKE_COMMAND) -P "/home/martu/Facu/Taller I/Taller-Worms/CMakeFiles/VerifyGlobs.cmake"
-	cd "/home/martu/Facu/Taller I/Taller-Worms" && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/monke/Desktop/Taller/Taller-Worms && $(CMAKE_COMMAND) -P /home/monke/Desktop/Taller/Taller-Worms/CMakeFiles/VerifyGlobs.cmake
+	cd /home/monke/Desktop/Taller/Taller-Worms && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

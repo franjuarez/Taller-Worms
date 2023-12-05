@@ -68,22 +68,20 @@ TEST_CASE("Testing the worms sent and received in the GameDynamic", "[info]") {
     REQUIRE(gameDynamicReceived->getWorms().size() == gameDynamicSent->getWorms().size());
 
     std::unordered_map<int, WormDTO> wormsReceived = gameDynamicReceived->getWorms(); 
-    for(int i = 0; i < gameDynamicReceived->getWorms().size(); i++) {
-        SECTION("WormInfo"){        
-            CAPTURE(i);
 
-            REQUIRE(wormsReceived[i].getId() == worms2[i].getId());
-            REQUIRE(wormsReceived[i].getDir() == worms2[i].getDir());
-            REQUIRE(wormsReceived[i].getX() == worms2[i].getX());
-            REQUIRE(wormsReceived[i].getY() == worms2[i].getY());
-            REQUIRE(wormsReceived[i].getHealth() == worms2[i].getHealth());
-            REQUIRE(wormsReceived[i].isAlive() == worms2[i].isAlive());
-            REQUIRE(wormsReceived[i].getVelX() == worms2[i].getVelX());
-            REQUIRE(wormsReceived[i].getVelY() == worms2[i].getVelY());
-            REQUIRE(wormsReceived[i].isOnGround() == worms2[i].isOnGround());
-            REQUIRE(wormsReceived[i].getCurrentAction() == worms2[i].getCurrentAction());
-            REQUIRE(wormsReceived[i].getWeapons().size() == worms2[i].getWeapons().size());
-        }
+    for (auto& wormR : wormsReceived) {
+        auto wormS = worms2.find(wormR.first);
+        REQUIRE(wormR.second.getId() == wormS->second.getId());
+        REQUIRE(wormR.second.getDir() == wormS->second.getDir());
+        REQUIRE(wormR.second.getX() == wormS->second.getX());
+        REQUIRE(wormR.second.getY() == wormS->second.getY());
+        REQUIRE(wormR.second.getHealth() == wormS->second.getHealth());
+        REQUIRE(wormR.second.isAlive() == wormS->second.isAlive());
+        REQUIRE(wormR.second.getVelX() == wormS->second.getVelX());
+        REQUIRE(wormR.second.getVelY() == wormS->second.getVelY());
+        REQUIRE(wormR.second.isOnGround() == wormS->second.isOnGround());
+        REQUIRE(wormR.second.getCurrentAction() == wormS->second.getCurrentAction());
+        REQUIRE(wormR.second.getWeapons().size() == wormS->second.getWeapons().size());
     }
 
 }
@@ -111,20 +109,17 @@ TEST_CASE("The amunition sent and received in WormsDTO through GameDynamic", "[i
     REQUIRE(gameDynamicReceived->getWorms().size() == gameDynamicSent->getWorms().size());
 
     std::unordered_map<int, WormDTO> wormsReceived = gameDynamicReceived->getWorms(); 
-    for(int i = 0; i < gameDynamicReceived->getWorms().size(); i++) {
-        SECTION("WormInfo"){        
+
+    for(auto& wormR : wormsReceived) {
+        auto wormS = worms2.find(wormR.first);
+        REQUIRE(wormR.second.getWeapons().size() == wormS->second.getWeapons().size());
+        std::vector<int> weaponsSent = wormS->second.getWeapons();
+        std::vector<int> weaponsReceived = wormR.second.getWeapons();
+
+        for(int i = 0; i < weaponsSent.size(); i++){
             CAPTURE(i);
-            REQUIRE(wormsReceived[i].getWeapons().size() == worms2[i].getWeapons().size());
-            SECTION("WeaponsInfo") {
-                std::vector<int> weaponsSent = worms2[i].getWeapons();
-                std::vector<int> weaponsReceived = wormsReceived[i].getWeapons();
+            REQUIRE(weaponsReceived[i] == weaponsSent[i]);
 
-                for(int j = 0; j < weaponsSent.size(); j++){
-                    CAPTURE(j);
-                    REQUIRE(weaponsReceived[j] == weaponsSent[j]);
-
-                }
-            }
         }
     }
 }
