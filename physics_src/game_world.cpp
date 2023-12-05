@@ -559,10 +559,11 @@ void GameWorld::removeEntities(){
             removeBoxFromMap(body);
         } else if(entityType == EntityWorm){
             Worm* wormData = (Worm*) body->GetUserData().pointer;
-            if(wormData->isDead() && body->GetLinearVelocity().Length() != 0){
+            if(body->GetLinearVelocity().Length() != 0){
                 deadWorms.insert(body);
                 continue;
             }
+            wormData->die();
             removeWormFromMap(body);
         }
         this->world->DestroyBody(body);
@@ -642,7 +643,6 @@ GameWorld::~GameWorld() {
         this->world->DestroyBody(worm.second);
         delete (Worm*) worm.second->GetUserData().pointer;
     }
-    //This shouldnt be necessary but just in case
     for (auto& projectile : this->projectiles) {
         this->world->DestroyBody(projectile.second);
         delete (Projectile*) projectile.second->GetUserData().pointer;
