@@ -55,6 +55,7 @@ private:
 	int camY;
 	int mouseX;
 	int mouseY;
+	bool volumeOn;
 	MouseHandler mouseHandler;
 
 	std::unordered_map<int, WormView> wormViews;

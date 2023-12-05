@@ -289,6 +289,7 @@ GameView::GameView(std::shared_ptr<InfoStruct> infoStruct) :
 	this->winnerTeam = -1;
 	this->throwPower = 10;
 	this->buttonPressing = false;
+	volumeOn = true;
 }
 
 void GameView::loadBeams(std::vector<BeamDTO>& beams) {
@@ -309,7 +310,7 @@ void GameView::playSound(int sound_id/*, bool playAlways*/) {
 		return;
 	try {
 		int channel = mixer.PlayChannel(-1, sfx[sound_id], 0);
-		mixer.SetVolume(channel, SFX_VOLUME);
+		mixer.SetVolume(channel, SFX_VOLUME * volumeOn);
 	} catch (SDL2pp::Exception &e) {
 	/*cuando sdl arregle su funcion 
 	yo voy a arreglar mi catch*/
@@ -1114,7 +1115,6 @@ void GameView::processInput(SDL_Event event, int i) {
 			this->client.execute(std::make_shared<Cheats>(Cheats(this->currentWormId, RENEW_TURN)));
 			break;
 
-
 		}
 	}
 }
@@ -1139,6 +1139,14 @@ void GameView::start() {
 				if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_q) {
 					return;
 				}
+
+				if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_m) {
+					this->volumeOn = !(this->volumeOn);
+					Mix_Volume(-1, MUSIC_VOLUME * volumeOn);
+				}
+
+						 
+
 				processInput(event, i);
 			}
 
