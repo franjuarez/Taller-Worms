@@ -57,16 +57,26 @@ void ClientLobby::run() {
 
 int ClientLobby::createNewMatch( int nrPlayers, std::string matchName, std::string mapName) {
     MatchCommand* mc = new MatchCommand(NEW_MATCH, nrPlayers, matchName, mapName);
-    mc->send(infoStruct->prot);
-    return infoStruct->prot.receiveAllOk();
+    try {
+        mc->send(infoStruct->prot);
+        return infoStruct->prot.receiveAllOk();
+    } catch (const std::exception& e) {
+        return 2;
+    }
+
 }
 
 int ClientLobby::joinMatch(std::string matchName) {
     int numberPlayers = 0;
     std::string mapName = "";
     MatchCommand* mc = new MatchCommand(JOIN, numberPlayers, matchName, mapName);
-    mc->send(infoStruct->prot);
-    return infoStruct->prot.receiveAllOk();
+    try {
+        mc->send(infoStruct->prot);
+        return infoStruct->prot.receiveAllOk();
+    } catch (const std::exception& e) {
+        return 2;
+    }
+
 }
 
 void ClientLobby::refresh() {
@@ -74,7 +84,11 @@ void ClientLobby::refresh() {
     std::string mapName = "";
     std::string matchName = "";
     MatchCommand* mc = new MatchCommand(REFRESH, numberPlayers, matchName, mapName);
-    mc->send(infoStruct->prot);
+    try {
+        mc->send(infoStruct->prot);
+    } catch (const std::exception& e) {
+    }
+
 }
 
 void ClientLobby::startGame() {
@@ -86,9 +100,13 @@ void ClientLobby::startGame() {
 
 std::map<std::string, std::string> ClientLobby::getAvailableMatches() {
     refresh();
-    std::shared_ptr<Serializable>gameDynamic(infoStruct->prot.receiveSerializable());
-    std::shared_ptr<GameInfo> gs = std::dynamic_pointer_cast<GameInfo>(gameDynamic);
-    return gs->getMatchesAvailable();
+    try {
+        std::shared_ptr<Serializable>gameDynamic(infoStruct->prot.receiveSerializable());
+        std::shared_ptr<GameInfo> gs = std::dynamic_pointer_cast<GameInfo>(gameDynamic);
+        return gs->getMatchesAvailable();
+    } catch (const ClosedSocket& e){} 
+    catch (const std::exception& e){}
+    return {};
 }
 
 void ClientLobby::showMatches() {

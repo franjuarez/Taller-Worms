@@ -41,17 +41,25 @@ void JoinWindow::on_joinButton_clicked()
         return;
     }
     hide();
-    //try {
-        this->cl.joinMatch(ui->availableMatchesComboBox->currentText().toStdString());
-        this->cl.startGame();
-        QApplication::quit();
-    //} catch (ClientClosed &e) {
-        QMessageBox msgBox;
-        msgBox.setWindowTitle("Error");
-        msgBox.setText("Ops! something happend with the server");
-        msgBox.exec();
-        msgBox.setStyleSheet("QMessageBox { background-color: gray; border: 1px solid gray; }");
-    //}
+        int result = this->cl.joinMatch(ui->availableMatchesComboBox->currentText().toStdString());
+        if (result == 0) {
+            hide();
+            this->cl.startGame();
+            QApplication::quit();
+        } else if (result == 1) {
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Error");
+            msgBox.setText("error creating server");
+            msgBox.exec();
+            msgBox.setStyleSheet("QMessageBox { background-color: gray; border: 1px solid gray; }");
+        } else if (result == 2) {
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Error");
+            msgBox.setText("server closed");
+            msgBox.exec();
+            msgBox.setStyleSheet("QMessageBox { background-color: gray; border: 1px solid gray; }");
+            QApplication::quit();
+        }
 
 }
 

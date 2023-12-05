@@ -37,12 +37,19 @@ void CreateWindow::createMatch(std::string map) {
             hide();
             this->cl.startGame();
             QApplication::quit();
-        } else {
+        } else if (result == 1) {
             QMessageBox msgBox;
             msgBox.setWindowTitle("Error");
             msgBox.setText("error creating server");
             msgBox.exec();
             msgBox.setStyleSheet("QMessageBox { background-color: gray; border: 1px solid gray; }");
+        } else if (result == 2) {
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Error");
+            msgBox.setText("server closed");
+            msgBox.exec();
+            msgBox.setStyleSheet("QMessageBox { background-color: gray; border: 1px solid gray; }");
+            QApplication::quit();
         }
 
     }

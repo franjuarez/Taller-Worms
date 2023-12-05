@@ -318,7 +318,6 @@ void GameView::updateEntities(int i) {
 	this->recievedWorms = currentGameStatus.getWorms();
 
 	this->currentWormId = currentGameStatus.getWormPlayingID();
-	std::cout << currentWormId << std::endl;
 	if (oldid != currentWormId) {
 		inputState = 0;
 		buttonPressing = false;

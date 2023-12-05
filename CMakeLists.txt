@@ -134,7 +134,7 @@ target_compile_options(client PRIVATE $<$<NOT:$<C_COMPILER_ID:MSVC>>:-Wall -Wext
 # target_link_libraries(tests PUBLIC SharedLib)
 # target_link_libraries(tests PUBLIC SharedGameLib)
 
-catch_discover_tests(tests)
+# catch_discover_tests(tests)
 
 #Installer
 

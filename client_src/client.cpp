@@ -40,7 +40,7 @@ void Client::kill() {
         infoStruct->prot.boom();
         commandsQueue.close();
         gameStatusQueue.close();
-    } catch (const ClosedQueue& e) {}
+    } catch (...) {}
     join();
 }
 
