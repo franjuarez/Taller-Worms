@@ -112,7 +112,7 @@ public:
     
     bool wormThrowBanana(int id, float angle, int direction, float power, int explosionTimer);
 
-    bool wormDropDynamite(int id, int explosionTimer);
+    bool wormDropDynamite(int id, int dir, int explosionTimer);
 
     bool wormCallAirAttack(int id, float xDest, float yDest);
 

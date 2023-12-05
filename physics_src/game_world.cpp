@@ -310,7 +310,7 @@ b2Body* GameWorld::createDynamite(b2Body* worm, int explosionTimer){
     return body;
 }
 
-bool GameWorld::wormDropDynamite(int id, int explosionTimer){
+bool GameWorld::wormDropDynamite(int id, int dir, int explosionTimer){
     checkWormExists(id);
     b2Body* worm = this->worms[id];
     Worm* wormData = (Worm*) worm->GetUserData().pointer;

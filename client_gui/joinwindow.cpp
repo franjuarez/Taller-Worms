@@ -14,6 +14,14 @@ JoinWindow::JoinWindow(QWidget *parent, ClientLobby&& cl) :
     ui->setupUi(this);
     std::map<std::string, std::string> matchNames = cl.getAvailableMatches();
     for (auto it = matchNames.begin(); it != matchNames.end(); it++) {
+        if (it->second == "") {
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Error");
+            msgBox.setText("server closed");
+            msgBox.exec();
+            msgBox.setStyleSheet("QMessageBox { background-color: gray; border: 1px solid gray; }");
+            QApplication::quit();
+        }
         ui->availableMatchesComboBox->addItem(QString::fromStdString(it->first));
     }
 }
@@ -28,6 +36,14 @@ void JoinWindow::on_refreshButton_clicked()
     ui->availableMatchesComboBox->clear();
     std::map<std::string, std::string> matchNames = cl.getAvailableMatches();
     for (auto it = matchNames.begin(); it != matchNames.end(); it++) {
+        if (it->second == "") {
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Error");
+            msgBox.setText("server closed");
+            msgBox.exec();
+            msgBox.setStyleSheet("QMessageBox { background-color: gray; border: 1px solid gray; }");
+            QApplication::quit();
+        }
         ui->availableMatchesComboBox->addItem(QString::fromStdString(it->first));
     }
 

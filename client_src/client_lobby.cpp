@@ -10,6 +10,7 @@
 #define JM "jm"
 #define R "r"
 
+
 ClientLobby::ClientLobby(const std::string& hostname, const std::string& servname) : infoStruct(std::make_shared<InfoStruct>(hostname, servname)) {}
 
 
@@ -103,9 +104,9 @@ std::map<std::string, std::string> ClientLobby::getAvailableMatches() {
         std::shared_ptr<Serializable>gameDynamic(infoStruct->prot.receiveSerializable());
         std::shared_ptr<GameInfo> gs = std::dynamic_pointer_cast<GameInfo>(gameDynamic);
         return gs->getMatchesAvailable();
-    } catch (const ClosedSocket& e){} 
-    catch (const std::exception& e){}
-    return {};
+    } catch (const std::exception& e){
+        return {{"",""}};
+    }
 }
 
 void ClientLobby::showMatches() {
