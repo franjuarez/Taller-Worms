@@ -65,7 +65,7 @@
 #define HOLY_GRENADE_HEIGHT 0.25f
 
 //Bat constants
-#define BAT_HEIGHT 0.4f
+#define BAT_HEIGHT 0.8f
 #define BAT_WIDTH 1.3f
 
 #endif
