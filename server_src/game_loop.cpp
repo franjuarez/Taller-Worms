@@ -52,7 +52,7 @@ void GameLoop::loopLogic(int64_t elapsed_time) {
 	std::unordered_map<int, WormDTO> worms = gameDynamic->getWorms();
 	int wormPlayingNewHealth = updateGameDynamic(gameDynamic, worms, elapsed_time);
 
-	if (gameOver) {
+	if (playingDone) {
 		return;
 	}
 
@@ -168,17 +168,17 @@ int GameLoop::updateWinningStatus() {
 		if (teamsWithWorms == 1) {
 			return PLAYING;
 		}
-		gameOver = true;
+		playingDone = true;
 		return ALL_LOST;
 	}
 
 	if (teamsWithWorms > 1) {
 		return PLAYING;
 	} else if (teamsWithWorms == 1) {
-		gameOver = true;
+		playingDone = true;
 		return teamWinning;
 	}
-	gameOver = true;
+	playingDone = true;
 	return ALL_LOST;
 }
 

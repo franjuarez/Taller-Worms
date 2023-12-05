@@ -41,6 +41,7 @@ private:
     bool stillWaiting = false;
     bool* playing;
     bool gameOver = false;
+    bool playingDone = false;
 
     void loopLogic(int64_t passed_time);
     int updateWinningStatus();
