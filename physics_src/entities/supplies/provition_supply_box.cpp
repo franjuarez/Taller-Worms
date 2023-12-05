@@ -6,7 +6,7 @@ ProvitionsSupplyBox::ProvitionsSupplyBox(b2Body* body, std::unordered_set<b2Body
 
 void ProvitionsSupplyBox::beginCollisionWithWorm(Entity* otherBody, b2Contact* contact) {
     Worm* worm = (Worm*) otherBody;
-    std::cout << "Supply type: " << this->supplyType << std::endl;
+    if(worm->isDead()) return;
     if(this->supplyType == HEALTH_SUPPLY){
         worm->addHealth(CONFIG.getSupplyBoxHealth());
     } else if(supplyType == MORTAR_SUPPLY){
