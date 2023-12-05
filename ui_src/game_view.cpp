@@ -32,6 +32,7 @@
 #define USE_AXE_SFX_PATH BASE_PATH "music/use_axe_sfx.mp3"
 #define FALL_SFX_PATH BASE_PATH "music/fall_sfx.mp3"
 #define HEAL_SFX_PATH BASE_PATH "music/heal_sfx.mp3"
+#define SG_SFX_PATH BASE_PATH "music/sg_sfx.mp3"
 
 
 #define WORM_LIFE_FONT_PATH BASE_PATH  "fonts/lazy.ttf"
@@ -256,6 +257,7 @@ GameView::GameView(std::shared_ptr<InfoStruct> infoStruct) :
 		sfx.push_back(Chunk(USE_AXE_SFX_PATH));
 		sfx.push_back(Chunk(FALL_SFX_PATH));
 		sfx.push_back(Chunk(HEAL_SFX_PATH));
+		sfx.push_back(Chunk(SG_SFX_PATH));
 
 
 
@@ -441,10 +443,7 @@ void GameView::drawProjectiles(int i) {
 		if (recievedProjectiles.find(it->first) != recievedProjectiles.end()) {
 			it->second.update(recievedProjectiles.at(it->first), i);
 		} else {
-			it->second.explode(i);
-			playSound(EXPLOSION_SFX);
-
-
+			playSound(it->second.explode(i));
 		}
 		it->second.display(i, renderer, camX, camY);
 		if (not it->second.isOver()) {

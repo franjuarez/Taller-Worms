@@ -78,12 +78,15 @@ bool ProjectileView::isOver() {
 	return currentFramesIndex == POST_EXPLOSION_FRAMES;
 }
 
-void ProjectileView::explode(int i) {
+int ProjectileView::explode(int i) {
 	if (currentFramesIndex != ROCKET_FRAMES && currentFramesIndex < RED_GRENADE_FRAMES)
-		return;
+		return -1;
 	this->startingPoint = i;
 	this->currentFramesIndex = EXPLOSION_FRAMES;
 	this->defaultFramesIndex = POST_EXPLOSION_FRAMES;
+	if (this->rocket.getType() == HOLY_GRENADE)
+		return SG_SFX;
+	return EXPLOSION_SFX;
 }
 
 void ProjectileView::display(int i, Renderer& renderer, int camX, int camY) {
