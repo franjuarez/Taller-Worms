@@ -32,11 +32,11 @@ private:
     int teamPlayingID;
     int wormPlayingID;
     int wormPlayingHealth;
-    bool waitingForStatic;
-    bool waitingExtraTime;
+    bool waitingForStatic = false;
+    bool waitingExtraTime = false;
     std::chrono::steady_clock::time_point start_time; 
     std::chrono::steady_clock::time_point start_extra_time;
-    bool cheatOn;
+    bool cheatOn = false;
     int waitingForBox = 0;
     bool stillWaiting = false;
     bool* playing;

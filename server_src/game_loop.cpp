@@ -8,13 +8,9 @@
 #define RATE (1000.f / CONFIG.getFps())
 
 GameLoop::GameLoop(Queue<std::shared_ptr<Command>>& commandsQueue, StatusBroadcaster& statusBroadcaster, std::shared_ptr<GameMap> gameMap, std::vector<Team> teams, bool* playing)
-: commandsQueue(commandsQueue), statusBroadcaster(statusBroadcaster), gameWorld(gameMap), teams(teams), playing(playing) {
+: commandsQueue(commandsQueue), statusBroadcaster(statusBroadcaster), gameWorld(gameMap), teams(teams), wormPlayingHealth(CONFIG.getWormInitialHealth()), playing(playing) {
 	this->teamPlayingID = 0;
-	this->wormPlayingHealth = CONFIG.getWormInitialHealth();
-	this->waitingForStatic = false;	
-	this->waitingExtraTime = false;
 	this->start_time = std::chrono::steady_clock::now();
-	this->cheatOn = false;
 }
 
 
@@ -103,7 +99,7 @@ int GameLoop::updateGameDynamic(std::shared_ptr<GameDynamic> gameDynamic, std::u
 	if (waitingForStatic && !cheatOn) {
 		gameDynamic->setWormPlayingID(NO_WORM_PLAYING);
 	}
-	int wormPlayingNewHealth;
+	int wormPlayingNewHealth = wormPlayingHealth;
 	std::vector<uint32_t> teamsHealth(teams.size(), 0);
 
 
