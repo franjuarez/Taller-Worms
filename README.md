@@ -63,7 +63,7 @@ Para jugar primero hay que crearla, por ende tocamos la opcion: `Create Game`.
 
 Dentro veremos la siguiente pantalla:
 
-![create-game-lobby](https://github.com/franjuarez/Taller-Worms/assets/90098530/b854fe5b-8875-4aa6-81ea-c8e01f4e9e38)
+![create-game-lobby](https://github.com/franjuarez/Taller-Worms/assets/90098530/07e0de96-d300-4b7e-82b2-31d75bbb3632)
 
 En esta debemos elegir:
 * La cantidad de jugadores (1-4)
