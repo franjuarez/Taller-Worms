@@ -53,9 +53,15 @@ bool SupplyBoxView::isOver() {
 	return this->currentFramesIndex == NOT_SHOWING_BOX_FRAMES;
 }
 
-void SupplyBoxView::open(int i) {
+int SupplyBoxView::open(int i) {
 	currentFramesIndex = defaultFramesIndex = NOT_SHOWING_BOX_FRAMES;
-	return;
+
+	if (this->box.getContent() == TRAP_SUPPLY)
+		return EXPLOSION_SFX;
+	if (this->box.getContent() == HEALTH_SUPPLY)
+		return HEAL_SFX;
+	return EQUIP_SFX;
+
 }
 
 
