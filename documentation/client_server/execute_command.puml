@@ -1,0 +1,41 @@
+@startuml new match sequence
+
+actor User 
+
+User -> GameView : LaunchRocket(type, wormID, dir, angle, power);
+
+GameView -> Client : execute(std::shared_ptr<Command>)
+
+Client -> Protocol : send(std::shared_ptr<Command>)
+
+Protocol -> ServerReceiver : receiveCommand()
+
+ServerReceiver -> ServerReceiver : commandQueue.push(command)
+
+GameLoop -> GameLoop : commandQueue.pop()
+
+GameLoop -> Command : executeCommand(GameWorld&)
+
+Command -> GameWorld : wormLaunchBazooka(wormID, angle, dir, power)
+
+GameLoop -> GameWorld : update()
+
+GameLoop -> GameWorld : getGameStatus(wormPlayingID)
+
+GameLoop -> StatusBroadcaster : broadcastStatus(Gamestd::shared_ptr<Serializable>)
+
+GameLoop -> GameLoop : changeWormPlaying()
+
+StatusBroadcaster -> ServerSender  : sendStatus(std::shared_ptr<Serializable>)
+
+ServerSender -> Protocol : sendSerializable(std::shared_ptr<Serializable>)
+
+Protocol -> ClientReceiver : receiveSerializable()
+
+ClientReceiver -> ClientReceiver : gameStatusQueue.push(serializable)
+
+GameView -> Client : getGameStatus()
+
+GameView -> GameView : draw()
+
+@enduml

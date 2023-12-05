@@ -57,6 +57,9 @@ Si un jugador se va en medio de una partida de 2 o + usuarios, la partida se man
 
 Las partidas pueden terminar por 4 motivos: se cerro el servidor, un usuario gano, o todos los usuarios perdieron, todos los jugadores abandonaron la partida. En los ultimos tres casos, estas partidas se cierran, y son marcadas como _inactive_, permitiendo a un nuevo usuario crear una partida con el mismo nombre. En caso de una partida no estar _incative_ intentar esto devolveria error. 
 
+> Un diagrama  de secuencia de la ejecucion de la instruccion LaunchRocket
+
+![Alt text](image-4.png)
 
 
 ## El Cliente
