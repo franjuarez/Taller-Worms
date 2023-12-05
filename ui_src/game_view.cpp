@@ -444,6 +444,7 @@ void GameView::drawProjectiles(int i) {
 			it->second.update(recievedProjectiles.at(it->first), i);
 		} else {
 			playSound(it->second.explode(i));
+
 		}
 		it->second.display(i, renderer, camX, camY);
 		if (not it->second.isOver()) {
@@ -453,12 +454,7 @@ void GameView::drawProjectiles(int i) {
 		}
 	}
 
-	//std::unordered_map<int, SupplyBoxDTO> boxes = currentGameStatus.getSupplyBox();
-	//for (auto it = boxes.begin(); it != boxes.end(); it++) {
-	//	int x = it->second.getX() * m_to_pix_x - camX;
-	//	int y = it->second.getY() * m_to_pix_y + WINDOW_HEIGHT - camY;
-	//	renderer.FillRect(Rect(x,y,20,20));
-	//}
+
 }
 
 void GameView::drawBoxes(int i) {
