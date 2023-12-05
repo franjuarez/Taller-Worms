@@ -72,6 +72,8 @@ En esta debemos elegir:
 
 Cabe destacar que la partida no empezara hasta que no se unan todos los jugadores.
 
+**IMPORTANTE**: El juego no permite dos partidas con el mismo nombre. Cuando se termina una partida, ese nombre puede ser reutilizado. (Una partida se da como finalizada cuando ambos usuarios cerraron el juego).
+
 ### Unirse a una partida
 
 Para unirse a una partida navegamos hacia `Join Game`.
