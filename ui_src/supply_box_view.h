@@ -22,7 +22,7 @@ public:
 	~SupplyBoxView();
 
 	bool isOver();
-	void open(int i);
+	int open(int i);
 	void display(int i, Renderer& renderer, int camX, int camY);
 	void update(SupplyBoxDTO other, int i);
 

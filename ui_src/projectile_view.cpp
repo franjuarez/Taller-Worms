@@ -116,9 +116,10 @@ void ProjectileView::display(int i, Renderer& renderer, int camX, int camY) {
 		angle += (rocket.getVelX() < 0) ? -90 : 90;
 	}
 
-	if (currentFramesIndex == EXPLOSION_FRAMES) {
+	if ((abs(this->rocket.getVelX()) < 0.1 && abs(this->rocket.getVelY()) < 0.1)  || currentFramesIndex == EXPLOSION_FRAMES) {
 		angle = 0;
 	}
+	
 
 	Texture& texture(this->projectileSpriteSheets[currentFramesIndex]);
 	//si esto es distinto de 0 rompe aca

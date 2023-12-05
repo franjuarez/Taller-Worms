@@ -28,6 +28,10 @@
 #define TP_SFX_PATH BASE_PATH "music/tp_3_sfx.mp3"
 #define DYNAMITE_SFX_PATH BASE_PATH "music/dynamite_2_sfx.mp3"
 #define LAUNCH_SFX_PATH BASE_PATH "music/launch_sfx.mp3"
+#define DRAW_AXE_SFX_PATH BASE_PATH "music/draw_axe_sfx.mp3"
+#define USE_AXE_SFX_PATH BASE_PATH "music/use_axe_sfx.mp3"
+#define FALL_SFX_PATH BASE_PATH "music/fall_sfx.mp3"
+
 
 #define WORM_LIFE_FONT_PATH BASE_PATH  "fonts/lazy.ttf"
 #define HUD_FONT_PATH BASE_PATH  "fonts/arcadeclassic/ARCADECLASSIC.TTF"
@@ -238,11 +242,14 @@ GameView::GameView(std::shared_ptr<InfoStruct> infoStruct) :
 		hudTextures.push_back(Texture(renderer, Surface(AIM_PATH).SetColorKey(true, 0)));
 
 	sfx.push_back(Chunk(THROW_SFX_PATH));
-	sfx.push_back(Chunk(EXPLOSION_SFX_PATH));
-	sfx.push_back(Chunk(EQUIP_SFX_PATH));
-	sfx.push_back(Chunk(TP_SFX_PATH));
-	sfx.push_back(Chunk(DYNAMITE_SFX_PATH));
-	sfx.push_back(Chunk(LAUNCH_SFX_PATH));
+		sfx.push_back(Chunk(EXPLOSION_SFX_PATH));
+		sfx.push_back(Chunk(EQUIP_SFX_PATH));
+		sfx.push_back(Chunk(TP_SFX_PATH));
+		sfx.push_back(Chunk(DYNAMITE_SFX_PATH));
+		sfx.push_back(Chunk(LAUNCH_SFX_PATH));
+		sfx.push_back(Chunk(DRAW_AXE_SFX_PATH));
+		sfx.push_back(Chunk(USE_AXE_SFX_PATH));
+		sfx.push_back(Chunk(FALL_SFX_PATH));
 
 
 
@@ -283,14 +290,7 @@ void GameView::loadBeams(std::vector<BeamDTO>& beams) {
 	}
 }
 
-//void GameView::loadWorms(std::vector<WormDTO>& recievedWorms) {
-//	for (auto &worm : recievedWorms) {
-//		wormViews.emplace(
-//			worm.getId(),
-//			WormView(worm, dynamicSpriteSheets, wormsFont)
-//		);
-//	}
-//}
+
 
 void GameView::stop() {
 	this->not_closed = false;
@@ -310,7 +310,6 @@ void GameView::playSound(int sound_id/*, bool playAlways*/) {
 void GameView::updateEntities(int i) {
 
 	this->currentGameStatus = *std::dynamic_pointer_cast<GameDynamic>(client.getGameStatus());
-
 	
 	int oldid = this->currentWormId;
 
@@ -331,6 +330,10 @@ void GameView::updateEntities(int i) {
 	bool anyAlive = false;
 	for (auto it = recievedWorms.begin(); it != recievedWorms.end(); it++) {
 		anyAlive |= (it->second.isAlive());
+
+		if (it->second.getY() < 1.5 && it->second.getVelY() < -0.1)
+			playSound(FALL_SFX);
+
 		if (it->second.getId() == this->currentWormId)
 			this->currentWorm = it->second;
 		if (wormViews.find(it->first) != wormViews.end())
@@ -456,7 +459,8 @@ void GameView::drawBoxes(int i) {
 		if (recievedBoxes.find(it->first) != recievedBoxes.end()) {
 			it->second.update(recievedBoxes.at(it->first), i);
 		} else {
-			it->second.open(i);
+			playSound(it->second.open(i));
+
 		}
 		it->second.display(i, renderer, camX, camY);
 
@@ -825,6 +829,7 @@ void GameView::returnKeyCase(int i) {
 void GameView::moveCase(int i, int dir) {
 	this->client.execute(std::make_shared<Move>(Move(currentWormId, dir)));
     this->wormViews.at(this->currentWormId).move(i);
+    this->inputState = 0;
 }
 
 void GameView::backspaceKeyCase(int i) {
@@ -919,10 +924,10 @@ void GameView::processInput(SDL_Event event, int i) {
 	if (event.type == SDL_MOUSEWHEEL){
 		if (event.wheel.y > 0) {
 			inputState = (inputState + 1) % 11;
-			playSound(EQUIP_SFX);
+			playSound((inputState != BAT_CODE) ? EQUIP_SFX : DRAW_AXE_SFX);
 		} else if( event.wheel.y < 0) {
 			inputState--;
-			playSound(EQUIP_SFX);
+			playSound((inputState != BAT_CODE) ? EQUIP_SFX : DRAW_AXE_SFX);
 			if (inputState < 0) {
 				inputState = 10;
 			}
@@ -1014,7 +1019,6 @@ void GameView::processInput(SDL_Event event, int i) {
 		case SDLK_r: //podria ser un mapa pero seria igual de feo en el constructor
 			inputState = BAZOOKA_CODE;
 			playSound(EQUIP_SFX);
-
 			this->wormViews.at(currentWormId).drawBazoka(i);
 			break;
 		case SDLK_t:
@@ -1027,7 +1031,7 @@ void GameView::processInput(SDL_Event event, int i) {
 			if (this->currentWorm.getWeapons()[BAT_CODE] == 0)
 				return;
 			inputState = BAT_CODE;
-			playSound(EQUIP_SFX);
+			playSound(DRAW_AXE_SFX);
 
 			wormViews.at(currentWormId).drawAxe(i);
 			break;
