@@ -2,7 +2,7 @@ maps_file: map_names.yaml
 
 game:
   FPS: 60
-  music_volume: 0 # 0-128
+  music_volume: 20 # 0-128
   sfx_volume: 20 # 0-128
   turn_time: 40
   extra_time: 3
