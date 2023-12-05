@@ -1,5 +1,8 @@
+#Mapas oficiales
 small: small.txt
 test: test.txt
 medium: medium.txt
 dust2: dust2.txt
 subsuelo de fiuba: subsuelo.txt
+
+#Agregar aca abajo los Mapas custom
