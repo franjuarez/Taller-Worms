@@ -15,7 +15,6 @@ JoinWindow::JoinWindow(QWidget *parent, ClientLobby&& cl) :
     std::map<std::string, std::string> matchNames = cl.getAvailableMatches();
     for (auto it = matchNames.begin(); it != matchNames.end(); it++) {
         ui->availableMatchesComboBox->addItem(QString::fromStdString(it->first));
-        
     }
 }
 

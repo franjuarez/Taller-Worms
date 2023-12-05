@@ -695,7 +695,26 @@ void GameView::drawWinningScreen(int i) {
 
 void GameView::drawLosingScreen(int i) {
 	renderer.Clear();
-	renderer.Copy(losingScreen, NullOpt, NullOpt);
+	renderer.SetDrawColor(0,0,0);
+	renderer.FillRect(Rect(0,0, WINDOW_WIDTH, WINDOW_HEIGHT));
+
+	std::string msg1;
+
+	if (winnerTeam == -3) {
+		msg1 = "Everyone died";
+	} else  {
+		msg1 = "You Lose. Winner's team: " +  std::__cxx11::to_string(winnerTeam);
+	}
+
+	Texture msg1Texture(renderer,
+		hudFont.RenderText_Solid(msg1,	{255,0,0}));
+
+	Rect textPosition(
+		Point(WINDOW_WIDTH/2, WINDOW_HEIGHT*2/3 + 30),
+		msg1Texture.GetSize());
+
+	renderer.Copy(msg1Texture, NullOpt, textPosition);
+
 	renderer.Present();
 }
 
@@ -873,9 +892,7 @@ void GameView::clickCase(int i, int mouseX, int mouseY) {
 		return;
 	}
 
-
 }
-
 
 void GameView::processInput(SDL_Event event, int i) {
 	if (this->currentWormId == -1 || this->currentWorm.getTeam() != this->team) {
