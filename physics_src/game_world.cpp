@@ -618,6 +618,7 @@ GameDynamic* GameWorld::getGameStatus(int id){
     for(auto& worm: this->worms){
         Worm* wormData = (Worm*) worm.second->GetUserData().pointer;
         wormsDTO.emplace(worm.first, wormData->getDTO());
+        // std::cout << "Worm " << worm.first << " health: " << wormData->getHealth() << std::endl;
     }
 
     std::unordered_map<int, ExplosivesDTO> projectilesDTO;

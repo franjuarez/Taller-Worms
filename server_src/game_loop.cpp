@@ -63,7 +63,8 @@ void GameLoop::loopLogic(int64_t elapsed_time) {
 		}
 	}
 
-
+	// std::cout << "Worm playing health: " << wormPlayingHealth << std::endl;
+	// std::cout << "Worm playing new health: " << wormPlayingNewHealth << std::endl;
 	if (wormPlayingHealth > wormPlayingNewHealth || elapsed_time > CONFIG.getTurnTime() * 1000 ) {
 		waitingForStatic = true;
 	} else if (wormPlayingHealth < wormPlayingNewHealth) {
@@ -99,7 +100,7 @@ int GameLoop::updateGameDynamic(std::shared_ptr<GameDynamic> gameDynamic, std::u
 	if (waitingForStatic && !cheatOn) {
 		gameDynamic->setWormPlayingID(NO_WORM_PLAYING);
 	}
-	int wormPlayingNewHealth = wormPlayingHealth;
+	int wormPlayingNewHealth = 0;
 	std::vector<uint32_t> teamsHealth(teams.size(), 0);
 
 
