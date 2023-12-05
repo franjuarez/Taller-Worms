@@ -1,10 +1,5 @@
 # Documentacion Tecnica
 
-## Requisitos 
-
-????
-
-
 ## El Juego
 
 La logica de comunicacion se dividio en dos partes: cliente y servidor. El servidor es quien cuenta con la logica del juego, tambien asi esta en contacto con la fisica provista por box2d. Por otro lado, el jugador solo maneja la parte visual y los comandos del usuario. El cliente y el  servidor se comunican mediante sockets, haciendo uso de un protocolo de comunicacion. Para simplificar la comunicacion, se hizo uso de la herencia de los objetos la cual permite contar con dos clases madre que envielven la logica necesaria.
@@ -42,6 +37,19 @@ El cambio de turno tiene dos etapas. La primera implica decidir probabilisticamn
 
 Luego de comunicar el Command al GameWorld el GameLoop utiliza la informacion obtenida para generar un GameDynamic, una clase que contiene la informacion actual del juego para que el cliente actualice la visual. 
 
+#### Fisicas del juego: GameWorld
+
+La clase GameWorld se encarga de emular las fisicas del mundo, usando el motor fisico Box2d. Al ser Box2d un motor fisico que no esta muy especializado en los juegos, hay varias precauciones que debimos tomar para poder hacer un juego funcional. Debido a esto, la clase GameWorld tiene como atributo varios `unordered_map` respectivos a los objetos principales del juego, estos son usados para mantenerse al tanto de las entidades especificas y poder pasarlas/removerlas del juego de una manera ordenada. 
+
+Para manejar las colisiones entre todo tipo de entidades creamos la clase `collisionHandler`. Esta, mirando el tipo de las entidades que forman parte de la colision, llama a la funcion respectiva para manejar la colision correspondiente. 
+
+Para modelar cada cuerpo de Box2d como una entidad de nuestro juego usamos la `UserData` del mismo para darle una clase que modele la entidad correspondiente. El problema es que Box2D no te guarda ningun tipo de informacion al respecto de esta data. Entonces para poder extraer la data sin tener ningun tipo de problema modelamos la clase `Entity`, de esta heredan todas las entidades que forman parte del juego. Al usar esta clase podemos acceder de manera segura a la UserData de cada cuerpo sabiendo que es de este tipo. Ademas esta clase maneja todo el comportamiento comun entre las entidades del juego, como las colisiones estandar entre entidades. Entonces cada entidad del juego se modela con una clase que hereda de este y modifica como se manejan las colisiones,ademas cada una le agrega el comportamiento especifico a cada una. 
+
+Los proyectiles son un tema muy complicado de abordar ya que su comportamiento es muy diferente al de todos los demas objetos. Debido a esto se modelan como una entidad mas, pero estos estan subdivididos en `InstantProjectiles` y `DelayedProjectiles` ya que cada uno tiene su comportamiento especifico. Esto es muy util ya que estas clases sobreescriben los comportamientos de colisiones con las diferentes entidades. Ambas heredan de `Projectile` ya que todos los projectiles comparten un comportamiento comun.
+
+Las supply boxes tambien tienen su clase particular y de una manera muy parecida a la de los proyectiles, hay una clase comun `supplyBox` y de esta heredan ambaos tipos de supply box, en la cual cada una implementa su comportamiento respectivo.
+
+El gusano esta modelado tambien por su propia clase. Esta maneja todo lo relacionado a su vida, su movilidad y sus armas.
 
 #### Detalles
 
