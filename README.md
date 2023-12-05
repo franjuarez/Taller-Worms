@@ -123,7 +123,7 @@ Finalmente dentro del archivo `map_names.yaml` se debe agregar el nombre del map
 
 Se pueden ver ejemplos dentro de la carpeta que ayudaran a entender mas facilmente el proceso.
 
-Una vez agregado el mapa **no** hace falta recompilar el proyecto! Al correr el jueg de vuelta el mapa va a aparecer!
+Una vez agregado el mapa **hace falta** correr el instalador del proyecto para poder elegirlos
 
 **IMPORTANTE**: Los mapas deben tener *al menos* 4 gusanos para que se soporten hasta 4 jugadores simultaneos
 
