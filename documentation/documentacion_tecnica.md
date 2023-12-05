@@ -61,7 +61,6 @@ Las partidas pueden terminar por 4 motivos: se cerro el servidor, un usuario gan
 
 ![Alt text](image-4.png)
 
-
 ## El Cliente
 
 El cliente por si mismo no conoce la implementacion de la logica del juego. Su funcion es mandar y recibir mensajes para comunicarse con el servidor. Los mensajes que envia son del tipo Command y los que recibe son del tipo Serializable. Al igual que el player cuenta con dos threads de comunicacion de la forma Sender y Receiver que hacen esto posible. El cliente recibe instrucciones por parte del WorldView, que le indica si requiere enviar un comando o recibir el estado actual del juego. El cliente guarda los Serializable en una queue, y le otorga al GameView el ultimo elemento de la queue siempre. En la etapa de ClienteLobby, se comunica con el Lobby grafico para indicas si se pudo crear/unirse a un match, u otorgar la lista mas reciente de matches disponibles.

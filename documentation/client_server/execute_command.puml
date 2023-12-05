@@ -2,7 +2,7 @@
 
 actor User 
 
-User -> GameView : LaunchRocket(type, wormID, dir, angle, power);
+User -> GameView : LaunchRocket;
 
 GameView -> Client : execute(std::shared_ptr<Command>)
 
