@@ -111,7 +111,11 @@ enum sfxs {
 	EQUIP_SFX,
 	TP_SFX,
 	DYNAMITE_SFX,
-	LAUNCH_SFX
+	LAUNCH_SFX,
+	DRAW_AXE_SFX,
+	USE_AXE_SFX,
+	FALL_SFX,
+	HEAL_SFX
 };
 
 extern const int MUSIC_VOLUME;

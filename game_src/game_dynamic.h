@@ -21,12 +21,12 @@ class GameDynamic : public Serializable {
 private:
     int wormPlayingID;
     int winnerTeam = PLAYING;
-    int status;
+    int status = WAITING;
     std::unordered_map<int, WormDTO> worms;
-    int timer;
+    int timer = 0;
     std::unordered_map<int, ExplosivesDTO> explosives;
     std::unordered_map<int, SupplyBoxDTO> supplyBox;
-    std::vector<uint32_t> teamsHealth;
+    std::vector<uint32_t> teamsHealth = {};
 
     int serializableType = GAME_DYNAMIC;
 public: 

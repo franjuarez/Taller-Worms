@@ -9,7 +9,7 @@ ConfigLoader::ConfigLoader(const YAML::Node& node) :
     //game
     fps(node["game"]["FPS"].as<int>()),
     music_volume(node["game"]["music_volume"].as<int>()),
-    sfx_volume(node["game"]["music_volume"].as<int>()),
+    sfx_volume(node["game"]["sfx_volume"].as<int>()),
     turn_time(node["game"]["turn_time"].as<int>()),
     extra_time(node["game"]["extra_time"].as<int>()),
     

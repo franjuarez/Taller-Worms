@@ -5,7 +5,7 @@ GameDynamic::GameDynamic() {}
 
 
 GameDynamic::GameDynamic(int wormPlayingID, std::unordered_map<int, WormDTO> worms, std::unordered_map<int, ExplosivesDTO> explosives, std::unordered_map<int, SupplyBoxDTO> supplyBox)
-: Serializable() ,wormPlayingID(wormPlayingID), worms(worms), explosives(explosives), supplyBox(supplyBox), teamsHealth() {}
+: Serializable() ,wormPlayingID(wormPlayingID), worms(worms), explosives(explosives), supplyBox(supplyBox) {}
 
 GameDynamic::GameDynamic(int wormPlayingID, int status, int winnerTeam, int timer, std::unordered_map<int, WormDTO> worms, std::unordered_map<int, ExplosivesDTO> explosives,
  std::unordered_map<int, SupplyBoxDTO> supplyBox, std::vector<uint32_t> teamsHealth)
