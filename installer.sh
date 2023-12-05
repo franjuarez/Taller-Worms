@@ -11,7 +11,7 @@ echo "Building..."
 mkdir build
 cd build
 cmake ..
-if sudo make install -j4 > /dev/null 2>&1; then
+if sudo make install -j8; then
   echo "Build complete! Ready for use!"
 else
   echo "Error: Failed to install. Check the error message above for details."

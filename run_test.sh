@@ -1,4 +1,4 @@
-echo "Installing Tests..."
+echo "Conecting proxys for tests..." #admin mal
 cd build
 cmake -DTESTING=ON . > /dev/null 2>&1
 cmake --build . -j8 > /dev/null 2>&1
