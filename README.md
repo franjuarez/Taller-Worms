@@ -131,6 +131,8 @@ Una vez agregado el mapa **hace falta** correr el instalador del proyecto para p
 
 **IMPORTANTE**: NO modificar los nombres de los mapas oficiales
 
+**IMPORTANTE**: Al crear un mapa, tener en cuenta que a partir de 2 metros para arriba, la caida le saca vida al gusano. De inicializar un gusano a altas alturas, este empezara con menos vida.
+
 ## Como jugar
 
 * `Flecha Izquierda `: Mueve el gusano a la izquierda
