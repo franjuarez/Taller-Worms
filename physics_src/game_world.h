@@ -67,7 +67,7 @@ private:
     
     b2Body* createBanana(b2Body* worm, int direction, int explosionTimer);
 
-    b2Body* createDynamite(b2Body* worm, int explosionTimer);
+    b2Body* createDynamite(b2Body* worm, int direction, int explosionTimer);
 
     b2Body* createHolyGrenade(b2Body* worm, int direction, int explosionTimer);
 
@@ -112,7 +112,7 @@ public:
     
     bool wormThrowBanana(int id, float angle, int direction, float power, int explosionTimer);
 
-    bool wormDropDynamite(int id, int explosionTimer);
+    bool wormDropDynamite(int id, int direction, int explosionTimer);
 
     bool wormCallAirAttack(int id, float xDest, float yDest);
 

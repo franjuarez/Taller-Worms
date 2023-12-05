@@ -14,6 +14,14 @@ JoinWindow::JoinWindow(QWidget *parent, ClientLobby&& cl) :
     ui->setupUi(this);
     std::map<std::string, std::string> matchNames = cl.getAvailableMatches();
     for (auto it = matchNames.begin(); it != matchNames.end(); it++) {
+        if (it->second == "") {
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Error");
+            msgBox.setText("Server closed");
+            msgBox.exec();
+            msgBox.setStyleSheet("QMessageBox { background-color: gray; border: 1px solid gray; }");
+            QApplication::quit();
+        }
         ui->availableMatchesComboBox->addItem(QString::fromStdString(it->first));
     }
 }
@@ -28,6 +36,14 @@ void JoinWindow::on_refreshButton_clicked()
     ui->availableMatchesComboBox->clear();
     std::map<std::string, std::string> matchNames = cl.getAvailableMatches();
     for (auto it = matchNames.begin(); it != matchNames.end(); it++) {
+        if (it->second == "") {
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Error");
+            msgBox.setText("Server closed");
+            msgBox.exec();
+            msgBox.setStyleSheet("QMessageBox { background-color: gray; border: 1px solid gray; }");
+            QApplication::quit();
+        }
         ui->availableMatchesComboBox->addItem(QString::fromStdString(it->first));
     }
 
@@ -48,13 +64,13 @@ void JoinWindow::on_joinButton_clicked()
         } else if (result == 1) {
             QMessageBox msgBox;
             msgBox.setWindowTitle("Error");
-            msgBox.setText("error creating server");
+            msgBox.setText("Error creating server");
             msgBox.exec();
             msgBox.setStyleSheet("QMessageBox { background-color: gray; border: 1px solid gray; }");
         } else if (result == 2) {
             QMessageBox msgBox;
             msgBox.setWindowTitle("Error");
-            msgBox.setText("server closed");
+            msgBox.setText("Server closed");
             msgBox.exec();
             msgBox.setStyleSheet("QMessageBox { background-color: gray; border: 1px solid gray; }");
             QApplication::quit();

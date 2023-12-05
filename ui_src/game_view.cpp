@@ -901,7 +901,7 @@ void GameView::clickCase(int i, int mouseX, int mouseY) {
 			dir, angle, throwPower, bombTimer)));
 		return;
 	case DYNAMITE_CODE:
-		this->client.execute(std::make_shared<DropDynamite>(DropDynamite(this->currentWormId, bombTimer)));
+		this->client.execute(std::make_shared<DropDynamite>(DropDynamite(this->currentWormId, dir, bombTimer)));
 		return;
 	case AIR_STRIKE_CODE:
 		this->client.execute(std::make_shared<RemoteOperated>(RemoteOperated(currentWormId, AIR_ATTACK, pos)));		

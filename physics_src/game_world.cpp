@@ -299,9 +299,9 @@ bool GameWorld::wormThrowBanana(int id, float angle, int direction, float power,
     return true;
 }
 
-b2Body* GameWorld::createDynamite(b2Body* worm, int explosionTimer){
+b2Body* GameWorld::createDynamite(b2Body* worm, int direction, int explosionTimer){
     int id = this->lastProjectileId;
-    b2Body* body = createProjectile(worm, DYNAMITE, RIGHT, DYNAMITE_WIDTH, DYNAMITE_HEIGHT, 0.0f);
+    b2Body* body = createProjectile(worm, DYNAMITE, direction, DYNAMITE_WIDTH, DYNAMITE_HEIGHT, 0.0f);
 
     body->SetFixedRotation(true);
     Dynamite* dynamiteEntity = new Dynamite(body, entitiesToRemove, entitiesToAdd, id, CONFIG.getDynamiteDamage(), CONFIG.getDynamiteRadius(), explosionTimer);
@@ -310,14 +310,14 @@ b2Body* GameWorld::createDynamite(b2Body* worm, int explosionTimer){
     return body;
 }
 
-bool GameWorld::wormDropDynamite(int id, int explosionTimer){
+bool GameWorld::wormDropDynamite(int id, int direction, int explosionTimer){
     checkWormExists(id);
     b2Body* worm = this->worms[id];
     Worm* wormData = (Worm*) worm->GetUserData().pointer;
     if(!wormData->hasAmmo(DYNAMITE)){
         return false; 
     }
-    b2Body* dynamite = createDynamite(worm, explosionTimer);
+    b2Body* dynamite = createDynamite(worm, direction, explosionTimer);
     dynamite->SetLinearVelocity(b2Vec2(0, -1)); //So it falls
     return true;
 }

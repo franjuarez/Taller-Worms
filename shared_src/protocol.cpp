@@ -181,6 +181,7 @@ void Protocol::sendDynamite(DropDynamite* dropDynamite) {
     checkClosed();
     sendUintEight(SEND_COMMAND_DYNAMITE);
     sendUintEight(dropDynamite->getID());
+    sendUintEight(dropDynamite->getDir());
     sendUintEight(dropDynamite->getTimer());
 }
 
@@ -342,8 +343,9 @@ std::shared_ptr<MatchCommand> Protocol::receiveMatchCommand() {
 std::shared_ptr<DropDynamite> Protocol::receiveDynamite() {
     checkClosed();
     uint8_t wormID = receiveUintEight();
+    uint8_t dir = receiveUintEight();
     uint8_t timer = receiveUintEight();
-    return std::make_shared<DropDynamite>(DropDynamite(wormID, timer));
+    return std::make_shared<DropDynamite>(DropDynamite(wormID, dir, timer));
 }
 
 void Protocol::sendVectorStr(std::vector<std::string> allMaps) {

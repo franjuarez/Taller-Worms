@@ -154,6 +154,7 @@ void GameLoop::changeWormPlaying(std::unordered_map<int, WormDTO> worms) {
 }
 
 int GameLoop::updateWinningStatus() {
+
 	int teamsWithWorms = 0;
 	int teamWinning = -1;
 	for (size_t i = 0; i < teams.size(); i++) {

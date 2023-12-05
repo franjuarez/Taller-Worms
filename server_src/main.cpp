@@ -17,19 +17,23 @@ int main(int argc, char** argv) {
 		return 1;
 	}
 
+	try {
+		const std::string hostname(argv[1]);
+		bool playing = true;
+		Lobby lobby(hostname, HARDCODED_PLAYERS, "subsuelo de fiuba", &playing);
 
-	const std::string hostname(argv[1]);
-	bool playing = true;
-	Lobby lobby(hostname, HARDCODED_PLAYERS, "subsuelo de fiuba", &playing);
+		lobby.start();
 
-	lobby.start();
-
-	while (std::cin.get() != 'q') {}
+		while (std::cin.get() != 'q') {}
 
 
-	playing = false;
-	lobby.stop();
-	lobby.join();
+		playing = false;
+		lobby.stop();
+		lobby.join();
+	} catch (const std::exception& e) {
+		std::cout << e.what() << std::endl;
+		return 1;
+	}
 	
 	return 0;
 }
