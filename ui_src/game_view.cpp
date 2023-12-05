@@ -642,7 +642,7 @@ void GameView::drawHud(int i) {
 			);
 
 		//power indicator
-		if (inputState != TP_CODE /*&& inputState != AIRSTRIKE_CODE */ && inputState != BAT_CODE) {
+		if (inputState != TP_CODE && inputState != AIR_STRIKE_CODE && inputState != BAT_CODE) {
 			renderer.SetDrawColor(255,5,5,255);
 
 			int squares_size = 20;

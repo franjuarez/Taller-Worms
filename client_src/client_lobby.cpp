@@ -76,7 +76,6 @@ int ClientLobby::joinMatch(std::string matchName) {
     } catch (const std::exception& e) {
         return 2;
     }
-
 }
 
 void ClientLobby::refresh() {

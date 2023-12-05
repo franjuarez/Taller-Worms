@@ -571,7 +571,7 @@ void WormView::display(int i, Renderer& renderer, int camX, int camY, int mouseX
 	);
 
 
-	if (!this->worm.isAlive() || this->currentFramesIndex == WWINNER_FRAMES)
+	if ((this->currentFramesIndex == POSTMORTEM_FRAMES) || this->currentFramesIndex == WWINNER_FRAMES)
 		return;
 
 	//grafico la vida
