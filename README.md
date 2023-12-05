@@ -160,6 +160,8 @@ Una vez agregado el mapa **hace falta** correr el instalador del proyecto para p
   *  `v `: Deja estatico el turno, sin importar el tiempo/ perdida de vida/ uso de herramienta
   *  `b `: Vuelve a permitir los cambios de turno
 
+* `Musica `: Se puede mutear y desmutear la musica y los SFX (ademas de usando el YAML) con la tecla `m`.
+
 
 ## Testing
 
