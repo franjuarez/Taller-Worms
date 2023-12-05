@@ -173,8 +173,6 @@ void Worm::hitWithBat(int direction){
     float batDir = this->direction == LEFT ? -BAT_WIDTH: BAT_WIDTH;
     aabb.lowerBound = b2Vec2(pos.x + batDir, pos.y - BAT_HEIGHT/2);
     aabb.upperBound = b2Vec2(pos.x + batDir, pos.y + BAT_HEIGHT/2);
-    // std::cout << "Worm pos: " << pos.x << ", " << pos.y << std::endl; 
-    // std::cout << "Bat AABB: " << aabb.lowerBound.x << ", " << aabb.lowerBound.y << " - " << aabb.upperBound.x << ", " << aabb.upperBound.y << std::endl;
     b2World* world = this->body->GetWorld();
     world->QueryAABB(&callback, aabb);
     for(b2Body* hitBody : callback.foundBodies) {

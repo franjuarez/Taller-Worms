@@ -38,7 +38,6 @@ GameWorld::GameWorld(std::shared_ptr<GameMap> gameMap) {
     this->worldMaxY += 10;
 
     std::unordered_map<int, WormDTO> worms = gameMap->getWorms();
-    //for (WormDTO& worm : worms) {
     for (auto it = worms.begin(); it != worms.end(); it++) {
         float x = it->second.getPosition().getX();
         float y = it->second.getPosition().getY();
@@ -367,7 +366,6 @@ bool GameWorld::wormCallAirAttack(int id, float xDest, float yDest){
     }
     float currentX = xDest - 5 - AIR_ATTACK_MISSILE_WIDTH - (AIR_ATTACK_MISSILE_AMOUNT/2 * AIR_ATTACK_MISSILE_WIDTH*2);
     float velX = (xDest - currentX) / 2;
-    //los separo entre si AIR_ATTACK_MISSILE_WIDTH para que no se superpongan
     for(int i = 0; i < AIR_ATTACK_MISSILE_AMOUNT; i++){
         b2Body* missile = createAirAttackMissile(currentX, xDest, velX);
         currentX += AIR_ATTACK_MISSILE_WIDTH*2;

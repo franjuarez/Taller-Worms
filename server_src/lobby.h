@@ -33,19 +33,10 @@ private:
     void reapDead();
     void killAll();
 
-
-    std::vector<Team> createTeams(std::vector<WormDTO>& worms);
-
-    std::vector<WormDTO> createWorms(std::vector<WormPosition> wormsPositions);
-
     bool* playing;
 public:
 
     Lobby(const std::string& hostname, int numberOfPLayers, std::string mapName, bool* playing);
-    void createNewMatch(std::string mapName, std::string matchName);
-    // crea el new Match y lo guarda en el map dematches
-    void selectMatch(std::string matchName);
-    // mete al nuevo jugador en el nuevo match
     ~Lobby();
     void run() override;
     void stop();

@@ -11,7 +11,6 @@ private:
     Protocol& protocol;
     Queue<std::shared_ptr<Command>>& commandsQueue;
     bool& talking;
-    // has the only queue of the game thread :)
 public:
     ServerReceiver(Protocol& protocol, Queue<std::shared_ptr<Command>>& commandsQueue, bool& talking);
     ~ServerReceiver();
