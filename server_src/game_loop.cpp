@@ -28,7 +28,6 @@ void GameLoop::run() {
 			usleep(RATE*1000);
 			checkPlayers();
 		} catch (const ClosedQueue& e){
-        	std::cout << "Reciever: Se ha cerrado la QUEUE\n";
 			return;
     	} catch (std::exception& e) {
 			std::cout << "Error in game loop: " << e.what() << std::endl;

@@ -33,7 +33,6 @@ void Match::run() {
 
     gameLoop.run();
 
-    std::cout << "sali del loop" << std::endl;
 
     commandQueue.close();
 
@@ -44,7 +43,6 @@ void Match::run() {
 
 
 void Match::killAll() {
-    std::cout << "Killing all players\n";
     for (auto& player : players ) {
         if (player->isAlive()) {
             player->kill();
@@ -53,7 +51,6 @@ void Match::killAll() {
         delete player;
     }
     players.clear();
-    std::cout << "All players killed\n";
 }
 
 Match::~Match() {}

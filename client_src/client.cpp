@@ -30,7 +30,7 @@ void Client::start() {
         sender.start();
         receiver.start();
     } catch (std::exception& e) {
-        // std::cout << "Error in client: " << e.what() << std::endl;
+        std::cout << "Error in client: " << e.what() << std::endl;
     }
 }
 
@@ -39,7 +39,6 @@ void Client::kill() {
         keepTalking = false;
         infoStruct->prot.boom();
         commandsQueue.close();
-        gameStatusQueue.close();
     } catch (...) {}
     join();
 }

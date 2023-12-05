@@ -19,19 +19,16 @@ void Sender::run() {
             return;
         }
         keepTalking = false;
-        // throw ClientClosed();
     } catch (const ClosedQueue& e){
         if (!keepTalking) {
             return;
         }
         keepTalking = false;
-        // throw ClientClosed();
     } catch (std::exception& e){
         if (!keepTalking) {
             return;
         }
         keepTalking = false;
-        // throw ClientClosed();
     }
 }
 

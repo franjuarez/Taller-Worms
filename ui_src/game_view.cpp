@@ -1128,7 +1128,7 @@ void GameView::start() {
 			SDL_Delay(rest);
 		}
 	} catch (const ClientClosed& e) {
-		std::cout << "Error in smth: " << e.what() << std::endl;
+		return;
 	} catch (...) {
 		std::cout << "Error in smth: " << "unknown" << std::endl;
 	}
