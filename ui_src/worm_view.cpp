@@ -650,9 +650,12 @@ void WormView::update(WormDTO other, int i) {
 }
 
 void WormView::notifyWinner(int winnerTeam) {
-	if (this->worm.getTeam() == winnerTeam && (defaultFramesIndex != WWINNER_FRAMES)) {
-		currentFramesIndex = WWINNER_FRAMES;
-		defaultFramesIndex = WWINNER_FRAMES;
+	if (this->worm.getTeam() == winnerTeam ) {
+		if (defaultFramesIndex != WWINNER_FRAMES)
+			currentFramesIndex = WWINNER_FRAMES;
+			defaultFramesIndex = WWINNER_FRAMES;
+	} else {
+		die();
 	}
 }
 

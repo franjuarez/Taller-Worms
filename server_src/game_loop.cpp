@@ -106,21 +106,27 @@ int GameLoop::updateGameDynamic(std::shared_ptr<GameDynamic> gameDynamic, std::u
 	int wormPlayingNewHealth;
 	std::vector<uint32_t> teamsHealth(teams.size(), 0);
 
-	for(auto& worm : worms) {
-		teamsHealth[worm.second.getTeam()] += worm.second.getHealth();
 
-		int wormId = worm.second.getId();
-
-		if (wormId == wormPlayingID) {
-			wormPlayingNewHealth = worm.second.getHealth();
+	for (size_t i = 0; i < teams.size(); i++) {
+		if (!teams[i].hasWorms()) {
+			teamsHealth[i] = 0;
+			continue;
 		}
+		std::vector<int> wormsIDs = teams[i].getWormIDs();
+		for (size_t j = 0; j < wormsIDs.size(); j ++) {
+			auto worm = worms.find(wormsIDs[j]);
+			if (worm != worms.end()) {
+				teamsHealth[i] += worm->second.getHealth();
+				if (wormsIDs[j] == wormPlayingID) {
+					wormPlayingNewHealth = worm->second.getHealth();
+				}
+			} else {
+				teams[i].removeWormID(wormsIDs[j]);
+			}
 
-		int wormTeam = worm.second.getTeam();
-
-		if (!worm.second.isAlive() && teams[wormTeam].checkWormExists(wormId)) {
-			teams[wormTeam].removeWormID(wormId);
 		}
 	}
+
 	
 	gameDynamic->setTeamsHealth(teamsHealth);
 	int winnerStatus = updateWinningStatus();

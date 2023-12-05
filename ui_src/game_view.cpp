@@ -720,14 +720,14 @@ void GameView::drawLosingScreen(int i) {
 	if (winnerTeam == -3) {
 		msg1 = "Everyone died";
 	} else  {
-		msg1 = "You Lose. Winner's team: " +  std::__cxx11::to_string(winnerTeam);
+		msg1 = "You Lose. Winner is team " +  std::__cxx11::to_string(winnerTeam);
 	}
 
 	Texture msg1Texture(renderer,
 		hudFont.RenderText_Solid(msg1,	{255,0,0}));
 
 	Rect textPosition(
-		Point(WINDOW_WIDTH/2, WINDOW_HEIGHT*2/3 + 30),
+		Point(WINDOW_WIDTH/3, WINDOW_HEIGHT*2/3 + 30),
 		msg1Texture.GetSize());
 
 	renderer.Copy(msg1Texture, NullOpt, textPosition);
