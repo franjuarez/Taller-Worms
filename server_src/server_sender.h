@@ -14,7 +14,6 @@ private:
     StatusBroadcaster& statusBroadcaster;
     bool& talking;
     int playerID;
-    // has the queue of each player
 public:
 
     ServerSender(Protocol& protocol, StatusBroadcaster& statusBroadcaster, bool& talking, int playerID);

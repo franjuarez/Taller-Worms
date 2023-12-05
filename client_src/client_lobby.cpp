@@ -16,8 +16,6 @@ ClientLobby::ClientLobby(const std::string& hostname, const std::string& servnam
 
 void ClientLobby::run() {
 
-    // showMatches();
-
     std::string userInput;
     while(true) {
         std::cin >> userInput;

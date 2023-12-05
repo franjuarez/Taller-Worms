@@ -21,8 +21,6 @@ public:
 
     void send(Protocol& protocol);
     int getSerType();
-    // cambiar a un map donde diga en q mapa esta cada partida 
-    // los mapNames van a irse harcodeados 
 
     std::map<std::string, std::string> getMatchesAvailable();
 

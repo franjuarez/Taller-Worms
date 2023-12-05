@@ -1,6 +1,0 @@
-Game: Worms Armageddon (with some leftovers from Worms 2)
-Subject: Worms, Weapons, Effects, etc.
-Copyright: Team17 (1998, 1999, 2001)
-Sprite Ripper: Random Talking Bush
-Hosting Permissions: The Spriters Resource
-Comments: I demand that you do NOT give me credit for these. All I did was extract them with Fudge Boy's "The Fiddler" and modified the palettes so that you can use them with Paint without the black in the sprites being ruined. I felt it would be more efficient that way, both animation-wise and time-wise (since it would take me forever to sheet them.) Use as you like, and give credit to Team17 for all their hard work in making these.

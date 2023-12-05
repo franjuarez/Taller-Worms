@@ -39,7 +39,6 @@ CreateWindow::~CreateWindow()
 }
 
 void CreateWindow::createMatch(std::string map) {
-    //cl.getAvailableMatches();
     if (ui->matchNameTextEdit->text().size() == 0) {
         QMessageBox msgBox;
         msgBox.setWindowTitle("Error");
