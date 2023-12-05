@@ -17,7 +17,7 @@ JoinWindow::JoinWindow(QWidget *parent, ClientLobby&& cl) :
         if (it->second == "") {
             QMessageBox msgBox;
             msgBox.setWindowTitle("Error");
-            msgBox.setText("server closed");
+            msgBox.setText("Server closed");
             msgBox.exec();
             msgBox.setStyleSheet("QMessageBox { background-color: gray; border: 1px solid gray; }");
             QApplication::quit();
@@ -39,7 +39,7 @@ void JoinWindow::on_refreshButton_clicked()
         if (it->second == "") {
             QMessageBox msgBox;
             msgBox.setWindowTitle("Error");
-            msgBox.setText("server closed");
+            msgBox.setText("Server closed");
             msgBox.exec();
             msgBox.setStyleSheet("QMessageBox { background-color: gray; border: 1px solid gray; }");
             QApplication::quit();
@@ -64,13 +64,13 @@ void JoinWindow::on_joinButton_clicked()
         } else if (result == 1) {
             QMessageBox msgBox;
             msgBox.setWindowTitle("Error");
-            msgBox.setText("error creating server");
+            msgBox.setText("Error creating server");
             msgBox.exec();
             msgBox.setStyleSheet("QMessageBox { background-color: gray; border: 1px solid gray; }");
         } else if (result == 2) {
             QMessageBox msgBox;
             msgBox.setWindowTitle("Error");
-            msgBox.setText("server closed");
+            msgBox.setText("Server closed");
             msgBox.exec();
             msgBox.setStyleSheet("QMessageBox { background-color: gray; border: 1px solid gray; }");
             QApplication::quit();

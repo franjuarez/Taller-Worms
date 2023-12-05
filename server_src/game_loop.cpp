@@ -168,17 +168,17 @@ int GameLoop::updateWinningStatus() {
 		if (teamsWithWorms == 1) {
 			return PLAYING;
 		}
-		gameOver = true;
+		// gameOver = true;
 		return ALL_LOST;
 	}
 
 	if (teamsWithWorms > 1) {
 		return PLAYING;
 	} else if (teamsWithWorms == 1) {
-		gameOver = true;
+		// gameOver = true;
 		return teamWinning;
 	}
-	gameOver = true;
+	// gameOver = true;
 	return ALL_LOST;
 }
 

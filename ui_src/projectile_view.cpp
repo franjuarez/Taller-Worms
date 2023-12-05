@@ -51,6 +51,7 @@ rocket(rocket), projectileSpriteSheets(projectileSpriteSheet), frames{11} {
 		y = 60 * i + 17;
 		frames[EXPLOSION_FRAMES].push_back(Rect(x,y,w,h));
 	}
+	
 	frames[POST_EXPLOSION_FRAMES].push_back(Rect(0,0,1,1));
 
 	frames[RED_GRENADE_FRAMES].push_back(Rect(7,4,14,24));

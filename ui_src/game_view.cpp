@@ -123,6 +123,7 @@
 #define HG_PROJECTILE_PATH BASE_PATH "images/hgrenade.bmp"
 #define FALLING_BOX_PATH BASE_PATH  "images/boxSprites/falling_box.bmp"
 #define GLOWING_BOX_PATH BASE_PATH "images/boxSprites/glowing_box.bmp"
+#define BOX_OPENING_PATH BASE_PATH "images/explosion.bmp"
 
 #include "../client_src/client_error.h"
 
@@ -181,6 +182,9 @@ GameView::GameView(std::shared_ptr<InfoStruct> infoStruct) :
 	boxSprites.push_back(Texture(renderer, Surface(FALLING_BOX_PATH).SetColorKey(true,0)));
 		boxSprites.push_back(Texture(renderer, Surface(GLOWING_BOX_PATH).SetColorKey(true,0)));
 		boxSprites.push_back(Texture(renderer, Surface(GLOWING_BOX_PATH).SetColorKey(true,0)));//para cuando no muestra
+		boxSprites.push_back(Texture(renderer, Surface(EXPLOSION_PATH).SetColorKey(true,0)));
+		boxSprites.push_back(Texture(renderer, Surface(BOX_OPENING_PATH).SetColorKey(true,0)));
+
 
 	//para los gusanos. EXTRAER A SU PROPIA CLASE
 	dynamicSpriteSheets.push_back(Texture(renderer,Surface(STILL_WORM_PATH).SetColorKey(true, 0)));
@@ -299,6 +303,8 @@ void GameView::stop() {
 }
 
 void GameView::playSound(int sound_id/*, bool playAlways*/) {
+	if (sound_id == -1)
+		return;
 	try {
 		int channel = mixer.PlayChannel(-1, sfx[sound_id], 0);
 		mixer.SetVolume(channel, SFX_VOLUME);

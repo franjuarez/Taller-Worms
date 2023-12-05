@@ -18,6 +18,18 @@ CreateWindow::CreateWindow(QWidget *parent, ClientLobby&& cl) :
             ui->comboBox->addItem(QString::fromStdString(mapName));
         }
     }
+
+    std::map<std::string, std::string> matchNames = cl.getAvailableMatches();
+    for (auto it = matchNames.begin(); it != matchNames.end(); it++) {
+        if (it->second == "") {
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Error");
+            msgBox.setText("Server closed");
+            msgBox.exec();
+            msgBox.setStyleSheet("QMessageBox { background-color: gray; border: 1px solid gray; }");
+            QApplication::quit();
+        }
+    }
 }
 
 
@@ -31,7 +43,7 @@ void CreateWindow::createMatch(std::string map) {
     if (ui->matchNameTextEdit->text().size() == 0) {
         QMessageBox msgBox;
         msgBox.setWindowTitle("Error");
-        msgBox.setText("error creating server");
+        msgBox.setText("Match name can't be empty!!");
         msgBox.exec();
         msgBox.setStyleSheet("QMessageBox { background-color: gray; border: 1px solid gray; }");
 
@@ -50,13 +62,13 @@ void CreateWindow::createMatch(std::string map) {
         } else if (result == 1) {
             QMessageBox msgBox;
             msgBox.setWindowTitle("Error");
-            msgBox.setText("error creating server");
+            msgBox.setText("Match name already exists");
             msgBox.exec();
             msgBox.setStyleSheet("QMessageBox { background-color: gray; border: 1px solid gray; }");
         } else if (result == 2) {
             QMessageBox msgBox;
             msgBox.setWindowTitle("Error");
-            msgBox.setText("server closed");
+            msgBox.setText("Server closed");
             msgBox.exec();
             msgBox.setStyleSheet("QMessageBox { background-color: gray; border: 1px solid gray; }");
             QApplication::quit();
