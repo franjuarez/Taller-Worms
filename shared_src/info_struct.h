@@ -9,7 +9,6 @@ struct InfoStruct {
     InfoStruct(Socket&& socket) : prot(std::move(socket)) {}
     InfoStruct(const std::string& hostname, const std::string& servname) : prot(hostname, servname) {}
     ~InfoStruct() {}
-
 };
 
 #endif

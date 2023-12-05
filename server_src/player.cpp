@@ -2,8 +2,8 @@
 #include <memory>
 #include "../game_src/constants_game.h"
 #include "../shared_src/info_struct.h"
+#include "constants_server.h"
 
-#define MAX_QUEUE 9000
 
 Player::Player(std::shared_ptr<InfoStruct> infoStruct, int playerID, Queue<std::shared_ptr<Command>>& commandQueue, StatusBroadcaster& statusBroadcaster , std::shared_ptr<GameMap> gameMap) : 
 playerID(playerID),

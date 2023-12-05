@@ -22,6 +22,7 @@ std::shared_ptr<Serializable> StatusBroadcaster::getGame(int id) {
 void StatusBroadcaster::deletePlayer(int id) {
     std::lock_guard<std::mutex> lock(m);
     playersQueues.erase(id);
+
 }
 
 bool StatusBroadcaster::isEmpty() {

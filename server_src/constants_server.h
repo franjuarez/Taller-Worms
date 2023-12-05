@@ -13,4 +13,6 @@ enum {
 #define OK 0
 #define ERROR 1
 
+#define MAX_QUEUE 9000
+
 #endif

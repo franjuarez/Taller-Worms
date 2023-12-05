@@ -14,31 +14,31 @@ teams(teams), playerInfoQueue(playerInfoQueue), matchName(matchName), gameMap(ga
 
 
 void Match::run() {
-    int idPlayer = 0;
-    Queue<std::shared_ptr<Command>> commandQueue(90);
-    StatusBroadcaster statusBroadcaster;
-    while (idPlayer != numberOfPlayers) {
-        std::shared_ptr<InfoStruct> infoStruct = playerInfoQueue->pop();
+    try {
+        int idPlayer = 0;
+        Queue<std::shared_ptr<Command>> commandQueue(MAX_QUEUE);
+        StatusBroadcaster statusBroadcaster;
 
-        std::shared_ptr<GameMap> playerMap = std::make_shared<GameMap>(idPlayer, numberOfPlayers, gameMap->getMapName(), gameMap->getBeams(), gameMap->getWorms());
-        Player* player = new Player(infoStruct, idPlayer, commandQueue, statusBroadcaster, playerMap);
-        players.push_back(player);
-        player->start();
-        idPlayer++;
+        while (idPlayer != numberOfPlayers) {
+            std::shared_ptr<InfoStruct> infoStruct = playerInfoQueue->pop();
+            std::shared_ptr<GameMap> playerMap = std::make_shared<GameMap>(idPlayer, numberOfPlayers, gameMap->getMapName(), gameMap->getBeams(), gameMap->getWorms());
+            Player* player = new Player(infoStruct, idPlayer, commandQueue, statusBroadcaster, playerMap);
+            players.push_back(player);
+            player->start();
+            idPlayer++;
+        }
+
+        GameLoop gameLoop(commandQueue, statusBroadcaster, gameMap, teams, playing);
+        *status = MATCH_IN_GAME_LOOP;
+        gameLoop.run();
+
+        commandQueue.close();
+        killAll();
+        *status = MATCH_OVER;
+    } catch (const ClosedQueue&) {} catch(const std::exception& e){
+        std::cerr << e.what() << '\n';
     }
 
-    GameLoop gameLoop(commandQueue, statusBroadcaster, gameMap, teams, playing);
-
-    *status = MATCH_IN_GAME_LOOP;
-
-    gameLoop.run();
-
-
-    commandQueue.close();
-
-    killAll();
-
-    *status = MATCH_OVER;
 }
 
 
