@@ -3,7 +3,9 @@
 
 #include <QDialog>
 #include "../client_src/client_lobby.h"
-
+#include "../shared_src/config_loader.h"
+#define CONFIG ConfigLoader::getInstance()
+#include "../game_src/map_loading/maps_loader.h"
 namespace Ui {
 class CreateWindow;
 }
@@ -26,6 +28,8 @@ private slots:
     void on_mediumButton_clicked();
 
     void on_subsueloButton_clicked();
+
+    void on_pushButton_clicked();
 
 private:
     ClientLobby cl;

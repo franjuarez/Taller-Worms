@@ -210,6 +210,77 @@ background-color: rgb(211, 215, 207)
     </item>
    </layout>
   </widget>
+  <widget class="QComboBox" name="comboBox">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>542</y>
+     <width>181</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-image: transparent;
+background-image: transparent;
+background-color: rgb(211, 215, 207);
+font: 10pt &quot;Ubuntu&quot;;
+</string>
+   </property>
+   <property name="placeholderText">
+    <string>custom map</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>542</y>
+     <width>131</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(211, 215, 207);
+border-image: transparent;
+font: 10pt &quot;Ubuntu&quot;;
+
+</string>
+   </property>
+   <property name="text">
+    <string>choose custom map</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>280</y>
+     <width>181</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>DejaVu Serif</family>
+     <pointsize>17</pointsize>
+     <italic>true</italic>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: transparent;
+border-color: rgb(46, 52, 54);
+color:  rgb(255,255,255);
+border-image: transparent;
+background-image: transparent;</string>
+   </property>
+   <property name="text">
+    <string>Official Maps:</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

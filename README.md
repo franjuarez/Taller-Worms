@@ -63,12 +63,12 @@ Para jugar primero hay que crearla, por ende tocamos la opcion: `Create Game`.
 
 Dentro veremos la siguiente pantalla:
 
-![create-game-lobby](https://github.com/franjuarez/Taller-Worms/assets/90098530/b854fe5b-8875-4aa6-81ea-c8e01f4e9e38)
+![create-game-lobby](https://github.com/franjuarez/Taller-Worms/assets/90098530/07e0de96-d300-4b7e-82b2-31d75bbb3632)
 
 En esta debemos elegir:
 * La cantidad de jugadores (1-4)
 * El nombre de la partida
-* El mapa a elegir (Clickeandolo)
+* El mapa a elegir (Clickeandolo o eligiendo uno custom)
 
 Cabe destacar que la partida no empezara hasta que no se unan todos los jugadores.
 
@@ -84,7 +84,7 @@ En esta decidimos a que partida unirnos a traves del menu desplegable. En caso d
 
 ### Ejemplo
 
-Dejamos un pequeño ejemplo de como se puede crear una partida y unirse a ella:
+Dejamos un pequeño ejemplo de como se puede crear una partida y unirse a ella usando un mapa oficial:
 
 https://github.com/franjuarez/Taller-Worms/assets/90098530/5981a719-9928-4e01-b0df-fc507f8a5cee
 
@@ -92,11 +92,22 @@ https://github.com/franjuarez/Taller-Worms/assets/90098530/5981a719-9928-4e01-b0
 
 Hay disponible un archivo de configuraciones donde se pueden modificar los valores por defecto de diferentes aspectos del juego. Simplemente modificando las variables pertinentes en `configuration.yaml` podes darle tu propio toque al juego para que quede lo mas divertido posible!
 
+Al cambiar las configuraciones **no** hace falta recompilar el proyecto! Solamente corriendolo de vuelta se aplican!
+
 ## Mapas
+
+### Seleccion
+El juego viene con mapas oficiales por default pero tambien soporta la opcion de agregar mapas custom. La diversion nunca se termina!
+
+Para usar los mapas oficiales basta con clickear su foto y asi iniciar la partida. 
+
+Los custom se pueden seleccionar con el menu desplegable y despues clickeando `choose custom map`
+
+### Creacion/Modificacion
 
 Para poder agregar o modificar mapas existentes se deben seguir los siguientes pasos:
 
-Primero hay que Entrar a la carpeta `maps`. Dentro de esta hay un archivo `map_names.yaml` que contiene los nombres de todos los mapas junto con sus archivos correspondientes. Ademas en esta carpeta estan todos los archivos `.txt` de los mapas. 
+Primero hay que entrar a la carpeta `maps`. Dentro de esta hay un archivo `map_names.yaml` que contiene los nombres de todos los mapas junto con sus archivos correspondientes. Ademas en esta carpeta estan todos los archivos `.txt` de los mapas. 
 
 Para agregar un mapa primero se debe agregar un archivo `.txt` de la siguiente manera:
 
@@ -112,7 +123,11 @@ Finalmente dentro del archivo `map_names.yaml` se debe agregar el nombre del map
 
 Se pueden ver ejemplos dentro de la carpeta que ayudaran a entender mas facilmente el proceso.
 
+Una vez agregado el mapa **no** hace falta recompilar el proyecto! Al correr el jueg de vuelta el mapa va a aparecer!
+
 **IMPORTANTE**: Los mapas deben tener *al menos* 4 gusanos para que se soporten hasta 4 jugadores simultaneos
+
+**IMPORTANTE**: NO modificar los nombres de los mapas oficiales
 
 ## Como jugar
 
@@ -142,3 +157,11 @@ Se pueden ver ejemplos dentro de la carpeta que ayudaran a entender mas facilmen
   *  `b `: Vuelve a permitir los cambios de turno
 
 
+## Testing
+
+El proyecto tambien contiene pruebas del protocolo, para correr estas se tiene que tener instalado el juego y correr:
+
+```bash
+chmod +x run_test.sh
+./run_test.sh
+```

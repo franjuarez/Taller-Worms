@@ -2,12 +2,22 @@
 #include "ui_createwindow.h"
 #include <QMessageBox>
 
+
 CreateWindow::CreateWindow(QWidget *parent, ClientLobby&& cl) :
         QDialog(parent),
         cl(std::move(cl)),
         ui(new Ui::CreateWindow)
 {
     ui->setupUi(this);
+    MapsLoader mapsLoader(CONFIG.getMapsFile());
+    std::vector<std::string> mapNames = mapsLoader.getMapsNames();
+    std::string defaultMapNames("dust2testsmallmediumsubsuelo de fiuba");
+
+    for (std::string& mapName : mapNames) {
+        if (defaultMapNames.find(mapName) == std::string::npos) {
+            ui->comboBox->addItem(QString::fromStdString(mapName));
+        }
+    }
 }
 
 
@@ -82,5 +92,14 @@ void CreateWindow::on_mediumButton_clicked()
 void CreateWindow::on_subsueloButton_clicked()
 {
     createMatch("subsuelo de fiuba");
+}
+
+
+void CreateWindow::on_pushButton_clicked()
+{
+    if (ui->comboBox->currentIndex() == -1) {
+        return;
+    }
+    createMatch(ui->comboBox->currentText().toStdString());
 }
 
