@@ -35,7 +35,7 @@ void Worm::takeDamage(float damage){
     }
     this->health -= damage;
     if(this->health < 0){
-        this->health = 1;
+        this->health = 0;
         entitiesToRemove.insert(this->body);
     }
 }
@@ -45,6 +45,7 @@ void Worm::die(){
         return;
     }
     this->health = 0;
+    entitiesToRemove.insert(this->body);
 }
 
 void Worm::addHealth(int additionalHealth){

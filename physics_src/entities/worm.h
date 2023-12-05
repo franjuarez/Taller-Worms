@@ -12,7 +12,6 @@ class Worm : public Entity {
     private:
     int id;
     int team;
-    float health;
     int direction;
     b2Fixture* footSensor;
     int groundsTouching = 0;
@@ -28,6 +27,7 @@ class Worm : public Entity {
 
 
     public:
+    float health;
     Worm(b2Body* body, b2Fixture* footSensor, std::unordered_set<b2Body*>& entitiesToRemove, int id, int team, int direction, float health, std::vector<int> weapons);
 
     virtual void beginCollisionWithWater(Entity* otherBody, b2Contact* contact) override;

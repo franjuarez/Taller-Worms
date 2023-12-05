@@ -563,7 +563,6 @@ void GameWorld::removeEntities(){
                 deadWorms.insert(body);
                 continue;
             }
-            wormData->die();
             removeWormFromMap(body);
         }
         this->world->DestroyBody(body);
