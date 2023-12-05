@@ -121,3 +121,13 @@ Protocol es quien sabe como enviar todas estas sub-clases, mientras que tanto se
 > Protocolo
 
 ![Alt text](image.png)
+
+
+## graficos
+para la parte grafica se utilizo la libreria SDL2 junto al wrapper para c++ SDL2pp
+la mayoria de la logica esta en la clase GameView. esta se encarga de graficar los distintos elementos de la pantalla, de llevar la cuenta de que elementos de la pantalla hay que graficar y de cargar y mantener los distintos recursos. utiliza las clases auxiliares WormView, BeamView, ProjectileView y BoxView para extraer la logica particular de las distintas entidades que posee el mapa.
+
+una parte importante es el gameloop constante en FPS. hecho para que se saltee animaciones en caso de que un frame tarde mas de 1 / FPS en dibujarse.
+
+## UI
+tambien se realizo con qt el lobby que permite al cliente conectarse a un servidor, y luego elegir si desea crear una partida o unirse a una existente.
