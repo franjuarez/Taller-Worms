@@ -2,8 +2,34 @@
 
 set -e
 
+GREEN='\033[0;32m'
+GRAY='\033[1;30m'
+NC='\033[0m' # No Color
+
+show_ascii_art() {
+cat << "EOF"
+                                                                                                    
+ /$$  /$$  /$$  /$$$$$$   /$$$$$$  /$$$$$$/$$$$   /$$$$$$$
+| $$ | $$ | $$ /$$__  $$ /$$__  $$| $$_  $$_  $$ /$$_____/
+| $$ | $$ | $$| $$  \ $$| $$  \__/| $$ \ $$ \ $$|  $$$$$$ 
+| $$ | $$ | $$| $$  | $$| $$      | $$ | $$ | $$ \____  $$
+|  $$$$$/$$$$/|  $$$$$$/| $$      | $$ | $$ | $$ /$$$$$$$/ 
+ \_____/\___/  \______/ |__/      |__/ |__/ |__/|_______/  
+                                                                            
+  /$$$$$$   /$$$$$$  /$$$$$$/$$$$   /$$$$$$ | $$   /$$  /$$$$$$ 
+ /$$__  $$ /$$__  $$| $$_  $$_  $$ |____  $$| $$  /$$/ /$$__  $$
+| $$  \__/| $$$$$$$$| $$ \ $$ \ $$  /$$$$$$$| $$$$$$/ | $$$$$$$$
+| $$      | $$_____/| $$ | $$ | $$ /$$__  $$| $$_  $$ | $$_____/
+| $$      |  $$$$$$$| $$ | $$ | $$|  $$$$$$$| $$ \  $$|  $$$$$$$
+|__/       \_______/|__/ |__/ |__/ \_______/|__/  \__/ \_______/
+EOF
+echo ""
+}
+
+
 main() {
-    help()
+    show_ascii_art
+    help
     while true; do
         echo "Enter a character (or 'q' to quit):"
         read input
@@ -19,7 +45,7 @@ main() {
 process_input() {
     case "$1" in
         "d")
-            install_dependecies
+            install_dependencies
             ;;
         "i")
             install_game
@@ -62,8 +88,6 @@ help() {
     echo "  'p': To uninstall the game and the dependencies"
 
     echo ""
-    
-    echo "Use 'q' to quit the installer"
 }
 
 install_dependencies() {
@@ -77,8 +101,11 @@ install_dependencies() {
   echo "Installation complete!"
 }
 
-install_game(){
+install_game() {
   echo "Installing game..."
+  if [ -d "build" ]; then
+    sudo rm -rf build
+  fi
   mkdir build
   cd build
   cmake ..
@@ -89,31 +116,34 @@ install_game(){
   fi
 }
 
-uninstall_game(){
+
+uninstall_game() {
   echo "Uninstalling game..."
-  sudo rm -rf /var/TPworms
-  sudo rm -rf /etc/TPworms
-  sudo rm /usr/bin/wormsServer
-  sudo rm /usr/bin/wormsClient
-  sudo rm -rf /usr/lib/TPworms
+  sudo rm -rf /var/TPworms || true
+  sudo rm -rf /etc/TPworms || true
+  sudo rm /usr/bin/wormsServer || true
+  sudo rm /usr/bin/wormsClient || true
+  sudo rm -rf /usr/lib/TPworms || true
   
   echo "Done!"
   echo "Removing build directory..."
-  if sudo rm -rf build; then
+  
+  if sudo rm -rf build || true; then
       echo "Uninstall complete!"
   else    
       echo "Error: Failed to uninstall. Check the error message above for details."
   fi
 }
 
+
 uninstall_dependencies(){
   echo "Uninstaling dependencies..."
-  sudo apt remove cmake
-  sudo apt remove libsdl2-dev
-  sudo apt remove libsdl2-image-dev
-  sudo apt remove libsdl2-ttf-dev
-  sudo apt remove libsdl2-mixer-dev
-  sudo apt remove qtbase5-dev
+  sudo apt remove cmake || true
+  sudo apt remove libsdl2-dev || true
+  sudo apt remove libsdl2-image-dev || true
+  sudo apt remove libsdl2-ttf-dev || true
+  sudo apt remove libsdl2-mixer-dev || true
+  sudo apt remove qtbase5-dev || true
   echo "Completed!"
 }
 
