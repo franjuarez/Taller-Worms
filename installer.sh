@@ -4,7 +4,8 @@ set -e
 
 GREEN='\033[0;32m'
 GRAY='\033[1;30m'
-NC='\033[0m' # No Color
+RED='\033[0;31m'
+NC='\033[0m'
 
 show_ascii_art() {
 cat << "EOF"
@@ -91,18 +92,22 @@ help() {
 }
 
 install_dependencies() {
-  echo "Installing dependencies..."
-  sudo apt-get install cmake
-  sudo apt-get install libsdl2-dev
-  sudo apt-get install libsdl2-image-dev
-  sudo apt-get install libsdl2-ttf-dev
-  sudo apt-get install libsdl2-mixer-dev
-  sudo apt-get install qtbase5-dev
-  echo "Installation complete!"
+  echo -e "${GREEN}Installing dependencies...${NC}"
+  sudo sh -c '
+    apt-get install cmake
+    apt-get install libsdl2-dev
+    apt-get install libsdl2-image-dev
+    apt-get install libsdl2-ttf-dev
+    apt-get install libsdl2-mixer-dev
+    apt-get install qtbase5-dev
+  ' | while IFS= read -r line; do
+    echo -e "${GRAY}${line}${NC}"
+  done
+  echo -e "${GREEN}Installation complete!${NC}"
 }
 
 install_game() {
-  echo "Installing game..."
+  echo -e "${GREEN}Installing game...${NC}"
   if [ -d "build" ]; then
     sudo rm -rf build
   fi
@@ -110,41 +115,38 @@ install_game() {
   cd build
   cmake ..
   if sudo make install -j8; then
-    echo "Build complete! Ready for use!"
+    echo -e "${GREEN}Build complete! Ready for use!${NC}"
   else
-    echo "Error: Failed to install. Check the error message above for details."
+    echo -e "${RED}Error: Failed to install. Check the error message above for details.${NC}"
   fi
 }
 
 
 uninstall_game() {
-  echo "Uninstalling game..."
+  echo -e "${GREEN}Uninstalling game...${NC}"
   sudo rm -rf /var/TPworms || true
   sudo rm -rf /etc/TPworms || true
   sudo rm /usr/bin/wormsServer || true
   sudo rm /usr/bin/wormsClient || true
   sudo rm -rf /usr/lib/TPworms || true
   
-  echo "Done!"
-  echo "Removing build directory..."
-  
   if sudo rm -rf build || true; then
-      echo "Uninstall complete!"
+      echo -e "${GREEN}Uninstall complete!${NC}"
   else    
-      echo "Error: Failed to uninstall. Check the error message above for details."
+      echo -e "${RED}Error: Failed to uninstall. Check the error message above for details.${NC}"
   fi
 }
 
 
 uninstall_dependencies(){
-  echo "Uninstaling dependencies..."
+  echo -e "${GREEN}Uninstaling dependencies...${NC}"
   sudo apt remove cmake || true
   sudo apt remove libsdl2-dev || true
   sudo apt remove libsdl2-image-dev || true
   sudo apt remove libsdl2-ttf-dev || true
   sudo apt remove libsdl2-mixer-dev || true
   sudo apt remove qtbase5-dev || true
-  echo "Completed!"
+  echo -e "${GREEN}Completed!${NC}"
 }
 
 main
